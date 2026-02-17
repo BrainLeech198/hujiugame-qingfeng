@@ -22,32 +22,18 @@
             padding: 30px 20px;
         }
 
-        /* 主卡片 - 毛玻璃效果增强 */
-        .main-wrapper {
+        /* 标题卡片 */
+        .hero-card {
             max-width: 1100px;
             width: 100%;
-            background-color: rgba(255,255,255,0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 56px;
-            box-shadow: 0 30px 50px -20px rgba(0,30,50,0.3), 0 0 0 1px rgba(255,255,255,0.8) inset;
-            padding: 40px 35px 50px 35px;
-            border: 1px solid rgba(255,255,255,0.9);
-            transition: all 0.3s ease;
-        }
-        .main-wrapper:hover {
-            box-shadow: 0 40px 60px -15px rgba(20,80,120,0.4);
-        }
-
-        /* 标题卡片 - 更通透 */
-        .hero-card {
             background: rgba(255,255,255,0.9);
             border-radius: 40px;
             padding: 30px 20px 30px 20px;
-            margin-bottom: 45px;
+            margin-bottom: 30px;
             box-shadow: 0 15px 30px -15px rgba(0,35,70,0.15);
             text-align: center;
             border: 1px solid rgba(255,255,255,0.8);
+            backdrop-filter: blur(4px);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         .hero-card:hover {
@@ -79,6 +65,27 @@
             background-clip: text;
             margin-top: 8px;
             text-shadow: 0 2px 5px rgba(255,255,255,0.5);
+        }
+
+        /* 通用卡片样式 */
+        .card {
+            max-width: 1100px;
+            width: 100%;
+            background-color: rgba(255,255,255,0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 56px;
+            box-shadow: 0 30px 50px -20px rgba(0,30,50,0.3), 0 0 0 1px rgba(255,255,255,0.8) inset;
+            padding: 40px 35px 50px 35px;
+            border: 1px solid rgba(255,255,255,0.9);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 40px 60px -15px rgba(20,80,120,0.4);
+        }
+
+        .download-card {
+            margin-bottom: 30px;
         }
 
         /* 下载头部 */
@@ -131,7 +138,7 @@
             transform: translateY(-2px);
         }
 
-        /* 双栏布局 */
+        /* 双栏布局（下载面板） */
         .download-panels {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -262,6 +269,30 @@
             min-height: 120px;
         }
 
+        /* 社区分享头部（与下载头部样式一致，但无链接） */
+        .share-header {
+            margin-bottom: 25px;
+            padding: 0 10px;
+        }
+        .share-header h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #0d4057;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+        .share-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(90deg, #2f6b8f, #b1d0e8);
+            border-radius: 4px;
+        }
+
         .loading-skeleton {
             color: #7a9eb5;
             font-style: italic;
@@ -273,7 +304,7 @@
             100% { opacity: 0.6; }
         }
 
-        /* 独立脚注 - 完全移出卡片，风格延续 */
+        /* 独立脚注 */
         .footnote {
             max-width: 1100px;
             width: 100%;
@@ -299,14 +330,16 @@
 
         /* 响应式优化 */
         @media (max-width: 700px) {
-            .main-wrapper { padding: 25px 18px; }
             .hero-card { padding: 20px 12px; }
+            .card { padding: 25px 18px; }
             .app-title { font-size: 2rem; }
             .download-panels { grid-template-columns: 1fr; }
             .download-header { flex-direction: column; align-items: flex-start; }
             .history-link { align-self: flex-start; white-space: normal; }
             .version-badge { font-size: 1.7rem; }
+            .share-header h2 { font-size: 1.7rem; }
             .footnote { margin-top: 25px; }
+            .download-card { margin-bottom: 20px; }
         }
         @media (max-width: 400px) {
             .platform-grid { flex-direction: column; align-items: center; }
@@ -315,13 +348,14 @@
     </style>
 </head>
 <body>
-<div class="main-wrapper">
-    <div class="hero-card">
-        <!-- 图片路径改为 resource/image/logo.png -->
-        <img src="resource/image/logo.png" alt="氢风启动器 logo" class="logo-img" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22200%22%20viewBox%3D%220%200%20600%20200%22%3E%3Crect%20width%3D%22600%22%20height%3D%22200%22%20fill%3D%22%23b8d4e3%22%2F%3E%3Ctext%20x%3D%22300%22%20y%3D%22120%22%20font-size%3D%2236%22%20fill%3D%22%231d4d6b%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3E%E6%B0%A2%E9%A3%8E%20Logo%3C%2Ftext%3E%3C%2Fsvg%3E'; this.style.filter='grayscale(0.3)';">
-        <div class="app-title">氢风启动器</div>
-    </div>
+<!-- 独立标题卡片 -->
+<div class="hero-card">
+    <img src="resource/image/logo.png" alt="氢风启动器 logo" class="logo-img" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22200%22%20viewBox%3D%220%200%20600%20200%22%3E%3Crect%20width%3D%22600%22%20height%3D%22200%22%20fill%3D%22%23b8d4e3%22%2F%3E%3Ctext%20x%3D%22300%22%20y%3D%22120%22%20font-size%3D%2236%22%20fill%3D%22%231d4d6b%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3E%E6%B0%A2%E9%A3%8E%20Logo%3C%2Ftext%3E%3C%2Fsvg%3E'; this.style.filter='grayscale(0.3)';">
+    <div class="app-title">氢风启动器</div>
+</div>
 
+<!-- 资源下载卡片 -->
+<div class="card download-card">
     <div class="download-header">
         <h2>📥 资源下载</h2>
         <a href="history_versions.html" class="history-link">📜 历史版本 →</a>
@@ -331,9 +365,7 @@
         <div class="platform-box">
             <div class="platform-grid">
                 <div class="download-item">
-                    <!-- 下载链接路径保持 versions/ 前缀 -->
                     <a href="versions/qing-feng_setup_windows_v1.0.0-beta.exe" download id="windows-link">
-                        <!-- 图片路径改为 resource/image/download-windows.png -->
                         <img src="resource/image/download-windows.png" alt="下载 Windows 版" class="download-icon" onerror="this.classList.add('error'); this.alt='Windows下载'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22100%22%20viewBox%3D%220%200%20200%20100%22%3E%3Crect%20width%3D%22200%22%20height%3D%22100%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%22100%22%20y%3D%2255%22%20font-size%3D%2224%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EWindows%3C%2Ftext%3E%3C%2Fsvg%3E';">
                         <span>Windows端</span>
                     </a>
@@ -361,6 +393,14 @@
     </div>
 </div>
 
+<!-- 社区分享卡片（独立，无内部圆角矩形） -->
+<div class="card">
+    <div class="share-header">
+        <h2>💬 社区分享</h2>
+    </div>
+    <!-- 此处无多余内容，卡片内自然留白 -->
+</div>
+
 <!-- 独立脚注 -->
 <div class="footnote">
     ⚡ 氢风启动器 · 官方站    |    <a href="history_versions.html">所有版本</a>
@@ -386,7 +426,6 @@
         function fetchVersionAndUpdate() {
             setLoadingState();
 
-            // fetch 路径保持 versions/versions.json
             fetch('versions/versions.json', { cache: 'no-cache' })
                 .then(response => {
                     if (!response.ok) {
@@ -403,7 +442,6 @@
                     if (!versionInfo || !versionInfo.name) {
                         throw new Error(`未找到键 ${newestKey} 对应的版本信息`);
                     }
-                    // 更新界面
                     if (versionNameEl) {
                         versionNameEl.textContent = versionInfo.name;
                         versionNameEl.classList.remove('loading-skeleton');
@@ -412,7 +450,6 @@
                         versionLogEl.textContent = versionInfo.log;
                         versionLogEl.classList.remove('loading-skeleton');
                     }
-                    // 下载链接路径前缀保持 versions/
                     const baseWindows = `versions/qing-feng_setup_windows_${versionInfo.name}.exe`;
                     const baseAndroid = `versions/qing-feng_setup_android_${versionInfo.name}.apk`;
                     if (windowsLink) {
