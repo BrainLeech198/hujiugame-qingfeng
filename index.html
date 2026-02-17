@@ -269,10 +269,15 @@
             min-height: 120px;
         }
 
-        /* 社区分享头部（与下载头部样式一致，但无链接） */
+        /* 社区分享头部（与下载头部样式一致） */
         .share-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 25px;
             padding: 0 10px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         .share-header h2 {
             font-size: 2.2rem;
@@ -335,6 +340,7 @@
             .app-title { font-size: 2rem; }
             .download-panels { grid-template-columns: 1fr; }
             .download-header { flex-direction: column; align-items: flex-start; }
+            .share-header { flex-direction: column; align-items: flex-start; }
             .history-link { align-self: flex-start; white-space: normal; }
             .version-badge { font-size: 1.7rem; }
             .share-header h2 { font-size: 1.7rem; }
@@ -393,10 +399,11 @@
     </div>
 </div>
 
-<!-- 社区分享卡片（独立，无内部圆角矩形） -->
+<!-- 社区分享卡片（带右上角超链接） -->
 <div class="card">
     <div class="share-header">
         <h2>💬 社区分享</h2>
+        <a href="community_share.html" class="history-link">💬 社区分享 →</a>
     </div>
     <!-- 此处无多余内容，卡片内自然留白 -->
 </div>
