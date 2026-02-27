@@ -22,7 +22,6 @@
             padding: 30px 20px;
         }
 
-        /* 标题卡片 */
         .hero-card {
             max-width: 1100px;
             width: 100%;
@@ -67,7 +66,56 @@
             text-shadow: 0 2px 5px rgba(255,255,255,0.5);
         }
 
-        /* 通用卡片样式 */
+        /* 提示卡片 */
+        .tip-card {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255,255,255,0.8);
+            border-radius: 40px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 30px -15px rgba(0,35,70,0.15);
+            border: 1px solid rgba(255,255,255,0.8);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .tip-text {
+            font-size: 1.2rem;
+            color: #1d4d6b;
+            line-height: 1.5;
+            flex: 1;
+            min-width: 250px;
+        }
+        .tip-text .highlight {
+            font-weight: 600;
+            color: #0b3b4e;
+        }
+        .tip-btn {
+            background: linear-gradient(135deg, #2f6b8f, #1a5f7a);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 16px -6px rgba(20,80,120,0.4);
+            transition: all 0.2s;
+            white-space: nowrap;
+            border: 1px solid rgba(255,255,255,0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .tip-btn:hover {
+            background: linear-gradient(135deg, #1a5f7a, #0f4a62);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px -8px rgba(20,80,120,0.5);
+        }
+
         .card {
             max-width: 1100px;
             width: 100%;
@@ -88,7 +136,6 @@
             margin-bottom: 30px;
         }
 
-        /* 下载头部 */
         .download-header {
             display: flex;
             justify-content: space-between;
@@ -138,7 +185,6 @@
             transform: translateY(-2px);
         }
 
-        /* 双栏布局（下载面板） */
         .download-panels {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -146,7 +192,6 @@
             margin-top: 15px;
         }
 
-        /* 左侧下载卡片 */
         .platform-box {
             background: rgba(255,255,255,0.65);
             backdrop-filter: blur(10px);
@@ -219,7 +264,6 @@
             backdrop-filter: blur(2px);
         }
 
-        /* 右侧更新日志卡片 */
         .changelog-box {
             background: rgba(255,255,255,0.75);
             backdrop-filter: blur(10px);
@@ -269,7 +313,6 @@
             min-height: 120px;
         }
 
-        /* 社区分享头部（与下载头部样式一致） */
         .share-header {
             display: flex;
             justify-content: space-between;
@@ -309,7 +352,6 @@
             100% { opacity: 0.6; }
         }
 
-        /* 独立脚注 */
         .footnote {
             max-width: 1100px;
             width: 100%;
@@ -333,9 +375,9 @@
             border-bottom-style: solid;
         }
 
-        /* 响应式优化 */
         @media (max-width: 700px) {
             .hero-card { padding: 20px 12px; }
+            .tip-card { padding: 20px; flex-direction: column; text-align: center; }
             .card { padding: 25px 18px; }
             .app-title { font-size: 2rem; }
             .download-panels { grid-template-columns: 1fr; }
@@ -354,10 +396,17 @@
     </style>
 </head>
 <body>
-<!-- 独立标题卡片 -->
 <div class="hero-card">
     <img src="resource/image/logo.png" alt="氢风启动器 logo" class="logo-img" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22200%22%20viewBox%3D%220%200%20600%20200%22%3E%3Crect%20width%3D%22600%22%20height%3D%22200%22%20fill%3D%22%23b8d4e3%22%2F%3E%3Ctext%20x%3D%22300%22%20y%3D%22120%22%20font-size%3D%2236%22%20fill%3D%22%231d4d6b%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3E%E6%B0%A2%E9%A3%8E%20Logo%3C%2Ftext%3E%3C%2Fsvg%3E'; this.style.filter='grayscale(0.3)';">
     <div class="app-title">氢风</div>
+</div>
+
+<!-- 提示卡片：点击按钮直接跳转官网 -->
+<div class="tip-card">
+    <div class="tip-text">
+        <span class="highlight">⚠️ 温馨提示：</span> 若您下载本站资源速度较慢，推荐使用免费加速工具 <strong>Watt Toolkit</strong>，可显著提升下载体验。
+    </div>
+    <a href="https://steampp.net/" class="tip-btn" target="_blank" rel="noopener">⚡ 下载 Watt Toolkit</a>
 </div>
 
 <!-- 资源下载卡片 -->
@@ -399,16 +448,14 @@
     </div>
 </div>
 
-<!-- 社区分享卡片（带右上角超链接） -->
+<!-- 社区分享卡片 -->
 <div class="card">
     <div class="share-header">
         <h2>💬 社区分享</h2>
         <a href="community_share.html" class="history-link">💬 社区分享 →</a>
     </div>
-    <!-- 此处无多余内容，卡片内自然留白 -->
 </div>
 
-<!-- 独立脚注 -->
 <div class="footnote">
     ⚡ 氢风启动器 · 官方站    |    <a href="history_versions.html">所有版本</a>
 </div>
