@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
+    <title>氢风 · 官网</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #eef2f6 0%, #d9e2ec 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+        }
+
+        .hero-card {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255,255,255,0.9);
+            border-radius: 40px;
+            padding: 30px 20px 30px 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 30px -15px rgba(0,35,70,0.15);
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.8);
+            backdrop-filter: blur(4px);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .hero-card:hover {
+            transform: scale(1.01);
+            box-shadow: 0 20px 35px -12px rgba(0,45,80,0.2);
+        }
+
+        .logo-img {
+            width: 600px;
+            max-width: 90%;
+            height: auto;
+            display: block;
+            margin: 0 auto 15px auto;
+            border-radius: 28px;
+            filter: drop-shadow(0 8px 15px rgba(0,30,50,0.1));
+            transition: filter 0.2s;
+        }
+        .logo-img:hover {
+            filter: drop-shadow(0 12px 20px rgba(0,50,70,0.15));
+        }
+
+        .app-title {
+            font-size: 2.6rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #0b3b4e, #2f6b8f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-top: 8px;
+            text-shadow: 0 2px 5px rgba(255,255,255,0.5);
+        }
+
+        /* 提示卡片 */
+        .tip-card {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255,255,255,0.8);
+            border-radius: 40px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 30px -15px rgba(0,35,70,0.15);
+            border: 1px solid rgba(255,255,255,0.8);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .tip-text {
+            font-size: 1.2rem;
+            color: #1d4d6b;
+            line-height: 1.5;
+            flex: 1;
+            min-width: 250px;
+        }
+        .tip-text .highlight {
+            font-weight: 600;
+            color: #0b3b4e;
+        }
+        .tip-btn {
+            background: linear-gradient(135deg, #2f6b8f, #1a5f7a);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 16px -6px rgba(20,80,120,0.4);
+            transition: all 0.2s;
+            white-space: nowrap;
+            border: 1px solid rgba(255,255,255,0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .tip-btn:hover {
+            background: linear-gradient(135deg, #1a5f7a, #0f4a62);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px -8px rgba(20,80,120,0.5);
+        }
+
+        .card {
+            max-width: 1100px;
+            width: 100%;
+            background-color: rgba(255,255,255,0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 56px;
+            box-shadow: 0 30px 50px -20px rgba(0,30,50,0.3), 0 0 0 1px rgba(255,255,255,0.8) inset;
+            padding: 40px 35px 50px 35px;
+            border: 1px solid rgba(255,255,255,0.9);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 40px 60px -15px rgba(20,80,120,0.4);
+        }
+
+        .download-card {
+            margin-bottom: 30px;
+        }
+
+        .download-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 0 10px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .download-header h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #0d4057;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+        .download-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(90deg, #2f6b8f, #b1d0e8);
+            border-radius: 4px;
+        }
+        .history-link {
+            font-size: 1.2rem;
+            background: rgba(255,255,255,0.6);
+            padding: 10px 28px;
+            border-radius: 50px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(70,120,160,0.4);
+            transition: all 0.2s;
+            color: #1d4d6b;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 6px 12px rgba(0,20,30,0.05);
+            white-space: nowrap;
+        }
+        .history-link:hover {
+            background: white;
+            border-color: #2f6b8f;
+            color: #083445;
+            box-shadow: 0 12px 20px -8px rgba(20,80,120,0.3);
+            transform: translateY(-2px);
+        }
+
+        .download-panels {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 15px;
+        }
+
+        .platform-box {
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(10px);
+            border-radius: 36px;
+            padding: 30px 20px;
+            box-shadow: 0 15px 25px -12px rgba(0,30,50,0.2);
+            border: 1px solid rgba(255,255,255,0.8);
+            height: fit-content;
+        }
+        .platform-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .download-item {
+            flex: 1 1 200px;
+            min-width: 160px;
+            text-align: center;
+            background: rgba(255,255,255,0.8);
+            border-radius: 28px;
+            padding: 22px 15px 18px 15px;
+            transition: 0.25s;
+            border: 1px solid rgba(255,255,255,0.9);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.02);
+        }
+        .download-item:hover {
+            background: white;
+            box-shadow: 0 20px 25px -12px #1c4e6e;
+            transform: translateY(-6px);
+        }
+        .download-item a {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .download-icon {
+            width: 100%;
+            max-width: 170px;
+            height: auto;
+            border-radius: 24px;
+            transition: 0.15s;
+            border: 1px solid rgba(150,180,200,0.3);
+            background-color: #eef4f9;
+            min-height: 80px;
+            object-fit: contain;
+        }
+        .download-icon.error {
+            background: #d9e2ec;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2f627c;
+            font-size: 1rem;
+            padding: 20px 0;
+        }
+        .download-item span {
+            font-size: 1.3rem;
+            font-weight: 550;
+            color: #1d4d6b;
+            background: rgba(230,240,250,0.8);
+            padding: 6px 18px;
+            border-radius: 40px;
+            width: fit-content;
+            margin: 0 auto;
+            border: 1px solid rgba(80,130,170,0.2);
+            backdrop-filter: blur(2px);
+        }
+
+        .changelog-box {
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(10px);
+            border-radius: 36px;
+            padding: 30px 30px;
+            box-shadow: 0 15px 25px -12px rgba(0,35,55,0.25);
+            border: 1px solid rgba(255,255,255,0.8);
+            display: flex;
+            flex-direction: column;
+        }
+        .changelog-header {
+            border-bottom: 2px dashed #a0c4d9;
+            padding-bottom: 18px;
+            margin-bottom: 22px;
+        }
+        .version-badge {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0b3b4e;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            word-break: break-word;
+        }
+        .version-badge .tag {
+            background: #1a5f7a;
+            color: white;
+            font-size: 1rem;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-weight: 400;
+            white-space: nowrap;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .log-content {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: #1e3a4a;
+            background: #f3f9ff;
+            padding: 22px 25px;
+            border-radius: 28px;
+            border: 1px solid #c7ddee;
+            white-space: pre-wrap;
+            word-break: break-word;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+            min-height: 120px;
+        }
+
+        .share-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 0 10px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .share-header h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #0d4057;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+        .share-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(90deg, #2f6b8f, #b1d0e8);
+            border-radius: 4px;
+        }
+
+        .loading-skeleton {
+            color: #7a9eb5;
+            font-style: italic;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        .footnote {
+            max-width: 1100px;
+            width: 100%;
+            margin-top: 35px;
+            text-align: center;
+            color: #4f6f8a;
+            font-size: 1rem;
+            border-top: 1px solid rgba(90,130,160,0.25);
+            padding-top: 25px;
+            backdrop-filter: blur(4px);
+        }
+        .footnote a {
+            color: #1f5f83;
+            text-decoration: none;
+            border-bottom: 1px dotted;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+        .footnote a:hover {
+            color: #083445;
+            border-bottom-style: solid;
+        }
+
+        @media (max-width: 700px) {
+            .hero-card { padding: 20px 12px; }
+            .tip-card { padding: 20px; flex-direction: column; text-align: center; }
+            .card { padding: 25px 18px; }
+            .app-title { font-size: 2rem; }
+            .download-panels { grid-template-columns: 1fr; }
+            .download-header { flex-direction: column; align-items: flex-start; }
+            .share-header { flex-direction: column; align-items: flex-start; }
+            .history-link { align-self: flex-start; white-space: normal; }
+            .version-badge { font-size: 1.7rem; }
+            .share-header h2 { font-size: 1.7rem; }
+            .footnote { margin-top: 25px; }
+            .download-card { margin-bottom: 20px; }
+        }
+        @media (max-width: 400px) {
+            .platform-grid { flex-direction: column; align-items: center; }
+            .log-content { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="hero-card">
+    <img src="resource/image/logo.png" alt="氢风启动器 logo" class="logo-img" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22200%22%20viewBox%3D%220%200%20600%20200%22%3E%3Crect%20width%3D%22600%22%20height%3D%22200%22%20fill%3D%22%23b8d4e3%22%2F%3E%3Ctext%20x%3D%22300%22%20y%3D%22120%22%20font-size%3D%2236%22%20fill%3D%22%231d4d6b%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3E%E6%B0%A2%E9%A3%8E%20Logo%3C%2Ftext%3E%3C%2Fsvg%3E'; this.style.filter='grayscale(0.3)';">
+    <div class="app-title">氢风</div>
+</div>
+
+<!-- 提示卡片：点击按钮直接跳转官网 -->
+<div class="tip-card">
+    <div class="tip-text">
+        <span class="highlight">⚠️ 温馨提示：</span> 若您下载本站资源速度较慢，推荐使用免费加速工具 <strong>Watt Toolkit</strong>，可显著提升下载体验。
+    </div>
+    <a href="https://steampp.net/" class="tip-btn" target="_blank" rel="noopener">⚡ 下载 Watt Toolkit</a>
+</div>
+
+<!-- 资源下载卡片 -->
+<div class="card download-card">
+    <div class="download-header">
+        <h2>📥 资源下载</h2>
+        <a href="history_versions.html" class="history-link">📜 历史版本 →</a>
+    </div>
+
+    <div class="download-panels">
+        <div class="platform-box">
+            <div class="platform-grid">
+                <div class="download-item">
+                    <a href="#" id="windows-link">
+                        <img src="resource/image/download-windows.png" alt="下载 Windows 版" class="download-icon" onerror="this.classList.add('error'); this.alt='Windows下载'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22100%22%20viewBox%3D%220%200%20200%20100%22%3E%3Crect%20width%3D%22200%22%20height%3D%22100%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%22100%22%20y%3D%2255%22%20font-size%3D%2224%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EWindows%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                        <span>Windows端</span>
+                    </a>
+                </div>
+                <div class="download-item">
+                    <a href="#" id="android-link">
+                        <img src="resource/image/download-android.png" alt="下载 Android 版" class="download-icon" onerror="this.classList.add('error'); this.alt='Android下载'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22100%22%20viewBox%3D%220%200%20200%20100%22%3E%3Crect%20width%3D%22200%22%20height%3D%22100%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%22100%22%20y%3D%2255%22%20font-size%3D%2224%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EAndroid%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                        <span>Android端</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="changelog-box">
+            <div class="changelog-header">
+                <div class="version-badge" id="version-display">
+                    <span id="version-name" class="loading-skeleton">加载版本中...</span>
+                    <span class="tag">最新</span>
+                </div>
+            </div>
+            <div class="log-content" id="version-log">
+                <span class="loading-skeleton">正在获取更新日志…</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 社区分享卡片 -->
+<div class="card">
+    <div class="share-header">
+        <h2>💬 社区分享</h2>
+        <a href="community_share.html" class="history-link">💬 社区分享 →</a>
+    </div>
+</div>
+
+<div class="footnote">
+    ⚡ 氢风启动器 · 官方站    |    <a href="history_versions.html">所有版本</a>
+</div>
+
+<script>
+    (function() {
+        const versionNameEl = document.getElementById('version-name');
+        const versionLogEl = document.getElementById('version-log');
+        const windowsLink = document.getElementById('windows-link');
+        const androidLink = document.getElementById('android-link');
+
+        // GitHub 仓库信息
+        const REPO_OWNER = 'BrainLeech198';
+        const REPO_NAME = 'hujiugame-qingfeng';
+
+        function setLoadingState() {
+            if (versionNameEl) versionNameEl.textContent = '加载版本中...';
+            if (versionLogEl) versionLogEl.innerHTML = '<span class="loading-skeleton">正在获取更新日志…</span>';
+        }
+
+        function showError(message) {
+            if (versionNameEl) versionNameEl.textContent = '❌ 读取失败';
+            if (versionLogEl) versionLogEl.innerHTML = `<span style="color:#b52b2b;">错误：${message}</span>`;
+        }
+
+        function fetchVersionAndUpdate() {
+            setLoadingState();
+
+            // 修改为从 data/versions.json 读取
+            fetch('data/versions.json', { cache: 'no-cache' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status} - ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const newestKey = data.newest_version;
+                    if (newestKey === undefined || !data.versions) {
+                        throw new Error('JSON 缺少 newest_version 或 versions 字段');
+                    }
+                    const versionInfo = data.versions[String(newestKey)];
+                    if (!versionInfo || !versionInfo.name) {
+                        throw new Error(`未找到键 ${newestKey} 对应的版本信息`);
+                    }
+                    if (versionNameEl) {
+                        versionNameEl.textContent = versionInfo.name;
+                        versionNameEl.classList.remove('loading-skeleton');
+                    }
+                    if (versionLogEl) {
+                        versionLogEl.textContent = versionInfo.log;
+                        versionLogEl.classList.remove('loading-skeleton');
+                    }
+
+                    // 构建 GitHub Releases 下载链接
+                    const tagName = versionInfo.name; // 假设 JSON 中的 name 与 Release tag 一致（例如 "v1.0.0"）
+                    const windowsFilename = `qing-feng_setup_windows_${tagName}.exe`;
+                    const androidFilename = `qing-feng_setup_android_${tagName}.apk`;
+
+                    const windowsUrl = `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${tagName}/${windowsFilename}`;
+                    const androidUrl = `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${tagName}/${androidFilename}`;
+
+                    if (windowsLink) {
+                        windowsLink.href = windowsUrl;
+                        windowsLink.removeAttribute('download'); // 跨域下载不需要 download 属性
+                        windowsLink.target = '_blank';
+                        windowsLink.rel = 'noopener';
+                    }
+                    if (androidLink) {
+                        androidLink.href = androidUrl;
+                        androidLink.removeAttribute('download');
+                        androidLink.target = '_blank';
+                        androidLink.rel = 'noopener';
+                    }
+                })
+                .catch(error => {
+                    showError(error.message);
+                });
+        }
+
+        fetchVersionAndUpdate();
+    })();
+</script>
+
+</body>
+</html>
