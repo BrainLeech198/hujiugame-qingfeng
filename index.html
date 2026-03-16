@@ -67,7 +67,7 @@
             text-shadow: 0 2px 5px rgba(255,255,255,0.5);
         }
 
-        /* 提示卡片 */
+        /* 提示卡片通用样式 */
         .tip-card {
             max-width: 1100px;
             width: 100%;
@@ -402,12 +402,20 @@
     <div class="app-title">氢风</div>
 </div>
 
-<!-- 提示卡片：点击按钮直接跳转官网 -->
+<!-- 提示卡片 1：Watt Toolkit 加速器 -->
 <div class="tip-card">
     <div class="tip-text">
         <span class="highlight">⚠️ 温馨提示：</span> 若您下载本站资源速度较慢，推荐使用免费加速工具 <strong>Watt Toolkit</strong>，可显著提升下载体验。
     </div>
     <a href="https://steampp.net/" class="tip-btn" target="_blank" rel="noopener">⚡ 下载 Watt Toolkit</a>
+</div>
+
+<!-- 提示卡片 2：资源修复指引 -->
+<div class="tip-card">
+    <div class="tip-text">
+        <span class="highlight">🛠️ 修复指引：</span> 若您遇到资源文件出错或缺失，请在游戏启动器加载界面右下角找到维修标识并点击，程序将自动退出，并在下次启动时尝试修复。
+    </div>
+    <button class="tip-btn" onclick="alert('请于游戏启动器加载界面右下角点击维修标识，程序将退出并自动修复。')">🔧 查看修复方法</button>
 </div>
 
 <!-- 资源下载卡片 -->
@@ -457,8 +465,9 @@
     </div>
 </div>
 
+<!-- 脚注：所有版本 + 社区资源 -->
 <div class="footnote">
-    ⚡ 氢风启动器 · 官方站    |    <a href="history_versions.html">所有版本</a>
+    ⚡ 氢风启动器 · 官方站    |    <a href="history_versions.html">所有版本</a>    |    <a href="community_resources.html">社区资源</a>
 </div>
 
 <script>
