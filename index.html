@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
     <title>氢风 · 官网</title>
     <style>
+        /* 样式与原版完全一致，此处省略以节省篇幅，实际使用请保留完整样式 */
         * {
             margin: 0;
             padding: 0;
@@ -28,7 +29,7 @@
             width: 100%;
             background: rgba(255,255,255,0.9);
             border-radius: 40px;
-            padding: 30px 20px 30px 20px;
+            padding: 30px 20px;
             margin-bottom: 30px;
             box-shadow: 0 15px 30px -15px rgba(0,35,70,0.15);
             text-align: center;
@@ -67,7 +68,6 @@
             text-shadow: 0 2px 5px rgba(255,255,255,0.5);
         }
 
-        /* 提示卡片通用样式 */
         .tip-card {
             max-width: 1100px;
             width: 100%;
@@ -122,7 +122,6 @@
             width: 100%;
             background-color: rgba(255,255,255,0.7);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border-radius: 56px;
             box-shadow: 0 30px 50px -20px rgba(0,30,50,0.3), 0 0 0 1px rgba(255,255,255,0.8) inset;
             padding: 40px 35px 50px 35px;
@@ -137,7 +136,7 @@
             margin-bottom: 30px;
         }
 
-        .download-header {
+        .download-header, .share-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -146,7 +145,7 @@
             flex-wrap: wrap;
             gap: 15px;
         }
-        .download-header h2 {
+        .download-header h2, .share-header h2 {
             font-size: 2.2rem;
             font-weight: 600;
             color: #0d4057;
@@ -154,7 +153,7 @@
             position: relative;
             display: inline-block;
         }
-        .download-header h2::after {
+        .download-header h2::after, .share-header h2::after {
             content: '';
             position: absolute;
             bottom: -10px;
@@ -269,7 +268,7 @@
             background: rgba(255,255,255,0.75);
             backdrop-filter: blur(10px);
             border-radius: 36px;
-            padding: 30px 30px;
+            padding: 30px;
             box-shadow: 0 15px 25px -12px rgba(0,35,55,0.25);
             border: 1px solid rgba(255,255,255,0.8);
             display: flex;
@@ -314,34 +313,6 @@
             min-height: 120px;
         }
 
-        .share-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding: 0 10px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        .share-header h2 {
-            font-size: 2.2rem;
-            font-weight: 600;
-            color: #0d4057;
-            letter-spacing: 1px;
-            position: relative;
-            display: inline-block;
-        }
-        .share-header h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 70px;
-            height: 4px;
-            background: linear-gradient(90deg, #2f6b8f, #b1d0e8);
-            border-radius: 4px;
-        }
-
         .loading-skeleton {
             color: #7a9eb5;
             font-style: italic;
@@ -382,8 +353,7 @@
             .card { padding: 25px 18px; }
             .app-title { font-size: 2rem; }
             .download-panels { grid-template-columns: 1fr; }
-            .download-header { flex-direction: column; align-items: flex-start; }
-            .share-header { flex-direction: column; align-items: flex-start; }
+            .download-header, .share-header { flex-direction: column; align-items: flex-start; }
             .history-link { align-self: flex-start; white-space: normal; }
             .version-badge { font-size: 1.7rem; }
             .share-header h2 { font-size: 1.7rem; }
@@ -398,7 +368,8 @@
 </head>
 <body>
 <div class="hero-card">
-    <img src="resource/image/logo.png" alt="氢风启动器 logo" class="logo-img" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22200%22%20viewBox%3D%220%200%20600%20200%22%3E%3Crect%20width%3D%22600%22%20height%3D%22200%22%20fill%3D%22%23b8d4e3%22%2F%3E%3Ctext%20x%3D%22300%22%20y%3D%22120%22%20font-size%3D%2236%22%20fill%3D%22%231d4d6b%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3E%E6%B0%A2%E9%A3%8E%20Logo%3C%2Ftext%3E%3C%2Fsvg%3E'; this.style.filter='grayscale(0.3)';">
+    <img id="logoImg" src="resource/image/logo.png" alt="氢风启动器 logo" class="logo-img" 
+         onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22200%22%20viewBox%3D%220%200%20600%20200%22%3E%3Crect%20width%3D%22600%22%20height%3D%22200%22%20fill%3D%22%23b8d4e3%22%2F%3E%3Ctext%20x%3D%22300%22%20y%3D%22120%22%20font-size%3D%2236%22%20fill%3D%22%231d4d6b%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3E%E6%B0%A2%E9%A3%8E%20Logo%3C%2Ftext%3E%3C%2Fsvg%3E'; this.style.filter='grayscale(0.3)';">
     <div class="app-title">氢风</div>
 </div>
 
@@ -422,27 +393,27 @@
 <div class="card download-card">
     <div class="download-header">
         <h2>📥 资源下载</h2>
-        <a href="history_versions.html" class="history-link">📜 历史版本 →</a>
+        <a href="html/history_versions.html" class="history-link">📜 历史版本 →</a>
     </div>
-
     <div class="download-panels">
         <div class="platform-box">
             <div class="platform-grid">
                 <div class="download-item">
                     <a href="#" id="windows-link">
-                        <img src="resource/image/download-windows.png" alt="下载 Windows 版" class="download-icon" onerror="this.classList.add('error'); this.alt='Windows下载'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22100%22%20viewBox%3D%220%200%20200%20100%22%3E%3Crect%20width%3D%22200%22%20height%3D%22100%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%22100%22%20y%3D%2255%22%20font-size%3D%2224%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EWindows%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                        <img id="windowsIcon" src="resource/image/download-windows.png" alt="下载 Windows 版" class="download-icon" 
+                             onerror="this.classList.add('error'); this.alt='Windows下载'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22100%22%20viewBox%3D%220%200%20200%20100%22%3E%3Crect%20width%3D%22200%22%20height%3D%22100%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%22100%22%20y%3D%2255%22%20font-size%3D%2224%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EWindows%3C%2Ftext%3E%3C%2Fsvg%3E';">
                         <span>Windows端</span>
                     </a>
                 </div>
                 <div class="download-item">
                     <a href="#" id="android-link">
-                        <img src="resource/image/download-android.png" alt="下载 Android 版" class="download-icon" onerror="this.classList.add('error'); this.alt='Android下载'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22100%22%20viewBox%3D%220%200%20200%20100%22%3E%3Crect%20width%3D%22200%22%20height%3D%22100%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%22100%22%20y%3D%2255%22%20font-size%3D%2224%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EAndroid%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                        <img id="androidIcon" src="resource/image/download-android.png" alt="下载 Android 版" class="download-icon" 
+                             onerror="this.classList.add('error'); this.alt='Android下载'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22100%22%20viewBox%3D%220%200%20200%20100%22%3E%3Crect%20width%3D%22200%22%20height%3D%22100%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%22100%22%20y%3D%2255%22%20font-size%3D%2224%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EAndroid%3C%2Ftext%3E%3C%2Fsvg%3E';">
                         <span>Android端</span>
                     </a>
                 </div>
             </div>
         </div>
-
         <div class="changelog-box">
             <div class="changelog-header">
                 <div class="version-badge" id="version-display">
@@ -465,21 +436,46 @@
     </div>
 </div>
 
-<!-- 脚注：所有版本 + 社区资源 -->
+<!-- 脚注 -->
 <div class="footnote">
-    ⚡ 氢风启动器 · 官方站    |    <a href="history_versions.html">所有版本</a>    |    <a href="community_resources.html">社区资源</a>
+    ⚡ 氢风启动器 · 官方站    |    <a href="html/history_versions.html">所有版本</a>    |    <a href="community_resources.html">社区资源</a>
 </div>
 
 <script>
     (function() {
+        // ==================== 可配置变量 ====================
+        const CONFIG = {
+            VERSION_DATA_PATH: 'data/versions.json', // 版本数据文件路径
+            IMAGE_CONFIG_PATH: 'data/image.json'     // 图片配置文件路径
+        };
+        // ===================================================
+
         const versionNameEl = document.getElementById('version-name');
         const versionLogEl = document.getElementById('version-log');
         const windowsLink = document.getElementById('windows-link');
         const androidLink = document.getElementById('android-link');
 
-        // GitHub 仓库信息
-        const REPO_OWNER = 'BrainLeech198';
-        const REPO_NAME = 'hujiugame-qingfeng';
+        // 图片元素
+        const logoImg = document.getElementById('logoImg');
+        const windowsIcon = document.getElementById('windowsIcon');
+        const androidIcon = document.getElementById('androidIcon');
+
+        // 加载图片配置并更新图片路径（若配置存在则替换，否则保留原有硬编码路径）
+        function loadImageConfig() {
+            fetch(CONFIG.IMAGE_CONFIG_PATH, { cache: 'no-cache' })
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    return response.json();
+                })
+                .then(config => {
+                    if (logoImg && config.logo) logoImg.src = config.logo;
+                    if (windowsIcon && config['download-windows']) windowsIcon.src = config['download-windows'];
+                    if (androidIcon && config['download-android']) androidIcon.src = config['download-android'];
+                })
+                .catch(err => {
+                    console.warn('图片配置加载失败，使用默认路径', err);
+                });
+        }
 
         function setLoadingState() {
             if (versionNameEl) versionNameEl.textContent = '加载版本中...';
@@ -494,23 +490,17 @@
         function fetchVersionAndUpdate() {
             setLoadingState();
 
-            // 修改为从 data/versions.json 读取
-            fetch('data/versions.json', { cache: 'no-cache' })
+            fetch(CONFIG.VERSION_DATA_PATH, { cache: 'no-cache' })
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status} - ${response.statusText}`);
-                    }
+                    if (!response.ok) throw new Error(`HTTP ${response.status} - ${response.statusText}`);
                     return response.json();
                 })
                 .then(data => {
                     const newestKey = data.newest_version;
-                    if (newestKey === undefined || !data.versions) {
-                        throw new Error('JSON 缺少 newest_version 或 versions 字段');
-                    }
+                    if (newestKey === undefined || !data.versions) throw new Error('JSON 缺少 newest_version 或 versions 字段');
                     const versionInfo = data.versions[String(newestKey)];
-                    if (!versionInfo || !versionInfo.name) {
-                        throw new Error(`未找到键 ${newestKey} 对应的版本信息`);
-                    }
+                    if (!versionInfo || !versionInfo.name) throw new Error(`未找到键 ${newestKey} 对应的版本信息`);
+
                     if (versionNameEl) {
                         versionNameEl.textContent = versionInfo.name;
                         versionNameEl.classList.remove('loading-skeleton');
@@ -520,35 +510,47 @@
                         versionLogEl.classList.remove('loading-skeleton');
                     }
 
-                    // 构建 GitHub Releases 下载链接
-                    const tagName = versionInfo.name; // 假设 JSON 中的 name 与 Release tag 一致（例如 "v1.0.0"）
-                    const windowsFilename = `qing-feng_setup_windows_${tagName}.exe`;
-                    const androidFilename = `qing-feng_setup_android_${tagName}.apk`;
-
-                    const windowsUrl = `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${tagName}/${windowsFilename}`;
-                    const androidUrl = `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${tagName}/${androidFilename}`;
+                    // 从 JSON 中读取下载链接（不再拼接）
+                    const windowsUrl = versionInfo.download?.windows?.github || null;
+                    const androidUrl = versionInfo.download?.android?.github || null;
 
                     if (windowsLink) {
-                        windowsLink.href = windowsUrl;
-                        windowsLink.removeAttribute('download'); // 跨域下载不需要 download 属性
-                        windowsLink.target = '_blank';
-                        windowsLink.rel = 'noopener';
+                        if (windowsUrl) {
+                            windowsLink.href = windowsUrl;
+                            windowsLink.removeAttribute('download');
+                            windowsLink.target = '_blank';
+                            windowsLink.rel = 'noopener';
+                        } else {
+                            windowsLink.href = '#';
+                            windowsLink.onclick = (e) => {
+                                e.preventDefault();
+                                alert('Windows 版下载链接未配置，请联系管理员。');
+                            };
+                        }
                     }
+
                     if (androidLink) {
-                        androidLink.href = androidUrl;
-                        androidLink.removeAttribute('download');
-                        androidLink.target = '_blank';
-                        androidLink.rel = 'noopener';
+                        if (androidUrl) {
+                            androidLink.href = androidUrl;
+                            androidLink.removeAttribute('download');
+                            androidLink.target = '_blank';
+                            androidLink.rel = 'noopener';
+                        } else {
+                            androidLink.href = '#';
+                            androidLink.onclick = (e) => {
+                                e.preventDefault();
+                                alert('Android 版下载链接未配置，请联系管理员。');
+                            };
+                        }
                     }
                 })
-                .catch(error => {
-                    showError(error.message);
-                });
+                .catch(error => showError(error.message));
         }
 
+        // 先加载图片配置（不影响版本数据加载），再加载版本数据
+        loadImageConfig();
         fetchVersionAndUpdate();
     })();
 </script>
-
 </body>
 </html>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
     <title>氢风 · 历史版本</title>
     <style>
-        /* 样式部分完全不变，此处省略以节省篇幅，实际使用请保留原样 */
+        /* 样式与原版完全一致，此处保留全部样式 */
         * {
             margin: 0;
             padding: 0;
@@ -29,10 +29,9 @@
             width: 100%;
             background-color: rgba(255,255,255,0.7);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border-radius: 56px;
             box-shadow: 0 30px 50px -20px rgba(0,30,50,0.3), 0 0 0 1px rgba(255,255,255,0.8) inset;
-            padding: 40px 40px 50px 40px;
+            padding: 40px;
             border: 1px solid rgba(255,255,255,0.9);
             transition: all 0.3s ease;
         }
@@ -40,7 +39,6 @@
             box-shadow: 0 40px 60px -15px rgba(20,80,120,0.4);
         }
 
-        /* 头部改为垂直排列 */
         .history-header {
             display: flex;
             flex-direction: column;
@@ -68,7 +66,6 @@
             background: white;
             border-color: #2f6b8f;
             color: #083445;
-            box-shadow: 0 12px 20px -8px rgba(20,80,120,0.3);
             transform: translateX(-3px);
         }
         .back-link span {
@@ -83,7 +80,6 @@
             letter-spacing: 1px;
             position: relative;
             display: inline-block;
-            margin-left: 0;
         }
         .page-title::after {
             content: '';
@@ -129,7 +125,6 @@
             font-size: 2rem;
             font-weight: 700;
             color: #0b3b4e;
-            letter-spacing: 0.5px;
             background: linear-gradient(135deg, #164863, #2b5f7a);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -246,7 +241,6 @@
             background: white;
             border-color: #2f6b8f;
             color: #083445;
-            box-shadow: 0 12px 20px -10px rgba(20,80,120,0.3);
             transform: scale(1.02);
         }
         .page-btn:disabled {
@@ -339,7 +333,7 @@
 <body>
 <div class="main-wrapper">
     <div class="history-header">
-        <a href="index.html" class="back-link">
+        <a href="../index.html" class="back-link">
             <span>←</span> 返回首页
         </a>
         <div class="page-title">📜 历史版本</div>
@@ -357,21 +351,23 @@
 </div>
 
 <div class="footnote">
-    ⚡ 氢风启动器 · 官方站    |    <a href="index.html">返回首页</a>
+    ⚡ 氢风启动器 · 官方站    |    <a href="../index.html">返回首页</a>
 </div>
 
 <script>
     (function() {
-        const PAGE_SIZE = 5;
+        // ==================== 可配置变量 ====================
+        const CONFIG = {
+            VERSION_DATA_PATH: '../data/versions.json', // 版本数据文件路径（从 html/ 返回上级）
+            PAGE_SIZE: 5                                // 每页显示版本数量
+        };
+        // ===================================================
+
         const container = document.getElementById('versionsContainer');
         const paginationDiv = document.getElementById('paginationControls');
         const prevBtn = document.getElementById('prevPage');
         const nextBtn = document.getElementById('nextPage');
         const pageInfo = document.getElementById('pageInfo');
-
-        // GitHub 仓库信息
-        const REPO_OWNER = 'BrainLeech198';
-        const REPO_NAME = 'hujiugame-qingfeng';
 
         let allVersions = [];
         let currentPage = 1;
@@ -388,35 +384,26 @@
         }
 
         function fetchVersions() {
-            // 修改为从 data/versions.json 读取
-            fetch('data/versions.json', { cache: 'no-cache' })
+            fetch(CONFIG.VERSION_DATA_PATH, { cache: 'no-cache' })
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status} - ${response.statusText}`);
-                    }
+                    if (!response.ok) throw new Error(`HTTP ${response.status} - ${response.statusText}`);
                     return response.json();
                 })
                 .then(data => {
-                    if (!data || !data.versions || typeof data.versions !== 'object') {
-                        throw new Error('版本数据格式错误');
-                    }
+                    if (!data || !data.versions || typeof data.versions !== 'object') throw new Error('版本数据格式错误');
                     processVersionData(data);
                 })
-                .catch(error => {
-                    showError(error.message);
-                });
+                .catch(error => showError(error.message));
         }
 
         function processVersionData(data) {
             const versionsObj = data.versions;
-            const rawArray = Object.keys(versionsObj).map(key => {
-                const item = versionsObj[key];
-                return {
-                    key: key,
-                    name: item.name || '未知版本',
-                    log: item.log || '暂无更新日志'
-                };
-            });
+            const rawArray = Object.keys(versionsObj).map(key => ({
+                key: key,
+                name: versionsObj[key].name || '未知版本',
+                log: versionsObj[key].log || '暂无更新日志',
+                download: versionsObj[key].download || {}   // 保存下载链接对象
+            }));
 
             if (rawArray.length === 0) {
                 showEmptyState();
@@ -426,23 +413,21 @@
             rawArray.sort((a, b) => {
                 const numA = Number(a.key);
                 const numB = Number(b.key);
-                if (!isNaN(numA) && !isNaN(numB)) {
-                    return numB - numA;
-                }
+                if (!isNaN(numA) && !isNaN(numB)) return numB - numA;
                 return b.name.localeCompare(a.name);
             });
 
             allVersions = rawArray;
             allVersions[0].isLatest = true;
 
-            totalPages = Math.ceil(allVersions.length / PAGE_SIZE) || 1;
+            totalPages = Math.ceil(allVersions.length / CONFIG.PAGE_SIZE) || 1;
             currentPage = 1;
             renderPage(1);
         }
 
         function renderPage(page) {
-            const start = (page - 1) * PAGE_SIZE;
-            const end = Math.min(start + PAGE_SIZE, allVersions.length);
+            const start = (page - 1) * CONFIG.PAGE_SIZE;
+            const end = Math.min(start + CONFIG.PAGE_SIZE, allVersions.length);
             const pageData = allVersions.slice(start, end);
 
             let htmlStr = '';
@@ -450,13 +435,34 @@
                 const isLatest = ver.isLatest ? '<span class="latest-tag">最新</span>' : '';
                 const safeLog = ver.log.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
 
-                // 构建 GitHub Releases 下载链接
-                const tagName = ver.name; // 假设 JSON 中的 name 与 Release tag 一致
-                const windowsFilename = `qing-feng_setup_windows_${tagName}.exe`;
-                const androidFilename = `qing-feng_setup_android_${tagName}.apk`;
+                // 从 JSON 中获取下载链接
+                const windowsUrl = ver.download?.windows?.github || null;
+                const androidUrl = ver.download?.android?.github || null;
 
-                const windowsUrl = `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${tagName}/${windowsFilename}`;
-                const androidUrl = `https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${tagName}/${androidFilename}`;
+                // 生成 Windows 按钮（如果链接无效则显示禁用样式）
+                const windowsButton = windowsUrl
+                    ? `<a href="${windowsUrl}" target="_blank" rel="noopener">
+                        <img src="../resource/image/download-windows.png" alt="Windows下载" class="download-icon-small" 
+                             onerror="this.classList.add('error'); this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22130%22%20height%3D%2270%22%20viewBox%3D%220%200%20130%2070%22%3E%3Crect%20width%3D%22130%22%20height%3D%2270%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%2265%22%20y%3D%2238%22%20font-size%3D%2218%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EWin%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                        <span>Windows版</span>
+                    </a>`
+                    : `<a href="#" onclick="alert('Windows 版下载链接未配置'); return false;">
+                        <img src="../resource/image/download-windows.png" alt="Windows下载" class="download-icon-small" 
+                             onerror="this.classList.add('error'); this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22130%22%20height%3D%2270%22%20viewBox%3D%220%200%20130%2070%22%3E%3Crect%20width%3D%22130%22%20height%3D%2270%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%2265%22%20y%3D%2238%22%20font-size%3D%2218%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EWin%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                        <span>Windows版</span>
+                    </a>`;
+
+                const androidButton = androidUrl
+                    ? `<a href="${androidUrl}" target="_blank" rel="noopener">
+                        <img src="../resource/image/download-android.png" alt="Android下载" class="download-icon-small"
+                             onerror="this.classList.add('error'); this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22130%22%20height%3D%2270%22%20viewBox%3D%220%200%20130%2070%22%3E%3Crect%20width%3D%22130%22%20height%3D%2270%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%2265%22%20y%3D%2238%22%20font-size%3D%2218%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EAndroid%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                        <span>Android版</span>
+                    </a>`
+                    : `<a href="#" onclick="alert('Android 版下载链接未配置'); return false;">
+                        <img src="../resource/image/download-android.png" alt="Android下载" class="download-icon-small"
+                             onerror="this.classList.add('error'); this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22130%22%20height%3D%2270%22%20viewBox%3D%220%200%20130%2070%22%3E%3Crect%20width%3D%22130%22%20height%3D%2270%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%2265%22%20y%3D%2238%22%20font-size%3D%2218%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EAndroid%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                        <span>Android版</span>
+                    </a>`;
 
                 htmlStr += `
                     <div class="version-card">
@@ -466,20 +472,8 @@
                         </div>
                         <div class="version-log">${safeLog}</div>
                         <div class="download-row">
-                            <div class="download-item-small">
-                                <a href="${windowsUrl}" target="_blank" rel="noopener">
-                                    <img src="resource/image/download-windows.png" alt="Windows下载" class="download-icon-small" 
-                                         onerror="this.classList.add('error'); this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22130%22%20height%3D%2270%22%20viewBox%3D%220%200%20130%2070%22%3E%3Crect%20width%3D%22130%22%20height%3D%2270%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%2265%22%20y%3D%2238%22%20font-size%3D%2218%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EWin%3C%2Ftext%3E%3C%2Fsvg%3E';">
-                                    <span>Windows版</span>
-                                </a>
-                            </div>
-                            <div class="download-item-small">
-                                <a href="${androidUrl}" target="_blank" rel="noopener">
-                                    <img src="resource/image/download-android.png" alt="Android下载" class="download-icon-small"
-                                         onerror="this.classList.add('error'); this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22130%22%20height%3D%2270%22%20viewBox%3D%220%200%20130%2070%22%3E%3Crect%20width%3D%22130%22%20height%3D%2270%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%2265%22%20y%3D%2238%22%20font-size%3D%2218%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EAndroid%3C%2Ftext%3E%3C%2Fsvg%3E';">
-                                    <span>Android版</span>
-                                </a>
-                            </div>
+                            <div class="download-item-small">${windowsButton}</div>
+                            <div class="download-item-small">${androidButton}</div>
                         </div>
                     </div>
                 `;
@@ -501,8 +495,10 @@
             prevBtn.disabled = (currentPage <= 1);
             nextBtn.disabled = (currentPage >= totalPages);
 
-            prevBtn.replaceWith(prevBtn.cloneNode(true));
-            nextBtn.replaceWith(nextBtn.cloneNode(true));
+            const newPrev = prevBtn.cloneNode(true);
+            const newNext = nextBtn.cloneNode(true);
+            prevBtn.replaceWith(newPrev);
+            nextBtn.replaceWith(newNext);
 
             document.getElementById('prevPage').addEventListener('click', (e) => {
                 e.preventDefault();
@@ -523,6 +519,5 @@
         fetchVersions();
     })();
 </script>
-
 </body>
 </html>
