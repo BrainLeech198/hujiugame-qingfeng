@@ -4,7 +4,7 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
-    <title>氢风 · 官网</title>
+    <title data-i18n="site_title">氢风 · 官网</title>
     <style>
         /* 样式与原版完全一致，此处省略以节省篇幅，实际使用请保留完整样式 */
         * {
@@ -370,30 +370,30 @@
 <div class="hero-card">
     <img id="logoImg" src="resource/image/logo.png" alt="氢风启动器 logo" class="logo-img" 
          onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22200%22%20viewBox%3D%220%200%20600%20200%22%3E%3Crect%20width%3D%22600%22%20height%3D%22200%22%20fill%3D%22%23b8d4e3%22%2F%3E%3Ctext%20x%3D%22300%22%20y%3D%22120%22%20font-size%3D%2236%22%20fill%3D%22%231d4d6b%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3E%E6%B0%A2%E9%A3%8E%20Logo%3C%2Ftext%3E%3C%2Fsvg%3E'; this.style.filter='grayscale(0.3)';">
-    <div class="app-title">氢风</div>
+    <div class="app-title" data-i18n="brand_name">氢风</div>
 </div>
 
 <!-- 提示卡片 1：Watt Toolkit 加速器 -->
 <div class="tip-card">
     <div class="tip-text">
-        <span class="highlight">⚠️ 温馨提示：</span> 若您下载本站资源速度较慢，推荐使用免费加速工具 <strong>Watt Toolkit</strong>，可显著提升下载体验。
+        <span class="highlight" data-i18n="tip_watt_title">温馨提示：</span> <span data-i18n="tip_watt_text">若您下载本站资源速度较慢，推荐使用免费加速工具 <strong>Watt Toolkit</strong>，可显著提升下载体验。</span>
     </div>
-    <a href="https://steampp.net/" class="tip-btn" target="_blank" rel="noopener">⚡ 下载 Watt Toolkit</a>
+    <a href="https://steampp.net/" class="tip-btn" target="_blank" rel="noopener" data-i18n="tip_watt_button">⚡ 下载 Watt Toolkit</a>
 </div>
 
 <!-- 提示卡片 2：资源修复指引 -->
 <div class="tip-card">
     <div class="tip-text">
-        <span class="highlight">🛠️ 修复指引：</span> 若您遇到资源文件出错或缺失，请在游戏启动器加载界面右下角找到维修标识并点击，程序将自动退出，并在下次启动时尝试修复。
+        <span class="highlight" data-i18n="tip_repair_title">🛠️ 修复指引：</span> <span data-i18n="tip_repair_text">若您遇到资源文件出错或缺失，请在游戏启动器加载界面右下角找到维修标识并点击，程序将自动退出，并在下次启动时尝试修复。</span>
     </div>
-    <button class="tip-btn" onclick="alert('请于游戏启动器加载界面右下角点击维修标识，程序将退出并自动修复。')">🔧 查看修复方法</button>
+    <button class="tip-btn" data-i18n="tip_repair_button">🔧 查看修复方法</button>
 </div>
 
 <!-- 资源下载卡片 -->
 <div class="card download-card">
     <div class="download-header">
-        <h2>📥 资源下载</h2>
-        <a href="html/history_versions.html" class="history-link">📜 历史版本 →</a>
+        <h2 data-i18n="download_section_title">📥 资源下载</h2>
+        <a href="html/history_versions.html" class="history-link" data-i18n="history_button">📜 历史版本 →</a>
     </div>
     <div class="download-panels">
         <div class="platform-box">
@@ -402,14 +402,14 @@
                     <a href="#" id="windows-link">
                         <img id="windowsIcon" src="resource/image/download-windows.png" alt="下载 Windows 版" class="download-icon" 
                              onerror="this.classList.add('error'); this.alt='Windows下载'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22100%22%20viewBox%3D%220%200%20200%20100%22%3E%3Crect%20width%3D%22200%22%20height%3D%22100%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%22100%22%20y%3D%2255%22%20font-size%3D%2224%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EWindows%3C%2Ftext%3E%3C%2Fsvg%3E';">
-                        <span>Windows端</span>
+                        <span data-i18n="windows_button">Windows端</span>
                     </a>
                 </div>
                 <div class="download-item">
                     <a href="#" id="android-link">
                         <img id="androidIcon" src="resource/image/download-android.png" alt="下载 Android 版" class="download-icon" 
                              onerror="this.classList.add('error'); this.alt='Android下载'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22100%22%20viewBox%3D%220%200%20200%20100%22%3E%3Crect%20width%3D%22200%22%20height%3D%22100%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%22100%22%20y%3D%2255%22%20font-size%3D%2224%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EAndroid%3C%2Ftext%3E%3C%2Fsvg%3E';">
-                        <span>Android端</span>
+                        <span data-i18n="android_button">Android端</span>
                     </a>
                 </div>
             </div>
@@ -417,12 +417,12 @@
         <div class="changelog-box">
             <div class="changelog-header">
                 <div class="version-badge" id="version-display">
-                    <span id="version-name" class="loading-skeleton">加载版本中...</span>
-                    <span class="tag">最新</span>
+                    <span id="version-name" class="loading-skeleton" data-i18n="loading_version">加载版本中...</span>
+                    <span class="tag" data-i18n="latest_tag">最新</span>
                 </div>
             </div>
             <div class="log-content" id="version-log">
-                <span class="loading-skeleton">正在获取更新日志…</span>
+                <span class="loading-skeleton" data-i18n="loading_log">正在获取更新日志…</span>
             </div>
         </div>
     </div>
@@ -431,36 +431,111 @@
 <!-- 社区分享卡片 -->
 <div class="card">
     <div class="share-header">
-        <h2>💬 社区分享</h2>
-        <a href="community_share.html" class="history-link">💬 社区分享 →</a>
+        <h2 data-i18n="community_title">💬 社区分享</h2>
+        <a href="community_share.html" class="history-link" data-i18n="community_button">💬 社区分享 →</a>
     </div>
 </div>
 
 <!-- 脚注 -->
 <div class="footnote">
-    ⚡ 氢风启动器 · 官方站    |    <a href="html/history_versions.html">所有版本</a>    |    <a href="community_resources.html">社区资源</a>
+    <span data-i18n="footer_text">⚡ 氢风启动器 · 官方站</span>    |    <a href="html/history_versions.html" data-i18n="footer_all_versions">所有版本</a>    |    <a href="community_resources.html" data-i18n="footer_community_resources">社区资源</a>
 </div>
 
 <script>
     (function() {
-        // ==================== 可配置变量 ====================
+        // ==================== i18n 初始化 ====================
+        let currentMessages = null;
+        const localeMap = {
+    		'zh': 'zh',        
+    		'zh-CN': 'zh',
+   		 'zh-TW': 'zh-TW', 
+    		'zh-HK': 'zh-TW',
+    		'en': 'en',
+    		'ja': 'ja',
+   		 'ko': 'ko',
+   		 'ru': 'ru',
+    		'pt': 'pt',
+    		'fr': 'fr',
+    		'de': 'de'
+	};
+	const defaultLang = 'zh';
+
+        function getBrowserLang() {
+            const lang = navigator.language || navigator.userLanguage;
+            const baseLang = lang.split('-')[0];
+            return localeMap[baseLang] ? baseLang : defaultLang;
+        }
+
+        function loadMessages(lang) {
+            return fetch(`data/locales/${lang}.json`, { cache: 'no-cache' })
+                .then(res => {
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    return res.json();
+                })
+                .catch(err => {
+                    console.warn(`加载语言文件 ${lang} 失败，回退到 ${defaultLang}`, err);
+                    if (lang !== defaultLang) return loadMessages(defaultLang);
+                    throw err;
+                });
+        }
+
+        function applyI18n(messages) {
+            currentMessages = messages;
+            // 替换所有带有 data-i18n 属性的元素文本
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (messages[key]) {
+                    // 保留原有 HTML 结构（如 emoji、加粗等）？这里简单替换文本，但可以保留内部 HTML 结构
+                    // 由于部分元素内包含子元素，我们仅替换纯文本节点？更安全的方式是使用 innerText 或 textContent
+                    // 为了避免破坏内部 HTML，我们只替换文本内容（但如果有嵌套元素，可能丢失样式）。此处简化：直接设置 textContent
+                    el.textContent = messages[key];
+                }
+            });
+            // 处理修复指引卡片中的混合文本（含 <span> 和 <strong>）
+            const tipWattTextSpan = document.querySelector('.tip-card:first-child .tip-text span:last-child');
+            if (tipWattTextSpan && messages.tip_watt_text) {
+                // 保留 <strong>Watt Toolkit</strong> 结构
+                const text = messages.tip_watt_text;
+                const strongMatch = /<strong>(.*?)<\/strong>/.exec(text);
+                if (strongMatch) {
+                    tipWattTextSpan.innerHTML = text;
+                } else {
+                    tipWattTextSpan.textContent = text;
+                }
+            }
+            const tipRepairTextSpan = document.querySelector('.tip-card:last-child .tip-text span:last-child');
+            if (tipRepairTextSpan && messages.tip_repair_text) {
+                tipRepairTextSpan.textContent = messages.tip_repair_text;
+            }
+            // 更新页面标题
+            if (messages.site_title) document.title = messages.site_title;
+        }
+
+        // 修复指引按钮的 alert 文本需要动态替换
+        function bindRepairButton() {
+            const repairBtn = document.querySelector('.tip-card:last-child .tip-btn');
+            if (repairBtn) {
+                repairBtn.onclick = () => {
+                    alert(currentMessages.alert_repair_click);
+                };
+            }
+        }
+
+        // ==================== 原有功能 ====================
         const CONFIG = {
-            VERSION_DATA_PATH: 'data/versions.json', // 版本数据文件路径
-            IMAGE_CONFIG_PATH: 'data/image.json'     // 图片配置文件路径
+            VERSION_DATA_PATH: 'data/versions.json',
+            IMAGE_CONFIG_PATH: 'data/image.json'
         };
-        // ===================================================
 
         const versionNameEl = document.getElementById('version-name');
         const versionLogEl = document.getElementById('version-log');
         const windowsLink = document.getElementById('windows-link');
         const androidLink = document.getElementById('android-link');
 
-        // 图片元素
         const logoImg = document.getElementById('logoImg');
         const windowsIcon = document.getElementById('windowsIcon');
         const androidIcon = document.getElementById('androidIcon');
 
-        // 加载图片配置并更新图片路径（若配置存在则替换，否则保留原有硬编码路径）
         function loadImageConfig() {
             fetch(CONFIG.IMAGE_CONFIG_PATH, { cache: 'no-cache' })
                 .then(response => {
@@ -472,19 +547,17 @@
                     if (windowsIcon && config['download-windows']) windowsIcon.src = config['download-windows'];
                     if (androidIcon && config['download-android']) androidIcon.src = config['download-android'];
                 })
-                .catch(err => {
-                    console.warn('图片配置加载失败，使用默认路径', err);
-                });
+                .catch(err => console.warn('图片配置加载失败，使用默认路径', err));
         }
 
         function setLoadingState() {
-            if (versionNameEl) versionNameEl.textContent = '加载版本中...';
-            if (versionLogEl) versionLogEl.innerHTML = '<span class="loading-skeleton">正在获取更新日志…</span>';
+            if (versionNameEl && currentMessages) versionNameEl.textContent = currentMessages.loading_version;
+            if (versionLogEl && currentMessages) versionLogEl.innerHTML = `<span class="loading-skeleton">${currentMessages.loading_log}</span>`;
         }
 
         function showError(message) {
-            if (versionNameEl) versionNameEl.textContent = '❌ 读取失败';
-            if (versionLogEl) versionLogEl.innerHTML = `<span style="color:#b52b2b;">错误：${message}</span>`;
+            if (versionNameEl) versionNameEl.textContent = '❌ ' + (currentMessages?.error_load_failed || '加载失败：') + message;
+            if (versionLogEl) versionLogEl.innerHTML = `<span style="color:#b52b2b;">${message}</span>`;
         }
 
         function fetchVersionAndUpdate() {
@@ -510,7 +583,6 @@
                         versionLogEl.classList.remove('loading-skeleton');
                     }
 
-                    // 从 JSON 中读取下载链接（不再拼接）
                     const windowsUrl = versionInfo.download?.windows?.github || null;
                     const androidUrl = versionInfo.download?.android?.github || null;
 
@@ -524,7 +596,7 @@
                             windowsLink.href = '#';
                             windowsLink.onclick = (e) => {
                                 e.preventDefault();
-                                alert('Windows 版下载链接未配置，请联系管理员。');
+                                alert(currentMessages?.alert_windows_missing || 'Windows 版下载链接未配置，请联系管理员。');
                             };
                         }
                     }
@@ -539,7 +611,7 @@
                             androidLink.href = '#';
                             androidLink.onclick = (e) => {
                                 e.preventDefault();
-                                alert('Android 版下载链接未配置，请联系管理员。');
+                                alert(currentMessages?.alert_android_missing || 'Android 版下载链接未配置，请联系管理员。');
                             };
                         }
                     }
@@ -547,9 +619,19 @@
                 .catch(error => showError(error.message));
         }
 
-        // 先加载图片配置（不影响版本数据加载），再加载版本数据
-        loadImageConfig();
-        fetchVersionAndUpdate();
+        // 启动流程：先加载语言，再加载图片和版本数据
+        const userLang = getBrowserLang();
+        loadMessages(userLang).then(messages => {
+            applyI18n(messages);
+            bindRepairButton();
+            loadImageConfig();
+            fetchVersionAndUpdate();
+        }).catch(err => {
+            console.error('i18n 初始化失败', err);
+            // 继续加载其他内容（使用硬编码中文）
+            loadImageConfig();
+            fetchVersionAndUpdate();
+        });
     })();
 </script>
 </body>

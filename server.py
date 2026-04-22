@@ -18,12 +18,14 @@ try :
         
         # 自动打开首页
         webbrowser.open(f"http://localhost:{PORT}/index.html")
-        
+    
         print("🛑 按 Ctrl+C 停止服务器")
+        
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
             print("\n👋 服务器已停止")
+            
 except Exception as e :
     print(e)
     

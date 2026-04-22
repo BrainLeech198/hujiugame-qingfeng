@@ -4,9 +4,9 @@
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
-    <title>氢风 · 历史版本</title>
+    <title data-i18n="history_title">氢风 · 历史版本</title>
     <style>
-        /* 样式与原版完全一致，此处保留全部样式 */
+        /* 样式与原版完全一致，此处省略以节省篇幅，实际使用请保留完整样式 */
         * {
             margin: 0;
             padding: 0;
@@ -334,34 +334,78 @@
 <div class="main-wrapper">
     <div class="history-header">
         <a href="../index.html" class="back-link">
-            <span>←</span> 返回首页
+            <span>←</span> <span data-i18n="back_home">返回首页</span>
         </a>
-        <div class="page-title">📜 历史版本</div>
+        <div class="page-title" data-i18n="history_title">📜 历史版本</div>
     </div>
 
     <div id="versionsContainer" class="versions-container">
-        <div class="loading-skeleton" style="text-align:center; padding:40px;">加载版本历史中...</div>
+        <div class="loading-skeleton" style="text-align:center; padding:40px;" data-i18n="loading_history">加载版本历史中...</div>
     </div>
 
     <div id="paginationControls" class="pagination" style="display: none;">
-        <button class="page-btn" id="prevPage" disabled>← 上一页</button>
+        <button class="page-btn" id="prevPage" disabled data-i18n="prev_page">← 上一页</button>
         <span class="page-info" id="pageInfo"></span>
-        <button class="page-btn" id="nextPage" disabled>下一页 →</button>
+        <button class="page-btn" id="nextPage" disabled data-i18n="next_page">下一页 →</button>
     </div>
 </div>
 
 <div class="footnote">
-    ⚡ 氢风启动器 · 官方站    |    <a href="../index.html">返回首页</a>
+    <span data-i18n="footer_text">⚡ 氢风启动器 · 官方站</span>    |    <a href="../index.html" data-i18n="back_home">返回首页</a>
 </div>
 
 <script>
     (function() {
-        // ==================== 可配置变量 ====================
+        // ==================== i18n 初始化 ====================
+        let currentMessages = null;
+        const localeMap = {
+    		'zh': 'zh',        
+    		'zh-CN': 'zh',
+   		 'zh-TW': 'zh-TW', 
+    		'zh-HK': 'zh-TW',
+    		'en': 'en',
+    		'ja': 'ja',
+   		 'ko': 'ko',
+   		 'ru': 'ru',
+    		'pt': 'pt',
+    		'fr': 'fr',
+    		'de': 'de'
+	};
+	const defaultLang = 'zh';
+
+        function getBrowserLang() {
+            const lang = navigator.language || navigator.userLanguage;
+            const baseLang = lang.split('-')[0];
+            return localeMap[baseLang] ? baseLang : defaultLang;
+        }
+
+        function loadMessages(lang) {
+            return fetch(`../data/locales/${lang}.json`, { cache: 'no-cache' })
+                .then(res => {
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    return res.json();
+                })
+                .catch(err => {
+                    console.warn(`加载语言文件 ${lang} 失败，回退到 ${defaultLang}`, err);
+                    if (lang !== defaultLang) return loadMessages(defaultLang);
+                    throw err;
+                });
+        }
+
+        function applyI18n(messages) {
+            currentMessages = messages;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (messages[key]) el.textContent = messages[key];
+            });
+            if (messages.history_title) document.title = messages.history_title;
+        }
+
+        // ==================== 原有功能 ====================
         const CONFIG = {
-            VERSION_DATA_PATH: '../data/versions.json', // 版本数据文件路径（从 html/ 返回上级）
-            PAGE_SIZE: 5                                // 每页显示版本数量
+            VERSION_DATA_PATH: '../data/versions.json',
+            PAGE_SIZE: 5
         };
-        // ===================================================
 
         const container = document.getElementById('versionsContainer');
         const paginationDiv = document.getElementById('paginationControls');
@@ -374,12 +418,14 @@
         let totalPages = 0;
 
         function showError(message) {
-            container.innerHTML = `<div class="error-message">❌ 加载失败：${message}</div>`;
+            const errorMsg = currentMessages?.error_load_failed || '加载失败：';
+            container.innerHTML = `<div class="error-message">❌ ${errorMsg}${message}</div>`;
             paginationDiv.style.display = 'none';
         }
 
         function showEmptyState() {
-            container.innerHTML = '<div class="no-versions">暂无版本信息</div>';
+            const msg = currentMessages?.no_versions || '暂无版本信息';
+            container.innerHTML = `<div class="no-versions">${msg}</div>`;
             paginationDiv.style.display = 'none';
         }
 
@@ -402,7 +448,7 @@
                 key: key,
                 name: versionsObj[key].name || '未知版本',
                 log: versionsObj[key].log || '暂无更新日志',
-                download: versionsObj[key].download || {}   // 保存下载链接对象
+                download: versionsObj[key].download || {}
             }));
 
             if (rawArray.length === 0) {
@@ -432,36 +478,34 @@
 
             let htmlStr = '';
             pageData.forEach(ver => {
-                const isLatest = ver.isLatest ? '<span class="latest-tag">最新</span>' : '';
+                const isLatest = ver.isLatest ? `<span class="latest-tag">${currentMessages?.latest_tag || '最新'}</span>` : '';
                 const safeLog = ver.log.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
 
-                // 从 JSON 中获取下载链接
                 const windowsUrl = ver.download?.windows?.github || null;
                 const androidUrl = ver.download?.android?.github || null;
 
-                // 生成 Windows 按钮（如果链接无效则显示禁用样式）
                 const windowsButton = windowsUrl
                     ? `<a href="${windowsUrl}" target="_blank" rel="noopener">
                         <img src="../resource/image/download-windows.png" alt="Windows下载" class="download-icon-small" 
                              onerror="this.classList.add('error'); this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22130%22%20height%3D%2270%22%20viewBox%3D%220%200%20130%2070%22%3E%3Crect%20width%3D%22130%22%20height%3D%2270%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%2265%22%20y%3D%2238%22%20font-size%3D%2218%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EWin%3C%2Ftext%3E%3C%2Fsvg%3E';">
-                        <span>Windows版</span>
+                        <span>${currentMessages?.windows_button || 'Windows版'}</span>
                     </a>`
-                    : `<a href="#" onclick="alert('Windows 版下载链接未配置'); return false;">
+                    : `<a href="#" onclick="alert('${currentMessages?.alert_windows_missing || 'Windows 版下载链接未配置'}'); return false;">
                         <img src="../resource/image/download-windows.png" alt="Windows下载" class="download-icon-small" 
                              onerror="this.classList.add('error'); this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22130%22%20height%3D%2270%22%20viewBox%3D%220%200%20130%2070%22%3E%3Crect%20width%3D%22130%22%20height%3D%2270%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%2265%22%20y%3D%2238%22%20font-size%3D%2218%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EWin%3C%2Ftext%3E%3C%2Fsvg%3E';">
-                        <span>Windows版</span>
+                        <span>${currentMessages?.windows_button || 'Windows版'}</span>
                     </a>`;
 
                 const androidButton = androidUrl
                     ? `<a href="${androidUrl}" target="_blank" rel="noopener">
                         <img src="../resource/image/download-android.png" alt="Android下载" class="download-icon-small"
                              onerror="this.classList.add('error'); this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22130%22%20height%3D%2270%22%20viewBox%3D%220%200%20130%2070%22%3E%3Crect%20width%3D%22130%22%20height%3D%2270%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%2265%22%20y%3D%2238%22%20font-size%3D%2218%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EAndroid%3C%2Ftext%3E%3C%2Fsvg%3E';">
-                        <span>Android版</span>
+                        <span>${currentMessages?.android_button || 'Android版'}</span>
                     </a>`
-                    : `<a href="#" onclick="alert('Android 版下载链接未配置'); return false;">
+                    : `<a href="#" onclick="alert('${currentMessages?.alert_android_missing || 'Android 版下载链接未配置'}'); return false;">
                         <img src="../resource/image/download-android.png" alt="Android下载" class="download-icon-small"
                              onerror="this.classList.add('error'); this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22130%22%20height%3D%2270%22%20viewBox%3D%220%200%20130%2070%22%3E%3Crect%20width%3D%22130%22%20height%3D%2270%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%2265%22%20y%3D%2238%22%20font-size%3D%2218%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EAndroid%3C%2Ftext%3E%3C%2Fsvg%3E';">
-                        <span>Android版</span>
+                        <span>${currentMessages?.android_button || 'Android版'}</span>
                     </a>`;
 
                 htmlStr += `
@@ -490,7 +534,10 @@
                 return;
             }
             paginationDiv.style.display = 'flex';
-            pageInfo.textContent = `第 ${currentPage} / ${totalPages} 页`;
+            const pageInfoText = (currentMessages?.page_info || '第 {current} / {total} 页')
+                .replace('{current}', currentPage)
+                .replace('{total}', totalPages);
+            pageInfo.textContent = pageInfoText;
 
             prevBtn.disabled = (currentPage <= 1);
             nextBtn.disabled = (currentPage >= totalPages);
@@ -516,7 +563,15 @@
             });
         }
 
-        fetchVersions();
+        // 启动流程
+        const userLang = getBrowserLang();
+        loadMessages(userLang).then(messages => {
+            applyI18n(messages);
+            fetchVersions();
+        }).catch(err => {
+            console.error('i18n 初始化失败', err);
+            fetchVersions(); // 使用默认文本（硬编码中文）
+        });
     })();
 </script>
 </body>
