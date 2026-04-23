@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
     <title data-i18n="history_title">氢风 · 历史版本</title>
     <style>
-        /* 样式与原版完全一致，此处省略以节省篇幅，实际使用请保留完整样式 */
+        /* 样式与原版完全一致，此处包含模态框样式 */
         * {
             margin: 0;
             padding: 0;
@@ -313,6 +313,97 @@
             border-bottom-style: solid;
         }
 
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(16px);
+            border-radius: 48px;
+            max-width: 500px;
+            width: 90%;
+            padding: 30px 25px;
+            box-shadow: 0 25px 45px -12px rgba(0,20,40,0.5);
+            border: 1px solid rgba(255,255,255,0.8);
+            animation: fadeInUp 0.2s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-header {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0d4057;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #a0c4d9;
+            padding-bottom: 12px;
+        }
+        .modal-body {
+            max-height: 60vh;
+            overflow-y: auto;
+            margin: 15px 0;
+        }
+        .download-option {
+            background: rgba(255,255,255,0.7);
+            border-radius: 28px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(70,120,160,0.3);
+            transition: 0.2s;
+        }
+        .download-option:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+        .option-description {
+            font-size: 1rem;
+            color: #1e3a4a;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        .option-btn {
+            background: linear-gradient(135deg, #2f6b8f, #1a5f7a);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.2s;
+        }
+        .option-btn:hover {
+            background: linear-gradient(135deg, #1a5f7a, #0f4a62);
+            transform: scale(1.02);
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            line-height: 1;
+            cursor: pointer;
+            float: right;
+            color: #4f6f8a;
+            transition: 0.2s;
+        }
+        .modal-close:hover {
+            color: #083445;
+        }
+
         @media (max-width: 700px) {
             .main-wrapper { padding: 25px 20px; }
             .page-title { font-size: 2.2rem; }
@@ -320,6 +411,8 @@
             .version-card { padding: 20px; }
             .download-row { gap: 15px; }
             .footnote { margin-top: 30px; }
+            .modal-content { padding: 20px; }
+            .modal-header { font-size: 1.5rem; }
         }
         @media (max-width: 500px) {
             .download-row { grid-template-columns: 1fr; }
@@ -354,24 +447,33 @@
     <span data-i18n="footer_text">⚡ 氢风启动器 · 官方站</span>    |    <a href="../index.html" data-i18n="back_home">返回首页</a>
 </div>
 
+<!-- 下载选项模态框 -->
+<div id="downloadModal" class="modal">
+    <div class="modal-content">
+        <button class="modal-close" id="modalClose">&times;</button>
+        <div class="modal-header" id="modalTitle">选择下载方式</div>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
 <script>
     (function() {
         // ==================== i18n 初始化 ====================
         let currentMessages = null;
         const localeMap = {
-    		'zh': 'zh',        
-    		'zh-CN': 'zh',
-   		 'zh-TW': 'zh-TW', 
-    		'zh-HK': 'zh-TW',
-    		'en': 'en',
-    		'ja': 'ja',
-   		 'ko': 'ko',
-   		 'ru': 'ru',
-    		'pt': 'pt',
-    		'fr': 'fr',
-    		'de': 'de'
-	};
-	const defaultLang = 'zh';
+            'zh': 'zh',
+            'zh-CN': 'zh',
+            'zh-TW': 'zh-TW',
+            'zh-HK': 'zh-TW',
+            'en': 'en',
+            'ja': 'ja',
+            'ko': 'ko',
+            'ru': 'ru',
+            'pt': 'pt',
+            'fr': 'fr',
+            'de': 'de'
+        };
+        const defaultLang = 'zh';
 
         function getBrowserLang() {
             const lang = navigator.language || navigator.userLanguage;
@@ -401,7 +503,52 @@
             if (messages.history_title) document.title = messages.history_title;
         }
 
-        // ==================== 原有功能 ====================
+        // ==================== 模态框管理 ====================
+        const modal = document.getElementById('downloadModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const modalClose = document.getElementById('modalClose');
+
+        function showDownloadOptions(platform, options) {
+            if (!options || Object.keys(options).length === 0) {
+                alert(currentMessages?.no_download_options || '该版本暂无可用下载链接，请联系管理员。');
+                return;
+            }
+            const platformNames = {
+                windows: currentMessages?.windows_button || 'Windows',
+                android: currentMessages?.android_button || 'Android'
+            };
+            modalTitle.textContent = `${platformNames[platform]} - ${currentMessages?.select_download_method || '选择下载方式'}`;
+            modalBody.innerHTML = '';
+            for (const [source, data] of Object.entries(options)) {
+                const description = data.description || (currentMessages?.[`source_${source}`] || source);
+                const url = data.url;
+                if (!url) continue;
+                const btnText = currentMessages?.[`download_from_${source}`] || source;
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'download-option';
+                optionDiv.innerHTML = `
+                    <div class="option-description">${description}</div>
+                    <a href="${url}" class="option-btn" target="_blank" rel="noopener">${btnText} →</a>
+                `;
+                modalBody.appendChild(optionDiv);
+            }
+            if (modalBody.children.length === 0) {
+                modalBody.innerHTML = `<div style="text-align:center; color:#b52b2b;">${currentMessages?.no_valid_download_source || '没有有效的下载链接'}</div>`;
+            }
+            modal.style.display = 'flex';
+        }
+
+        modalClose.onclick = () => {
+            modal.style.display = 'none';
+        };
+        window.onclick = (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+
+        // ==================== 版本列表加载 ====================
         const CONFIG = {
             VERSION_DATA_PATH: '../data/versions.json',
             PAGE_SIZE: 5
@@ -481,28 +628,19 @@
                 const isLatest = ver.isLatest ? `<span class="latest-tag">${currentMessages?.latest_tag || '最新'}</span>` : '';
                 const safeLog = ver.log.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
 
-                const windowsUrl = ver.download?.windows?.github || null;
-                const androidUrl = ver.download?.android?.github || null;
+                // 将整个平台的下载选项存入 data 属性
+                const windowsOptions = ver.download?.windows || {};
+                const androidOptions = ver.download?.android || {};
 
-                const windowsButton = windowsUrl
-                    ? `<a href="${windowsUrl}" target="_blank" rel="noopener">
-                        <img src="../resource/image/download-windows.png" alt="Windows下载" class="download-icon-small" 
-                             onerror="this.classList.add('error'); this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22130%22%20height%3D%2270%22%20viewBox%3D%220%200%20130%2070%22%3E%3Crect%20width%3D%22130%22%20height%3D%2270%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%2265%22%20y%3D%2238%22%20font-size%3D%2218%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EWin%3C%2Ftext%3E%3C%2Fsvg%3E';">
-                        <span>${currentMessages?.windows_button || 'Windows版'}</span>
-                    </a>`
-                    : `<a href="#" onclick="alert('${currentMessages?.alert_windows_missing || 'Windows 版下载链接未配置'}'); return false;">
+                // 生成按钮时使用自定义属性存储选项对象（JSON字符串）
+                const windowsBtnHtml = `
+                    <a href="#" class="download-btn" data-platform="windows" data-options='${JSON.stringify(windowsOptions)}'>
                         <img src="../resource/image/download-windows.png" alt="Windows下载" class="download-icon-small" 
                              onerror="this.classList.add('error'); this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22130%22%20height%3D%2270%22%20viewBox%3D%220%200%20130%2070%22%3E%3Crect%20width%3D%22130%22%20height%3D%2270%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%2265%22%20y%3D%2238%22%20font-size%3D%2218%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EWin%3C%2Ftext%3E%3C%2Fsvg%3E';">
                         <span>${currentMessages?.windows_button || 'Windows版'}</span>
                     </a>`;
-
-                const androidButton = androidUrl
-                    ? `<a href="${androidUrl}" target="_blank" rel="noopener">
-                        <img src="../resource/image/download-android.png" alt="Android下载" class="download-icon-small"
-                             onerror="this.classList.add('error'); this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22130%22%20height%3D%2270%22%20viewBox%3D%220%200%20130%2070%22%3E%3Crect%20width%3D%22130%22%20height%3D%2270%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%2265%22%20y%3D%2238%22%20font-size%3D%2218%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EAndroid%3C%2Ftext%3E%3C%2Fsvg%3E';">
-                        <span>${currentMessages?.android_button || 'Android版'}</span>
-                    </a>`
-                    : `<a href="#" onclick="alert('${currentMessages?.alert_android_missing || 'Android 版下载链接未配置'}'); return false;">
+                const androidBtnHtml = `
+                    <a href="#" class="download-btn" data-platform="android" data-options='${JSON.stringify(androidOptions)}'>
                         <img src="../resource/image/download-android.png" alt="Android下载" class="download-icon-small"
                              onerror="this.classList.add('error'); this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22130%22%20height%3D%2270%22%20viewBox%3D%220%200%20130%2070%22%3E%3Crect%20width%3D%22130%22%20height%3D%2270%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%2265%22%20y%3D%2238%22%20font-size%3D%2218%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EAndroid%3C%2Ftext%3E%3C%2Fsvg%3E';">
                         <span>${currentMessages?.android_button || 'Android版'}</span>
@@ -516,14 +654,27 @@
                         </div>
                         <div class="version-log">${safeLog}</div>
                         <div class="download-row">
-                            <div class="download-item-small">${windowsButton}</div>
-                            <div class="download-item-small">${androidButton}</div>
+                            <div class="download-item-small">${windowsBtnHtml}</div>
+                            <div class="download-item-small">${androidBtnHtml}</div>
                         </div>
                     </div>
                 `;
             });
 
             container.innerHTML = htmlStr;
+            // 绑定所有下载按钮的点击事件
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const platform = btn.getAttribute('data-platform');
+                    const optionsStr = btn.getAttribute('data-options');
+                    let options = {};
+                    try {
+                        options = JSON.parse(optionsStr);
+                    } catch(e) { options = {}; }
+                    showDownloadOptions(platform, options);
+                });
+            });
             updatePagination(page);
         }
 
@@ -570,7 +721,7 @@
             fetchVersions();
         }).catch(err => {
             console.error('i18n 初始化失败', err);
-            fetchVersions(); // 使用默认文本（硬编码中文）
+            fetchVersions(); // 使用默认文本
         });
     })();
 </script>
