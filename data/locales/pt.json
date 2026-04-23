@@ -29,5 +29,12 @@
   "next_page": "Próxima →",
   "page_info": "Página {current} de {total}",
   "error_load_failed": "Falha ao carregar: ",
-  "no_versions": "Nenhuma informação de versão"
+  "no_versions": "Nenhuma informação de versão",
+  "select_download_method": "Selecione o método de download",
+  "no_download_options": "Não há links de download disponíveis para esta plataforma. Contate o administrador.",
+  "no_valid_download_source": "Nenhuma fonte de download válida",
+  "download_from_github": "Baixar do GitHub",
+  "download_from_lanzouyun": "Baixar do Lanzouyun",
+  "source_github": "Repositório GitHub",
+  "source_lanzouyun": "Armazenamento Lanzouyun"
 }

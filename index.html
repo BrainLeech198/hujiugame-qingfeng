@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
     <title data-i18n="site_title">氢风 · 官网</title>
     <style>
-        /* 样式与原版完全一致，此处省略以节省篇幅，实际使用请保留完整样式 */
+        /* 样式与原版完全一致，新增模态框样式 */
         * {
             margin: 0;
             padding: 0;
@@ -347,6 +347,110 @@
             border-bottom-style: solid;
         }
 
+        .community-description {
+            margin-top: 20px;
+            padding: 0 10px;
+            font-size: 1rem;
+            color: #2f6b8f;
+            line-height: 1.5;
+            border-top: 1px dashed rgba(160,196,217,0.5);
+            padding-top: 15px;
+        }
+        .community-description p {
+            margin: 0;
+        }
+
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(16px);
+            border-radius: 48px;
+            max-width: 500px;
+            width: 90%;
+            padding: 30px 25px;
+            box-shadow: 0 25px 45px -12px rgba(0,20,40,0.5);
+            border: 1px solid rgba(255,255,255,0.8);
+            animation: fadeInUp 0.2s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-header {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0d4057;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #a0c4d9;
+            padding-bottom: 12px;
+        }
+        .modal-body {
+            max-height: 60vh;
+            overflow-y: auto;
+            margin: 15px 0;
+        }
+        .download-option {
+            background: rgba(255,255,255,0.7);
+            border-radius: 28px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(70,120,160,0.3);
+            transition: 0.2s;
+        }
+        .download-option:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+        .option-description {
+            font-size: 1rem;
+            color: #1e3a4a;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        .option-btn {
+            background: linear-gradient(135deg, #2f6b8f, #1a5f7a);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.2s;
+        }
+        .option-btn:hover {
+            background: linear-gradient(135deg, #1a5f7a, #0f4a62);
+            transform: scale(1.02);
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            line-height: 1;
+            cursor: pointer;
+            float: right;
+            color: #4f6f8a;
+            transition: 0.2s;
+        }
+        .modal-close:hover {
+            color: #083445;
+        }
+
         @media (max-width: 700px) {
             .hero-card { padding: 20px 12px; }
             .tip-card { padding: 20px; flex-direction: column; text-align: center; }
@@ -359,6 +463,9 @@
             .share-header h2 { font-size: 1.7rem; }
             .footnote { margin-top: 25px; }
             .download-card { margin-bottom: 20px; }
+            .community-description { font-size: 0.9rem; }
+            .modal-content { padding: 20px; }
+            .modal-header { font-size: 1.5rem; }
         }
         @media (max-width: 400px) {
             .platform-grid { flex-direction: column; align-items: center; }
@@ -376,7 +483,7 @@
 <!-- 提示卡片 1：Watt Toolkit 加速器 -->
 <div class="tip-card">
     <div class="tip-text">
-        <span class="highlight" data-i18n="tip_watt_title">温馨提示：</span> <span data-i18n="tip_watt_text">若您下载本站资源速度较慢，推荐使用免费加速工具 <strong>Watt Toolkit</strong>，可显著提升下载体验。</span>
+        <span class="highlight" data-i18n="tip_watt_title">💡 温馨提示：</span> <span data-i18n="tip_watt_text">若您下载本站资源速度较慢，推荐使用免费加速工具 <strong>Watt Toolkit</strong>，可显著提升下载体验。</span>
     </div>
     <a href="https://steampp.net/" class="tip-btn" target="_blank" rel="noopener" data-i18n="tip_watt_button">⚡ 下载 Watt Toolkit</a>
 </div>
@@ -399,14 +506,14 @@
         <div class="platform-box">
             <div class="platform-grid">
                 <div class="download-item">
-                    <a href="#" id="windows-link">
+                    <a href="#" id="windows-link" data-platform="windows">
                         <img id="windowsIcon" src="resource/image/download-windows.png" alt="下载 Windows 版" class="download-icon" 
                              onerror="this.classList.add('error'); this.alt='Windows下载'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22100%22%20viewBox%3D%220%200%20200%20100%22%3E%3Crect%20width%3D%22200%22%20height%3D%22100%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%22100%22%20y%3D%2255%22%20font-size%3D%2224%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EWindows%3C%2Ftext%3E%3C%2Fsvg%3E';">
                         <span data-i18n="windows_button">Windows端</span>
                     </a>
                 </div>
                 <div class="download-item">
-                    <a href="#" id="android-link">
+                    <a href="#" id="android-link" data-platform="android">
                         <img id="androidIcon" src="resource/image/download-android.png" alt="下载 Android 版" class="download-icon" 
                              onerror="this.classList.add('error'); this.alt='Android下载'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22100%22%20viewBox%3D%220%200%20200%20100%22%3E%3Crect%20width%3D%22200%22%20height%3D%22100%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%22100%22%20y%3D%2255%22%20font-size%3D%2224%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EAndroid%3C%2Ftext%3E%3C%2Fsvg%3E';">
                         <span data-i18n="android_button">Android端</span>
@@ -432,7 +539,12 @@
 <div class="card">
     <div class="share-header">
         <h2 data-i18n="community_title">💬 社区分享</h2>
-        <a href="community_share.html" class="history-link" data-i18n="community_button">💬 社区分享 →</a>
+        <a href="html/community_share.html" class="history-link" data-i18n="community_button">💬 社区分享 →</a>
+    </div>
+    <div class="community-description">
+        <p data-i18n="community_description">
+            ✨ 这里是功能建议与改进反馈、创作内容分享、玩家间讨论的社区空间。欢迎文明交流！
+        </p>
     </div>
 </div>
 
@@ -441,24 +553,33 @@
     <span data-i18n="footer_text">⚡ 氢风启动器 · 官方站</span>    |    <a href="html/history_versions.html" data-i18n="footer_all_versions">所有版本</a>    |    <a href="community_resources.html" data-i18n="footer_community_resources">社区资源</a>
 </div>
 
+<!-- 下载选项模态框 -->
+<div id="downloadModal" class="modal">
+    <div class="modal-content">
+        <button class="modal-close" id="modalClose">&times;</button>
+        <div class="modal-header" id="modalTitle">选择下载方式</div>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
 <script>
     (function() {
         // ==================== i18n 初始化 ====================
         let currentMessages = null;
         const localeMap = {
-    		'zh': 'zh',        
-    		'zh-CN': 'zh',
-   		 'zh-TW': 'zh-TW', 
-    		'zh-HK': 'zh-TW',
-    		'en': 'en',
-    		'ja': 'ja',
-   		 'ko': 'ko',
-   		 'ru': 'ru',
-    		'pt': 'pt',
-    		'fr': 'fr',
-    		'de': 'de'
-	};
-	const defaultLang = 'zh';
+            'zh': 'zh',
+            'zh-CN': 'zh',
+            'zh-TW': 'zh-TW',
+            'zh-HK': 'zh-TW',
+            'en': 'en',
+            'ja': 'ja',
+            'ko': 'ko',
+            'ru': 'ru',
+            'pt': 'pt',
+            'fr': 'fr',
+            'de': 'de'
+        };
+        const defaultLang = 'zh';
 
         function getBrowserLang() {
             const lang = navigator.language || navigator.userLanguage;
@@ -481,20 +602,15 @@
 
         function applyI18n(messages) {
             currentMessages = messages;
-            // 替换所有带有 data-i18n 属性的元素文本
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (messages[key]) {
-                    // 保留原有 HTML 结构（如 emoji、加粗等）？这里简单替换文本，但可以保留内部 HTML 结构
-                    // 由于部分元素内包含子元素，我们仅替换纯文本节点？更安全的方式是使用 innerText 或 textContent
-                    // 为了避免破坏内部 HTML，我们只替换文本内容（但如果有嵌套元素，可能丢失样式）。此处简化：直接设置 textContent
                     el.textContent = messages[key];
                 }
             });
-            // 处理修复指引卡片中的混合文本（含 <span> 和 <strong>）
+            // 处理提示卡片中的混合内容（保留 strong 标签）
             const tipWattTextSpan = document.querySelector('.tip-card:first-child .tip-text span:last-child');
             if (tipWattTextSpan && messages.tip_watt_text) {
-                // 保留 <strong>Watt Toolkit</strong> 结构
                 const text = messages.tip_watt_text;
                 const strongMatch = /<strong>(.*?)<\/strong>/.exec(text);
                 if (strongMatch) {
@@ -507,11 +623,9 @@
             if (tipRepairTextSpan && messages.tip_repair_text) {
                 tipRepairTextSpan.textContent = messages.tip_repair_text;
             }
-            // 更新页面标题
             if (messages.site_title) document.title = messages.site_title;
         }
 
-        // 修复指引按钮的 alert 文本需要动态替换
         function bindRepairButton() {
             const repairBtn = document.querySelector('.tip-card:last-child .tip-btn');
             if (repairBtn) {
@@ -520,6 +634,51 @@
                 };
             }
         }
+
+        // ==================== 模态框管理 ====================
+        const modal = document.getElementById('downloadModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const modalClose = document.getElementById('modalClose');
+
+        function showDownloadOptions(platform, options) {
+            if (!options || Object.keys(options).length === 0) {
+                alert(currentMessages?.no_download_options || '该平台暂无可用下载链接，请联系管理员。');
+                return;
+            }
+            const platformNames = {
+                windows: currentMessages?.windows_button || 'Windows',
+                android: currentMessages?.android_button || 'Android'
+            };
+            modalTitle.textContent = `${platformNames[platform]} - ${currentMessages?.select_download_method || '选择下载方式'}`;
+            modalBody.innerHTML = '';
+            for (const [source, data] of Object.entries(options)) {
+                const description = data.description || (currentMessages?.[`source_${source}`] || source);
+                const url = data.url;
+                if (!url) continue;
+                const btnText = currentMessages?.[`download_from_${source}`] || source;
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'download-option';
+                optionDiv.innerHTML = `
+                    <div class="option-description">${description}</div>
+                    <a href="${url}" class="option-btn" target="_blank" rel="noopener">${btnText} →</a>
+                `;
+                modalBody.appendChild(optionDiv);
+            }
+            if (modalBody.children.length === 0) {
+                modalBody.innerHTML = `<div style="text-align:center; color:#b52b2b;">${currentMessages?.no_valid_download_source || '没有有效的下载链接'}</div>`;
+            }
+            modal.style.display = 'flex';
+        }
+
+        modalClose.onclick = () => {
+            modal.style.display = 'none';
+        };
+        window.onclick = (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
 
         // ==================== 原有功能 ====================
         const CONFIG = {
@@ -535,6 +694,8 @@
         const logoImg = document.getElementById('logoImg');
         const windowsIcon = document.getElementById('windowsIcon');
         const androidIcon = document.getElementById('androidIcon');
+
+        let currentVersionInfo = null; // 存储最新版本信息
 
         function loadImageConfig() {
             fetch(CONFIG.IMAGE_CONFIG_PATH, { cache: 'no-cache' })
@@ -583,43 +744,28 @@
                         versionLogEl.classList.remove('loading-skeleton');
                     }
 
-                    const windowsUrl = versionInfo.download?.windows?.github || null;
-                    const androidUrl = versionInfo.download?.android?.github || null;
+                    currentVersionInfo = versionInfo; // 保存以便下载时使用
 
+                    // 绑定下载按钮点击事件（弹窗选择）
                     if (windowsLink) {
-                        if (windowsUrl) {
-                            windowsLink.href = windowsUrl;
-                            windowsLink.removeAttribute('download');
-                            windowsLink.target = '_blank';
-                            windowsLink.rel = 'noopener';
-                        } else {
-                            windowsLink.href = '#';
-                            windowsLink.onclick = (e) => {
-                                e.preventDefault();
-                                alert(currentMessages?.alert_windows_missing || 'Windows 版下载链接未配置，请联系管理员。');
-                            };
-                        }
+                        windowsLink.onclick = (e) => {
+                            e.preventDefault();
+                            const options = currentVersionInfo.download?.windows;
+                            showDownloadOptions('windows', options);
+                        };
                     }
-
                     if (androidLink) {
-                        if (androidUrl) {
-                            androidLink.href = androidUrl;
-                            androidLink.removeAttribute('download');
-                            androidLink.target = '_blank';
-                            androidLink.rel = 'noopener';
-                        } else {
-                            androidLink.href = '#';
-                            androidLink.onclick = (e) => {
-                                e.preventDefault();
-                                alert(currentMessages?.alert_android_missing || 'Android 版下载链接未配置，请联系管理员。');
-                            };
-                        }
+                        androidLink.onclick = (e) => {
+                            e.preventDefault();
+                            const options = currentVersionInfo.download?.android;
+                            showDownloadOptions('android', options);
+                        };
                     }
                 })
                 .catch(error => showError(error.message));
         }
 
-        // 启动流程：先加载语言，再加载图片和版本数据
+        // 启动流程
         const userLang = getBrowserLang();
         loadMessages(userLang).then(messages => {
             applyI18n(messages);
@@ -628,7 +774,6 @@
             fetchVersionAndUpdate();
         }).catch(err => {
             console.error('i18n 初始化失败', err);
-            // 继续加载其他内容（使用硬编码中文）
             loadImageConfig();
             fetchVersionAndUpdate();
         });

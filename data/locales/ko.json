@@ -29,5 +29,12 @@
   "next_page": "다음 →",
   "page_info": "{current} / {total} 페이지",
   "error_load_failed": "로딩 실패: ",
-  "no_versions": "버전 정보 없음"
+  "no_versions": "버전 정보 없음",
+  "select_download_method": "다운로드 방법 선택",
+  "no_download_options": "이 플랫폼에 사용 가능한 다운로드 링크가 없습니다. 관리자에게 문의하세요.",
+  "no_valid_download_source": "유효한 다운로드 소스가 없음",
+  "download_from_github": "GitHub에서 다운로드",
+  "download_from_lanzouyun": "Lanzouyun에서 다운로드",
+  "source_github": "GitHub 저장소",
+  "source_lanzouyun": "Lanzouyun 스토리지"
 }

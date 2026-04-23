@@ -11,11 +11,29 @@
 			{
 				"android":
 				{
-					"github":"https://github.com/BrainLeech198/hujiugame-qingfeng/releases/download/v0.0.0-beta/qing-feng_setup_android_v0.0.0-beta.apk"
+					"github":
+					{
+						"description":"通过GitHub仓库存储，方便快捷开源",
+						"url":"https://github.com/BrainLeech198/hujiugame-qingfeng/releases/download/v0.0.0-beta/qing-feng_setup_android_v0.0.0-beta.apk"
+					},
+					"lanzouyun":
+					{
+						"description":"通过蓝奏云平台存储，大陆用户方便下载，密码1698",
+						"url":"https://brainleech198.lanzn.com/i68Op3nwnone"
+					}
 				},
 				"windows":
 				{
-					"github":"https://github.com/BrainLeech198/hujiugame-qingfeng/releases/download/v0.0.0-beta/qing-feng_setup_windows_v0.0.0-beta.exe"
+					"github":
+					{
+						"description":"通过GitHub仓库存储，方便快捷开源",
+						"url":"https://github.com/BrainLeech198/hujiugame-qingfeng/releases/download/v0.0.0-beta/qing-feng_setup_windows_v0.0.0-beta.exe"
+					},
+					"lanzouyun":
+					{
+						"description":"通过蓝奏云平台存储，大陆用户方便下载，密码1698",
+						"url":"https://brainleech198.lanzn.com/inToC3nwoehe"
+					}
 				}
 			}
 		}

@@ -29,5 +29,12 @@
   "next_page": "下一頁 →",
   "page_info": "第 {current} / {total} 頁",
   "error_load_failed": "載入失敗：",
-  "no_versions": "暫無版本資訊"
+  "no_versions": "暫無版本資訊",
+  "select_download_method": "選擇下載方式",
+  "no_download_options": "該平台暫無可用下載連結，請聯絡管理員。",
+  "no_valid_download_source": "沒有有效的下載連結",
+  "download_from_github": "GitHub 下載",
+  "download_from_lanzouyun": "藍奏雲下載",
+  "source_github": "GitHub 存儲",
+  "source_lanzouyun": "藍奏雲存儲"
 }

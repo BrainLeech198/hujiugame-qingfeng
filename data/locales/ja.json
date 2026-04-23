@@ -29,5 +29,12 @@
   "next_page": "次へ →",
   "page_info": "{current} / {total} ページ",
   "error_load_failed": "読み込み失敗：",
-  "no_versions": "バージョン情報はありません"
+  "no_versions": "バージョン情報はありません",
+  "select_download_method": "ダウンロード方法を選択",
+  "no_download_options": "このプラットフォームには利用可能なダウンロードリンクがありません。管理者にお問い合わせください。",
+  "no_valid_download_source": "有効なダウンロードソースがありません",
+  "download_from_github": "GitHubからダウンロード",
+  "download_from_lanzouyun": "Lanzouyunからダウンロード",
+  "source_github": "GitHubリポジトリ",
+  "source_lanzouyun": "Lanzouyunストレージ"
 }

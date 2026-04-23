@@ -29,5 +29,12 @@
   "next_page": "下一页",
   "page_info": "第 {current} / {total} 页",
   "error_load_failed": "加载失败：",
-  "no_versions": "暂无版本信息"
+  "no_versions": "暂无版本信息",
+  "select_download_method": "选择下载方式",
+  "no_download_options": "该平台暂无可用下载链接，请联系管理员。",
+  "no_valid_download_source": "没有有效的下载链接",
+  "download_from_github": "GitHub 下载",
+  "download_from_lanzouyun": "蓝奏云下载",
+  "source_github": "GitHub 存储",
+  "source_lanzouyun": "蓝奏云存储"
 }

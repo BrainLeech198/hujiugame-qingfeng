@@ -29,5 +29,12 @@
   "next_page": "Вперед →",
   "page_info": "Страница {current} из {total}",
   "error_load_failed": "Ошибка загрузки: ",
-  "no_versions": "Нет информации о версиях"
+  "no_versions": "Нет информации о версиях",
+  "select_download_method": "Выберите способ загрузки",
+  "no_download_options": "Нет доступных ссылок для загрузки для этой платформы. Пожалуйста, свяжитесь с администратором.",
+  "no_valid_download_source": "Нет действительного источника загрузки",
+  "download_from_github": "Скачать с GitHub",
+  "download_from_lanzouyun": "Скачать с Lanzouyun",
+  "source_github": "Репозиторий GitHub",
+  "source_lanzouyun": "Хранилище Lanzouyun"
 }
