@@ -36,5 +36,11 @@
   "download_from_github": "Von GitHub herunterladen",
   "download_from_lanzouyun": "Von Lanzouyun herunterladen",
   "source_github": "GitHub-Repository",
-  "source_lanzouyun": "Lanzouyun-Speicher"
+  "source_lanzouyun": "Lanzouyun-Speicher",
+  "community_page_title": "Community",
+  "suggestions_title": "Funktionsvorschläge & Verbesserungen – Lasst uns gemeinsam bauen!",
+  "suggestions_description": "Wir schätzen jedes Feedback. Teilen Sie hier gerne Ihre Funktionsvorschläge, Verbesserungsideen oder Kreationen. Bitte bleiben Sie respektvoll und freundlich.",
+  "suggestions_button": "Zu den Diskussionen →",
+  "loading_community": "Lade Community-Informationen...",
+  "no_discussion_link": "Diskussionslink nicht gefunden"
 }

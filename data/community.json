@@ -1,6 +1,11 @@
 {
 	"discussions":
 	{
-		"suggestions":"https://github.com/BrainLeech198/hujiugame-qingfeng/discussions/1"
+		"suggestions":
+		{
+			"github":"https://github.com/BrainLeech198/hujiugame-qingfeng/discussions/1",
+			"gitee":"https://gitee.com/mr_lai-13615002926/hujiugame-qingfeng/issues/IJDZY4",
+			"txc":"https://txc.qq.com/products/800195"
+		}
 	}
 }

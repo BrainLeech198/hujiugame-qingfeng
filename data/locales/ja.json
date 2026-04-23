@@ -36,5 +36,11 @@
   "download_from_github": "GitHubからダウンロード",
   "download_from_lanzouyun": "Lanzouyunからダウンロード",
   "source_github": "GitHubリポジトリ",
-  "source_lanzouyun": "Lanzouyunストレージ"
+  "source_lanzouyun": "Lanzouyunストレージ",
+  "community_page_title": "コミュニティ共有",
+  "suggestions_title": "機能提案と改善 – 一緒に作りましょう！",
+  "suggestions_description": "すべてのフィードバックを大切にします。機能提案、改善アイデア、作品をここで共有してください。礼儀正しく、友好的なコミュニケーションをお願いします。",
+  "suggestions_button": "ディスカッションへ →",
+  "loading_community": "コミュニティ情報を読み込み中...",
+  "no_discussion_link": "ディスカッションリンクが見つかりません"
 }

@@ -36,5 +36,11 @@
   "download_from_github": "GitHub 下载",
   "download_from_lanzouyun": "蓝奏云下载",
   "source_github": "GitHub 存储",
-  "source_lanzouyun": "蓝奏云存储"
+  "source_lanzouyun": "蓝奏云存储",
+  "community_page_title": "社区分享",
+  "suggestions_title": "功能建议与改进 – 让我们一起构建！",
+  "suggestions_description": "我们非常重视每一位用户的反馈。欢迎您在这里提出功能建议、改进意见或分享您的创作。请保持文明、友善的交流。",
+  "suggestions_button": "前往讨论区 →",
+  "loading_community": "加载社区信息中...",
+  "no_discussion_link": "未找到讨论区链接"
 }

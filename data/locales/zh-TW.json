@@ -36,5 +36,11 @@
   "download_from_github": "GitHub 下載",
   "download_from_lanzouyun": "藍奏雲下載",
   "source_github": "GitHub 存儲",
-  "source_lanzouyun": "藍奏雲存儲"
+  "source_lanzouyun": "藍奏雲存儲",
+  "community_page_title": "社群分享",
+  "suggestions_title": "功能建議與改進 – 讓我們一起構建！",
+  "suggestions_description": "我們非常重視每一位用戶的反饋。歡迎您在這裡提出功能建議、改進意見或分享您的創作。請保持文明、友善的交流。",
+  "suggestions_button": "前往討論區 →",
+  "loading_community": "載入社群資訊中...",
+  "no_discussion_link": "未找到討論區連結"
 }

@@ -36,5 +36,11 @@
   "download_from_github": "Скачать с GitHub",
   "download_from_lanzouyun": "Скачать с Lanzouyun",
   "source_github": "Репозиторий GitHub",
-  "source_lanzouyun": "Хранилище Lanzouyun"
+  "source_lanzouyun": "Хранилище Lanzouyun",
+  "community_page_title": "Общий доступ сообщества",
+  "suggestions_title": "Предложения функций и улучшений – Давайте строить вместе!",
+  "suggestions_description": "Мы ценим каждый отзыв. Делитесь здесь своими предложениями, идеями улучшений или творческими работами. Пожалуйста, соблюдайте вежливость и дружелюбие.",
+  "suggestions_button": "Перейти к обсуждениям →",
+  "loading_community": "Загрузка информации сообщества...",
+  "no_discussion_link": "Ссылка на обсуждение не найдена"
 }
