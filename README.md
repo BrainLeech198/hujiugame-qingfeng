@@ -30,8 +30,8 @@ All historical versions can be found and downloaded directly from the "Historica
 - This repository does not contain source code; it is used only for storing GitHub Releases files.
 - If download speeds are slow, you may try the acceleration tools recommended on the official website.
 - For any questions or suggestions, please provide feedback through the official website community or GitHub Issues.
+- For source code, please visit: xxx.xxx
 
 ---
 
 QingFeng Launcher
-```
