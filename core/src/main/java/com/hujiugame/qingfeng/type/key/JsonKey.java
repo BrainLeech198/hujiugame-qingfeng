@@ -62,7 +62,7 @@ public final class JsonKey
             throw new UnsupportedOperationException("Utility class cannot be instantiated");
         }
 
-        public static final String FONT_NAME = "fontName";
+        public static final String FONT_NAME = "font_name";
         public static final String FONT_SIZE = "font_size";
         public static final String FONT_COLOR = "font_color";
         public static final String FONT_FLAG = "font_flag";
@@ -76,8 +76,8 @@ public final class JsonKey
                 throw new UnsupportedOperationException("Utility class cannot be instantiated");
             }
 
-            public static final String PAD_X = "padX";
-            public static final String PAD_Y = "padY";
+            public static final String PAD_X = "pad_x";
+            public static final String PAD_Y = "pad_y";
             public static final String PAD = "pad";
         }
     }

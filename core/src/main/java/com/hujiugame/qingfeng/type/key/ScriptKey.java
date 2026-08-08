@@ -47,7 +47,7 @@ public final class ScriptKey
             }
 
             /** 形参名 */
-            public static final String ARGUMENT_NAME = "argumentName";
+            public static final String ARGUMENT_NAME = "argument_name";
             /** 传递方式（CONST/VARIABLE/SCOPE_VARIABLE/GAME_VARIABLE） */
             public static final String TYPE = "type";
             /** 常量值 */
@@ -70,7 +70,7 @@ public final class ScriptKey
         /** 返回值类型 */
         public static final String CLASS = "class";
         /** 默认值 */
-        public static final String DEFAULT_VALUE = "defaultValue";
+        public static final String DEFAULT_VALUE = "default_value";
     }
 
     // ====================================================================================================
@@ -181,9 +181,9 @@ public final class ScriptKey
                 /** 条件表达式 */
                 public static final String CONDITION = "condition";
                 /** If 的条件成立分支 */
-                public static final String THEN_COMMANDS = "thenCommands";
+                public static final String THEN_COMMANDS = "then_commands";
                 /** If 的条件不成立分支 */
-                public static final String ELSE_COMMANDS = "elseCommands";
+                public static final String ELSE_COMMANDS = "else_commands";
                 /** Wait 的等待时间 */
                 public static final String TIME = "time";
                 /** Call 的脚本名称 */

@@ -111,7 +111,7 @@ public final class UiKey
         public static final String FONT_COLOR = "font_color";
 
         /** 标签背景颜色 */
-        public static final String BACKGROUND_COLOR = "backgroundColor";
+        public static final String BACKGROUND_COLOR = "background_color";
 
         /** 标签边框缩放 */
         public static final String BORDER_SCALE = "border_scale";
