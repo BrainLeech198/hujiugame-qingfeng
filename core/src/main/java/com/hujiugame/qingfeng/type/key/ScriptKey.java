@@ -193,142 +193,6 @@ public final class ScriptKey
         public static final String PARAM = "param";
 
         // ====================================================================================================
-        // 指令 type 字段值（ScriptCommand / ValueCommand 共用信封 type/action/param）
-
-        public static final class Type
-        {
-            private Type()
-            {
-                throw new UnsupportedOperationException("Utility class cannot be instantiated");
-            }
-
-            // ================================================================
-            // 指令大类（ScriptCommandType）
-
-            /** 控制流指令 */
-            public static final String CONTROL = "control";
-            /** 变量指令 */
-            public static final String VARIABLE = "variable";
-            /** 故事指令 */
-            public static final String STORY = "story";
-
-            // ================================================================
-            // 值指令大类（ValueCommandType）
-
-            /** 数学运算 */
-            public static final String MATH = "math";
-            /** 比较运算 */
-            public static final String COMPARE = "compare";
-            /** 标准逻辑运算 */
-            public static final String LOGIC = "logic";
-            /** 原子值 */
-            public static final String ATOMIC = "atomic";
-        }
-
-        // ====================================================================================================
-        // 指令 action 字段值（ScriptCommand / ValueCommand 共用信封 type/action/param）
-
-        public static final class Action
-        {
-            private Action()
-            {
-                throw new UnsupportedOperationException("Utility class cannot be instantiated");
-            }
-
-            // ================================================================
-            // 控制流指令（ScriptCommandAction）
-
-            /** 条件分支 */
-            public static final String IF = "if";
-            /** 循环 */
-            public static final String WHILE = "while";
-            /** 跳出循环 */
-            public static final String BREAK = "break";
-            /** 跳过本次循环 */
-            public static final String CONTINUE = "continue";
-            /** 返回 */
-            public static final String RETURN = "return";
-            /** 等待 */
-            public static final String WAIT = "wait";
-            /** 调用脚本 */
-            public static final String CALL = "call";
-
-            // ================================================================
-            // 变量指令（ScriptCommandAction）
-
-            /** 创建变量 */
-            public static final String CREATE = "create";
-            /** 变量赋值 */
-            public static final String ASSIGNMENT = "assignment";
-
-            // ================================================================
-            // 故事指令（ScriptCommandAction）
-
-            /** 前进一页 */
-            public static final String FORWARD_PAGE = "forward_page";
-            /** 跳转到指定页 */
-            public static final String GOTO_PAGE = "goto_page";
-
-            // ================================================================
-            // 数学运算（ValueCommandAction）
-
-            /** 加法 */
-            public static final String ADD = "add";
-            /** 减法 */
-            public static final String SUB = "sub";
-            /** 乘法 */
-            public static final String MUL = "mul";
-            /** 除法 */
-            public static final String DIV = "div";
-            /** 取负 */
-            public static final String NEG = "neg";
-            /** 随机数 */
-            public static final String RANDOM = "random";
-
-            // ================================================================
-            // 比较运算（ValueCommandAction）
-
-            /** 等于 */
-            public static final String EQUAL = "equal";
-            /** 不等于 */
-            public static final String NOT_EQUAL = "not_equal";
-            /** 大于 */
-            public static final String GREATER = "greater";
-            /** 小于 */
-            public static final String LESS = "less";
-            /** 大于等于 */
-            public static final String GREATER_EQUAL = "greater_equal";
-            /** 小于等于 */
-            public static final String LESS_EQUAL = "less_equal";
-
-            // ================================================================
-            // 逻辑运算（ValueCommandAction）
-
-            /** 与 */
-            public static final String AND = "and";
-            /** 或 */
-            public static final String OR = "or";
-            /** 非 */
-            public static final String NOT = "not";
-
-            // ================================================================
-            // 原子值（ValueCommandAction）
-
-            /** 常量 */
-            public static final String CONST = "const";
-            /** 变量 */
-            public static final String VARIABLE = "variable";
-            /** 作用域变量 */
-            public static final String SCOPE_VARIABLE = "scope_variable";
-            /** 游戏变量 */
-            public static final String GAME_VARIABLE = "game_variable";
-            /** 真 */
-            public static final String TRUE = "true";
-            /** 假 */
-            public static final String FALSE = "false";
-        }
-
-        // ====================================================================================================
         // 指令参数字段（ScriptCommand / ValueCommand 的参数内部结构）
 
         public static final class Param
@@ -405,6 +269,148 @@ public final class ScriptKey
                 /** 游戏变量键名 */
                 public static final String KEY = "key";
             }
+        }
+    }
+
+    // ====================================================================================================
+    // 脚本指令体系 type/action 字段值（ScriptCommandType / ScriptCommandAction）
+
+    public static final class Script
+    {
+        private Script()
+        {
+            throw new UnsupportedOperationException("Utility class cannot be instantiated");
+        }
+
+        /** 脚本指令 type 字段值 */
+        public static final class Type
+        {
+            private Type()
+            {
+                throw new UnsupportedOperationException("Utility class cannot be instantiated");
+            }
+
+            /** 控制流指令 */
+            public static final String CONTROL = "control";
+            /** 变量指令 */
+            public static final String VARIABLE = "variable";
+            /** 故事指令 */
+            public static final String STORY = "story";
+        }
+
+        /** 脚本指令 action 字段值 */
+        public static final class Action
+        {
+            private Action()
+            {
+                throw new UnsupportedOperationException("Utility class cannot be instantiated");
+            }
+
+            /** 条件分支 */
+            public static final String IF = "if";
+            /** 循环 */
+            public static final String WHILE = "while";
+            /** 跳出循环 */
+            public static final String BREAK = "break";
+            /** 跳过本次循环 */
+            public static final String CONTINUE = "continue";
+            /** 返回 */
+            public static final String RETURN = "return";
+            /** 等待 */
+            public static final String WAIT = "wait";
+            /** 调用脚本 */
+            public static final String CALL = "call";
+            /** 创建变量 */
+            public static final String CREATE = "create";
+            /** 变量赋值 */
+            public static final String ASSIGNMENT = "assignment";
+            /** 前进一页 */
+            public static final String FORWARD_PAGE = "forward_page";
+            /** 跳转到指定页 */
+            public static final String GOTO_PAGE = "goto_page";
+        }
+    }
+
+    // ====================================================================================================
+    // 值指令体系 type/action 字段值（ValueCommandType / ValueCommandAction）
+
+    public static final class Value
+    {
+        private Value()
+        {
+            throw new UnsupportedOperationException("Utility class cannot be instantiated");
+        }
+
+        /** 值指令 type 字段值 */
+        public static final class Type
+        {
+            private Type()
+            {
+                throw new UnsupportedOperationException("Utility class cannot be instantiated");
+            }
+
+            /** 数学运算 */
+            public static final String MATH = "math";
+            /** 比较运算 */
+            public static final String COMPARE = "compare";
+            /** 标准逻辑运算 */
+            public static final String LOGIC = "logic";
+            /** 原子值 */
+            public static final String ATOMIC = "atomic";
+        }
+
+        /** 值指令 action 字段值 */
+        public static final class Action
+        {
+            private Action()
+            {
+                throw new UnsupportedOperationException("Utility class cannot be instantiated");
+            }
+
+            /** 加法 */
+            public static final String ADD = "add";
+            /** 减法 */
+            public static final String SUB = "sub";
+            /** 乘法 */
+            public static final String MUL = "mul";
+            /** 除法 */
+            public static final String DIV = "div";
+            /** 取负 */
+            public static final String NEG = "neg";
+            /** 随机数 */
+            public static final String RANDOM = "random";
+            /** 等于 */
+            public static final String EQUAL = "equal";
+            /** 不等于 */
+            public static final String NOT_EQUAL = "not_equal";
+            /** 大于 */
+            public static final String GREATER = "greater";
+            /** 小于 */
+            public static final String LESS = "less";
+            /** 大于等于 */
+            public static final String GREATER_EQUAL = "greater_equal";
+            /** 小于等于 */
+            public static final String LESS_EQUAL = "less_equal";
+            /** 与 */
+            public static final String AND = "and";
+            /** 或 */
+            public static final String OR = "or";
+            /** 非 */
+            public static final String NOT = "not";
+            /** 常量 */
+            public static final String CONST = "const";
+            /** 变量 */
+            public static final String VARIABLE = "variable";
+            /** 作用域变量 */
+            public static final String SCOPE_VARIABLE = "scope_variable";
+            /** 游戏变量 */
+            public static final String GAME_VARIABLE = "game_variable";
+            /** 真 */
+            public static final String TRUE = "true";
+            /** 假 */
+            public static final String FALSE = "false";
+            /** 调用脚本 */
+            public static final String CALL = "call";
         }
     }
 

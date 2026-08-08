@@ -18,6 +18,15 @@
 > 7. 【如果】本次更新比较重要、与项目关键设计相关 → 同步写入 `temp/CLAUDE_MEMORY.md`（gitignored 本地工作记忆，仅当前开发机可见），便于后续 AI 对话延续上下文
 > 8. 【必须】CHANGELOG 条目不独立提交：每个内容改动 = 一笔提交，同时包含对应改动的文件 + 本文档中该改动对应的条目。先改文件并写对应条目 → 一并提交 → 再改下一个文件、写下一条目；按内容逐条拆分提交，禁止攒一堆 CHANGELOG 更新最后统一提交（例：文件 `a`、`b` 均有改动 → 提交 1 = `a` + 「更新了 a」条目；提交 2 = `b` + 「更新了 b」条目）
 
+## 2026-08-08 — ScriptCommand/ValueCommand type/action 常量按体系拆分
+
+### 重构
+
+- **ScriptCommand 与 ValueCommand 常量分体系** — 原 `ScriptKey.Command.Type/Action`（混含两个体系）拆分为 `ScriptKey.Script.Type/Action`（ScriptCommandType/ScriptCommandAction）与 `ScriptKey.Value.Type/Action`（ValueCommandType/ValueCommandAction），与 `ScriptKey.Trigger.Type/Action` 三体系并列；`ScriptKey.Command` 仅保留信封字段（`type`/`action`/`param`）与参数结构
+- **枚举与解析器引用同步迁移** — `ScriptCommandType`/`ScriptCommandAction`/`ValueCommandType`/`ValueCommandAction` 及 `ScriptCommandParser`（14 处 switch case）的引用改为对应体系常量
+
+---
+
 ## 2026-08-08 — 脚本 Type/Action 字符串常量规约进 ScriptKey
 
 ### 重构

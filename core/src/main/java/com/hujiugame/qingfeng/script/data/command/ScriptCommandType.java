@@ -9,9 +9,9 @@ import com.hujiugame.qingfeng.type.key.ScriptKey;
  */
 public enum ScriptCommandType
 {
-    CONTROL(ScriptKey.Command.Type.CONTROL),
-    VARIABLE(ScriptKey.Command.Type.VARIABLE),
-    STORY(ScriptKey.Command.Type.STORY);
+    CONTROL(ScriptKey.Script.Type.CONTROL),
+    VARIABLE(ScriptKey.Script.Type.VARIABLE),
+    STORY(ScriptKey.Script.Type.STORY);
 
     private final String displayString;
 

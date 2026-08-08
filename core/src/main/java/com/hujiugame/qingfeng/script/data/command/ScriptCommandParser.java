@@ -137,13 +137,13 @@ public class ScriptCommandParser
     {
         switch (type)
         {
-            case ScriptKey.Command.Type.CONTROL:
+            case ScriptKey.Script.Type.CONTROL:
                 return parseControlScriptCommand(action, paramJson);
 
-            case ScriptKey.Command.Type.VARIABLE:
+            case ScriptKey.Script.Type.VARIABLE:
                 return parseVariableScriptCommand(action, paramJson);
 
-            case ScriptKey.Command.Type.STORY:
+            case ScriptKey.Script.Type.STORY:
                 return parseStoryScriptCommand(action, paramJson);
 
             default:
@@ -156,25 +156,25 @@ public class ScriptCommandParser
     {
         switch (action)
         {
-            case ScriptKey.Command.Action.IF:
+            case ScriptKey.Script.Action.IF:
                 return new ControlScriptCommand(ScriptCommandAction.IF, new IfControlScriptCommandParam(paramJson));
 
-            case ScriptKey.Command.Action.WHILE:
+            case ScriptKey.Script.Action.WHILE:
                 return new ControlScriptCommand(ScriptCommandAction.WHILE, new WhileControlScriptCommandParam(paramJson));
 
-            case ScriptKey.Command.Action.BREAK:
+            case ScriptKey.Script.Action.BREAK:
                 return new ControlScriptCommand(ScriptCommandAction.BREAK, new BreakControlScriptCommandParam());
 
-            case ScriptKey.Command.Action.CONTINUE:
+            case ScriptKey.Script.Action.CONTINUE:
                 return new ControlScriptCommand(ScriptCommandAction.CONTINUE, new ContinueControlScriptCommandParam());
 
-            case ScriptKey.Command.Action.RETURN:
+            case ScriptKey.Script.Action.RETURN:
                 return new ControlScriptCommand(ScriptCommandAction.RETURN, new ReturnControlScriptCommandParam(paramJson));
 
-            case ScriptKey.Command.Action.WAIT:
+            case ScriptKey.Script.Action.WAIT:
                 return new ControlScriptCommand(ScriptCommandAction.WAIT, new WaitControlScriptCommandParam(paramJson));
 
-            case ScriptKey.Command.Action.CALL:
+            case ScriptKey.Script.Action.CALL:
                 return new ControlScriptCommand(ScriptCommandAction.CALL, new CallControlScriptCommandParam(paramJson));
 
             default:
@@ -187,10 +187,10 @@ public class ScriptCommandParser
     {
         switch (action)
         {
-            case ScriptKey.Command.Action.CREATE:
+            case ScriptKey.Script.Action.CREATE:
                 return new VariableScriptCommand(ScriptCommandAction.CREATE, new CreateVariableScriptCommandParam(paramJson));
 
-            case ScriptKey.Command.Action.ASSIGNMENT:
+            case ScriptKey.Script.Action.ASSIGNMENT:
                 return new VariableScriptCommand(ScriptCommandAction.ASSIGNMENT, new AssignmentVariableScriptCommandParam(paramJson));
 
             default:
@@ -203,10 +203,10 @@ public class ScriptCommandParser
     {
         switch (action)
         {
-            case ScriptKey.Command.Action.FORWARD_PAGE:
+            case ScriptKey.Script.Action.FORWARD_PAGE:
                 return new StoryScriptCommand(ScriptCommandAction.FORWARD_PAGE, new ForwardPageStoryScriptCommandParam(paramJson));
 
-            case ScriptKey.Command.Action.GOTO_PAGE:
+            case ScriptKey.Script.Action.GOTO_PAGE:
                 return new StoryScriptCommand(ScriptCommandAction.GOTO_PAGE, new GotoPageStoryScriptCommandParam(paramJson));
 
             default:

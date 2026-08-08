@@ -9,10 +9,10 @@ import com.hujiugame.qingfeng.type.key.ScriptKey;
  */
 public enum ValueCommandType
 {
-    MATH(ScriptKey.Command.Type.MATH),
-    COMPARE(ScriptKey.Command.Type.COMPARE),
-    LOGIC(ScriptKey.Command.Type.LOGIC),
-    ATOMIC(ScriptKey.Command.Type.ATOMIC);
+    MATH(ScriptKey.Value.Type.MATH),
+    COMPARE(ScriptKey.Value.Type.COMPARE),
+    LOGIC(ScriptKey.Value.Type.LOGIC),
+    ATOMIC(ScriptKey.Value.Type.ATOMIC);
 
     private final String displayString;
 

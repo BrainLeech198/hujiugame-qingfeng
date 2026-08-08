@@ -13,23 +13,23 @@ public enum ScriptCommandAction
 {
     // ===== control =====
 
-    IF(ScriptCommandType.CONTROL, ScriptKey.Command.Action.IF),
-    WHILE(ScriptCommandType.CONTROL, ScriptKey.Command.Action.WHILE),
-    BREAK(ScriptCommandType.CONTROL, ScriptKey.Command.Action.BREAK),
-    CONTINUE(ScriptCommandType.CONTROL, ScriptKey.Command.Action.CONTINUE),
-    RETURN(ScriptCommandType.CONTROL, ScriptKey.Command.Action.RETURN),
-    WAIT(ScriptCommandType.CONTROL, ScriptKey.Command.Action.WAIT),
-    CALL(ScriptCommandType.CONTROL, ScriptKey.Command.Action.CALL),
+    IF(ScriptCommandType.CONTROL, ScriptKey.Script.Action.IF),
+    WHILE(ScriptCommandType.CONTROL, ScriptKey.Script.Action.WHILE),
+    BREAK(ScriptCommandType.CONTROL, ScriptKey.Script.Action.BREAK),
+    CONTINUE(ScriptCommandType.CONTROL, ScriptKey.Script.Action.CONTINUE),
+    RETURN(ScriptCommandType.CONTROL, ScriptKey.Script.Action.RETURN),
+    WAIT(ScriptCommandType.CONTROL, ScriptKey.Script.Action.WAIT),
+    CALL(ScriptCommandType.CONTROL, ScriptKey.Script.Action.CALL),
 
     // ===== variable =====
 
-    CREATE(ScriptCommandType.VARIABLE, ScriptKey.Command.Action.CREATE),
-    ASSIGNMENT(ScriptCommandType.VARIABLE, ScriptKey.Command.Action.ASSIGNMENT),
+    CREATE(ScriptCommandType.VARIABLE, ScriptKey.Script.Action.CREATE),
+    ASSIGNMENT(ScriptCommandType.VARIABLE, ScriptKey.Script.Action.ASSIGNMENT),
 
     // ===== story =====
 
-    FORWARD_PAGE(ScriptCommandType.STORY, ScriptKey.Command.Action.FORWARD_PAGE),
-    GOTO_PAGE(ScriptCommandType.STORY, ScriptKey.Command.Action.GOTO_PAGE);
+    FORWARD_PAGE(ScriptCommandType.STORY, ScriptKey.Script.Action.FORWARD_PAGE),
+    GOTO_PAGE(ScriptCommandType.STORY, ScriptKey.Script.Action.GOTO_PAGE);
 
     // ===== 字段 =====
 
