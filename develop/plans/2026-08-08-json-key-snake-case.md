@@ -15,9 +15,9 @@
   - 对象 tag（如 `select_lastRole`、`language`、`back`）是内容标识，**不迁移**
   - 兼容性：直接替换、无兼容层
 
-## 迁移键清单（24 个）
+## 迁移键清单（29 个）
 
-### 程序消费键（21 个）
+### 程序消费键（26 个）
 
 | 常量类 | 当前键 | 迁移后 | 出处文件（仓库内） |
 |--------|--------|--------|---------------------|
@@ -29,6 +29,8 @@
 | `JsonKey` | `fontColor` | `font_color` | 各 `layout.json`、`theme.json`、`ui/button|label/*.json`、`message_box.json` |
 | `JsonKey` | `fontFlag` | `font_flag` | 各 `layout.json`、`message_box.json` |
 | `JsonKey` | `fontArgs` | `font_args` | `message_box.json` |
+| `JsonKey` | `fontName` | `font_name` | 无静态数据（预留键） |
+| `JsonKey` | `padX`/`padY`（font_args 子字段） | `pad_x`/`pad_y` | `message_box.json`（`pad` 单字母不变） |
 | `ThemeKey` | `fontUseSize` | `font_use_size` | `theme.json` |
 | `ThemeKey` | `primaryColor` | `primary_color` | `theme.json` |
 | `ThemeKey` | `secondaryColor` | `secondary_color` | `theme.json` |
@@ -42,6 +44,11 @@
 | `UiKey` | `borderScale` | `border_scale` | 外部 `button.json`/`label.json` |
 | `RequirementKey` | `priorityConfirmUi` | `priority_confirm_ui` | 各 `config.json` |
 | `RequirementKey` | `pageMaxGame` | `page_max_game` | `menu_list/config.json` |
+| `ScriptKey` | `argumentName` | `argument_name` | 脚本指令 JSON（预留键） |
+| `ScriptKey` | `defaultValue` | `default_value` | 脚本指令 JSON（预留键） |
+| `ScriptKey` | `thenCommands` | `then_commands` | 脚本指令 JSON（预留键） |
+| `ScriptKey` | `elseCommands` | `else_commands` | 脚本指令 JSON（预留键） |
+| `UiKey` | `backgroundColor` | `background_color` | Label kind 样式（预留键） |
 
 ### 场景动画键（3 个）
 
