@@ -833,12 +833,8 @@ public class NoopParam implements ScriptCommandParam
 ```java
 public enum XxxType
 {
-    FOO("foo"),
-    BAR("bar");
-
-    // 字符串常量（给 Parser switch 用）
-    public static final String FOO_STRING = "foo";
-    public static final String BAR_STRING = "bar";
+    FOO(ScriptKey.Xxx.Type.FOO),
+    BAR(ScriptKey.Xxx.Type.BAR);
 
     private final String displayString;
 
@@ -867,7 +863,7 @@ public enum XxxType
 ```
 
 规则：
-- `XXX_STRING` 常量为 `public static final String`，首字母大写全称
+- 枚举的 `displayString` 从 `ScriptKey` 常量引用（如 `ScriptKey.Xxx.Type.FOO`），字符串值唯一来源，不在枚举内重复定义
 - `getDisplayString()` 给 JSON 序列化用
 - `fromString()` 给反序列化用，返回 `null` 而非抛异常
 
@@ -918,7 +914,7 @@ private static XxxCommand dispatchXxxCommandJson (String type, String action, Js
 {
     switch (type)
     {
-        case XxxType.FOO_STRING:
+        case ScriptKey.Xxx.Type.FOO:
             return parseFooCommand(action, paramJson);
         default:
             LogUtils.error(...);
@@ -930,7 +926,7 @@ private static XxxCommand parseFooCommand (String action, JsonEntity paramJson)
 {
     switch (action)
     {
-        case ActionEnum.BAZ_STRING:
+        case ScriptKey.Xxx.Action.BAZ:
             return new FooCommand(ActionEnum.BAZ, new BazParam(paramJson));
         default:
             LogUtils.error(...);
@@ -941,7 +937,7 @@ private static XxxCommand parseFooCommand (String action, JsonEntity paramJson)
 
 规则：
 - 解析器**仅含静态方法**，无状态
-- switch 使用 `XXX_STRING` 常量，非硬编码字符串
+- switch 使用 `ScriptKey` 常量（`ScriptKey.Xxx.Type` / `ScriptKey.Xxx.Action`），非硬编码字符串
 - 失败返回 `null`，由调用方处理
 - `parseList(JsonEntity)` 可选，用于解析 JSON 数组
 

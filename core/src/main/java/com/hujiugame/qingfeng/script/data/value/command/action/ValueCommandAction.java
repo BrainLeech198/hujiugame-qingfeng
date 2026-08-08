@@ -1,38 +1,39 @@
 package com.hujiugame.qingfeng.script.data.value.command.action;
 
 import com.hujiugame.qingfeng.script.data.value.command.ValueCommandType;
+import com.hujiugame.qingfeng.type.key.ScriptKey;
 
 public enum ValueCommandAction
 {
     // 数学运算指令 MathValueCommand
-    ADD(ValueCommandType.MATH, "add"),
-    SUB(ValueCommandType.MATH, "sub"),
-    MUL(ValueCommandType.MATH, "mul"),
-    DIV(ValueCommandType.MATH, "div"),
-    NEG(ValueCommandType.MATH, "neg"),
-    RANDOM(ValueCommandType.MATH, "random"),
+    ADD(ValueCommandType.MATH, ScriptKey.Command.Action.ADD),
+    SUB(ValueCommandType.MATH, ScriptKey.Command.Action.SUB),
+    MUL(ValueCommandType.MATH, ScriptKey.Command.Action.MUL),
+    DIV(ValueCommandType.MATH, ScriptKey.Command.Action.DIV),
+    NEG(ValueCommandType.MATH, ScriptKey.Command.Action.NEG),
+    RANDOM(ValueCommandType.MATH, ScriptKey.Command.Action.RANDOM),
 
     // 比较运算指令 CompareValueCommand
-    EQUAL(ValueCommandType.COMPARE, "equal"),
-    NOT_EQUAL(ValueCommandType.COMPARE, "not_equal"),
-    GREATER(ValueCommandType.COMPARE, "greater"),
-    LESS(ValueCommandType.COMPARE, "less"),
-    GREATER_EQUAL(ValueCommandType.COMPARE, "greater_equal"),
-    LESS_EQUAL(ValueCommandType.COMPARE, "less_equal"),
+    EQUAL(ValueCommandType.COMPARE, ScriptKey.Command.Action.EQUAL),
+    NOT_EQUAL(ValueCommandType.COMPARE, ScriptKey.Command.Action.NOT_EQUAL),
+    GREATER(ValueCommandType.COMPARE, ScriptKey.Command.Action.GREATER),
+    LESS(ValueCommandType.COMPARE, ScriptKey.Command.Action.LESS),
+    GREATER_EQUAL(ValueCommandType.COMPARE, ScriptKey.Command.Action.GREATER_EQUAL),
+    LESS_EQUAL(ValueCommandType.COMPARE, ScriptKey.Command.Action.LESS_EQUAL),
 
     // 标准逻辑运算指令 LogicValueCommand
-    AND(ValueCommandType.LOGIC, "and"),
-    OR(ValueCommandType.LOGIC, "or"),
-    NOT(ValueCommandType.LOGIC, "not"),
+    AND(ValueCommandType.LOGIC, ScriptKey.Command.Action.AND),
+    OR(ValueCommandType.LOGIC, ScriptKey.Command.Action.OR),
+    NOT(ValueCommandType.LOGIC, ScriptKey.Command.Action.NOT),
 
     // 原子值指令 AtomicValueCommand
-    CONST(ValueCommandType.ATOMIC, "const"),
-    VARIABLE(ValueCommandType.ATOMIC, "variable"),
-    SCOPE_VARIABLE(ValueCommandType.ATOMIC, "scope_variable"),
-    GAME_VARIABLE(ValueCommandType.ATOMIC, "game_variable"),
-    TRUE(ValueCommandType.ATOMIC, "true"),
-    FALSE(ValueCommandType.ATOMIC, "false"),
-    CALL(ValueCommandType.ATOMIC, "call");
+    CONST(ValueCommandType.ATOMIC, ScriptKey.Command.Action.CONST),
+    VARIABLE(ValueCommandType.ATOMIC, ScriptKey.Command.Action.VARIABLE),
+    SCOPE_VARIABLE(ValueCommandType.ATOMIC, ScriptKey.Command.Action.SCOPE_VARIABLE),
+    GAME_VARIABLE(ValueCommandType.ATOMIC, ScriptKey.Command.Action.GAME_VARIABLE),
+    TRUE(ValueCommandType.ATOMIC, ScriptKey.Command.Action.TRUE),
+    FALSE(ValueCommandType.ATOMIC, ScriptKey.Command.Action.FALSE),
+    CALL(ValueCommandType.ATOMIC, ScriptKey.Command.Action.CALL);
 
     private final ValueCommandType valueCommandType;
     private final String displayString;

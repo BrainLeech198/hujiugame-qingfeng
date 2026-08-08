@@ -1,6 +1,7 @@
 package com.hujiugame.qingfeng.script.data.command.action;
 
 import com.hujiugame.qingfeng.script.data.command.ScriptCommandType;
+import com.hujiugame.qingfeng.type.key.ScriptKey;
 
 /**
  * 具体指令枚举。
@@ -12,37 +13,23 @@ public enum ScriptCommandAction
 {
     // ===== control =====
 
-    IF(ScriptCommandType.CONTROL, "if"),
-    WHILE(ScriptCommandType.CONTROL, "while"),
-    BREAK(ScriptCommandType.CONTROL, "break"),
-    CONTINUE(ScriptCommandType.CONTROL, "continue"),
-    RETURN(ScriptCommandType.CONTROL, "return"),
-    WAIT(ScriptCommandType.CONTROL, "wait"),
-    CALL(ScriptCommandType.CONTROL, "call"),
+    IF(ScriptCommandType.CONTROL, ScriptKey.Command.Action.IF),
+    WHILE(ScriptCommandType.CONTROL, ScriptKey.Command.Action.WHILE),
+    BREAK(ScriptCommandType.CONTROL, ScriptKey.Command.Action.BREAK),
+    CONTINUE(ScriptCommandType.CONTROL, ScriptKey.Command.Action.CONTINUE),
+    RETURN(ScriptCommandType.CONTROL, ScriptKey.Command.Action.RETURN),
+    WAIT(ScriptCommandType.CONTROL, ScriptKey.Command.Action.WAIT),
+    CALL(ScriptCommandType.CONTROL, ScriptKey.Command.Action.CALL),
 
     // ===== variable =====
 
-    CREATE(ScriptCommandType.VARIABLE, "create"),
-    ASSIGNMENT(ScriptCommandType.VARIABLE, "assignment"),
+    CREATE(ScriptCommandType.VARIABLE, ScriptKey.Command.Action.CREATE),
+    ASSIGNMENT(ScriptCommandType.VARIABLE, ScriptKey.Command.Action.ASSIGNMENT),
 
     // ===== story =====
 
-    FORWARD_PAGE(ScriptCommandType.STORY, "forward_page"),
-    GOTO_PAGE(ScriptCommandType.STORY, "goto_page");
-
-    public static final String IF_STRING = "if";
-    public static final String WHILE_STRING = "while";
-    public static final String BREAK_STRING = "break";
-    public static final String CONTINUE_STRING = "continue";
-    public static final String RETURN_STRING = "return";
-    public static final String WAIT_STRING = "wait";
-    public static final String CALL_STRING = "call";
-
-    public static final String CREATE_STRING = "create";
-    public static final String ASSIGNMENT_STRING = "assignment";
-
-    public static final String FORWARD_PAGE_STRING = "forward_page";
-    public static final String GOTO_PAGE_STRING = "goto_page";
+    FORWARD_PAGE(ScriptCommandType.STORY, ScriptKey.Command.Action.FORWARD_PAGE),
+    GOTO_PAGE(ScriptCommandType.STORY, ScriptKey.Command.Action.GOTO_PAGE);
 
     // ===== 字段 =====
 

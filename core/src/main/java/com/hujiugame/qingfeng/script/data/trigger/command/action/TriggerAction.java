@@ -1,12 +1,11 @@
 package com.hujiugame.qingfeng.script.data.trigger.command.action;
 
 import com.hujiugame.qingfeng.script.data.trigger.command.TriggerType;
+import com.hujiugame.qingfeng.type.key.ScriptKey;
 
 public enum TriggerAction
 {
-    LABEL_CLICK (TriggerType.LABEL, "label_click");
-
-    public static final String LABEL_CLICK_STRING = "label_click";
+    LABEL_CLICK (TriggerType.LABEL, ScriptKey.Trigger.Action.LABEL_CLICK);
 
     // ===== 字段 =====
 

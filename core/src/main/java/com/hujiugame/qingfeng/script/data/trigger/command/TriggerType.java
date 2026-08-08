@@ -1,14 +1,12 @@
 package com.hujiugame.qingfeng.script.data.trigger.command;
 
+import com.hujiugame.qingfeng.type.key.ScriptKey;
+
 public enum TriggerType
 {
-    IMAGE("image"),
-    LABEL("label"),
-    BUTTON("button");
-
-    public static final String IMAGE_STRING = "image";
-    public static final String LABEL_STRING = "label";
-    public static final String BUTTON_STRING = "button";
+    IMAGE(ScriptKey.Trigger.Type.IMAGE),
+    LABEL(ScriptKey.Trigger.Type.LABEL),
+    BUTTON(ScriptKey.Trigger.Type.BUTTON);
 
     private final String displayString;
 

@@ -1,5 +1,7 @@
 package com.hujiugame.qingfeng.script.data.command;
 
+import com.hujiugame.qingfeng.type.key.ScriptKey;
+
 /**
  * 指令大类枚举。
  * <p>
@@ -7,13 +9,9 @@ package com.hujiugame.qingfeng.script.data.command;
  */
 public enum ScriptCommandType
 {
-    CONTROL("control"),
-    VARIABLE("variable"),
-    STORY("story");
-
-    public static final String CONTROL_STRING = "control";
-    public static final String VARIABLE_STRING = "variable";
-    public static final String STORY_STRING = "story";
+    CONTROL(ScriptKey.Command.Type.CONTROL),
+    VARIABLE(ScriptKey.Command.Type.VARIABLE),
+    STORY(ScriptKey.Command.Type.STORY);
 
     private final String displayString;
 

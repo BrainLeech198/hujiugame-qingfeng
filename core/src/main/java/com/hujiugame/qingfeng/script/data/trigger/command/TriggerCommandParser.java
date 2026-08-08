@@ -73,7 +73,7 @@ public class TriggerCommandParser
     {
         switch (type)
         {
-            case TriggerType.LABEL_STRING:
+            case ScriptKey.Trigger.Type.LABEL:
                 return parseLabelTriggerCommand(action, paramJson);
 
             default:
@@ -86,7 +86,7 @@ public class TriggerCommandParser
     {
         switch (action)
         {
-            case TriggerAction.LABEL_CLICK_STRING:
+            case ScriptKey.Trigger.Action.LABEL_CLICK:
                 return new LabelClickTrigger(TriggerAction.LABEL_CLICK, new LabelClickTriggerParam(paramJson));
 
             default:

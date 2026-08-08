@@ -1,5 +1,7 @@
 package com.hujiugame.qingfeng.script.data.value.command;
 
+import com.hujiugame.qingfeng.type.key.ScriptKey;
+
 /**
  * 指令大类枚举。
  * <p>
@@ -7,10 +9,10 @@ package com.hujiugame.qingfeng.script.data.value.command;
  */
 public enum ValueCommandType
 {
-    MATH("math"),
-    COMPARE("compare"),
-    LOGIC("logic"),
-    ATOMIC("atomic");
+    MATH(ScriptKey.Command.Type.MATH),
+    COMPARE(ScriptKey.Command.Type.COMPARE),
+    LOGIC(ScriptKey.Command.Type.LOGIC),
+    ATOMIC(ScriptKey.Command.Type.ATOMIC);
 
     private final String displayString;
 
