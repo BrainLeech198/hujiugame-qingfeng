@@ -5,5 +5,5 @@
   {
     "background" : "transparent/black32.png"
   },
-  "fontColor" : "#FFFFFFFF"
+  "font_color" : "#FFFFFFFF"
 }

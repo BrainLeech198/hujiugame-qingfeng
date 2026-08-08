@@ -1,6 +1,6 @@
 {
   "graphics" : {
-    "backgroundPicture" : "menu.background.png"
+    "background_picture" : "menu.background.png"
   },
   "ui" : {
     "label" : {
@@ -14,10 +14,10 @@
           "width" : 560,
           "height" : 100
         },
-        "textKey" : "{language$requirement.json#menu.load.label.loading}",
-        "fontSize" : 1,
-        "fontColor" : "#FFFFFFFF",
-        "fontFlag" : "center"
+        "text_key" : "{language$requirement.json#menu.load.label.loading}",
+        "font_size" : 1,
+        "font_color" : "#FFFFFFFF",
+        "font_flag" : "center"
       }
     }
   }

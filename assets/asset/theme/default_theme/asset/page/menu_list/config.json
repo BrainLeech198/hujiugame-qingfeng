@@ -1,6 +1,6 @@
 {
-  "pageMaxGame" : 8,
-  "priorityConfirmUi" : {
+  "page_max_game" : 8,
+  "priority_confirm_ui" : {
     "type" : "button",
     "tag" : "import"
   }

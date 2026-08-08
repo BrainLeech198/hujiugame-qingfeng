@@ -14,7 +14,7 @@ public final class LayoutKey
     public static final String AUDIO = "audio";
 
     /** 背景图片文件名（旧版顶层格式；已收编至 graphics 节，此常量保留用于回退兼容） */
-    public static final String BACKGROUND_PICTURE = "backgroundPicture";
+    public static final String BACKGROUND_PICTURE = "background_picture";
 
     /** 装饰图片/动图容器 */
     public static final String GRAPHICS = "graphics";
@@ -39,7 +39,7 @@ public final class LayoutKey
         }
 
         /** 背景音乐列表 */
-        public static final String BACKGROUND_MUSIC = "backgroundMusic";
+        public static final String BACKGROUND_MUSIC = "background_music";
 
         /** 音乐映射（tag → 文件名） */
         public static final String MUSIC = "music";

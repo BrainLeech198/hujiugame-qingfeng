@@ -88,7 +88,7 @@ step_copy_outputs     → 输出成品
 | 操作 | 目标文件 | 说明 |
 |------|---------|------|
 | 写入 `projectVersion` | `gradle.properties` | Gradle 编译版本，影响 JAR 文件名 |
-| 写入 `appVersion` / `appVersionString` / `appVersionType` | `assets/asset/app_version.json` | 运行时版本显示 + 更新检测 |
+| 写入 `app_version` / `app_version_string` / `app_version_type` | `assets/asset/app_version.json` | 运行时版本显示 + 更新检测 |
 | 写入 `versionCode` / `versionName` | `android/build.gradle` | Android 系统版本号 |
 | 写入 `#define MyAppVersion` | `lwjgl3/setup/inno_setup.iss` | Windows 安装包版本显示 |
 
@@ -140,9 +140,9 @@ step_copy_outputs     → 输出成品
 
 | 字段 | 类型 | 说明 | 对比用途 |
 |------|------|------|---------|
-| `appVersion` | int | 单调递增的整型编码 | 运行时更新检测的主依据 |
-| `appVersionString` | string | `major.minor.patch` 格式 | 展示给用户看 |
-| `appVersionType` | int | `0`=beta, `1`=release | 同版本号时判断 beta→release 升级 |
+| `app_version` | int | 单调递增的整型编码 | 运行时更新检测的主依据 |
+| `app_version_string` | string | `major.minor.patch` 格式 | 展示给用户看 |
+| `app_version_type` | int | `0`=beta, `1`=release | 同版本号时判断 beta→release 升级 |
 
 ### 版本存储位置
 
@@ -157,9 +157,9 @@ step_copy_outputs     → 输出成品
 
 ### 版本号使用规范
 
-- **appVersion（整型）**: 每次发布递增 1。原则上不跳跃、不回退
-- **appVersionString**: 遵循语义化版本 `major.minor.patch`。major 不兼容时递增 major，功能新增递增 minor，bug 修复递增 patch
-- **appVersionType**: beta 阶段用 `0`，正式发布用 `1`。同版本号从 beta 升级到 release 时触发更新提醒
+- **app_version（整型）**: 每次发布递增 1。原则上不跳跃、不回退
+- **app_version_string**: 遵循语义化版本 `major.minor.patch`。major 不兼容时递增 major，功能新增递增 minor，bug 修复递增 patch
+- **app_version_type**: beta 阶段用 `0`，正式发布用 `1`。同版本号从 beta 升级到 release 时触发更新提醒
 
 ---
 
@@ -168,8 +168,8 @@ step_copy_outputs     → 输出成品
 `UpdateChecker` 在应用启动后异步请求 `https://brainleech198.github.io/hujiugame.qingfeng/data/versions.json`，三段式判断是否需要更新：
 
 ```
-远程 newest_version  >  本地 appVersion    → 需要更新
-远程 newest_version == 本地 appVersion
+远程 newest_version  >  本地 app_version    → 需要更新
+远程 newest_version == 本地 app_version
   && 远程 type > 本地 type                  → 需要更新（beta→release）
 远程无整型字段                    → 回退字符串比较
 ```

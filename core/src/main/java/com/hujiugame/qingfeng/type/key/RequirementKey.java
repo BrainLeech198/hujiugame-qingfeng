@@ -64,12 +64,12 @@ public final class RequirementKey
         }
 
         // 通用
-        public static final String UNIVERSAL_PRIORITY_CONFIRM_UI = "priorityConfirmUi";
+        public static final String UNIVERSAL_PRIORITY_CONFIRM_UI = "priority_confirm_ui";
         public static final String UNIVERSAL_PRIORITY_CONFIRM_UI_TYPE = "type";
         public static final String UNIVERSAL_PRIORITY_CONFIRM_UI_TAG = "tag";
 
         // menu list
-        public static final String MENU_LIST_PAGE_MAX_GAME = "pageMaxGame";
+        public static final String MENU_LIST_PAGE_MAX_GAME = "page_max_game";
     }
 
     // ====================================================================================================

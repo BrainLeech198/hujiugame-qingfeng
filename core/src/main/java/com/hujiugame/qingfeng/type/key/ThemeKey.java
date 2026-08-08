@@ -17,16 +17,16 @@ public final class ThemeKey
     public static final String FONT = "font";
 
     /** 字体预缓存尺寸列表 */
-    public static final String FONT_USE_SIZE = "fontUseSize";
+    public static final String FONT_USE_SIZE = "font_use_size";
 
     /** 主色调 */
-    public static final String PRIMARY_COLOR = "primaryColor";
+    public static final String PRIMARY_COLOR = "primary_color";
 
     /** 辅色 */
-    public static final String SECONDARY_COLOR = "secondaryColor";
+    public static final String SECONDARY_COLOR = "secondary_color";
 
     /** 字体颜色 */
-    public static final String FONT_COLOR = "fontColor";
+    public static final String FONT_COLOR = "font_color";
 
     /** 进度条颜色（写入 app_config.json） */
     public static final String PROCESS_COLOR = "process_color";

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "icon": "icon.png",
   "font": "default",
-  "fontUseSize": [0.8, 1.2, 1.5],
-  "primaryColor" : "#3F48CCFF",
-  "secondaryColor" : "#FDA1FFFF",
-  "fontColor" : "#000000FF"
+  "font_use_size": [0.8, 1.2, 1.5],
+  "primary_color" : "#3F48CCFF",
+  "secondary_color" : "#FDA1FFFF",
+  "font_color" : "#000000FF"
 }

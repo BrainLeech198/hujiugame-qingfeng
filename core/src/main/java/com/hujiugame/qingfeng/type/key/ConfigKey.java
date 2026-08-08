@@ -56,8 +56,8 @@ public final class ConfigKey
             throw new UnsupportedOperationException("Utility class cannot be instantiated");
         }
 
-        public static final String LOG_LEVEL = "logLevel";
-        public static final String FILE_LOG_LEVEL = "fileLogLevel";
+        public static final String LOG_LEVEL = "log_level";
+        public static final String FILE_LOG_LEVEL = "file_log_level";
     }
 
     // ====================================================================================================
@@ -86,7 +86,7 @@ public final class ConfigKey
 
         public static final String LANGUAGE = "language";
         public static final String THEME = "theme";
-        public static final String USE_VIEWPORT = "useViewport";
+        public static final String USE_VIEWPORT = "use_viewport";
         public static final String FULLSCREEN = "fullscreen";
 
         public static final class Resolution
@@ -108,7 +108,7 @@ public final class ConfigKey
                 throw new UnsupportedOperationException("Utility class cannot be instantiated");
             }
 
-            public static final String KEY = "soundVolume";
+            public static final String KEY = "sound_volume";
             public static final String TOTAL = "total";
             public static final String MUSIC = "music";
             public static final String SOUND = "sound";

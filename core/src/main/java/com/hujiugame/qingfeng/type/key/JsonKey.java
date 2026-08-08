@@ -48,7 +48,7 @@ public final class JsonKey
         }
 
         /** 语言 key 引用 */
-        public static final String TEXT_KEY = "textKey";
+        public static final String TEXT_KEY = "text_key";
 
         /** 纯文本 */
         public static final String TEXT = "text";
@@ -63,10 +63,10 @@ public final class JsonKey
         }
 
         public static final String FONT_NAME = "fontName";
-        public static final String FONT_SIZE = "fontSize";
-        public static final String FONT_COLOR = "fontColor";
-        public static final String FONT_FLAG = "fontFlag";
-        public static final String FONT_ARGS = "fontArgs";
+        public static final String FONT_SIZE = "font_size";
+        public static final String FONT_COLOR = "font_color";
+        public static final String FONT_FLAG = "font_flag";
+        public static final String FONT_ARGS = "font_args";
 
         /** fontArgs 子字段 */
         public static final class Args

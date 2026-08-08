@@ -1,9 +1,9 @@
 {
   "audio" : {
-    "backgroundMusic" : ["Scorching Sun.mp3", "Title Music.mp3", "The Dragon Fell in Love wit.mp3"]
+    "background_music" : ["Scorching Sun.mp3", "Title Music.mp3", "The Dragon Fell in Love wit.mp3"]
   },
   "graphics" : {
-    "backgroundPicture" : "menu.background.png",
+    "background_picture" : "menu.background.png",
     "picture" : {
     "path_tab" : {
       "path" : "transparent/black48.png",
@@ -315,10 +315,10 @@
           "width" : 1910,
           "height" : 130
         },
-        "textKey" : "{language$requirement.json#menu.list.label.absolute_path} : {game$game_list.absolute_path}",
-        "fontSize" : 0.8,
-        "fontColor" : "#FFFFFFFF",
-        "fontFlag" : "w"
+        "text_key" : "{language$requirement.json#menu.list.label.absolute_path} : {game$game_list.absolute_path}",
+        "font_size" : 0.8,
+        "font_color" : "#FFFFFFFF",
+        "font_flag" : "w"
       },
       "selected_path" : {
         "kind" : "default",
@@ -330,10 +330,10 @@
           "width" : 1910,
           "height" : 130
         },
-        "textKey" : "{language$requirement.json#menu.list.label.selected_path} : {game$game_list.selected_path}",
-        "fontSize" : 0.8,
-        "fontColor" : "#FFFFFFFF",
-        "fontFlag" : "w"
+        "text_key" : "{language$requirement.json#menu.list.label.selected_path} : {game$game_list.selected_path}",
+        "font_size" : 0.8,
+        "font_color" : "#FFFFFFFF",
+        "font_flag" : "w"
       },
       "page" : {
         "kind" : "default",
@@ -345,10 +345,10 @@
           "width" : 400,
           "height" : 110
         },
-        "textKey" : "{game$game_list.now_page}{language$requirement.json#menu.list.label.page}{game$game_list.max_page}",
-        "fontSize" : 1,
-        "fontColor" : "#FFFFFFFF",
-        "fontFlag" : "center"
+        "text_key" : "{game$game_list.now_page}{language$requirement.json#menu.list.label.page}{game$game_list.max_page}",
+        "font_size" : 1,
+        "font_color" : "#FFFFFFFF",
+        "font_flag" : "center"
       }
     },
     "button" : {
@@ -362,8 +362,8 @@
           "width" : 400,
           "height" : 110
         },
-        "textKey" : "{language$requirement.json#menu.list.button.back}",
-        "fontSize" : 1.2
+        "text_key" : "{language$requirement.json#menu.list.button.back}",
+        "font_size" : 1.2
       },
       "import" : {
         "kind" : "default",
@@ -375,8 +375,8 @@
           "width" : 400,
           "height" : 110
         },
-        "textKey" : "{language$requirement.json#menu.list.button.import}",
-        "fontSize" : 1.2
+        "text_key" : "{language$requirement.json#menu.list.button.import}",
+        "font_size" : 1.2
       },
       "profile" : {
         "kind" : "default",
@@ -388,8 +388,8 @@
           "width" : 400,
           "height" : 110
         },
-        "textKey" : "{language$requirement.json#menu.list.button.profile}",
-        "fontSize" : 1.2
+        "text_key" : "{language$requirement.json#menu.list.button.profile}",
+        "font_size" : 1.2
       },
       "share" : {
         "kind" : "default",
@@ -401,8 +401,8 @@
           "width" : 400,
           "height" : 110
         },
-        "textKey" : "{language$requirement.json#menu.list.button.share}",
-        "fontSize" : 1.2
+        "text_key" : "{language$requirement.json#menu.list.button.share}",
+        "font_size" : 1.2
       },
       "delete" : {
         "kind" : "default",
@@ -414,8 +414,8 @@
           "width" : 400,
           "height" : 110
         },
-        "textKey" : "{language$requirement.json#menu.list.button.delete}",
-        "fontSize" : 1.2
+        "text_key" : "{language$requirement.json#menu.list.button.delete}",
+        "font_size" : 1.2
       },
       "select.last_page" : {
         "kind" : "default",
@@ -427,8 +427,8 @@
           "width" : 400,
           "height" : 110
         },
-        "textKey" : "{language$requirement.json#menu.list.button.last_page}",
-        "fontSize" : 1.2
+        "text_key" : "{language$requirement.json#menu.list.button.last_page}",
+        "font_size" : 1.2
       },
       "select.next_page" : {
         "kind" : "default",
@@ -440,8 +440,8 @@
           "width" : 400,
           "height" : 110
         },
-        "textKey" : "{language$requirement.json#menu.list.button.next_page}",
-        "fontSize" : 1.2
+        "text_key" : "{language$requirement.json#menu.list.button.next_page}",
+        "font_size" : 1.2
       }
     }
   }

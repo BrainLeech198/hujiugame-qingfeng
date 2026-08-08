@@ -1,9 +1,9 @@
 {
   "audio" : {
-    "backgroundMusic" : ["Scorching Sun.mp3", "Title Music.mp3", "The Dragon Fell in Love wit.mp3"]
+    "background_music" : ["Scorching Sun.mp3", "Title Music.mp3", "The Dragon Fell in Love wit.mp3"]
   },
   "graphics" : {
-    "backgroundPicture" : "menu.background.png",
+    "background_picture" : "menu.background.png",
     "picture" : {
     "masker" : {
       "path" : "menu.masker.png",
@@ -41,8 +41,8 @@
           "width" : 540,
           "height" : 140
         },
-        "textKey" : "{language$requirement.json#menu.main.button.start}",
-        "fontSize" : 1.5
+        "text_key" : "{language$requirement.json#menu.main.button.start}",
+        "font_size" : 1.5
       },
       "create" : {
         "kind" : "default",
@@ -54,8 +54,8 @@
           "width" : 540,
           "height" : 140
         },
-        "textKey" : "{language$requirement.json#menu.main.button.create}",
-        "fontSize" : 1.5
+        "text_key" : "{language$requirement.json#menu.main.button.create}",
+        "font_size" : 1.5
       },
       "config" : {
         "kind" : "default",
@@ -67,8 +67,8 @@
           "width" : 540,
           "height" : 140
         },
-        "textKey" : "{language$requirement.json#menu.main.button.config}",
-        "fontSize" : 1.5
+        "text_key" : "{language$requirement.json#menu.main.button.config}",
+        "font_size" : 1.5
       },
       "quit" : {
         "kind" : "default",
@@ -80,8 +80,8 @@
           "width" : 540,
           "height" : 140
         },
-        "textKey" : "{language$requirement.json#menu.main.button.quit}",
-        "fontSize" : 1.5
+        "text_key" : "{language$requirement.json#menu.main.button.quit}",
+        "font_size" : 1.5
       }
     }
   }

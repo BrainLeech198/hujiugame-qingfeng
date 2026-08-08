@@ -5,5 +5,5 @@
   {
     "background" : "label/mb.img.background.png"
   },
-  "fontColor" : "#FFFFFFFF"
+  "font_color" : "#FFFFFFFF"
 }

@@ -1,9 +1,9 @@
 {
   "audio" : {
-    "backgroundMusic" : ["Scorching Sun.mp3", "Title Music.mp3", "The Dragon Fell in Love wit.mp3"]
+    "background_music" : ["Scorching Sun.mp3", "Title Music.mp3", "The Dragon Fell in Love wit.mp3"]
   },
   "graphics" : {
-    "backgroundPicture" : "menu.background.png",
+    "background_picture" : "menu.background.png",
     "picture" : {
     "introduction_tab" : {
       "path" : "transparent/black48.png",
@@ -41,8 +41,8 @@
           "width" : 400,
           "height" : 110
         },
-        "textKey" : "{language$requirement.json#config.basic.back}",
-        "fontSize" : 1.2
+        "text_key" : "{language$requirement.json#config.basic.back}",
+        "font_size" : 1.2
       }
     }
   }

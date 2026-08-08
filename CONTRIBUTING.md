@@ -112,7 +112,7 @@ python develop/output/build_package.py
 | 文件                              | 字段                                    | 说明                         |
 |---------------------------------|---------------------------------------|----------------------------|
 | `gradle.properties`             | `projectVersion`                      | Gradle 构建版本号               |
-| `assets/asset/app_version.json` | `appVersionString` / `appVersionType` | 运行时版本显示（beta=0, release=1） |
+| `assets/asset/app_version.json` | `app_version_string` / `app_version_type` | 运行时版本显示（beta=0, release=1） |
 | `lwjgl3/setup/inno_setup.iss`   | `MyAppVersion`                        | Windows 安装包版本号             |
 
 **输出成品（`develop/output/`）：**

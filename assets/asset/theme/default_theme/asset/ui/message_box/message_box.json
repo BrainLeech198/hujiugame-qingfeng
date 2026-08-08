@@ -5,18 +5,18 @@
     "title" :
     {
       "kind" : "message_box.title",
-      "fontSize" : 1.2,
-      "fontFlag" : "center",
-      "fontArgs" : {
+      "font_size" : 1.2,
+      "font_flag" : "center",
+      "font_args" : {
         "pad" : 20
       }
     },
     "content" :
     {
       "kind" : "message_box.content",
-      "fontSize" : 1.0,
-      "fontFlag" : "nw",
-      "fontArgs" : {
+      "font_size" : 1.0,
+      "font_flag" : "nw",
+      "font_args" : {
         "pad" : 25
       }
     }
@@ -26,7 +26,7 @@
     "normal" :
     {
       "kind" : "default",
-      "fontSize" : 1.2
+      "font_size" : 1.2
     }
   }
 }

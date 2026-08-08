@@ -114,7 +114,7 @@
 2. **类型**：String / int / float / boolean / Object / Array
 3. **必需/可选**：解析时是否必须存在
 4. **默认值**：字段缺失时 Java 代码中使用的默认值
-5. **解析逻辑**：读取方式和特殊行为（如 `fontColor` 要求 hex 字符串）
+5. **解析逻辑**：读取方式和特殊行为（如 `font_color` 要求 hex 字符串）
 6. **示例值**：一个真实的用法示例
 
 ### 第四步：更新本文档
@@ -214,12 +214,12 @@
 | `version` | String | 必需 | — | 该主题的版本号，如 `"1.0.0"` |
 | `icon` | String | — | — | 主题图标的文件名，位于主题根目录下 |
 | `font` | String | 必需 | — | 默认字体名称，引用 `ui_config.json` 中注册的字体 |
-| `fontUseSize` | Array\<Float\> | 可选 | `Numeric.getFontNormalScaleList()` | 字体预缓存缩放系数列表，如 `[0.8, 1.2, 1.5]` |
-| `primaryColor` | String (hex) | 可选 | `"#000000FF"` | 主题主色调，`Color.valueOf()` 解析 |
-| `secondaryColor` | String (hex) | 可选 | `"#000000FF"` | 主题辅色 |
-| `fontColor` | String (hex) | 可选 | `"#000000FF"` | 主题默认字体色 |
+| `font_use_size` | Array\<Float\> | 可选 | `Numeric.getFontNormalScaleList()` | 字体预缓存缩放系数列表，如 `[0.8, 1.2, 1.5]` |
+| `primary_color` | String (hex) | 可选 | `"#000000FF"` | 主题主色调，`Color.valueOf()` 解析 |
+| `secondary_color` | String (hex) | 可选 | `"#000000FF"` | 主题辅色 |
+| `font_color` | String (hex) | 可选 | `"#000000FF"` | 主题默认字体色 |
 
-**注意**：启动器主题（非游戏主题）初始化时，会将 `primaryColor` 写入外部 `app_config.json` 的 `process_color` 字段，供进度条使用。
+**注意**：启动器主题（非游戏主题）初始化时，会将 `primary_color` 写入外部 `app_config.json` 的 `process_color` 字段，供进度条使用。
 
 **示例**：
 ```json
@@ -228,10 +228,10 @@
   "version": "1.0.0",
   "icon": "icon.png",
   "font": "default",
-  "fontUseSize": [0.8, 1.2, 1.5],
-  "primaryColor": "#3F48CCFF",
-  "secondaryColor": "#FDA1FFFF",
-  "fontColor": "#000000FF"
+  "font_use_size": [0.8, 1.2, 1.5],
+  "primary_color": "#3F48CCFF",
+  "secondary_color": "#FDA1FFFF",
+  "font_color": "#000000FF"
 }
 ```
 
@@ -249,14 +249,14 @@
 | `label` | Array\<String\> | — | 要加载的标签种类名称列表 |
 | `image` | Array\<String\> | — | 要加载的图像种类名称列表 |
 | `font` | Array\<String\> | — | 要加载的字体名称列表 |
-| `messageBox` | Array\<String\> | — | 要加载的弹窗种类名称列表 |
+| `message_box` | Array\<String\> | — | 要加载的弹窗种类名称列表 |
 
 **加载规则**：列表中的名称会被拼接为文件路径查找：
 - **button**: `asset/ui/button/{name}.json`
 - **label**: `asset/ui/label/{name}.json`
 - **image**: `asset/ui/image/{name}.image.json`
 - **font**: `asset/ui/font/{name}/font.json`
-- **messageBox**: `asset/ui/message_box/message_box.json`
+- **message_box**: `asset/ui/message_box/message_box.json`
 
 **示例**：
 ```json
@@ -265,7 +265,7 @@
   "label": ["default", "message_box.content", "message_box.title"],
   "image": ["select_frame.image", "unselect_frame.image"],
   "font": ["default"],
-  "messageBox": ["default"]
+  "message_box": ["default"]
 }
 ```
 
@@ -307,8 +307,8 @@
 | `name` | String | 必需 | — | 标签种类名称，在 `ui_config.json` 中引用 |
 | `font` | String | 必需 | — | 使用的字体名称 |
 | `image.background` | String | 可选 | — | 九宫格背景图片文件名，相对 `resource/image/` |
-| `borderScale` | float | 可选 | `1.0` | 九宫格边框缩放系数 |
-| `fontColor` | String (hex) | 必需 | — | 默认字体颜色，`Color.valueOf()` 解析 |
+| `border_scale` | float | 可选 | `1.0` | 九宫格边框缩放系数 |
+| `font_color` | String (hex) | 必需 | — | 默认字体颜色，`Color.valueOf()` 解析 |
 | `backgroundColor` | String (hex) | 可选 | `Color.CLEAR` | 纯色背景（与 `image.background` 二选一） |
 
 **背景优先级**：`image.background` > `backgroundColor` > 透明
@@ -319,8 +319,8 @@
   "name": "message_box.title",
   "font": "default",
   "image": { "background": "label/mb.img.background.png" },
-  "borderScale": 4.0,
-  "fontColor": "#FFFFFFFF"
+  "border_scale": 4.0,
+  "font_color": "#FFFFFFFF"
 }
 ```
 
@@ -330,7 +330,7 @@
   "name": "default",
   "font": "default",
   "image": { "background": "transparent/black64.png" },
-  "fontColor": "#FFFFFFFF"
+  "font_color": "#FFFFFFFF"
 }
 ```
 
@@ -350,12 +350,12 @@
 | `image.down` | String | 必需 | — | 按下状态图片 |
 | `image.disabled` | String | 必需 | — | 禁用状态图片 |
 | `audio.click` | String | 必需 | — | 点击音效文件，相对 `resource/audio/` |
-| `borderScale` | float | 可选 | `1.0` | 九宫格边框缩放系数 |
-| `fontColor` | String (hex) | 必需 | — | 默认字体颜色 |
+| `border_scale` | float | 可选 | `1.0` | 九宫格边框缩放系数 |
+| `font_color` | String (hex) | 必需 | — | 默认字体颜色 |
 
 **自动颜色派生**：
 - `downFontColor` = 1 - R, 1 - G, 1 - B（反色）
-- `disabledFontColor` = fontColor × 0.5（半透明度）
+- `disabledFontColor` = font_color × 0.5（半透明度）
 
 **示例**：
 ```json
@@ -368,7 +368,7 @@
     "disabled": "button/de.img.disabled.png"
   },
   "audio": { "click": "button/de.aud.click.ogg" },
-  "fontColor": "#00008BFF"
+  "font_color": "#00008BFF"
 }
 ```
 
@@ -416,21 +416,21 @@
 
 **解析**：`LayoutManager.loadLayout()` → `LayoutConfig`
 
-**上下文说明**：布局 JSON 的字段结构在启动器和游戏中完全一致，但 `textKey` 的文本插值解析目标取决于布局所在上下文——启动器布局解析启动器的语言/变量，游戏布局解析该游戏的语言/变量（详见 [11.4 文本插值语法](#114-文本插值语法)）。
+**上下文说明**：布局 JSON 的字段结构在启动器和游戏中完全一致，但 `text_key` 的文本插值解析目标取决于布局所在上下文——启动器布局解析启动器的语言/变量，游戏布局解析该游戏的语言/变量（详见 [11.4 文本插值语法](#114-文本插值语法)）。
 
 | 字段 | 类型 | 必需 | 默认值 | 解析说明 |
 |------|------|------|--------|----------|
 | `name` | String | 可选 | 文件名（不含扩展名） | 页面名称 |
 | `template` | String | 可选 | — | 模板布局名，加载后与本布局合并（`mergeLayout`） |
-| `audio` | Object | 可选 | — | 音频节点，子字段 `backgroundMusic`（背景音乐）与 `music`（点播音乐），见 [3.2](#32-背景音乐配置) |
-| `graphics` | Object | 可选 | — | 图形容器，含 `backgroundPicture`（背景图，见 [3.3](#33-背景图片配置)）与 `picture` / `gif` 子分类（每一项见 [3.4](#34-graphics-条目)） |
+| `audio` | Object | 可选 | — | 音频节点，子字段 `background_music`（背景音乐）与 `music`（点播音乐），见 [3.2](#32-背景音乐配置) |
+| `graphics` | Object | 可选 | — | 图形容器，含 `background_picture`（背景图，见 [3.3](#33-背景图片配置)）与 `picture` / `gif` 子分类（每一项见 [3.4](#34-graphics-条目)） |
 | `ui.image` | Object | 可选 | — | UI 图像映射表，每一项见 [3.5](#35-uiimage-条目) |
 | `ui.label` | Object | 可选 | — | 标签映射表，每一项见 [3.6](#36-uilabel-条目) |
 | `ui.button` | Object | 可选 | — | 按钮映射表，每一项见 [3.7](#37-uibutton-条目) |
 
 **模板合并行为**：
 当 `template` 指定后，会先加载模板布局，然后将两者的字段按以下规则合并：
-- 基础字段（backgroundMusicList、musicList）与 backgroundPicture（graphics 下）：merge 覆盖 main
+- 基础字段（backgroundMusicList、musicList）与 background_picture（graphics 下）：merge 覆盖 main
 - 映射表字段（graphics/picture、graphics/gif、image、label、button）：相同 tag 时 merge 的字段覆盖 main，main 填补缺失字段
 - JSON 数据：`layoutJson.combined(mergeJson)`
 
@@ -438,14 +438,14 @@
 
 ### 3.2 背景音乐配置
 
-**字段**：`audio.backgroundMusic`（Layout 的 `audio` 节点下）
+**字段**：`audio.background_music`（Layout 的 `audio` 节点下）
 
 **结构示例**：
 
 ```json
 {
   "audio" : {
-    "backgroundMusic" : ["menu.mp3", "menu2.mp3"],
+    "background_music" : ["menu.mp3", "menu2.mp3"],
     "music" : { "tag1" : "bgm1.mp3" }
   }
 }
@@ -453,8 +453,8 @@
 
 | 值类型 | 示例 | 说明 |
 |--------|------|------|
-| String（单曲） | `"backgroundMusic" : "menu.mp3"` | 单首背景音乐 |
-| Array（多曲） | `"backgroundMusic" : ["bgm1.mp3", "bgm2.mp3"]` | 多首背景音乐，运行时随机选择一首播放 |
+| String（单曲） | `"background_music" : "menu.mp3"` | 单首背景音乐 |
+| Array（多曲） | `"background_music" : ["bgm1.mp3", "bgm2.mp3"]` | 多首背景音乐，运行时随机选择一首播放 |
 
 **加载**：音频文件放置在 `resource/audio/` 目录下。
 
@@ -462,14 +462,14 @@
 
 ### 3.3 背景图片配置
 
-**字段**：`graphics.backgroundPicture`（Layout 的 `graphics` 节点下）
+**字段**：`graphics.background_picture`（Layout 的 `graphics` 节点下）
 
 **结构示例**：
 
 ```json
 {
   "graphics" : {
-    "backgroundPicture" : "menu.background.png",
+    "background_picture" : "menu.background.png",
     "picture" : { ... }
   }
 }
@@ -479,7 +479,7 @@
 |--------|------|------|
 | String | `"menu.background.png"` | 背景图片文件名，相对 `resource/image/` |
 
-> **兼容**：旧格式将 `backgroundPicture` 写在 Layout 顶层；读取时优先取 `graphics.backgroundPicture`，缺失则回退顶层旧格式（第三方页面不受影响）。
+> **兼容**：旧格式将 `background_picture` 写在 Layout 顶层；读取时优先取 `graphics.background_picture`，缺失则回退顶层旧格式（第三方页面不受影响）。
 
 ---
 
@@ -596,15 +596,15 @@
 | `position.y` | int | 必需 | `0` | Y 坐标 |
 | `size.width` | int | 必需 | `100` | 宽度 |
 | `size.height` | int | 必需 | `100` | 高度 |
-| `textKey` | String | 与 `text` 二选一 | `""` | 可解析文本键，格式见 [第十章](#101-语言-json-与文本插值) |
-| `text` | String | 与 `textKey` 二选一 | `""` | 纯文本（不解析） |
+| `text_key` | String | 与 `text` 二选一 | `""` | 可解析文本键，格式见 [第十章](#101-语言-json-与文本插值) |
+| `text` | String | 与 `text_key` 二选一 | `""` | 纯文本（不解析） |
 | `fontName` | String | 可选 | `null` | 覆盖种类的默认字体名称 |
-| `fontSize` | float | 可选 | `1.0` | 字体缩放系数 |
-| `fontColor` | String (hex) | 可选 | `null`（继承种类颜色） | 字体颜色。**必须使用 `"#RRGGBBAA"` 格式的字符串**，不可使用整数 |
-| `fontFlag` | String | 可选 | `"NW"` | 对齐+打字机标志，见 [FontFlag 枚举](#fontflag-枚举) |
-| `fontArgs` | Object | 可选 | `{}` | 字体参数对象，见下方 `fontArgs` 子字段 |
+| `font_size` | float | 可选 | `1.0` | 字体缩放系数 |
+| `font_color` | String (hex) | 可选 | `null`（继承种类颜色） | 字体颜色。**必须使用 `"#RRGGBBAA"` 格式的字符串**，不可使用整数 |
+| `font_flag` | String | 可选 | `"NW"` | 对齐+打字机标志，见 [FontFlag 枚举](#fontflag-枚举) |
+| `font_args` | Object | 可选 | `{}` | 字体参数对象，见下方 `font_args` 子字段 |
 
-#### fontArgs 子字段
+#### font_args 子字段
 
 | 字段 | 类型 | 必需 | 默认值 | 解析说明 |
 |------|------|------|--------|----------|
@@ -646,11 +646,11 @@
     "kind": "default",
     "position": { "x": 50, "y": 50 },
     "size": { "width": 2460, "height": 450 },
-    "textKey": "{language$ui.json#layout.menu.dialogue}",
-    "fontSize": 1.0,
-    "fontColor": "#FFFFFFFF",
-    "fontFlag": "nw_typing",
-    "fontArgs": { "pad": 30 }
+    "text_key": "{language$ui.json#layout.menu.dialogue}",
+    "font_size": 1.0,
+    "font_color": "#FFFFFFFF",
+    "font_flag": "nw_typing",
+    "font_args": { "pad": 30 }
   }
 }
 ```
@@ -671,13 +671,13 @@
 | `position.y` | int | 必需 | `0` | Y 坐标 |
 | `size.width` | int | 必需 | `100` | 宽度 |
 | `size.height` | int | 必需 | `100` | 高度 |
-| `textKey` | String | 与 `text` 二选一 | `""` | 可解析文本键 |
-| `text` | String | 与 `textKey` 二选一 | `""` | 纯文本 |
+| `text_key` | String | 与 `text` 二选一 | `""` | 可解析文本键 |
+| `text` | String | 与 `text_key` 二选一 | `""` | 纯文本 |
 | `fontName` | String | 可选 | `null` | 覆盖种类的默认字体名称 |
-| `fontSize` | float | 可选 | `1.0` | 字体缩放系数 |
-| `fontColor` | String (hex) | 可选 | `null`（继承种类颜色） | 字体颜色 |
+| `font_size` | float | 可选 | `1.0` | 字体缩放系数 |
+| `font_color` | String (hex) | 可选 | `null`（继承种类颜色） | 字体颜色 |
 
-**与 LabelInfo 的区别**：`ButtonInfo` 没有 `fontFlag`、`fontArgs` 字段。
+**与 LabelInfo 的区别**：`ButtonInfo` 没有 `font_flag`、`font_args` 字段。
 
 **示例**：
 ```json
@@ -686,8 +686,8 @@
     "kind": "default",
     "position": { "x": 230, "y": 746 },
     "size": { "width": 540, "height": 140 },
-    "textKey": "{language$main.json#menu.main.button.start}",
-    "fontSize": 1.5
+    "text_key": "{language$main.json#menu.main.button.start}",
+    "font_size": 1.5
   }
 }
 ```
@@ -707,13 +707,13 @@
 | `audio` | String | — | 弹窗提示音，相对 `resource/audio/` |
 | `label.title` | Object | — | 标题标签配置 |
 | `label.title.kind` | String | 必需 | 标签种类名称 |
-| `label.title.fontSize` | float | 可选 | `1.0` |
-| `label.title.fontFlag` | String | 可选 | `"center"` |
-| `label.title.fontArgs` | Object | 可选 | 字体参数，支持 `pad` |
+| `label.title.font_size` | float | 可选 | `1.0` |
+| `label.title.font_flag` | String | 可选 | `"center"` |
+| `label.title.font_args` | Object | 可选 | 字体参数，支持 `pad` |
 | `label.content` | Object | — | 内容标签配置，同上 |
 | `button.normal` | Object | — | 确定按钮配置 |
 | `button.normal.kind` | String | 必需 | 按钮种类名称 |
-| `button.normal.fontSize` | float | 可选 | `1.0` |
+| `button.normal.font_size` | float | 可选 | `1.0` |
 
 **示例**：
 ```json
@@ -722,21 +722,21 @@
   "label": {
     "title": {
       "kind": "message_box.title",
-      "fontSize": 1.2,
-      "fontFlag": "center",
-      "fontArgs": { "pad": 20 }
+      "font_size": 1.2,
+      "font_flag": "center",
+      "font_args": { "pad": 20 }
     },
     "content": {
       "kind": "message_box.content",
-      "fontSize": 1.0,
-      "fontFlag": "nw",
-      "fontArgs": { "pad": 25 }
+      "font_size": 1.0,
+      "font_flag": "nw",
+      "font_args": { "pad": 25 }
     }
   },
   "button": {
     "normal": {
       "kind": "message_box.button",
-      "fontSize": 1.2
+      "font_size": 1.2
     }
   }
 }
@@ -904,16 +904,16 @@
 
 | 字段 | 类型 | 必需 | 说明 |
 |------|------|------|------|
-| `appVersion` | int | 是 | 版本代码，单调递增 |
-| `appVersionType` | int | 是 | 发布类型（1=稳定版，2=测试版等） |
-| `appVersionString` | String | 是 | 语义版本号，如 `"1.0.0"` |
+| `app_version` | int | 是 | 版本代码，单调递增 |
+| `app_version_type` | int | 是 | 发布类型（1=稳定版，2=测试版等） |
+| `app_version_string` | String | 是 | 语义版本号，如 `"1.0.0"` |
 
 **示例**：
 ```json
 {
-  "appVersion": 1,
-  "appVersionType": 1,
-  "appVersionString": "1.0.0"
+  "app_version": 1,
+  "app_version_type": 1,
+  "app_version_string": "1.0.0"
 }
 ```
 
@@ -1045,7 +1045,7 @@
 
 ### 11.4 文本插值语法
 
-在布局 JSON 的 `textKey` 字段中使用 `TextManager` 解析变量：
+在布局 JSON 的 `text_key` 字段中使用 `TextManager` 解析变量：
 
 | 格式 | 示例 | 说明 |
 |------|------|------|
@@ -1056,17 +1056,17 @@
 - `{language$...}`：在**启动器布局**中 → 从 `assets/asset/language/` 查找；在**游戏布局**中 → 从 `{game_path}/{game_id}/asset/language/` 查找。两者共享 `LanguageManager` 实现，但 `pathHandle` 指向不同的目录。
 - `{game$...}`：在**启动器界面**中 → 读取启动器的 `GameInfoManager`（如 `game_list.now_page` 表示游戏列表页码）；在**游戏界面**中 → 读取该游戏的 `GameInfoManager`（如 `hp`、`score` 等游戏运行时变量）。
 
-**解析优先级**：`textKey` > `text` > 空字符串 `""`
+**解析优先级**：`text_key` > `text` > 空字符串 `""`
 
 **示例**：
 ```json
 {
-  "textKey": "{language$main.json#menu.list.label.page}"
+  "text_key": "{language$main.json#menu.list.label.page}"
 }
 ```
 ```json
 {
-  "textKey": "{language$main.json#menu.list.label.absolute_path} : {game$game_list.absolute_path}"
+  "text_key": "{language$main.json#menu.list.label.absolute_path} : {game$game_list.absolute_path}"
 }
 ```
 
@@ -1086,23 +1086,23 @@
 |------|------|------|
 | `language` | String | **启动器全局**语言设置 |
 | `theme` | String | **启动器全局**主题设置 |
-| `useViewport` | String | 视口缩放策略（如 `"stretch"`） |
+| `use_viewport` | String | 视口缩放策略（如 `"stretch"`） |
 | `fullscreen` | boolean | 全屏标志 |
 | `resolution.width` | int | 分辨率宽度 |
 | `resolution.height` | int | 分辨率高度 |
-| `soundVolume.total` | float | 总音量（0.0~1.0） |
-| `soundVolume.music` | float | 音乐音量（0.0~1.0） |
-| `soundVolume.sound` | float | 音效音量（0.0~1.0） |
+| `sound_volume.total` | float | 总音量（0.0~1.0） |
+| `sound_volume.music` | float | 音乐音量（0.0~1.0） |
+| `sound_volume.sound` | float | 音效音量（0.0~1.0） |
 
 **示例**：
 ```json
 {
   "language": "zh_CN",
   "theme": "default_theme",
-  "useViewport": "stretch",
+  "use_viewport": "stretch",
   "fullscreen": false,
   "resolution": { "width": 1024, "height": 576 },
-  "soundVolume": { "total": 1, "music": 0.5, "sound": 0.8 }
+  "sound_volume": { "total": 1, "music": 0.5, "sound": 0.8 }
 }
 ```
 
@@ -1411,9 +1411,9 @@
 
 **结构**：层级化的 key-value 映射，叶子节点为字符串值。
 
-#### 文本键格式（textKey）
+#### 文本键格式（text_key）
 
-`LabelInfo` 和 `ButtonInfo` 的 `textKey` 字段支持两种插值语法：
+`LabelInfo` 和 `ButtonInfo` 的 `text_key` 字段支持两种插值语法：
 
 | 格式 | 示例 | 说明 |
 |------|------|------|
@@ -1422,12 +1422,12 @@
 
 **解析**：`TextManager` + `TextObject`
 
-**textKey 优先级**：如果在 JSON 中同时设置了 `textKey` 和 `text`，优先使用 `textKey`。
+**text_key 优先级**：如果在 JSON 中同时设置了 `text_key` 和 `text`，优先使用 `text_key`。
 
 **示例**：
 ```json
 {
-  "textKey": "{language$main.json#menu.list.label.page}"
+  "text_key": "{language$main.json#menu.list.label.page}"
 }
 ```
 
@@ -1435,7 +1435,7 @@
 
 #### 纯文本格式（text）
 
-当使用 `text` 字段而非 `textKey` 时，字符串直接作为显示文本使用，不经过语言解析系统。
+当使用 `text` 字段而非 `text_key` 时，字符串直接作为显示文本使用，不经过语言解析系统。
 
 ```json
 {
@@ -1485,19 +1485,19 @@
 | `show`（布尔显隐） | `JsonShowParser.parseShow()` | `true` |
 | `position.x` / `position.y` | `JsonPositionParser` | `0` / `0` |
 | `size.width` / `size.height` | `JsonSizeParser` | `100` / `100` |
-| `fontSize` | `JsonTextParser.parseFontSize()` | `1.0f` |
-| `fontColor`（缺省） | `JsonTextParser.parseFontColor()` | `null` |
-| `fontFlag`（缺省） | `JsonTextParser.parseFontFlag()` | `FontFlag.NW` |
+| `font_size` | `JsonTextParser.parseFontSize()` | `1.0f` |
+| `font_color`（缺省） | `JsonTextParser.parseFontColor()` | `null` |
+| `font_flag`（缺省） | `JsonTextParser.parseFontFlag()` | `FontFlag.NW` |
 | `fontName`（缺省） | `JsonTextParser.parseFontName()` | `null` |
-| `fontArgs`（缺省） | `JsonTextParser.parseFontArgs()` | 空 `JsonEntity` |
-| `fontArgs.padX` / `fontArgs.padY` | `LabelManager.createLabel()` | `50` / `50` |
-| `textKey`/`text` 均缺省 | `JsonTextParser.parseText()` | 空字符串 `""` |
-| `borderScale`（按钮/标签） | `ButtonManager.loadButtonKind()` / `LabelManager.loadLabelKind()` | `1.0f` |
-| `fontUseSize`（主题） | `ThemeManager.loadFontUseSizeFromJson()` | `Numeric.getFontNormalScaleList()` |
-| `primaryColor` / `secondaryColor` / `fontColor`（主题色） | `ThemeManager.loadColorFromJson()` | `"#000000FF"` |
+| `font_args`（缺省） | `JsonTextParser.parseFontArgs()` | 空 `JsonEntity` |
+| `font_args.padX` / `font_args.padY` | `LabelManager.createLabel()` | `50` / `50` |
+| `text_key`/`text` 均缺省 | `JsonTextParser.parseText()` | 空字符串 `""` |
+| `border_scale`（按钮/标签） | `ButtonManager.loadButtonKind()` / `LabelManager.loadLabelKind()` | `1.0f` |
+| `font_use_size`（主题） | `ThemeManager.loadFontUseSizeFromJson()` | `Numeric.getFontNormalScaleList()` |
+| `primary_color` / `secondary_color` / `font_color`（主题色） | `ThemeManager.loadColorFromJson()` | `"#000000FF"` |
 | `name`（Layout 名称） | `LayoutManager.loadLayoutBasicInfo()` | 文件名（不含扩展名） |
 | 打字机速度 | `LabelManager` | `25.0f` 字符/秒 |
-| 标签 `fontFlag` 缺省时的对齐 | `LabelManager.createLabel()` | `Align.center` |
+| 标签 `font_flag` 缺省时的对齐 | `LabelManager.createLabel()` | `Align.center` |
 
 ---
 

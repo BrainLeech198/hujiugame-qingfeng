@@ -1,10 +1,10 @@
 {
-  "priorityConfirmUi" : {
+  "priority_confirm_ui" : {
     "type" : "button",
     "tag" : "start"
   },
   "animation" : {
-    "fadeIn" : {
+    "fade_in" : {
       "default" : {
         "duration" : 0.2,
         "action" : {
@@ -113,14 +113,14 @@
           ]
         }
       },
-      "fromPage" :
+      "from_page" :
       {
         "config_basic" : {
           "duration" : 0.5
         }
       }
     },
-    "fadeOut" : {
+    "fade_out" : {
       "default" : {
         "duration" : 0.2,
         "action" : {

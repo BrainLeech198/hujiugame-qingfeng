@@ -40,10 +40,10 @@ public final class UiKey
         public static final String FONT = "font";
 
         /** kind 配置中的字体颜色 */
-        public static final String FONT_COLOR = "fontColor";
+        public static final String FONT_COLOR = "font_color";
 
         /** 按钮边框缩放 */
-        public static final String BORDER_SCALE = "borderScale";
+        public static final String BORDER_SCALE = "border_scale";
 
         /** image 对象（按钮状态图片） */
         public static final class Image
@@ -108,13 +108,13 @@ public final class UiKey
         public static final String FONT = "font";
 
         /** kind 配置中的字体颜色 */
-        public static final String FONT_COLOR = "fontColor";
+        public static final String FONT_COLOR = "font_color";
 
         /** 标签背景颜色 */
         public static final String BACKGROUND_COLOR = "backgroundColor";
 
         /** 标签边框缩放 */
-        public static final String BORDER_SCALE = "borderScale";
+        public static final String BORDER_SCALE = "border_scale";
 
         /** image 对象（标签背景图片） */
         public static final class Image
@@ -195,7 +195,7 @@ public final class UiKey
         }
 
         /** ui_config.json 中的组件类型 key */
-        public static final String KEY = "messageBox";
+        public static final String KEY = "message_box";
 
         /** 弹窗音效 */
         public static final String AUDIO = "audio";

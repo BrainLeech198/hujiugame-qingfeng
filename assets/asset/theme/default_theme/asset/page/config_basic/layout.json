@@ -1,9 +1,9 @@
 {
   "audio" : {
-    "backgroundMusic" : ["Scorching Sun.mp3", "Title Music.mp3", "The Dragon Fell in Love wit.mp3"]
+    "background_music" : ["Scorching Sun.mp3", "Title Music.mp3", "The Dragon Fell in Love wit.mp3"]
   },
   "graphics" : {
-    "backgroundPicture" : "menu.background.png",
+    "background_picture" : "menu.background.png",
     "picture" : {
     "introduction_tab" : {
       "path" : "transparent/black48.png",
@@ -42,9 +42,9 @@
           "height" : 130
         },
         "text" : "",
-        "fontSize" : 0.8,
-        "fontColor" : "#FFFFFFFF",
-        "fontFlag" : "w"
+        "font_size" : 0.8,
+        "font_color" : "#FFFFFFFF",
+        "font_flag" : "w"
       },
       "language" : {
         "kind" : "default2",
@@ -56,10 +56,10 @@
           "width" : 1855,
           "height" : 110
         },
-        "textKey" : "{language$requirement.json#config.basic.language} : {game$user.language.name} ({game$user.language})",
-        "fontSize" : 1,
-        "fontColor" : "#FFFFFFFF",
-        "fontFlag" : "w"
+        "text_key" : "{language$requirement.json#config.basic.language} : {game$user.language.name} ({game$user.language})",
+        "font_size" : 1,
+        "font_color" : "#FFFFFFFF",
+        "font_flag" : "w"
       },
       "language_selected" : {
         "kind" : "default3",
@@ -71,10 +71,10 @@
           "width" : 1855,
           "height" : 110
         },
-        "textKey" : "{language$requirement.json#config.basic.language} : {game$user.language.name} ({game$user.language})",
-        "fontSize" : 1,
-        "fontColor" : "#FFFFFFFF",
-        "fontFlag" : "w"
+        "text_key" : "{language$requirement.json#config.basic.language} : {game$user.language.name} ({game$user.language})",
+        "font_size" : 1,
+        "font_color" : "#FFFFFFFF",
+        "font_flag" : "w"
       }
     },
     "button" : {
@@ -88,8 +88,8 @@
           "width" : 400,
           "height" : 110
         },
-        "textKey" : "{language$requirement.json#config.basic.back}",
-        "fontSize" : 1.2
+        "text_key" : "{language$requirement.json#config.basic.back}",
+        "font_size" : 1.2
       }
     }
   }

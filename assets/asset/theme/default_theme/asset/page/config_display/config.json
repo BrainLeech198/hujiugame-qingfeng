@@ -1,5 +1,5 @@
 {
-  "priorityConfirmUi" : {
+  "priority_confirm_ui" : {
     "type" : "button",
     "tag" : "back"
   }

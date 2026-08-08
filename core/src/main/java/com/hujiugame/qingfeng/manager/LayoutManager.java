@@ -143,8 +143,8 @@ public final class LayoutManager
             // 解析背景音乐
             // ===================================================================================================================
             // 音频字段统一收敛到 audio 节点：
-            //   "audio" : { "backgroundMusic" : "menu.mp3" }               → 单曲，自动包装为单值列表
-            //   "audio" : { "backgroundMusic" : ["menu.mp3", "menu2.mp3"] } → 列表，每首分别加载
+            //   "audio" : { "background_music" : "menu.mp3" }               → 单曲，自动包装为单值列表
+            //   "audio" : { "background_music" : ["menu.mp3", "menu2.mp3"] } → 列表，每首分别加载
             // ===================================================================================================================
             JsonEntity audioJson = layoutJson.getJsonEntityByKey(LayoutKey.AUDIO);
             List<String> backgroundMusicNames = null;

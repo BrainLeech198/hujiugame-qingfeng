@@ -11,7 +11,7 @@ public final class GraphicsKey
     }
 
     /** graphics → backgroundPicture 背景图片文件名 */
-    public static final String BACKGROUND_PICTURE = "backgroundPicture";
+    public static final String BACKGROUND_PICTURE = "background_picture";
 
     /** graphics → picture 子分类 */
     public static final String PICTURE = "picture";

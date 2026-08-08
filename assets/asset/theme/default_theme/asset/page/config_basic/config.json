@@ -1,5 +1,5 @@
 {
-  "priorityConfirmUi" : {
+  "priority_confirm_ui" : {
     "type" : "label",
     "tag" : "language"
   }
