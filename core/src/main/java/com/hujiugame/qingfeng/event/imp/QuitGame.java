@@ -6,14 +6,14 @@ import com.hujiugame.qingfeng.event.EventObject;
 /**
  * 退出游戏事件
  */
-public class EventQuitGame implements EventObject
+public class QuitGame implements EventObject
 {
     private final String eventName;
 
     /**
      * 构造退出游戏事件
      */
-    public EventQuitGame ()
+    public QuitGame ()
     {
         this.eventName = Event.QUIT_GAME;
     }

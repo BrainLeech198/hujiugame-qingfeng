@@ -27,7 +27,6 @@ public class ControllerInputHandler implements ControllerListener
 
     private final Stage stage;
     private final GraphicsManager graphicsManager;
-    private final UiManager uiManager;
     private final GameHost gameHost;
 
     // 当前摇杆值（由 axisMoved 实时更新）
@@ -87,7 +86,6 @@ public class ControllerInputHandler implements ControllerListener
         this.virtualInputHandler = virtualInputHandler;
         this.stage = instanceContent.getStage();
         this.graphicsManager = instanceContent.getGraphicsManager();
-        this.uiManager = instanceContent.getUiManager();
         this.gameHost = instanceContent.getGameHost();
     }
 
@@ -213,7 +211,10 @@ public class ControllerInputHandler implements ControllerListener
      */
     private boolean handleCancel ()
     {
-        return UniversalInputHandlerFunction.handleEscape(uiManager, uiManager.getMessageBox(), gameHost, UniversalInputType.CONTROLLER);
+        return UniversalInputHandlerFunction.handleEscape(
+            virtualInputHandler.getUiManager(),
+            virtualInputHandler.getUiManager().getMessageBox(),
+            gameHost, UniversalInputType.CONTROLLER);
     }
 
     /**
@@ -222,7 +223,10 @@ public class ControllerInputHandler implements ControllerListener
      */
     private boolean handleConfirm ()
     {
-        return UniversalInputHandlerFunction.handleEnter(uiManager, uiManager.getMessageBox(), gameHost, UniversalInputType.CONTROLLER);
+        return UniversalInputHandlerFunction.handleEnter(
+            virtualInputHandler.getUiManager(),
+            virtualInputHandler.getUiManager().getMessageBox(),
+            gameHost, UniversalInputType.CONTROLLER);
     }
 
     /**

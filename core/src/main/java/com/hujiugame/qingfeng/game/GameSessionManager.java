@@ -15,10 +15,10 @@ import com.hujiugame.qingfeng.data.story.Role;
 import com.hujiugame.qingfeng.type.game.state.GameState;
 import com.hujiugame.qingfeng.type.game.state.GameSubState;
 import com.hujiugame.qingfeng.type.play.Hoster;
-import com.hujiugame.qingfeng.event.imp.EventEnterGame;
-import com.hujiugame.qingfeng.event.imp.EventPlayGame;
-import com.hujiugame.qingfeng.event.imp.EventPushGameState;
-import com.hujiugame.qingfeng.event.imp.EventQuitGame;
+import com.hujiugame.qingfeng.event.imp.EnterGame;
+import com.hujiugame.qingfeng.event.imp.PlayGame;
+import com.hujiugame.qingfeng.event.imp.PushGameState;
+import com.hujiugame.qingfeng.event.imp.QuitGame;
 import com.hujiugame.qingfeng.event.EventQueue;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
@@ -91,7 +91,7 @@ public final class GameSessionManager
             playLocalData.setGamePathHandle(gamePathDirectory);
 
             // 进入加载页面
-            eventQueue.addEvent(new EventPushGameState(GameState.MENU, GameSubState.MENU_LOAD));
+            eventQueue.addEvent(new PushGameState(GameState.MENU, GameSubState.MENU_LOAD));
 
             LogUtils.debug(GameSessionManager.class, "loadGame 成功进入加载界面 (path): " + gamePathDirectory.path());
             return true;
@@ -159,7 +159,7 @@ public final class GameSessionManager
             }
 
             // 进入游戏
-            eventQueue.addEvent(new EventEnterGame(gamePathHandle, gameId, gameName, gameVersion, gameLauncherVersion));
+            eventQueue.addEvent(new EnterGame(gamePathHandle, gameId, gameName, gameVersion, gameLauncherVersion));
 
             LogUtils.info(GameSessionManager.class, "enterGame 进入游戏 (name): " + gameName + " (id): " + gameId + " (path): " + gamePathHandle);
         }
@@ -181,7 +181,7 @@ public final class GameSessionManager
         try
         {
             // 重置游戏状态
-            eventQueue.addEvent(new EventQuitGame());
+            eventQueue.addEvent(new QuitGame());
 
             // 释放游戏数据
             if (!dataLoader.disposeData())
@@ -273,7 +273,7 @@ public final class GameSessionManager
             }
 
             // 创建游戏状态并切换到游戏播放状态
-            eventQueue.addEvent(new EventPlayGame(hoster, role));
+            eventQueue.addEvent(new PlayGame(hoster, role));
 
             LogUtils.info(GameSessionManager.class, "playNewStory 创建角色新游戏 (hoster): " + hoster + " (roleId): " + role.getId());
             return true;

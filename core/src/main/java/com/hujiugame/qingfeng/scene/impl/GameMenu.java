@@ -11,8 +11,8 @@ import com.hujiugame.qingfeng.input.VirtualInputHandler;
 import com.hujiugame.qingfeng.scene.GameRender;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventQueue;
-import com.hujiugame.qingfeng.event.imp.EventPushGameState;
-import com.hujiugame.qingfeng.event.imp.EventResetGameState;
+import com.hujiugame.qingfeng.event.imp.PushGameState;
+import com.hujiugame.qingfeng.event.imp.ResetGameState;
 
 public final class GameMenu implements GameRender
 {
@@ -63,7 +63,7 @@ public final class GameMenu implements GameRender
         // 开始按钮
         if (gameUiManager.isButtonClicked(RequirementKey.Ui.GAME_MENU_BUTTON_START))
         {
-            eventQueue.addEvent(new EventPushGameState(GameState.GAME, GameSubState.GAME_ROLE));
+            eventQueue.addEvent(new PushGameState(GameState.GAME, GameSubState.GAME_ROLE));
         }
 
         // 按下返回按钮
@@ -80,7 +80,7 @@ public final class GameMenu implements GameRender
             () ->
             {
                 gameHost.getGameSessionManager().quitGame();
-                eventQueue.addEvent(new EventResetGameState());
+                eventQueue.addEvent(new ResetGameState());
             });
     }
 

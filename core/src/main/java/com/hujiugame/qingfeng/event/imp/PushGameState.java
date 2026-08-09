@@ -3,7 +3,7 @@ package com.hujiugame.qingfeng.event.imp;
 import com.hujiugame.qingfeng.type.game.Event;
 import com.hujiugame.qingfeng.event.EventObject;
 
-public class EventPushGameState implements EventObject
+public class PushGameState implements EventObject
 {
     private final String eventName;
     private final int state;
@@ -15,7 +15,7 @@ public class EventPushGameState implements EventObject
      * @param state    目标状态
      * @param subState 目标子状态
      */
-    public EventPushGameState (int state, int subState)
+    public PushGameState (int state, int subState)
     {
         eventName = Event.PUSH_GAME_STATE;
         this.state = state;

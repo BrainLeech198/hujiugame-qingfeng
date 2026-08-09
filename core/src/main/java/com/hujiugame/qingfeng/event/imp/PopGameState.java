@@ -4,18 +4,18 @@ import com.hujiugame.qingfeng.type.game.Event;
 import com.hujiugame.qingfeng.event.EventObject;
 
 /**
- * 重置游戏状态事件，用于重置游戏状态至初始状态。
+ * 弹出游戏状态事件，用于从状态栈中移除当前状态。
  */
-public class EventResetGameState implements EventObject
+public class PopGameState implements EventObject
 {
     private final String eventName;
 
     /**
-     * 构造重置游戏状态事件
+     * 构造弹出游戏状态事件
      */
-    public EventResetGameState ()
+    public PopGameState ()
     {
-        eventName = Event.RESET_GAME_STATE;
+        eventName = Event.POP_GAME_STATE;
     }
 
     /**

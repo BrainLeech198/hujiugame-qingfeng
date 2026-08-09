@@ -7,6 +7,8 @@ public final class Event
         throw new UnsupportedOperationException("Utility class cannot be instantiated");
     }
 
+    public static final String REFRESH_UI_MANAGER = "refresh_ui_manager";
+
     public static final String PUSH_GAME_STATE = "push_game_state";
     public static final String POP_GAME_STATE = "pop_game_state";
     public static final String SET_GAME_STATE = "set_game_state";

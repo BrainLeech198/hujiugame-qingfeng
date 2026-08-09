@@ -3,6 +3,7 @@ package com.hujiugame.qingfeng.core;
 import com.badlogic.gdx.files.FileHandle;
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.data.game.Layout;
+import com.hujiugame.qingfeng.event.imp.SetGameState;
 import com.hujiugame.qingfeng.game.GameLogicService;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.util.system.CrashUtils;
@@ -256,6 +257,45 @@ public final class SceneStack
             return false;
         }
     }
+
+    /**
+     * 刷新当前状态并更新
+     *
+     * @return 是否刷新成功
+     */
+    public boolean refreshGameState ()
+    {
+        try
+        {
+            // 判断栈是否为空
+            if (!stateStack.empty())
+            {
+                StateStructure nowStateStructure = stateStack.peek();
+                setGameState(nowStateStructure);
+            }
+            else
+            {
+                if (!resetGameState())
+                {
+                    LogUtils.error(SceneStack.class, "refreshGameState 栈为空，重置游戏状态失败");
+                }
+                else
+                {
+                    LogUtils.debug(SceneStack.class, "refreshGameState 栈为空，已重置游戏状态");
+                }
+            }
+
+            LogUtils.debug(SceneStack.class, "refreshGameState 状态 (stateStructure): " + getCurrentState());
+            return true;
+        }
+        catch (Exception e)
+        {
+            LogUtils.error(SceneStack.class, "refreshGameState", e);
+            CrashUtils.crash(e);
+            return false;
+        }
+    }
+
 
     /**
      * 获取当前状态结构

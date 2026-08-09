@@ -103,7 +103,6 @@ public final class GameHost
                 this.textManager,
                 this.audioManager,
                 this.graphicsManager,
-                this.uiManager,
                 this.layoutManager,
                 this.playLocalData),
             new GamePlayDataLoader(

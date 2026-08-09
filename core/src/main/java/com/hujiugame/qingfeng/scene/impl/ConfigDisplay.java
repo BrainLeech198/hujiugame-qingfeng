@@ -8,7 +8,7 @@ import com.hujiugame.qingfeng.input.VirtualInputHandler;
 import com.hujiugame.qingfeng.scene.GameRender;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventQueue;
-import com.hujiugame.qingfeng.event.imp.EventPopGameState;
+import com.hujiugame.qingfeng.event.imp.PopGameState;
 
 public final class ConfigDisplay implements GameRender
 {
@@ -59,7 +59,7 @@ public final class ConfigDisplay implements GameRender
         // 按下返回按钮
         if (uiManager.isButtonClicked(UniversalUiKey.BUTTON_BACK))
         {
-            eventQueue.addEvent(new EventPopGameState());
+            eventQueue.addEvent(new PopGameState());
         }
     }
 

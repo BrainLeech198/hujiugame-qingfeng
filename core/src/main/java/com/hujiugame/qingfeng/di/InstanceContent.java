@@ -226,12 +226,10 @@ public final class InstanceContent
             );
             LogUtils.debug(InstanceContent.class, "init - GameHost 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
 
-            // 后续注入一般很快，不单独计时
-            instanceContent.textManager.setLanguageManager(instanceContent.languageManager);
-            instanceContent.textManager.setGameInfoManager(instanceContent.gameHost.getGameInfoManager());
-            instanceContent.layoutManager.setAudioManager(instanceContent.audioManager);
-            instanceContent.layoutManager.setGraphicsManager(instanceContent.graphicsManager);
-            instanceContent.layoutManager.setUiManager(instanceContent.uiManager);
+            // 后续注入一般很快，不单独计时：统一走封装 setter，对象替换时连带配置一并完成
+            instanceContent.setTextManager(instanceContent.textManager);
+            instanceContent.setLayoutManager(instanceContent.layoutManager);
+            instanceContent.setUiManager(instanceContent.uiManager);
 
             return true;
         }
@@ -291,13 +289,14 @@ public final class InstanceContent
     }
 
     /**
-     * 设置虚拟输入处理器
+     * 设置虚拟输入处理器，并绑定当前 UiManager（其构造时拿的是当时的 UiManager，需在此补一次绑定）
      *
      * @param virtualInputHandler 虚拟输入处理器
      */
     public void setVirtualInputHandler (VirtualInputHandler virtualInputHandler)
     {
         this.virtualInputHandler = virtualInputHandler;
+        if (uiManager != null) virtualInputHandler.setUiManager(uiManager);
     }
 
     /**
@@ -402,12 +401,42 @@ public final class InstanceContent
     }
 
     /**
+     * 设置文本管理器，并连带注入其依赖的语言管理器与游戏信息管理器
+     * <p>
+     * 对应依赖未初始化（null）时跳过，由各自的 setter 反向补绑（见 setGameHost）。
+     *
+     * @param textManager 文本管理器
+     */
+    public void setTextManager (TextManager textManager)
+    {
+        this.textManager = textManager;
+        if (languageManager != null) textManager.setLanguageManager(languageManager);
+        if (gameHost != null) textManager.setGameInfoManager(gameHost.getGameInfoManager());
+    }
+
+    /**
      * 获取 UI 管理器
      * @return UI 管理器
      */
     public UiManager getUiManager ()
     {
         return uiManager;
+    }
+
+    /**
+     * 设置 UI 管理器，并连带切换其依赖者的引用（切换主题整体替换 UiManager 实例时使用）
+     * <p>
+     * 连带项：图形管理器字体来源、布局管理器引用、虚拟输入引用；对应对象未初始化（null）时跳过，
+     * 由它们各自的 setter 反向补绑（见 setVirtualInputHandler/setLayoutManager）。
+     *
+     * @param uiManager UI 管理器
+     */
+    public void setUiManager (UiManager uiManager)
+    {
+        this.uiManager = uiManager;
+        if (graphicsManager != null) uiManager.setGraphicsQuoteFont(graphicsManager);
+        if (layoutManager != null) layoutManager.setUiManager(uiManager);
+        if (virtualInputHandler != null) virtualInputHandler.setUiManager(uiManager);
     }
 
     /**
@@ -426,6 +455,21 @@ public final class InstanceContent
     public LayoutManager getLayoutManager ()
     {
         return layoutManager;
+    }
+
+    /**
+     * 设置布局管理器，并连带注入其依赖的音频、图形与 UI 管理器
+     * <p>
+     * 对应依赖未初始化（null）时跳过，由各自的 setter 反向补绑（见 setAudioManager/setGraphicsManager/setUiManager）。
+     *
+     * @param layoutManager 布局管理器
+     */
+    public void setLayoutManager (LayoutManager layoutManager)
+    {
+        this.layoutManager = layoutManager;
+        if (audioManager != null) layoutManager.setAudioManager(audioManager);
+        if (graphicsManager != null) layoutManager.setGraphicsManager(graphicsManager);
+        if (uiManager != null) layoutManager.setUiManager(uiManager);
     }
 
     /**

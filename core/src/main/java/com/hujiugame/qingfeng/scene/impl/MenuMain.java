@@ -19,7 +19,7 @@ import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.scene.GameRender;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventQueue;
-import com.hujiugame.qingfeng.event.imp.EventPushGameState;
+import com.hujiugame.qingfeng.event.imp.PushGameState;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 
 public final class MenuMain implements GameRender
@@ -105,7 +105,7 @@ public final class MenuMain implements GameRender
         // 按下开始按钮
         if (uiManager.isButtonClicked(RequirementKey.Ui.MENU_MAIN_BUTTON_START))
         {
-            eventQueue.addEvent(new EventPushGameState(GameState.MENU, GameSubState.MENU_LIST));
+            eventQueue.addEvent(new PushGameState(GameState.MENU, GameSubState.MENU_LIST));
         }
         // 按下创作按钮
         else if (uiManager.isButtonClicked(RequirementKey.Ui.MENU_MAIN_BUTTON_CREATE))
@@ -115,7 +115,7 @@ public final class MenuMain implements GameRender
         // 按下配置按钮
         else if (uiManager.isButtonClicked(RequirementKey.Ui.MENU_MAIN_BUTTON_CONFIG))
         {
-            eventQueue.addEvent(new EventPushGameState(GameState.CONFIG, GameSubState.CONFIG_BASIC));
+            eventQueue.addEvent(new PushGameState(GameState.CONFIG, GameSubState.CONFIG_BASIC));
         }
         // 按下退出按钮
         else if (uiManager.isButtonClicked(RequirementKey.Ui.MENU_MAIN_BUTTON_QUIT))

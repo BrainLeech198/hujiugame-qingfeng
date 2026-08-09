@@ -13,7 +13,6 @@ public class KeyboardInputHandler extends InputAdapter
 {
     private final VirtualInputHandler virtualInputHandler;
 
-    private final UiManager uiManager;
     private final GameHost gameHost;
 
     /**
@@ -25,7 +24,6 @@ public class KeyboardInputHandler extends InputAdapter
     public KeyboardInputHandler (InstanceContent instanceContent, VirtualInputHandler virtualInputHandler)
     {
         this.virtualInputHandler = virtualInputHandler;
-        this.uiManager = instanceContent.getUiManager();
         this.gameHost = instanceContent.getGameHost();
     }
 
@@ -44,7 +42,10 @@ public class KeyboardInputHandler extends InputAdapter
             {
                 if (virtualInputHandler.getVirtualInputType() == VirtualInputType.NONE)
                 {
-                    return UniversalInputHandlerFunction.handleEscape(uiManager, uiManager.getMessageBox(), gameHost, UniversalInputType.KEYBOARD);
+                    return UniversalInputHandlerFunction.handleEscape(
+                        virtualInputHandler.getUiManager(),
+                        virtualInputHandler.getUiManager().getMessageBox(),
+                        gameHost, UniversalInputType.KEYBOARD);
                 }
                 else if (virtualInputHandler.getVirtualInputType() == VirtualInputType.KEYBOARD_SELECT)
                 {
@@ -57,7 +58,10 @@ public class KeyboardInputHandler extends InputAdapter
             {
                 if (virtualInputHandler.getVirtualInputType() == VirtualInputType.NONE)
                 {
-                    return UniversalInputHandlerFunction.handleEnter(uiManager, uiManager.getMessageBox(), gameHost, UniversalInputType.KEYBOARD);
+                    return UniversalInputHandlerFunction.handleEnter(
+                        virtualInputHandler.getUiManager(),
+                        virtualInputHandler.getUiManager().getMessageBox(),
+                        gameHost, UniversalInputType.KEYBOARD);
                 }
                 else if (virtualInputHandler.getVirtualInputType() == VirtualInputType.KEYBOARD_SELECT)
                 {

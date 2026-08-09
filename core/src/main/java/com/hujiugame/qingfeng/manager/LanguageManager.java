@@ -348,6 +348,8 @@ public final class LanguageManager
     {
         try
         {
+            // 切换语言前清空旧语言块缓存：块名不随语言变，命中缓存会返回旧语言内容
+            blockMap.clear();
             return init(name, directoryPathHandle, isLauncherLanguage, userConfigManager);
         }
         catch (Exception e)

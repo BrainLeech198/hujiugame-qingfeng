@@ -18,6 +18,30 @@
 > 7. 【如果】本次更新比较重要、与项目关键设计相关 → 同步写入 `temp/CLAUDE_MEMORY.md`（gitignored 本地工作记忆，仅当前开发机可见），便于后续 AI 对话延续上下文
 > 8. 【必须】CHANGELOG 条目不独立提交：每个内容改动 = 一笔提交，同时包含对应改动的文件 + 本文档中该改动对应的条目。先改文件并写对应条目 → 一并提交 → 再改下一个文件、写下一条目；按内容逐条拆分提交，禁止攒一堆 CHANGELOG 更新最后统一提交（例：文件 `a`、`b` 均有改动 → 提交 1 = `a` + 「更新了 a」条目；提交 2 = `b` + 「更新了 b」条目）
 
+## 2026-08-09 — 事件类统一命名 + 运行时主题/语言切换
+
+### 新增
+
+- **`RefreshUiManager` 事件 + 分发处理** — 运行时主题切换：调用方用目标主题创建并 init 新 UiManager → 事件携带 → `EventDispatcher` 替换进 `InstanceContent` → 场景重进 → 旧 UiManager 帧间释放
+- **`SceneStack.refreshGameState()`** — 重进当前状态，使渲染机用新 UiManager 重建页面
+- **`InstanceContent` 封装替换型 setter** — `setUiManager`/`setTextManager`/`setLayoutManager`/`setVirtualInputHandler` 在替换实例时连带切换图形字体来源、布局管理器、虚拟输入等依赖引用（null 安全，缺失依赖由各自 setter 反向补绑）
+
+### 变更
+
+- **`LanguageManager.reload` 清空语言块缓存** — 切换语言前 `blockMap.clear()`：块名不随语言变化，缓存命中会返回旧语言内容
+
+### 重构
+
+- **事件类统一命名** — `EventEnterGame`→`EnterGame`、`EventPlayGame`→`PlayGame`、`EventPopGameState`→`PopGameState`、`EventPushGameState`→`PushGameState`、`EventQuitGame`→`QuitGame`、`EventResetGameState`→`ResetGameState`、`EventSetGameState`→`SetGameState`
+- **输入处理器动态获取 UiManager** — `KeyboardInputHandler`/`ControllerInputHandler` 不再持有构造时固定的 UiManager，改为经 `virtualInputHandler.getUiManager()` 动态获取，切主题后输入跟随新实例
+
+### 修复
+
+- **`GameResourceLoader` 字体链路** — 删除把已释放的启动器 UiManager 绑回图形管理器的冗余调用；游戏内标准注入改为 `gameGraphicsManager.quoteUiManager(gameUiManager)`
+- **`Init.initUi` 去除冗余字体注入** — 与 `uiManager.init` 引用同一实例，多余的 `setGraphicsQuoteFont` 调用已删除
+
+---
+
 ## 2026-08-09 — UiObject 支持 JsonEntity 构造 + 复用点替换
 
 ### 新增

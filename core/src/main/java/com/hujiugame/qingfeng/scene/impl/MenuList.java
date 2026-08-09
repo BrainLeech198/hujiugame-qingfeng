@@ -8,7 +8,7 @@ import com.hujiugame.qingfeng.core.UpdateChecker;
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.data.game.GameStateDataContainer;
 import com.hujiugame.qingfeng.event.EventQueue;
-import com.hujiugame.qingfeng.event.imp.EventPopGameState;
+import com.hujiugame.qingfeng.event.imp.PopGameState;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.input.VirtualInputHandler;
 import com.hujiugame.qingfeng.scene.GameRender;
@@ -428,7 +428,7 @@ public final class MenuList implements GameRender
         // 按下返回按钮
         if (uiManager.isButtonClicked(RequirementKey.Ui.MENU_LIST_BUTTON_BACK))
         {
-            eventQueue.addEvent(new EventPopGameState());
+            eventQueue.addEvent(new PopGameState());
         }
 
         // 点击路径标签

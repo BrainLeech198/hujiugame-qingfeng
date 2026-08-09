@@ -12,7 +12,7 @@ import com.hujiugame.qingfeng.input.VirtualInputHandler;
 import com.hujiugame.qingfeng.scene.GameRender;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventQueue;
-import com.hujiugame.qingfeng.event.imp.EventPopGameState;
+import com.hujiugame.qingfeng.event.imp.PopGameState;
 import com.hujiugame.qingfeng.manager.LayoutManager;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
@@ -151,7 +151,7 @@ public final class GameRole implements GameRender
         // 按下返回按钮
         if (gameUiManager.isButtonClicked(UniversalUiKey.BUTTON_BACK))
         {
-            eventQueue.addEvent(new EventPopGameState());
+            eventQueue.addEvent(new PopGameState());
         }
 
         // 单人模式角色

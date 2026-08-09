@@ -7,7 +7,7 @@ import com.hujiugame.qingfeng.event.EventObject;
 /**
  * 进入游戏事件
  */
-public class EventEnterGame implements EventObject
+public class EnterGame implements EventObject
 {
     private final String eventName;
     private final FileHandle gamePathHandle;
@@ -26,7 +26,7 @@ public class EventEnterGame implements EventObject
      * @param gameVersion         游戏版本
      * @param gameLauncherVersion 游戏启动器版本
      */
-    public EventEnterGame (FileHandle gamePathHandle, String gameId, String gameName, String gameVersion, String gameLauncherVersion)
+    public EnterGame (FileHandle gamePathHandle, String gameId, String gameName, String gameVersion, String gameLauncherVersion)
     {
         eventName = Event.ENTER_GAME;
         this.gamePathHandle = gamePathHandle;

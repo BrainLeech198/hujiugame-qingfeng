@@ -8,7 +8,7 @@ import com.hujiugame.qingfeng.event.EventObject;
 /**
  * 退出游戏事件
  */
-public class EventPlayGame implements EventObject
+public class PlayGame implements EventObject
 {
     private final String eventName;
     private final Hoster hoster;
@@ -20,7 +20,7 @@ public class EventPlayGame implements EventObject
      * @param hoster 游戏主持类型
      * @param role   角色对象
      */
-    public EventPlayGame (Hoster hoster, Role role)
+    public PlayGame (Hoster hoster, Role role)
     {
         eventName = Event.PLAY_GAME;
         this.hoster = hoster;

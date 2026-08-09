@@ -21,7 +21,6 @@ public final class GameResourceLoader
     private final TextManager textManager;
     private final AudioManager launcherAudioManager;
     private final GraphicsManager launcherGraphicsManager;
-    private final UiManager launcherUiManager;
     private final LayoutManager layoutManager;
     private final PlayLocalData playLocalData;
 
@@ -34,7 +33,6 @@ public final class GameResourceLoader
      * @param textManager             文本管理器
      * @param launcherAudioManager    启动器音频管理器
      * @param launcherGraphicsManager 启动器图形管理器
-     * @param launcherUiManager       启动器UI管理器
      * @param layoutManager           布局管理器
      * @param playLocalData         游戏数据内容
      */
@@ -44,7 +42,6 @@ public final class GameResourceLoader
                                TextManager textManager,
                                AudioManager launcherAudioManager,
                                GraphicsManager launcherGraphicsManager,
-                               UiManager launcherUiManager,
                                LayoutManager layoutManager,
                                PlayLocalData playLocalData)
     {
@@ -54,7 +51,6 @@ public final class GameResourceLoader
         this.textManager = textManager;
         this.launcherAudioManager = launcherAudioManager;
         this.launcherGraphicsManager = launcherGraphicsManager;
-        this.launcherUiManager = launcherUiManager;
         this.layoutManager = layoutManager;
         this.playLocalData = playLocalData;
     }
@@ -110,15 +106,10 @@ public final class GameResourceLoader
                 playLocalData.setUiManager(gameUiManager);
                 LogUtils.debug(GameResourceLoader.class, "loadResource ui初始化成功");
             }
-            if (!launcherGraphicsManager.quoteUiManager(launcherUiManager))
-            {
-                LogUtils.error(GameResourceLoader.class, "loadResource 绘图引用字体失败");
-                return false;
-            }
-            else
-            {
-                LogUtils.debug(GameResourceLoader.class, "loadResource 绘图引用字体成功");
-            }
+
+            // 游戏内图形引用游戏内UI的字体来源（与启动器画布由 setUiManager 注入对称，供游戏内 putText 取字）
+            gameGraphicsManager.quoteUiManager(gameUiManager);
+            LogUtils.debug(GameResourceLoader.class, "loadResource 游戏内绘图引用字体成功");
 
             // script
             ScriptExecutor scriptExecutor = new ScriptExecutor();

@@ -5,11 +5,11 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.hujiugame.qingfeng.core.GameHost;
 import com.hujiugame.qingfeng.core.UpdateChecker;
+import com.hujiugame.qingfeng.event.imp.PushGameState;
 import com.hujiugame.qingfeng.util.interact.NativeDialogUtils;
 import com.hujiugame.qingfeng.util.system.CrashUtils;
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.data.game.GameStateDataContainer;
-import com.hujiugame.qingfeng.type.Numeric;
 import com.hujiugame.qingfeng.type.ScreenSize;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.file.PathName;
@@ -23,7 +23,6 @@ import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.scene.GameRender;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventQueue;
-import com.hujiugame.qingfeng.event.imp.EventPushGameState;
 import com.hujiugame.qingfeng.manager.LanguageManager;
 import com.hujiugame.qingfeng.manager.ThemeManager;
 import com.hujiugame.qingfeng.manager.UserConfigManager;
@@ -221,16 +220,6 @@ public final class Init implements GameRender
         {
             LogUtils.debug(Init.class, "initUi uiManager.init() ui初始化成功");
         }
-        if (!uiManager.setGraphicsQuoteFont(graphicsManager))
-        {
-            LogUtils.error(Init.class, "initUi uiManager.setGraphicsQuoteFont(graphicsManager) 设置字体失败");
-            CrashUtils.crash(new RuntimeException("initUi uiManager.setGraphicsQuoteFont(graphicsManager) 设置字体失败"));
-            return;
-        }
-        else
-        {
-            LogUtils.debug(Init.class, "initUi uiManager.setGraphicsQuoteFont(graphicsManager) 设置字体成功");
-        }
         initState++;
     }
 
@@ -240,7 +229,7 @@ public final class Init implements GameRender
         checkUpdate();
 
         // 跳转菜单
-        eventQueue.addEvent(new EventPushGameState(GameState.MENU, GameSubState.MENU_MAIN));
+        eventQueue.addEvent(new PushGameState(GameState.MENU, GameSubState.MENU_MAIN));
     }
 
     // ===================================================================================================================
