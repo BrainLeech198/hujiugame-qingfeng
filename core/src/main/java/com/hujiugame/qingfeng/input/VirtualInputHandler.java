@@ -11,10 +11,10 @@ import com.hujiugame.qingfeng.type.VirtualInputType;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.file.PathName;
 import com.hujiugame.qingfeng.type.key.RequirementKey;
-import com.hujiugame.qingfeng.type.key.UiKey;
 import com.hujiugame.qingfeng.type.key.UniversalUiKey;
 import com.hujiugame.qingfeng.ui.MessageBox;
 import com.hujiugame.qingfeng.ui.UiManager;
+import com.hujiugame.qingfeng.ui.info.UiObject;
 import com.hujiugame.qingfeng.ui.kind.InteractableObject;
 import com.hujiugame.qingfeng.util.StringPolisher;
 import com.hujiugame.qingfeng.util.system.LogUtils;
@@ -24,8 +24,8 @@ import java.util.*;
 public class VirtualInputHandler
 {
     private final GraphicsManager graphicsManager;
-    private final UiManager uiManager;
     private final GameHost gameHost;
+    private UiManager uiManager;
 
     private VirtualInputType virtualInputType = VirtualInputType.NONE;
     private static final double DEFAULT_REMAINING_VIRTUAL_SELECT_TIME = 5.0;
@@ -80,8 +80,8 @@ public class VirtualInputHandler
     public VirtualInputHandler (InstanceContent instanceContent)
     {
         this.graphicsManager = instanceContent.getGraphicsManager();
-        this.uiManager = instanceContent.getUiManager();
         this.gameHost = instanceContent.getGameHost();
+        this.uiManager = instanceContent.getUiManager();
 
         // 图片资源
         FileHandle externalImageDirectory = Gdx.files.internal(PathName.ASSET_S_RESOURCE_IMAGE);
@@ -119,6 +119,26 @@ public class VirtualInputHandler
             virtualCancelRectPictureFileHandle
         );
 
+    }
+
+    /**
+     * 获取 UI 管理器
+     *
+     * @return UI 管理器
+     */
+    public UiManager getUiManager ()
+    {
+        return uiManager;
+    }
+
+    /**
+     * 设置 UI 管理器
+     *
+     * @param uiManager UI 管理器
+     */
+    public void setUiManager (UiManager uiManager)
+    {
+        this.uiManager = uiManager;
     }
 
     /**
@@ -168,19 +188,16 @@ public class VirtualInputHandler
                 return;
             }
 
-            // 优先选中配置json
+            // 优先选中配置json → 构造 UiObject（type/tag 缺失或解析失败时对应字段为 null）
             JsonEntity priorityConfig = configJson.getJsonEntityByKey(RequirementKey.Config.UNIVERSAL_PRIORITY_CONFIRM_UI);
+            UiObject uiObject = new UiObject(priorityConfig);
 
-            // 优先选中控件解析
-            String type = priorityConfig.containsKey(RequirementKey.Config.UNIVERSAL_PRIORITY_CONFIRM_UI_TYPE)
-                ? priorityConfig.getString(RequirementKey.Config.UNIVERSAL_PRIORITY_CONFIRM_UI_TYPE) : "";
-            String tag = priorityConfig.containsKey(RequirementKey.Config.UNIVERSAL_PRIORITY_CONFIRM_UI_TAG)
-                ? priorityConfig.getString(RequirementKey.Config.UNIVERSAL_PRIORITY_CONFIRM_UI_TAG) : "";
-
-            // 配置格式校验
-            if (tag.isEmpty())
+            // 配置格式校验：类型未解析或标签缺失
+            if (uiObject.getUiKind() == null || uiObject.getTag() == null || uiObject.getTag().isEmpty())
             {
-                LogUtils.error(VirtualInputHandler.class, "setPriorityConfirmSelectObject 配置格式错误 (type): " + type + " (tag): " + tag);
+                LogUtils.error(VirtualInputHandler.class,
+                    "setPriorityConfirmSelectObject 配置格式错误 (type): " + priorityConfig.getString(RequirementKey.Config.UNIVERSAL_PRIORITY_CONFIRM_UI_TYPE)
+                        + " (tag): " + priorityConfig.getString(RequirementKey.Config.UNIVERSAL_PRIORITY_CONFIRM_UI_TAG));
                 return;
             }
 
@@ -195,38 +212,23 @@ public class VirtualInputHandler
                 effectiveUiManager = uiManager;
             }
 
-            // 按控件类型 + tag 从 UiManager 分类型集合中查找
-            InteractableObject obj;
-            switch (type)
-            {
-                case UiKey.Button.KEY:
-                    obj = effectiveUiManager.getButton(tag);
-                    break;
-
-                case UiKey.Label.KEY:
-                    obj = effectiveUiManager.getLabel(tag);
-                    break;
-
-                case UiKey.Image.KEY:
-                    obj = effectiveUiManager.getImage(tag);
-                    break;
-
-                default:
-                    LogUtils.error(VirtualInputHandler.class, "setPriorityConfirmSelectObject 未知类型 (type): " + type + " (tag): " + tag);
-                    return;
-            }
+            // 交给 UiManager 统一查找
+            InteractableObject obj = effectiveUiManager.findObject(uiObject);
 
             // 未找到对象
             if (obj == null)
             {
-                LogUtils.debug(VirtualInputHandler.class, "setPriorityConfirmSelectObject 未找到 (type): " + type + " (tag): " + tag);
+                LogUtils.debug(VirtualInputHandler.class,
+                    "setPriorityConfirmSelectObject 未找到 (type): " + priorityConfig.getString(RequirementKey.Config.UNIVERSAL_PRIORITY_CONFIRM_UI_TYPE)
+                        + " (tag): " + uiObject.getTag());
                 return;
             }
 
             // 设置优先选中对象
             setPriorityConfirmSelectObject(obj);
             LogUtils.debug(VirtualInputHandler.class,
-                "setPriorityConfirmSelectObject 配置驱动优先选中 (type): " + type + " (tag): " + tag + " (obj): " + obj);
+                "setPriorityConfirmSelectObject 配置驱动优先选中 (type): " + priorityConfig.getString(RequirementKey.Config.UNIVERSAL_PRIORITY_CONFIRM_UI_TYPE)
+                    + " (tag): " + uiObject.getTag() + " (obj): " + obj);
         }
         catch (Exception e)
         {

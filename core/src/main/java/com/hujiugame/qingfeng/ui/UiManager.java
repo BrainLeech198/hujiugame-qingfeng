@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.data.game.Layout;
+import com.hujiugame.qingfeng.ui.info.UiObject;
 import com.hujiugame.qingfeng.ui.kind.InteractableObject;
 import com.hujiugame.qingfeng.ui.kind.TextObject;
 import com.hujiugame.qingfeng.ui.kind.UiInfo;
@@ -41,6 +42,7 @@ import com.hujiugame.qingfeng.type.file.PathName;
 import com.hujiugame.qingfeng.type.key.JsonKey;
 import com.hujiugame.qingfeng.type.key.UiKey;
 import com.hujiugame.qingfeng.type.ui.FontFlag;
+import com.hujiugame.qingfeng.type.ui.UiKind;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.manager.TextManager;
@@ -219,21 +221,26 @@ public final class UiManager
                     continue;
                 }
                 Set<String> styleSet = new HashSet<>(styles);
-                switch (category)
+                UiKind kind = UiKind.fromString(category);
+                if (kind == null)
                 {
-                    case UiKey.Button.KEY:
+                    continue;
+                }
+                switch (kind)
+                {
+                    case BUTTON:
                         availableButtonStyles = styleSet;
                         break;
-                    case UiKey.Label.KEY:
+                    case LABEL:
                         availableLabelStyles = styleSet;
                         break;
-                    case UiKey.Image.KEY:
+                    case IMAGE:
                         availableImageStyles = styleSet;
                         break;
-                    case UiKey.Font.KEY:
+                    case FONT:
                         availableFontStyles = styleSet;
                         break;
-                    case UiKey.MessageBox.KEY:
+                    case MESSAGE_BOX:
                         availableMessageBoxStyles = styleSet;
                         break;
                 }
@@ -3609,6 +3616,40 @@ public final class UiManager
     public boolean containsButton (String buttonTag)
     {
         return buttonMap.containsKey(buttonTag);
+    }
+
+    /**
+     * 根据 UI 对象标识查找交互控件
+     *
+     * @param uiObject UI 对象标识（类型 + tag）
+     * @return 对应交互控件，类型不支持或对象不存在返回 null
+     */
+    public InteractableObject findObject (UiObject uiObject)
+    {
+        try
+        {
+            if (uiObject == null) return null;
+            switch (uiObject.getUiKind())
+            {
+                case BUTTON:
+                    return getButton(uiObject.getTag());
+
+                case LABEL:
+                    return getLabel(uiObject.getTag());
+
+                case IMAGE:
+                    return getImage(uiObject.getTag());
+
+                default:
+                    LogUtils.error(UiManager.class, "findObject 不支持的 UI 类型 (uiObject): " + uiObject);
+                    return null;
+            }
+        }
+        catch (Exception e)
+        {
+            LogUtils.error(UiManager.class, "findObject", e);
+            return null;
+        }
     }
 
     /**

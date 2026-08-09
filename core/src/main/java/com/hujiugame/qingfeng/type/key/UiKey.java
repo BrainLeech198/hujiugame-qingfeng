@@ -233,4 +233,21 @@ public final class UiKey
             public static final String NORMAL = "normal";
         }
     }
+
+    // ====================================================================================================
+    // UI 对象标识字段（UiObject 从 JsonEntity 构造时读取）
+
+    public static final class UiObject
+    {
+        private UiObject()
+        {
+            throw new UnsupportedOperationException("Utility class cannot be instantiated");
+        }
+
+        /** UiObject 的类型字段 */
+        public static final String TYPE = "type";
+
+        /** UiObject 的标签字段 */
+        public static final String TAG = "tag";
+    }
 }
