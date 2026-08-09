@@ -1165,16 +1165,25 @@ public final class AudioManager
                     // 该状态不可靠。用 playingObjectMap 的 containsKey 代替——
                     // BGM 只要通过 playBackgroundMusic 启动过就会在该表中登记，
                     // 显式停止/销毁时才移除。不受 native 音频状态影响。
+                    // 但记录存在不代表 native 真正在播：Android 打开系统文件选择器时，
+                    // 暂停在 GL 线程、恢复在主线程且被窗口焦点门控，快速往返存在顺序
+                    // 颠倒导致 BGM 被暂停却不再恢复的竞态。因此命中记录时仍交给
+                    // playBackgroundMusic 校验实际状态——在播则 no-op，未播则恢复。
+                    String playingTag = null;
                     synchronized (bgMusicPlayingObjectMap)
                     {
                         for (String tag : bgmList)
                         {
                             if (bgMusicPlayingObjectMap.containsKey(tag))
                             {
-                                // 已有曲目在播，保持当前播放不切换
-                                return true;
+                                playingTag = tag;
+                                break;
                             }
                         }
+                    }
+                    if (playingTag != null)
+                    {
+                        return playBackgroundMusic(playingTag, false);
                     }
 
                     // 没有曲目在播：随机选一首播放
