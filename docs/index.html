@@ -602,6 +602,59 @@
             .platform-grid { flex-direction: column; align-items: center; }
             .log-content { font-size: 1.1rem; }
         }
+
+        /* ================================
+           Lightbox - 图片点击放大
+           ================================ */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.88);
+        }
+        .lightbox.open {
+            display: flex;
+        }
+        .lightbox-content {
+            max-width: 94vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .lightbox-content img {
+            max-width: 94vw;
+            max-height: 84vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 12px;
+            right: 22px;
+            font-size: 2.6rem;
+            line-height: 1;
+            color: #fff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            opacity: 0.85;
+            padding: 8px;
+        }
+        .lightbox-close:hover {
+            opacity: 1;
+        }
+        .lightbox-caption {
+            margin-top: 12px;
+            color: #ddd;
+            font-size: 1rem;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -758,6 +811,15 @@
     </div>
 </div>
 
+<!-- ==================== 图片放大查看 ==================== -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="关闭">&times;</button>
+    <figure class="lightbox-content">
+        <img id="lightboxImg" src="" alt="">
+        <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
+    </figure>
+</div>
+
 <script>
     (function() {
         // ==================== i18n 初始化 ====================
@@ -826,9 +888,16 @@
             const repairBtn = document.querySelector('#tipCardRepair .tip-btn');
             const repairSteps = document.getElementById('repairSteps');
             if (repairBtn && repairSteps) {
+                // 只更新按钮内文案 span，保留 🔧 emoji
+                const updateRepairBtnText = (key) => {
+                    const span = repairBtn.querySelector('[data-i18n]');
+                    if (span && currentMessages && currentMessages[key]) {
+                        span.textContent = currentMessages[key];
+                    }
+                };
                 repairBtn.onclick = () => {
                     const isOpen = repairSteps.classList.toggle('open');
-                    repairBtn.textContent = currentMessages[isOpen ? 'tip_repair_button_hide' : 'tip_repair_button'];
+                    updateRepairBtnText(isOpen ? 'tip_repair_button_hide' : 'tip_repair_button');
                 };
                 // 点击面板外部关闭
                 document.addEventListener('click', (e) => {
@@ -837,10 +906,51 @@
                         !repairSteps.contains(e.target) &&
                         !tipCard.contains(e.target)) {
                         repairSteps.classList.remove('open');
-                        repairBtn.textContent = currentMessages['tip_repair_button'];
+                        updateRepairBtnText('tip_repair_button');
                     }
                 });
             }
+        }
+
+        // ==================== Lightbox 图片放大 ====================
+        function initLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            if (!lightbox) return;
+            const lightboxImg = document.getElementById('lightboxImg');
+            const lightboxCaption = document.getElementById('lightboxCaption');
+            const closeBtn = document.getElementById('lightboxClose');
+
+            function open(src, alt) {
+                lightboxImg.src = src;
+                lightboxImg.alt = alt || '';
+                lightboxCaption.textContent = alt || '';
+                lightbox.classList.add('open');
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+            function close() {
+                lightbox.classList.remove('open');
+                lightbox.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                lightboxImg.src = '';
+            }
+
+            // 事件委托：仅放大非交互容器内的图片（排除下载按钮等）
+            document.addEventListener('click', (e) => {
+                const img = e.target.closest('img');
+                if (!img) return;
+                if (img.closest('a, button')) return;   // 交互元素内的图片不放大
+                if (!img.offsetParent) return;          // 已隐藏（onerror 兜底）的图片不放大
+                open(img.currentSrc || img.src, img.alt);
+            });
+
+            closeBtn.addEventListener('click', close);
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) close();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') close();
+            });
         }
 
         // ==================== 模态框管理 ====================
@@ -978,6 +1088,7 @@
 
         // 启动流程
         const userLang = getBrowserLang();
+        initLightbox();
         loadMessages(userLang).then(messages => {
             applyI18n(messages);
             bindRepairButton();
