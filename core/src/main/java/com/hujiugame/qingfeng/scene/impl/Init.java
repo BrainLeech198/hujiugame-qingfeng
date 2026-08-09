@@ -147,6 +147,8 @@ public final class Init implements GameRender
 
     private void repairGame ()
     {
+        // 防重入：双击过快会触发两次并发修复，两个线程同时同步资源导致文件损坏
+        if (isRepairing) return;
         isRepairing = true;
         updateChecker.repairGame(() ->
         {
