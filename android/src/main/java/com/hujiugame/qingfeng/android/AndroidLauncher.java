@@ -23,7 +23,6 @@ import com.hujiugame.qingfeng.android.imp.AndroidExplorerOpener;
 import com.hujiugame.qingfeng.util.interact.CrashDialogShower;
 import com.hujiugame.qingfeng.util.interact.FileExplorer;
 import com.hujiugame.qingfeng.util.interact.NativeDialogUtils;
-import com.hujiugame.qingfeng.util.interact.interfaces.ConfirmCallback;
 import com.hujiugame.qingfeng.util.interact.interfaces.NativeDialog;
 import com.hujiugame.qingfeng.util.system.FilePathConfig;
 import games.spooky.gdx.nativefilechooser.android.AndroidFileChooser;
@@ -78,7 +77,7 @@ public class AndroidLauncher extends AndroidApplication
             }
 
             @Override
-            public void showConfirm (String title, String message, ConfirmCallback callback)
+            public void showConfirm (String title, String message, Runnable onConfirm, Runnable onCancel)
             {
                 mainHandler.post(() ->
                 {
@@ -86,9 +85,13 @@ public class AndroidLauncher extends AndroidApplication
                         .setTitle(title)
                         .setMessage(message)
                         .setPositiveButton("确定", (dialog, which) ->
-                            Gdx.app.postRunnable(callback::onConfirm))
+                        {
+                            if (onConfirm != null) Gdx.app.postRunnable(onConfirm);
+                        })
                         .setNegativeButton("取消", (dialog, which) ->
-                            Gdx.app.postRunnable(callback::onCancel))
+                        {
+                            if (onCancel != null) Gdx.app.postRunnable(onCancel);
+                        })
                         .show();
                 });
             }

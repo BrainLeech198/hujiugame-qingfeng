@@ -1,6 +1,5 @@
 package com.hujiugame.qingfeng.util.interact;
 
-import com.hujiugame.qingfeng.util.interact.interfaces.ConfirmCallback;
 import com.hujiugame.qingfeng.util.interact.interfaces.NativeDialog;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
@@ -74,24 +73,38 @@ public final class NativeDialogUtils
     // ===================================================================================================================
 
     /**
+     * 显示确认选择对话框（只关心"确定"）
+     *
+     * @param title     对话框标题
+     * @param message   确认内容
+     * @param onConfirm 用户点击"确定"后的回调（可为 null）
+     */
+    public static void showConfirm (String title, String message, Runnable onConfirm)
+    {
+        showConfirm(title, message, onConfirm, null);
+    }
+
+
+    /**
      * 显示确认选择对话框
      *
-     * @param title    对话框标题
-     * @param message  确认内容
-     * @param callback 用户选择回调
+     * @param title     对话框标题
+     * @param message   确认内容
+     * @param onConfirm 用户点击"确定"后的回调（可为 null）
+     * @param onCancel  用户点击"取消"或关闭对话框后的回调（可为 null）
      */
-    public static void showConfirm (String title, String message, ConfirmCallback callback)
+    public static void showConfirm (String title, String message, Runnable onConfirm, Runnable onCancel)
     {
         if (platformDialog != null)
         {
-            platformDialog.showConfirm(title, message, callback);
+            platformDialog.showConfirm(title, message, onConfirm, onCancel);
         }
         else
         {
             LogUtils.info(NativeDialogUtils.class, "showConfirm [未注入]: " + title + " - " + message);
-            if (callback != null)
+            if (onCancel != null)
             {
-                callback.onConfirm();
+                onCancel.run();
             }
         }
     }

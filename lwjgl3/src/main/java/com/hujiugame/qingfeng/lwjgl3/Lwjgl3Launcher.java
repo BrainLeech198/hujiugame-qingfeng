@@ -12,7 +12,6 @@ import com.hujiugame.qingfeng.util.interact.CrashDialogShower;
 import com.hujiugame.qingfeng.util.interact.FileChooser;
 import com.hujiugame.qingfeng.util.interact.FileExplorer;
 import com.hujiugame.qingfeng.util.interact.NativeDialogUtils;
-import com.hujiugame.qingfeng.util.interact.interfaces.ConfirmCallback;
 import com.hujiugame.qingfeng.util.interact.interfaces.NativeDialog;
 import com.hujiugame.qingfeng.util.system.FilePathConfig;
 import games.spooky.gdx.nativefilechooser.desktop.DesktopFileChooser;
@@ -133,7 +132,7 @@ public class Lwjgl3Launcher
             }
 
             @Override
-            public void showConfirm (String title, String message, ConfirmCallback callback)
+            public void showConfirm (String title, String message, Runnable onConfirm, Runnable onCancel)
             {
                 javax.swing.SwingUtilities.invokeLater(() ->
                 {
@@ -143,11 +142,11 @@ public class Lwjgl3Launcher
                     {
                         if (result == javax.swing.JOptionPane.YES_OPTION)
                         {
-                            callback.onConfirm();
+                            if (onConfirm != null) onConfirm.run();
                         }
-                        else
+                        else if (onCancel != null)
                         {
-                            callback.onCancel();
+                            onCancel.run();
                         }
                     });
                 });

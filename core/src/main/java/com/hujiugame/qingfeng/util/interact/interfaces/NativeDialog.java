@@ -19,11 +19,12 @@ public interface NativeDialog
     /**
      * 显示确认选择对话框（带确定/取消按钮）
      *
-     * @param title    对话框标题
-     * @param message  提示内容
-     * @param callback 用户选择回调（onConfirm / onCancel）
+     * @param title     对话框标题
+     * @param message   提示内容
+     * @param onConfirm 用户点击"确定"后的回调（可为 null）
+     * @param onCancel  用户点击"取消"或关闭对话框后的回调（可为 null）
      */
-    void showConfirm (String title, String message, ConfirmCallback callback);
+    void showConfirm (String title, String message, Runnable onConfirm, Runnable onCancel);
 
     /**
      * 显示错误通知对话框
