@@ -183,21 +183,21 @@ public class VirtualInputHandler
         try
         {
             // 配置为空或不包含优先选中配置，则返回
-            if (configJson == null || !configJson.containsKey(RequirementKey.Config.UNIVERSAL_PRIORITY_CONFIRM_UI))
+            if (configJson == null || !configJson.containsKey(RequirementKey.Config.Universal.PRIORITY_CONFIRM_UI))
             {
                 return;
             }
 
             // 优先选中配置json → 构造 UiObject（type/tag 缺失或解析失败时对应字段为 null）
-            JsonEntity priorityConfig = configJson.getJsonEntityByKey(RequirementKey.Config.UNIVERSAL_PRIORITY_CONFIRM_UI);
+            JsonEntity priorityConfig = configJson.getJsonEntityByKey(RequirementKey.Config.Universal.PRIORITY_CONFIRM_UI);
             UiObject uiObject = new UiObject(priorityConfig);
 
             // 配置格式校验：类型未解析或标签缺失
             if (uiObject.getUiKind() == null || uiObject.getTag() == null || uiObject.getTag().isEmpty())
             {
                 LogUtils.error(VirtualInputHandler.class,
-                    "setPriorityConfirmSelectObject 配置格式错误 (type): " + priorityConfig.getString(RequirementKey.Config.UNIVERSAL_PRIORITY_CONFIRM_UI_TYPE)
-                        + " (tag): " + priorityConfig.getString(RequirementKey.Config.UNIVERSAL_PRIORITY_CONFIRM_UI_TAG));
+                    "setPriorityConfirmSelectObject 配置格式错误 (type): " + priorityConfig.getString(RequirementKey.Config.Universal.PRIORITY_CONFIRM_UI_TYPE)
+                        + " (tag): " + priorityConfig.getString(RequirementKey.Config.Universal.PRIORITY_CONFIRM_UI_TAG));
                 return;
             }
 
@@ -219,7 +219,7 @@ public class VirtualInputHandler
             if (obj == null)
             {
                 LogUtils.debug(VirtualInputHandler.class,
-                    "setPriorityConfirmSelectObject 未找到 (type): " + priorityConfig.getString(RequirementKey.Config.UNIVERSAL_PRIORITY_CONFIRM_UI_TYPE)
+                    "setPriorityConfirmSelectObject 未找到 (type): " + priorityConfig.getString(RequirementKey.Config.Universal.PRIORITY_CONFIRM_UI_TYPE)
                         + " (tag): " + uiObject.getTag());
                 return;
             }
@@ -227,7 +227,7 @@ public class VirtualInputHandler
             // 设置优先选中对象
             setPriorityConfirmSelectObject(obj);
             LogUtils.debug(VirtualInputHandler.class,
-                "setPriorityConfirmSelectObject 配置驱动优先选中 (type): " + priorityConfig.getString(RequirementKey.Config.UNIVERSAL_PRIORITY_CONFIRM_UI_TYPE)
+                "setPriorityConfirmSelectObject 配置驱动优先选中 (type): " + priorityConfig.getString(RequirementKey.Config.Universal.PRIORITY_CONFIRM_UI_TYPE)
                     + " (tag): " + uiObject.getTag() + " (obj): " + obj);
         }
         catch (Exception e)

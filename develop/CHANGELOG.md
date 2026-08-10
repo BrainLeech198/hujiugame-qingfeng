@@ -18,6 +18,14 @@
 > 7. 【如果】本次更新比较重要、与项目关键设计相关 → 同步写入 `temp/CLAUDE_MEMORY.md`（gitignored 本地工作记忆，仅当前开发机可见），便于后续 AI 对话延续上下文
 > 8. 【必须】CHANGELOG 条目不独立提交：每个内容改动 = 一笔提交，同时包含对应改动的文件 + 本文档中该改动对应的条目。先改文件并写对应条目 → 一并提交 → 再改下一个文件、写下一条目；按内容逐条拆分提交，禁止攒一堆 CHANGELOG 更新最后统一提交（例：文件 `a`、`b` 均有改动 → 提交 1 = `a` + 「更新了 a」条目；提交 2 = `b` + 「更新了 b」条目）
 
+## 2026-08-10 — RequirementKey.Config 通用字段收进 Universal 内部类
+
+### 重构
+
+- **`RequirementKey.Config.Universal` 内部类** — 优先级确认 UI 三个通用配置键从 `Config.UNIVERSAL_PRIORITY_CONFIRM_UI*` 收进 `Config.Universal`，去掉冗余 `UNIVERSAL_` 前缀（嵌套后避免 `Config.Universal.UNIVERSAL_...` 双重前缀），`VirtualInputHandler` 引用同步更新
+
+---
+
 ## 2026-08-10 — NativeDialog showConfirm 改用两个 Runnable 回调
 
 ### 重构
