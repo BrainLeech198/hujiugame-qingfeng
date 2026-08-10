@@ -73,9 +73,13 @@ public final class RequirementKey
                 throw new UnsupportedOperationException("Utility class cannot be instantiated");
             }
 
+            // 虚拟控制:优先选中的对象
             public static final String PRIORITY_CONFIRM_UI = "priority_confirm_ui";
             public static final String PRIORITY_CONFIRM_UI_TYPE = UiKey.UiObject.TYPE;
             public static final String PRIORITY_CONFIRM_UI_TAG = UiKey.UiObject.TAG;
+
+            // 淡入淡出动画系统
+            public static final String ANIMATION = AnimationKey.ANIMATION_KEY;
         }
 
         // ====================================================================================================

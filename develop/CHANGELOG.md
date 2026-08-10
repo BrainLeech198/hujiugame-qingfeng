@@ -18,6 +18,22 @@
 > 7. 【如果】本次更新比较重要、与项目关键设计相关 → 同步写入 `temp/CLAUDE_MEMORY.md`（gitignored 本地工作记忆，仅当前开发机可见），便于后续 AI 对话延续上下文
 > 8. 【必须】CHANGELOG 条目不独立提交：每个内容改动 = 一笔提交，同时包含对应改动的文件 + 本文档中该改动对应的条目。先改文件并写对应条目 → 一并提交 → 再改下一个文件、写下一条目；按内容逐条拆分提交，禁止攒一堆 CHANGELOG 更新最后统一提交（例：文件 `a`、`b` 均有改动 → 提交 1 = `a` + 「更新了 a」条目；提交 2 = `b` + 「更新了 b」条目）
 
+## 2026-08-10 — 动画目标类：AnimationObject + Ui/Graphics 子类
+
+### 新增
+
+- **`AnimationObject` 抽象基类 + 子类** — 动画目标定位体系（`animation.task.object` 包）：`fromJson` 按 object 节点 `class` 分发 `UiAnimationObject`（target=UiObject）/`GraphicsAnimationObject`（target=GraphicsObject），子类即类别，无需额外类别枚举
+- **`GraphicsObject` 数据类** — 以"类别 + tag"定位 graphics 元素，模仿 `UiObject`（含 JsonEntity 构造）
+- **`GraphicsKind` 枚举** — graphics 元素类型（backgroundPicture/picture/gif），displayString 绑 `GraphicsKey`，带 `fromString()`
+- **`AnimationKey.Target` 常量** — object 节点 `class` 字段及 `ui`/`graphics` 类别值
+
+### 重构
+
+- **`AnimationObject` 体系补 Script 式构造器** — 抽象基类加 `valid`/`json` 与 `isValid()`/`getJson()`；子类字段构造 + JsonEntity 构造双构造器，字段构造时 `buildJson()` 按目标生成 object 节点 JSON；`fromJson` 改 fail-fast：对非 Map、未知 class、解析无效的目标抛 `IllegalArgumentException`（消息带完整 json），由动画加载点 catch 降级，符合"内层 throw、边界兜底"错误策略
+- **`AniomationObject` 拼写修正** — 空壳类改名 `AnimationObject` 并变抽象基类
+
+---
+
 ## 2026-08-10 — RequirementKey.Config 通用字段收进 Universal 内部类
 
 ### 重构
