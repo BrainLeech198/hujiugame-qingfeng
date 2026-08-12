@@ -18,6 +18,28 @@
 > 7. 【如果】本次更新比较重要、与项目关键设计相关 → 同步写入 `temp/CLAUDE_MEMORY.md`（gitignored 本地工作记忆，仅当前开发机可见），便于后续 AI 对话延续上下文
 > 8. 【必须】CHANGELOG 条目不独立提交：每个内容改动 = 一笔提交，同时包含对应改动的文件 + 本文档中该改动对应的条目。先改文件并写对应条目 → 一并提交 → 再改下一个文件、写下一条目；按内容逐条拆分提交，禁止攒一堆 CHANGELOG 更新最后统一提交（例：文件 `a`、`b` 均有改动 → 提交 1 = `a` + 「更新了 a」条目；提交 2 = `b` + 「更新了 b」条目）
 
+## 2026-08-13 — 打包工具按平台拆分 + 主编排器逐平台询问
+
+### 新增
+
+- **平台脚本** — `build_package_windows.py` / `build_package_linux.py` / `build_package_android.py`：将原 `build_package.py` 的单体 7 步流水线按平台拆分为独立自包含脚本，各自完成工具链检测、构建与产物复制，可被主编排器分发也可单独运行
+- **`build_common.py` 公共模块** — 路径常量、`BuildConfig` / `BuildEnvironment`（JDK/ISCC/MinGW/Android SDK 检测）、`run_gradle`、版本读取 / 交互输入 / 确认 / 统一写入 / 还原、`confirm_platform` 单键询问（Enter=是 / Esc=跳过，Windows 用 msvcrt、Unix 用 termios，非 tty 环境默认打包）
+
+### 功能
+
+- **主编排器逐平台询问** — `build_package.py` 确认版本并统一写入版本文件后，逐个询问"是否打包 Windows/Linux/Android/macOS 平台安装包？[Enter=是 / Esc=跳过]"，Enter=打包 / Esc=跳过；新增 `--windows / --linux / --android / --mac` 显式指定平台跳过询问（可组合），`--config-only` 保留
+
+### 变更
+
+- **旧 CLI 参数移除** — 旧语义 `--linux-only` / `--linux` / `--mac` 删除，统一改用新的显式平台参数，不再兼容
+- **版本写入只归主编排器** — 平台脚本只读版本（环境变量 `PACKAGE_VERSION / RELEASE_TYPE / APP_VERSION_INT` 优先，否则 `app_version.json`），绝不写项目文件
+
+### 重构
+
+- **mac 脚本并入新结构** — `build_mac_package.py` 改名 `build_package_mac.py`，改 import `build_common`，版本解析改为环境变量优先
+
+---
+
 ## 2026-08-10 — 动画目标类：AnimationObject + Ui/Graphics 子类
 
 ### 新增
