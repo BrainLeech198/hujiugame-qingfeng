@@ -16,14 +16,14 @@ body {
     width: 100%;
     background-color: rgba(255,255,255,0.7);
     backdrop-filter: blur(12px);
-    border-radius: 56px;
-    box-shadow: 0 30px 50px -20px rgba(0,30,50,0.3), 0 0 0 1px rgba(255,255,255,0.8) inset;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
     padding: 40px;
     border: 1px solid rgba(255,255,255,0.9);
     transition: box-shadow 0.3s var(--ease-out), transform 0.3s var(--ease-out);
 }
 .main-wrapper:hover {
-    box-shadow: 0 40px 60px -15px rgba(20,80,120,0.4);
+    box-shadow: var(--shadow-hover);
 }
 
 .history-header {
@@ -37,11 +37,11 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255,255,255,0.6);
+    background: transparent;
     backdrop-filter: blur(4px);
     padding: 12px 28px;
     border-radius: 50px;
-    border: 1px solid rgba(70,120,160,0.4);
+    border: 1.5px solid rgba(47,107,143,0.55);
     color: #1d4d6b;
     text-decoration: none;
     font-weight: 500;
@@ -50,7 +50,7 @@ body {
     box-shadow: 0 6px 12px rgba(0,20,30,0.05);
 }
 .back-link:hover {
-    background: white;
+    background: rgba(47,107,143,0.1);
     border-color: #2f6b8f;
     color: #083445;
     transform: translateX(-3px);
@@ -89,16 +89,16 @@ body {
 .version-card {
     background: rgba(255,255,255,0.75);
     backdrop-filter: blur(8px);
-    border-radius: 40px;
+    border-radius: var(--radius-card);
     padding: 28px 32px;
-    box-shadow: 0 15px 25px -12px rgba(0,30,50,0.2);
+    box-shadow: var(--shadow-soft);
     border: 1px solid rgba(255,255,255,0.8);
     transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
 }
 .version-card:hover {
-    background: rgba(255,255,255,0.85);
-    box-shadow: 0 20px 30px -12px #1c4e6e;
-    transform: translateY(-3px);
+    background: rgba(255,255,255,0.88);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-4px);
 }
 
 .version-header {
@@ -161,7 +161,7 @@ body {
 }
 .download-item-small:hover {
     background: white;
-    box-shadow: 0 15px 20px -12px #1c4e6e;
+    box-shadow: var(--shadow-hover);
     transform: translateY(-4px);
 }
 .download-item-small a {
