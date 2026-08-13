@@ -25,7 +25,7 @@ release {app_version: 3, app_version_type: 1, app_version_string: "1.0.0", app_v
 
 - `app_version_string` 恒为纯 `major.minor.patch`（`parseVersion` 严格三段整数约束不受影响）
 - 显示：beta → `v1.0.0-beta-26w33a`；release → `v1.0.0-release`（不变）
-- 更新检测仍以 `app_version` 整型为主；字符串回退比较逻辑不动
+- 更新检测以 `app_version` 整型为主；**整型相同时，双方都是 beta 则再按日期码（快照码）细分新旧**（如 `26w33a` → `26w33b` 判更新）；字符串回退比较逻辑不动
 
 ## 快照码生成规则
 
@@ -49,4 +49,5 @@ release {app_version: 3, app_version_type: 1, app_version_string: "1.0.0", app_v
 - `gradle.properties` projectVersion 保持 `{version}`（JAR 名/构建稳定，快照不进 gradle 版本）
 - `android/build.gradle` versionName 保持 `{version}`（现状 beta 也不带 `-beta`）
 - `parseVersion` 严格三段整数不动
-- 官网 `docs/data/versions.json` / 下载区展示（本次不做，后续可选）
+- 官网已加 `newest_version_snapshot` 字段并同步 `versions` 下载区展示（含 `UpdateChecker` 按日期码判断更新）
+- 官网下载区改为两阶段弹窗：先选下载来源（蓝奏云 / GitHub / Gitee，mac 的 M1 / Intel 为两个独立来源）→ 再在大弹窗（左上角返回 / 右上角关闭）列该来源的「描述 + 下载链接」，与「不改」的 `versions.json` 数据结构直接映射（`download.<平台>.<源>` = 单对象或数组）
