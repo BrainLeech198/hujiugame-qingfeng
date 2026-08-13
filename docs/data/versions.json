@@ -12,70 +12,38 @@
         "windows" : {
           "lanzouyun" : [
             {
-              "description" : "蓝奏云 · Windows 安装包（.exe）",
-              "url" : "https://example.com/qingfeng/windows-v1.0.0-beta-26w33a.exe"
-            },
-            {
-              "description" : "蓝奏云 · Windows 安装包备用通道（.exe）",
-              "url" : "https://example.com/qingfeng/windows-v1.0.0-beta-26w33a-backup.exe"
-            },
-            {
-              "description" : "蓝奏云 · Windows 便携版（.zip）",
-              "url" : "https://example.com/qingfeng/windows-v1.0.0-beta-26w33a-portable.zip"
+              "description" : "蓝奏云 · Windows 安装包（.exe）· 提取码 1698 · 双击安装，若弹安全提示点「更多信息 → 仍要运行」",
+              "url" : "https://brainleech198.lanzn.com/iDQgu424nycf"
             }
           ]
         },
         "android" : {
           "lanzouyun" : [
             {
-              "description" : "蓝奏云 · Android 安装包（.apk）",
-              "url" : "https://example.com/qingfeng/android-v1.0.0-beta-26w33a.apk"
-            },
-            {
-              "description" : "蓝奏云 · Android arm64 专用（.apk）",
-              "url" : "https://example.com/qingfeng/android-v1.0.0-beta-26w33a-arm64.apk"
-            },
-            {
-              "description" : "蓝奏云 · Android x86_64 专用（.apk）",
-              "url" : "https://example.com/qingfeng/android-v1.0.0-beta-26w33a-x86_64.apk"
+              "description" : "蓝奏云 · Android 安装包（.apk）· 提取码 1698 · 安装时请允许「未知来源」",
+              "url" : "https://brainleech198.lanzn.com/iMGfg424nrub"
             }
           ]
         },
         "linux" : {
           "lanzouyun" : [
             {
-              "description" : "蓝奏云 · Linux 安装包（.deb）",
-              "url" : "https://example.com/qingfeng/linux-v1.0.0-beta-26w33a.deb"
-            },
-            {
-              "description" : "蓝奏云 · Linux 安装包备用通道（.deb）",
-              "url" : "https://example.com/qingfeng/linux-v1.0.0-beta-26w33a-backup.deb"
-            },
-            {
-              "description" : "蓝奏云 · Linux 免安装包（.tar.gz）",
-              "url" : "https://example.com/qingfeng/linux-v1.0.0-beta-26w33a.tar.gz"
+              "description" : "蓝奏云 · Linux 安装包（.deb · Debian/Ubuntu）· 提取码 1698 · 双击安装，或终端执行 sudo dpkg -i",
+              "url" : "https://brainleech198.lanzn.com/ilYQO424nv0f"
             }
           ]
         },
         "mac" : {
           "lanzouyun" : [
             {
-              "description" : "蓝奏云 · macOS Apple 芯片（M1/M2/M3，.zip）",
-              "url" : "https://example.com/qingfeng/macM1-v1.0.0-beta-26w33a.zip"
-            },
-            {
-              "description" : "蓝奏云 · macOS Apple 芯片备用通道（.zip）",
-              "url" : "https://example.com/qingfeng/macM1-v1.0.0-beta-26w33a-backup.zip"
+              "description" : "蓝奏云 · macOS Apple 芯片版（M 芯片，.zip）· 提取码 1698 · 解压后双击「安装氢风」，若提示无法打开请右键 → 打开",
+              "url" : "https://brainleech198.lanzn.com/i1Ssv42535vg"
             }
           ],
           "lanzouyun_intel" : [
             {
-              "description" : "蓝奏云 · macOS Intel（.zip）",
-              "url" : "https://example.com/qingfeng/mac-v1.0.0-beta-26w33a.zip"
-            },
-            {
-              "description" : "蓝奏云 · macOS Intel 备用通道（.zip）",
-              "url" : "https://example.com/qingfeng/mac-v1.0.0-beta-26w33a-backup.zip"
+              "description" : "蓝奏云 · macOS Intel 版（.zip）· 提取码 1698 · 解压后双击「安装氢风」，若提示无法打开请右键 → 打开",
+              "url" : "https://brainleech198.lanzn.com/iCvV74253ctg"
             }
           ]
         }
