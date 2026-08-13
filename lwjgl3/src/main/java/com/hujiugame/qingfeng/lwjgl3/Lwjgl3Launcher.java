@@ -7,6 +7,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Graphics;
 import com.badlogic.gdx.files.FileHandle;
 import com.hujiugame.qingfeng.Main;
 import com.hujiugame.qingfeng.lwjgl3.imp.DesktopExplorerOpener;
+import com.hujiugame.qingfeng.lwjgl3.imp.MacOsAppleScriptDialog;
 import com.hujiugame.qingfeng.lwjgl3.imp.ZenityFileChooser;
 import com.hujiugame.qingfeng.util.interact.CrashDialogShower;
 import com.hujiugame.qingfeng.util.interact.FileChooser;
@@ -104,71 +105,86 @@ public class Lwjgl3Launcher
 
     private static void initializePlatformServices ()
     {
-        // crashDialog
-        CrashDialogShower.setPlatformShower((title, message) ->
+        String osName = System.getProperty("os.name").toLowerCase();
+        boolean isMac = osName.contains("mac");
+
+        // 崩溃弹窗与多功能原生对话框
+        // macOS：AWT/Swing 与 LWJGL3 抢占主线程（-XstartOnFirstThread）会死锁卡死游戏，
+        // 统一改用 osascript（非 AWT）原生弹窗；其余平台保持 Swing JOptionPane。
+        if (isMac)
         {
-            javax.swing.SwingUtilities.invokeLater(() ->
-            {
-                javax.swing.JOptionPane.showMessageDialog(null, message, title,
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-            });
-        });
-
-        // 多功能原生对话框
-        NativeDialogUtils.setPlatformDialog(new NativeDialog()
+            MacOsAppleScriptDialog macDialog = new MacOsAppleScriptDialog();
+            CrashDialogShower.setPlatformShower((title, message) -> macDialog.showError(title, message, null));
+            NativeDialogUtils.setPlatformDialog(macDialog);
+        }
+        else
         {
-            @Override
-            public void showInfo (String title, String message, Runnable onClose)
-            {
-                javax.swing.SwingUtilities.invokeLater(() ->
-                {
-                    javax.swing.JOptionPane.showMessageDialog(null, message, title,
-                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                    if (onClose != null)
-                    {
-                        Gdx.app.postRunnable(onClose);
-                    }
-                });
-            }
-
-            @Override
-            public void showConfirm (String title, String message, Runnable onConfirm, Runnable onCancel)
-            {
-                javax.swing.SwingUtilities.invokeLater(() ->
-                {
-                    int result = javax.swing.JOptionPane.showConfirmDialog(null, message, title,
-                        javax.swing.JOptionPane.YES_NO_OPTION);
-                    Gdx.app.postRunnable(() ->
-                    {
-                        if (result == javax.swing.JOptionPane.YES_OPTION)
-                        {
-                            if (onConfirm != null) onConfirm.run();
-                        }
-                        else if (onCancel != null)
-                        {
-                            onCancel.run();
-                        }
-                    });
-                });
-            }
-
-            @Override
-            public void showError (String title, String message, Runnable onClose)
+            // crashDialog
+            CrashDialogShower.setPlatformShower((title, message) ->
             {
                 javax.swing.SwingUtilities.invokeLater(() ->
                 {
                     javax.swing.JOptionPane.showMessageDialog(null, message, title,
                         javax.swing.JOptionPane.ERROR_MESSAGE);
-                    if (onClose != null)
-                    {
-                        Gdx.app.postRunnable(onClose);
-                    }
                 });
-            }
-        });
+            });
+
+            // 多功能原生对话框
+            NativeDialogUtils.setPlatformDialog(new NativeDialog()
+            {
+                @Override
+                public void showInfo (String title, String message, Runnable onClose)
+                {
+                    javax.swing.SwingUtilities.invokeLater(() ->
+                    {
+                        javax.swing.JOptionPane.showMessageDialog(null, message, title,
+                            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        if (onClose != null)
+                        {
+                            Gdx.app.postRunnable(onClose);
+                        }
+                    });
+                }
+
+                @Override
+                public void showConfirm (String title, String message, Runnable onConfirm, Runnable onCancel)
+                {
+                    javax.swing.SwingUtilities.invokeLater(() ->
+                    {
+                        int result = javax.swing.JOptionPane.showConfirmDialog(null, message, title,
+                            javax.swing.JOptionPane.YES_NO_OPTION);
+                        Gdx.app.postRunnable(() ->
+                        {
+                            if (result == javax.swing.JOptionPane.YES_OPTION)
+                            {
+                                if (onConfirm != null) onConfirm.run();
+                            }
+                            else if (onCancel != null)
+                            {
+                                onCancel.run();
+                            }
+                        });
+                    });
+                }
+
+                @Override
+                public void showError (String title, String message, Runnable onClose)
+                {
+                    javax.swing.SwingUtilities.invokeLater(() ->
+                    {
+                        javax.swing.JOptionPane.showMessageDialog(null, message, title,
+                            javax.swing.JOptionPane.ERROR_MESSAGE);
+                        if (onClose != null)
+                        {
+                            Gdx.app.postRunnable(onClose);
+                        }
+                    });
+                }
+            });
+        }
 
         // 注入桌面实现（Linux 用 zenity 避免 Swing/GTK Wayland 崩溃）
-        if (System.getProperty("os.name").toLowerCase().contains("linux"))
+        if (osName.contains("linux"))
         {
             FileChooser.setFileChooser(new ZenityFileChooser());
         }

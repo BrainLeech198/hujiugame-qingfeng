@@ -18,6 +18,14 @@
 > 7. 【如果】本次更新比较重要、与项目关键设计相关 → 同步写入 `temp/CLAUDE_MEMORY.md`（gitignored 本地工作记忆，仅当前开发机可见），便于后续 AI 对话延续上下文
 > 8. 【必须】CHANGELOG 条目不独立提交：每个内容改动 = 一笔提交，同时包含对应改动的文件 + 本文档中该改动对应的条目。先改文件并写对应条目 → 一并提交 → 再改下一个文件、写下一条目；按内容逐条拆分提交，禁止攒一堆 CHANGELOG 更新最后统一提交（例：文件 `a`、`b` 均有改动 → 提交 1 = `a` + 「更新了 a」条目；提交 2 = `b` + 「更新了 b」条目）
 
+## 2026-08-13 — 修复(mac)：原生弹窗改用 osascript 避免 AWT 死锁
+
+### 修复
+
+- **macOS 原生弹窗改用 osascript（非 AWT）** — 新增 `lwjgl3/imp/MacOsAppleScriptDialog.java`（AppleScript `display dialog` 实现），`Lwjgl3Launcher` macOS 分支注入替换 Swing `JOptionPane`（含崩溃弹窗），消除同类 AWT 与 LWJGL3 主线程死锁隐患；其余平台保持 Swing 实现不变
+
+---
+
 ## 2026-08-13 — 修复(mac)：点击路径打开资源管理器死锁
 
 ### 修复
