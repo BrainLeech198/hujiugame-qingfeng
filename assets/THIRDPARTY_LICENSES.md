@@ -13,28 +13,12 @@
 
 ### 1.1 AI 生成
 
-#### 1.1.1 menu.background.png（主菜单背景图）
-
-- **文件：** `asset/theme/default_theme/asset/resource/image/menu.background.png`
-- **作者：** 豆包AI
-- **来源：** [豆包AI](https://www.doubao.com)
-- **许可：** 视觉素材可商用（需二次设计后再使用）
-- **修改：** 是（加入了品牌色、版式等二次设计）
-
-本作品使用了豆包AI生成的图像素材，按平台商用说明声明如下：
-
-- 可用于海报、官网背景、社媒配图、包装辅助图、演示文稿等视觉场景
-- 建议进行二次设计后再使用（加入品牌色、版式、文案等原创元素）
-- 不建议直接原样大图售卖或作为独家 IP 素材
-- 用于商标/Logo/产品外观专利时需进一步差异化设计
-
-#### 1.1.2 AI 生成/修改的图像素材合集
+#### 1.1.1 AI 生成/修改的图像素材合集
 
 以下图像使用豆包AI生成并经过二次修改，按平台商用说明声明：
 
 | 文件 | 用途 | 修改情况 |
 |------|------|----------|
-| `asset/resource/image/app_init.png` | 启动加载背景图 | 稍作修改 |
 | `asset/resource/image/controller_button_a.png` | 手柄 A 键图符 | 稍作修改 |
 | `asset/resource/image/controller_button_b.png` | 手柄 B 键图符 | 稍作修改 |
 | `asset/resource/image/controller_button_a_or_b.png` | 手柄 A/B 键图符 | 稍作修改 |
@@ -291,6 +275,8 @@
 
 | 文件 | 说明 |
 |------|------|
+| `asset/theme/default_theme/asset/resource/image/menu.background.png` | 主菜单背景图（AI 生成 + 手工二次设计） |
+| `asset/resource/image/app_init.png` | 启动加载背景图（AI 生成 + 手工二次设计） |
 | `asset/theme/default_theme/asset/resource/image/menu.masker.png` | 主菜单遮罩层（自行绘制） |
 | `asset/theme/default_theme/asset/resource/image/transparent/*.png` | 纯色透明覆盖图（程序生成） |
 | `asset/theme/default_theme/asset/resource/image/button/de.img.*.png` | 按钮三态图（自行绘制） |
