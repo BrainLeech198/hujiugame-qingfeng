@@ -242,7 +242,7 @@ def package_installer_zip(installer_path, dest_zip) -> bool:
         zi.create_system = 3
         zi.external_attr = 0o100755 << 16
         zf.writestr(zi, data)
-        zi2 = zipfile.ZipInfo("安装氢风")
+        zi2 = zipfile.ZipInfo("安装氢风请打开Install QingFeng.command")
         zi2.create_system = 3
         zi2.external_attr = 0o120777 << 16
         zf.writestr(zi2, "Install QingFeng.command")
