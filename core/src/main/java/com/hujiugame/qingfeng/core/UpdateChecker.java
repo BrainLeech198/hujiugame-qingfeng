@@ -700,7 +700,7 @@ public final class UpdateChecker
     }
 
     /**
-     * 重置更新状态，允许重新执行 {@link #init()}
+     * 重置更新状态 {@link #init()}
      */
     public void resetUpdateState ()
     {
@@ -749,7 +749,7 @@ public final class UpdateChecker
         {
             if (mode == RepairMode.FULL)
             {
-                LogUtils.info(UpdateChecker.class, "repairGame 彻底修复模式：删除全部外部资源文件");
+                LogUtils.info(UpdateChecker.class, "repairGame 彻底修复模式：删除全部资源文件");
                 FileUtils.deleteDirectory(baseExternalHandle);
                 baseExternalHandle.mkdirs();
             }
@@ -760,8 +760,10 @@ public final class UpdateChecker
                 LogUtils.info(UpdateChecker.class, "repairGame 保守修复模式：仅删除 app_version.json");
             }
 
+            // 重置更新状态
             resetUpdateState();
 
+            // 启动异步修复流程
             new Thread(() ->
             {
                 boolean success = init();
@@ -921,13 +923,14 @@ public final class UpdateChecker
         final long RETRY_DELAY_MS = 5000;
 
         // 构建请求
-        final String versionUrl = WebSite.OFFICIAL + "data/versions.json";
+        final String versionUrl = WebSite.OFFICIAL + WebSite.VERSION_JSON_PATH;
         final Net.HttpRequest request = new Net.HttpRequest(Net.HttpMethods.GET);
 
         // 设置请求参数
         request.setUrl(versionUrl);
         request.setTimeOut(Numeric.Time.HTTP_TIMEOUT_MS);
 
+        // 发送请求
         Gdx.net.sendHttpRequest(request, new Net.HttpResponseListener()
         {
             /**
@@ -941,6 +944,11 @@ public final class UpdateChecker
                 doDetectUpdateFinish = true;
             }
 
+            /**
+             * 处理网络请求响应
+             *
+             * @param httpResponse 网络响应
+             */
             @Override
             public void handleHttpResponse (Net.HttpResponse httpResponse)
             {
@@ -1025,6 +1033,11 @@ public final class UpdateChecker
                 }
             }
 
+            /**
+             * 处理网络请求失败
+             *
+             * @param t 失败原因
+             */
             @Override
             public void failed (Throwable t)
             {
@@ -1032,6 +1045,9 @@ public final class UpdateChecker
                 handleFailure();
             }
 
+            /**
+             * 处理网络请求被取消
+             */
             @Override
             public void cancelled ()
             {

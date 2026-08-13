@@ -8,4 +8,5 @@ public final class WebSite
     }
 
     public static final String OFFICIAL = "https://brainleech198.github.io/hujiugame.qingfeng/";
+    public static final String VERSION_JSON_PATH = "data/versions.json";
 }
