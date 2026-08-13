@@ -25,7 +25,7 @@
 - **Mac 下载卡片** — 首页资源下载区新增「Mac端」下载卡片，图标使用 `download-mac.png`（iMac 一体机样式，256×256）
 - **下载弹窗分组** — Mac 弹窗将下载源按 M1 / Intel 分组：各源（GitHub/蓝奏云/Gitee）M1 版默认在前，`_intel` 后缀源归入「Intel 处理器」分组，后续每新增一个源补一对即可
 - **9 语言文案** — 各语言 locale 新增 `mac_button` / `mac_intel_group` 按钮与分组标题文案
-- **图标版权声明** — `THIRDPARTY_LICENSES.html` 新增 `download-mac.png` 条目（icon-icons.com/imac-mac-apple/272，免费商用无需署名），商标声明并入 Apple，并修复重复的商标声明段落
+- **图标版权声明** — `THIRDPARTY_LICENSES.html` 新增 `download-mac.png` 条目（作者 Kyo-Tux (Asher)，Aeon Icons 系列，icon-icons.com/imac-mac-apple/272，免费商用无需署名），商标声明并入 Apple，并修复重复的商标声明段落
 - **分发站说明** — `docs/README.md` 平台列表补充 macOS（Mac M1 / Mac Intel）
 
 ---
