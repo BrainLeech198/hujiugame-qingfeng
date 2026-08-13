@@ -253,3 +253,10 @@
 html {
     scroll-behavior: smooth;
 }
+
+/* ================================
+   按钮 hover 光晕（美化共用）
+   ================================ */
+.platform-select-btn:hover {
+    box-shadow: 0 0 0 4px rgba(47,107,143,0.12), 0 12px 20px -8px rgba(20,80,120,0.4);
+}
