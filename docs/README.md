@@ -1,6 +1,6 @@
 # QingFeng — 安装包分发站
 
-本仓库的 `docs/` 目录为 **GitHub Pages 发布站**，提供 Windows (.exe) 和 Android (.apk) 安装包下载。
+本仓库的 `docs/` 目录为 **GitHub Pages 发布站**，提供 Windows (.exe)、Linux (.deb)、Android (.apk) 与 macOS（Mac M1 / Mac Intel）安装包下载。
 
 > 源代码仓库位于 Gitee：<https://gitee.com/Mr_brainleech/hujiugame.qingfeng>
 

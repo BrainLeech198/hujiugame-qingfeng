@@ -527,6 +527,17 @@
             color: #b52b2b;
         }
 
+        .modal-group-header {
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #2a5a70;
+            margin: 20px 0 12px;
+            padding-top: 12px;
+            border-top: 1px dashed rgba(70,120,160,0.4);
+            letter-spacing: 0.5px;
+        }
+
         .modal-close {
             background: none;
             border: none;
@@ -758,6 +769,13 @@
                             <span data-i18n="linux_button">Linux端</span>
                         </a>
                     </div>
+                    <div class="download-item">
+                        <a href="#" id="mac-link" data-platform="mac">
+                            <img id="macIcon" src="resource/image/download-mac.png" alt="下载 Mac 版" class="download-icon"
+                                 onerror="this.classList.add('error'); this.alt='Mac下载'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22100%22%20viewBox%3D%220%200%20200%20100%22%3E%3Crect%20width%3D%22200%22%20height%3D%22100%22%20fill%3D%22%233b6f8c%22%2F%3E%3Ctext%20x%3D%22100%22%20y%3D%2255%22%20font-size%3D%2224%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EMac%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                            <span data-i18n="mac_button">Mac端</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="changelog-box">
@@ -967,23 +985,47 @@
             const platformNames = {
                 windows: currentMessages?.windows_button || 'Windows',
                 android: currentMessages?.android_button || 'Android',
-                linux: currentMessages?.linux_button || 'Linux'
+                linux: currentMessages?.linux_button || 'Linux',
+                mac: currentMessages?.mac_button || 'Mac'
             };
             modalTitle.textContent = `${platformNames[platform]} - ${currentMessages?.select_download_method || '选择下载方式'}`;
             modalBody.innerHTML = '';
-            for (const [source, data] of Object.entries(options)) {
-                const description = data.description || (currentMessages?.[`source_${source}`] || source);
-                const url = data.url;
-                if (!url) continue;
-                const btnText = currentMessages?.[`download_from_${source}`] || source;
-                const optionDiv = document.createElement('div');
-                optionDiv.className = 'download-option';
-                optionDiv.innerHTML = `
-                    <div class="option-description">${description}</div>
-                    <a href="${url}" class="option-btn" target="_blank" rel="noopener">${btnText} →</a>
-                `;
-                modalBody.appendChild(optionDiv);
+            // mac 平台：源以 _intel 结尾的归到 Intel 分组，其余为默认（M1）组
+            const isMac = (platform === 'mac');
+            const primaryGroup = [];
+            const intelGroup = [];
+            if (isMac) {
+                for (const [source, data] of Object.entries(options)) {
+                    if (source.endsWith('_intel')) intelGroup.push([source, data]);
+                    else primaryGroup.push([source, data]);
+                }
+            } else {
+                primaryGroup.push(...Object.entries(options));
             }
+            const renderGroup = (group, addHeader) => {
+                if (addHeader && group.length > 0) {
+                    const header = document.createElement('div');
+                    header.className = 'modal-group-header';
+                    header.textContent = currentMessages?.mac_intel_group || 'Intel 处理器';
+                    modalBody.appendChild(header);
+                }
+                for (const [source, data] of group) {
+                    const baseSource = source.replace('_intel', '');
+                    const description = data.description || (currentMessages?.[`source_${baseSource}`] || baseSource);
+                    const url = data.url;
+                    if (!url) continue;
+                    const btnText = currentMessages?.[`download_from_${baseSource}`] || baseSource;
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'download-option';
+                    optionDiv.innerHTML = `
+                        <div class="option-description">${description}</div>
+                        <a href="${url}" class="option-btn" target="_blank" rel="noopener">${btnText} →</a>
+                    `;
+                    modalBody.appendChild(optionDiv);
+                }
+            };
+            renderGroup(primaryGroup, false);
+            if (isMac) renderGroup(intelGroup, true);
             if (modalBody.children.length === 0) {
                 modalBody.innerHTML = `<div class="modal-error">${currentMessages?.no_valid_download_source || '没有有效的下载链接'}</div>`;
             }
@@ -1006,11 +1048,13 @@
         const windowsLink = document.getElementById('windows-link');
         const androidLink = document.getElementById('android-link');
         const linuxLink = document.getElementById('linux-link');
+        const macLink = document.getElementById('mac-link');
 
         const logoImg = document.getElementById('logoImg');
         const windowsIcon = document.getElementById('windowsIcon');
         const androidIcon = document.getElementById('androidIcon');
         const linuxIcon = document.getElementById('linuxIcon');
+        const macIcon = document.getElementById('macIcon');
 
         let currentVersionInfo = null;
 
@@ -1025,6 +1069,7 @@
                     if (windowsIcon && config['download-windows']) windowsIcon.src = config['download-windows'];
                     if (androidIcon && config['download-android']) androidIcon.src = config['download-android'];
                     if (linuxIcon && config['download-linux']) linuxIcon.src = config['download-linux'];
+                    if (macIcon && config['download-mac']) macIcon.src = config['download-mac'];
                 })
                 .catch(err => console.warn('图片配置加载失败，使用默认路径', err));
         }
@@ -1080,6 +1125,12 @@
                         linuxLink.onclick = (e) => {
                             e.preventDefault();
                             showDownloadOptions('linux', currentVersionInfo.download?.linux);
+                        };
+                    }
+                    if (macLink) {
+                        macLink.onclick = (e) => {
+                            e.preventDefault();
+                            showDownloadOptions('mac', currentVersionInfo.download?.mac);
                         };
                     }
                 })

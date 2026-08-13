@@ -64,6 +64,8 @@
   "game_intro_desc2": "QingFeng suporta nativamente três idiomas de interface — chinês simplificado, chinês tradicional e inglês — além de um sistema de temas alternável, atendendo às preferências de usuários de diferentes regiões. Ele funciona em Windows, Linux e Android, cobrindo cenários de uso em desktop e dispositivos móveis.",
   "game_intro_desc3": "O QingFeng conta com um sistema completo de gerenciamento de pacotes de recursos, com suporte à importação e alternância de pacotes de idioma, pacotes de tema, pacotes de idioma de jogo e pacotes de tema de jogo, permitindo que os criadores expandam o conteúdo do jogo com flexibilidade. A verificação de versão e o reparo de recursos com um clique garantem que seus recursos de jogo permaneçam sempre completos e utilizáveis.",
   "linux_button": "Linux",
+  "mac_button": "Mac",
+  "mac_intel_group": "Processador Intel",
   "community_description": "Um espaço da comunidade para sugestões de funcionalidades, feedback de melhorias, compartilhamento de conteúdo criativo e discussões entre jogadores. Mantenha a conversa civilizada!",
   "game_intro_desc4": "Jogos e pacotes de recursos usam formatos de arquivo dedicados (.qfg, .qfl, .qft, .qfgl, .qfgt), registrados em Windows, Linux e Android, permitindo carregamento e execução diretos com um clique duplo. Editores visuais, mapas 2D e reprodução de vídeo estão em planejamento, abrindo mais possibilidades para os criadores."
 }

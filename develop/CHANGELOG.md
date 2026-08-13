@@ -18,6 +18,18 @@
 > 7. 【如果】本次更新比较重要、与项目关键设计相关 → 同步写入 `temp/CLAUDE_MEMORY.md`（gitignored 本地工作记忆，仅当前开发机可见），便于后续 AI 对话延续上下文
 > 8. 【必须】CHANGELOG 条目不独立提交：每个内容改动 = 一笔提交，同时包含对应改动的文件 + 本文档中该改动对应的条目。先改文件并写对应条目 → 一并提交 → 再改下一个文件、写下一条目；按内容逐条拆分提交，禁止攒一堆 CHANGELOG 更新最后统一提交（例：文件 `a`、`b` 均有改动 → 提交 1 = `a` + 「更新了 a」条目；提交 2 = `b` + 「更新了 b」条目）
 
+## 2026-08-13 — 官网新增 Mac 下载入口（M1/Intel 链接分组）
+
+### 网站
+
+- **Mac 下载卡片** — 首页资源下载区新增「Mac端」下载卡片，图标使用 `download-mac.png`（iMac 一体机样式，256×256）
+- **下载弹窗分组** — Mac 弹窗将下载源按 M1 / Intel 分组：各源（GitHub/蓝奏云/Gitee）M1 版默认在前，`_intel` 后缀源归入「Intel 处理器」分组，后续每新增一个源补一对即可
+- **9 语言文案** — 各语言 locale 新增 `mac_button` / `mac_intel_group` 按钮与分组标题文案
+- **图标版权声明** — `THIRDPARTY_LICENSES.html` 新增 `download-mac.png` 条目（icon-icons.com/imac-mac-apple/272，免费商用无需署名），商标声明并入 Apple，并修复重复的商标声明段落
+- **分发站说明** — `docs/README.md` 平台列表补充 macOS（Mac M1 / Mac Intel）
+
+---
+
 ## 2026-08-13 — .gitignore 打包产物忽略规则收窄为 qingfeng_setup_ 前缀
 
 ### 构建
