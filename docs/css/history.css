@@ -210,9 +210,9 @@ body {
     flex-wrap: wrap;
 }
 .page-btn {
-    background: rgba(255,255,255,0.6);
+    background: transparent;
     backdrop-filter: blur(4px);
-    border: 1px solid rgba(70,120,160,0.4);
+    border: 1.5px solid rgba(47,107,143,0.55);
     color: #1d4d6b;
     font-size: 1.2rem;
     font-weight: 500;
@@ -225,7 +225,7 @@ body {
     text-align: center;
 }
 .page-btn:hover:not(:disabled) {
-    background: white;
+    background: rgba(47,107,143,0.1);
     border-color: #2f6b8f;
     color: #083445;
     transform: scale(1.02);
