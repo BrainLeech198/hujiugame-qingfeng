@@ -45,7 +45,6 @@ body {
     align-items: center;
     gap: 8px;
     background: rgba(255,255,255,0.6);
-    backdrop-filter: blur(4px);
     padding: 12px 28px;
     border-radius: 50px;
     border: 1px solid rgba(70,120,160,0.4);
@@ -88,7 +87,6 @@ body {
 
 .discussion-card {
     background: rgba(255,255,255,0.75);
-    backdrop-filter: blur(8px);
     border-radius: 32px;
     padding: 32px 36px;
     margin: 20px 0;

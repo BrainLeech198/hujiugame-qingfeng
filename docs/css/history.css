@@ -38,7 +38,6 @@ body {
     align-items: center;
     gap: 8px;
     background: transparent;
-    backdrop-filter: blur(4px);
     padding: 12px 28px;
     border-radius: 50px;
     border: 1.5px solid rgba(47,107,143,0.55);
@@ -88,7 +87,6 @@ body {
 
 .version-card {
     background: rgba(255,255,255,0.75);
-    backdrop-filter: blur(8px);
     border-radius: var(--radius-card);
     padding: 28px 32px;
     box-shadow: var(--shadow-soft);
@@ -198,7 +196,6 @@ body {
     padding: 5px 16px;
     border-radius: 40px;
     border: 1px solid rgba(80,130,170,0.2);
-    backdrop-filter: blur(2px);
 }
 
 .pagination {
@@ -211,7 +208,6 @@ body {
 }
 .page-btn {
     background: transparent;
-    backdrop-filter: blur(4px);
     border: 1.5px solid rgba(47,107,143,0.55);
     color: #1d4d6b;
     font-size: 1.2rem;
