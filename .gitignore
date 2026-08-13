@@ -169,10 +169,14 @@ Thumbs.db
 /develop/output/qingfeng_setup_*.sh
 /develop/output/qingfeng_setup_*.exe
 /develop/output/qingfeng_setup_*.tar.gz
-/develop/output/build_config.env
+/develop/output/*.zip
+/develop/output/*.dmg
+/develop/output/*.command
 /develop/output/build/
 /develop/output/dist/
 /develop/output/*.spec
+# develop/output/scripts 打包脚本运行配置（自动生成）
+/develop/output/scripts/build_config.env
 __pycache__/
 temp/
 .claude/
