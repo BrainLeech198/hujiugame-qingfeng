@@ -27,7 +27,7 @@ from pathlib import Path
 from build_common import (
     OUTPUT_DIR, PROJECT_DIR, SETUP_DIR, CONFIG_FILE,
     _exe, _is_windows, run_gradle, resolve_version, check_version_consistency,
-    BuildConfig, BuildEnvironment,
+    BuildConfig, BuildEnvironment, full_version,
 )
 
 
@@ -286,11 +286,11 @@ def build_installer(env: BuildEnvironment, version: str) -> bool:
     return True
 
 
-def copy_outputs(version: str, release_type: str):
+def copy_outputs(version: str, release_type: str, snapshot: str):
     """复制 Windows 安装包到 output 目录"""
     print("[复制] 复制成品到 output 目录...")
     output_dir = OUTPUT_DIR
-    tag = f"v{version}-{release_type}"
+    tag = "v" + full_version(version, release_type, snapshot)
 
     setup_exe = SETUP_DIR / "dist" / "qingfeng_setup_windows.exe"
     if setup_exe.exists():
@@ -304,9 +304,9 @@ def copy_outputs(version: str, release_type: str):
 def main():
     os.chdir(str(PROJECT_DIR))
 
-    version, release_type, app_version_int = resolve_version()
+    version, release_type, app_version_int, snapshot = resolve_version()
     check_version_consistency(version)
-    tag = f"v{version}-{release_type}"
+    tag = "v" + full_version(version, release_type, snapshot)
 
     print("=" * 44)
     print(f"   氢风 Windows 打包: {tag}")
@@ -340,7 +340,7 @@ def main():
     else:
         print("[跳过] 安装包因启动器失败跳过")
     if ok:
-        copy_outputs(version, release_type)
+        copy_outputs(version, release_type, snapshot)
 
     print()
     print("=" * 44)

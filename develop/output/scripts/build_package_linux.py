@@ -6,9 +6,9 @@
 否则只读 app_version.json。本脚本只读版本，绝不修改任何项目文件。
 
 流程：construo(linuxX64) 跨平台包 → 瘦身 JAR → .deb 安装包 → 自解压 .sh 一键安装器
-产物（写入 develop/output/）：
-    qingfeng_setup_linux_v1.0.0-beta.deb
-    qingfeng_setup_linux_v1.0.0-beta.sh   ← 发给 Linux 用户的首选（双击即可图形化安装）
+产物（写入 develop/output/，beta 带快照码如 v1.0.0-beta-26w32a）：
+    qingfeng_setup_linux_v1.0.0-release.deb
+    qingfeng_setup_linux_v1.0.0-release.sh   ← 发给 Linux 用户的首选（双击即可图形化安装）
 
 用法：
     python build_package_linux.py                  # 使用 app_version.json 的版本
@@ -28,7 +28,7 @@ from pathlib import Path
 from build_common import (
     OUTPUT_DIR, PROJECT_DIR, CONSTRUO_OUTPUT_DIR,
     run_gradle, resolve_version, check_version_consistency,
-    BuildConfig, BuildEnvironment,
+    BuildConfig, BuildEnvironment, full_version,
 )
 
 CONSTRUO_TARGET = "linuxX64"
@@ -146,7 +146,7 @@ def _write_ar(path: Path, control_tar: bytes, data_tar: bytes):
     path.write_bytes(buf.getvalue())
 
 
-def build_deb(version: str, release_type: str) -> Path | None:
+def build_deb(version: str, release_type: str, snapshot: str) -> Path | None:
     """将 construo 构建产物打包为 .deb（Linux 安装包），返回 .deb 路径"""
     print("[构建] 打包 linux .deb 安装包...")
 
@@ -156,7 +156,7 @@ def build_deb(version: str, release_type: str) -> Path | None:
         print(f"[错误] 未找到 construo 产物: {roast_dir}")
         return None
 
-    tag = f"v{version}-{release_type}"
+    tag = "v" + full_version(version, release_type, snapshot)
     deb_name = f"qingfeng_setup_{PLATFORM_LABEL}_{tag}"
     deb_path = OUTPUT_DIR / f"{deb_name}.deb"
 
@@ -209,7 +209,7 @@ def build_deb(version: str, release_type: str) -> Path | None:
     control_files = {
         "control": (
             f"Package: qingfeng\n"
-            f"Version: {version}-{release_type}\n"
+            f"Version: {full_version(version, release_type, snapshot)}\n"
             f"Section: games\n"
             f"Priority: optional\n"
             f"Architecture: amd64\n"
@@ -388,9 +388,9 @@ def build_install_sh(deb_path: Path) -> bool:
 def main():
     os.chdir(str(PROJECT_DIR))
 
-    version, release_type, app_version_int = resolve_version()
+    version, release_type, app_version_int, snapshot = resolve_version()
     check_version_consistency(version)
-    tag = f"v{version}-{release_type}"
+    tag = "v" + full_version(version, release_type, snapshot)
 
     print("=" * 44)
     print(f"   氢风 Linux 打包: {tag}")
@@ -405,7 +405,7 @@ def main():
 
     ok = build_construo(env, version)
     if ok:
-        deb_path = build_deb(version, release_type)
+        deb_path = build_deb(version, release_type, snapshot)
         ok = deb_path is not None
         if ok:
             build_install_sh(deb_path)

@@ -22,6 +22,7 @@ import shutil
 import subprocess
 import sys
 import tkinter as tk
+from datetime import date
 from pathlib import Path
 from tkinter import filedialog
 from typing import Optional
@@ -45,10 +46,48 @@ VERSION_TYPE_MAP = {0: "beta", 1: "release"}
 
 APP_VERSION_JSON = PROJECT_DIR / "assets" / "asset" / "app_version.json"
 
+# 版本 JSON 字段名（与 Java VersionKey 保持一致）
+APP_VERSION_SNAPSHOT_KEY = "app_version_snapshot"
+
+# beta 细分快照码格式：YYwWWa（ISO 年两位 + w + ISO 周两位 + 修订字母）
+SNAPSHOT_PATTERN = re.compile(r"^\d{2}w\d{2}[a-z]$")
+
 
 def _get_type_name(type_int: int) -> str:
     """将整型版本类型转为名称字符串"""
     return VERSION_TYPE_MAP.get(type_int, "beta")
+
+
+def current_week_code() -> str:
+    """返回当前 ISO 周的 YYwWW 代码（如 "26w33"）"""
+    iso_year, iso_week, _ = date.today().isocalendar()
+    return f"{iso_year % 100:02d}w{iso_week:02d}"
+
+
+def generate_snapshot_default(last_snapshot: str) -> str:
+    """按 Minecraft 法则生成快照码默认值：YYwWW + 修订字母。
+
+    与上一快照同周则字母递增（a→b→c），否则回到 a。
+    """
+    week = current_week_code()
+    letter = "a"
+    if last_snapshot:
+        m = re.match(r"^(\d{2}w\d{2})([a-z])$", last_snapshot)
+        if m and m.group(1) == week:
+            letter = chr(ord(m.group(2)) + 1) if m.group(2) < "z" else "a"
+    return week + letter
+
+
+def validate_snapshot(snapshot: str) -> bool:
+    """校验快照码格式是否为 YYwWWa"""
+    return bool(SNAPSHOT_PATTERN.match(snapshot))
+
+
+def full_version(version: str, release_type: str, snapshot: str = "") -> str:
+    """拼接完整版本串：release 不加快照，beta 加快照（如 1.0.0-beta-26w32a）。"""
+    if release_type == "beta" and snapshot:
+        return f"{version}-{release_type}-{snapshot}"
+    return f"{version}-{release_type}"
 
 
 def _is_windows() -> bool:
@@ -360,15 +399,16 @@ def read_app_version() -> dict:
     return {}
 
 
-def resolve_version() -> tuple[str, str, int]:
+def resolve_version() -> tuple[str, str, int, str]:
     """解析版本号（各平台脚本用）：环境变量优先，否则只读 app_version.json。
 
-    返回 (version, release_type, app_version_int)。均无法解析时报错退出。
-    绝不修改任何文件。
+    返回 (version, release_type, app_version_int, snapshot)。均无法解析时报错退出。
+    release 恒不带快照（配置层强制空串）。绝不修改任何文件。
     """
     version = os.environ.get("PACKAGE_VERSION") or ""
     release_type = os.environ.get("RELEASE_TYPE") or ""
     app_int_env = os.environ.get("APP_VERSION_INT") or ""
+    snapshot = os.environ.get("APP_VERSION_SNAPSHOT") or ""
 
     if not version or not release_type or not app_int_env:
         data = read_app_version()
@@ -379,12 +419,17 @@ def resolve_version() -> tuple[str, str, int]:
             release_type = _get_type_name(type_int) if type_int in (0, 1) else ""
         if not app_int_env:
             app_int_env = str(data.get("app_version", 0))
+        if not snapshot:
+            snapshot = data.get(APP_VERSION_SNAPSHOT_KEY, "") or ""
 
     if not version or not release_type:
         print("[错误] 无法解析版本号。请先运行主编排器 build_package.py，")
         print("       或设置环境变量 PACKAGE_VERSION / RELEASE_TYPE / APP_VERSION_INT")
         sys.exit(1)
-    return version, release_type, int(app_int_env or 0)
+    # release 不允许带日期码
+    if release_type == "release":
+        snapshot = ""
+    return version, release_type, int(app_int_env or 0), snapshot
 
 
 def check_version_consistency(version: str):
@@ -398,17 +443,19 @@ def check_version_consistency(version: str):
         print("       建议先运行 build_package.py 统一版本号，否则产物命名可能与展示版本不符")
 
 
-def input_version_interactive() -> tuple[str, str, int]:
-    """交互输入版本（主编排器用）：读取上次版本作默认值，返回 (version, release_type, app_version_int)。"""
+def input_version_interactive() -> tuple[str, str, int, str]:
+    """交互输入版本（主编排器用）：读取上次版本作默认值，返回 (version, release_type, app_version_int, snapshot)。"""
     last = read_app_version()
     last_version_str = last.get("app_version_string", "")
     last_type = last.get("app_version_type", -1)
     last_release_type = _get_type_name(last_type) if last_type in (0, 1) else ""
     last_version_int = last.get("app_version", 0)
+    last_snapshot = last.get(APP_VERSION_SNAPSHOT_KEY, "") or ""
 
     version = os.environ.get("PACKAGE_VERSION") or ""
     release_type = os.environ.get("RELEASE_TYPE") or ""
     app_int_env = os.environ.get("APP_VERSION_INT") or ""
+    snapshot_env = os.environ.get("APP_VERSION_SNAPSHOT") or ""
 
     if not version:
         while True:
@@ -440,6 +487,27 @@ def input_version_interactive() -> tuple[str, str, int]:
                 break
             print("发布类型只能是 beta 或 release")
 
+    # beta 细分快照码：自动生成默认（YYwWWa 法则），可手改；release 强制空串
+    if release_type == "beta":
+        if snapshot_env:
+            snapshot = snapshot_env
+        else:
+            default_snapshot = generate_snapshot_default(last_snapshot)
+            while True:
+                try:
+                    prompt = "请输入 beta 快照码"
+                    prompt += f" (回车使用自动: {default_snapshot})"
+                    prompt += ": "
+                    raw = input(prompt).strip().lower()
+                except (EOFError, OSError):
+                    raw = ""
+                snapshot = raw or default_snapshot
+                if validate_snapshot(snapshot):
+                    break
+                print("快照码格式应为 YYwWWa，如 26w33a")
+    else:
+        snapshot = ""
+
     if not app_int_env:
         while True:
             try:
@@ -462,28 +530,31 @@ def input_version_interactive() -> tuple[str, str, int]:
     else:
         app_version_int = int(app_int_env)
 
-    return version, release_type, app_version_int
+    return version, release_type, app_version_int, snapshot
 
 
-def confirm_version_change(version: str, release_type: str, app_version_int: int):
+def confirm_version_change(version: str, release_type: str, app_version_int: int, snapshot: str = ""):
     """展示版本变更差异，用户确认（Y 继续，n 取消退出）"""
     data = read_app_version()
     old_type = data.get("app_version_type", -1)
     old_type_name = _get_type_name(old_type) if old_type in (0, 1) else "(无)"
+    old_snapshot = data.get(APP_VERSION_SNAPSHOT_KEY, "") or ""
     print(f"  版本整型编码: {data.get('app_version', '(无)')} → {app_version_int}")
     print(f"  版本字符串:   {data.get('app_version_string', '(无)')} → {version}")
     print(f"  发行类型:     {old_type_name} → {release_type}")
+    print(f"  快照码:       {old_snapshot or '(无)'} → {snapshot or '(无)'}")
     confirm = input("确认以上信息无误？(Y/n): ").strip().lower()
     if confirm == "n":
         print("取消打包")
         sys.exit(1)
 
 
-def update_version_files(version: str, release_type: str, app_version_int: int):
+def update_version_files(version: str, release_type: str, app_version_int: int, snapshot: str = ""):
     """写入版本号到项目文件（仅主编排器在确认后调用）。
 
     涉及：gradle.properties / app_version.json / android/build.gradle / inno_setup.iss(+WebSite.OFFICIAL 同步)。
     inno_setup.iss 首次修改前备份为 .bak，供 restore_backups 还原。
+    beta 快照码写入 app_version.json 与 inno MyAppVersion；release 恒为空。
     """
     # gradle.properties
     gp = PROJECT_DIR / "gradle.properties"
@@ -499,11 +570,12 @@ def update_version_files(version: str, release_type: str, app_version_int: int):
         ver_data["app_version"] = app_version_int
         ver_data["app_version_string"] = version
         ver_data["app_version_type"] = 0 if release_type == "beta" else 1
+        ver_data[APP_VERSION_SNAPSHOT_KEY] = snapshot
         APP_VERSION_JSON.write_text(
             json.dumps(ver_data, ensure_ascii=False, indent=2),
             encoding="utf-8"
         )
-        print(f"  [信息] app_version.json 已同步: v{version} ({release_type})")
+        print(f"  [信息] app_version.json 已同步: v{full_version(version, release_type, snapshot)}")
     else:
         print(f"  [警告] 未找到 app_version.json: {APP_VERSION_JSON}")
 
@@ -524,9 +596,10 @@ def update_version_files(version: str, release_type: str, app_version_int: int):
         if not iss_bak.exists():
             shutil.copy2(iss_path, iss_bak)
         content = iss_path.read_text(encoding="utf-8")
-        content = content.replace(
-            '#define MyAppVersion "1.0.0"',
-            f'#define MyAppVersion "{version}-{release_type}"'
+        content = re.sub(
+            r'#define MyAppVersion "[^"]*"',
+            f'#define MyAppVersion "{full_version(version, release_type, snapshot)}"',
+            content
         )
         content = re.sub(r'qingfeng-.*\.jar', f'qingfeng-{version}.jar', content)
 
@@ -550,7 +623,7 @@ def update_version_files(version: str, release_type: str, app_version_int: int):
                 print("  [警告] 未找到 WebSite.OFFICIAL 常量")
 
         iss_path.write_text(content, encoding="utf-8")
-        print(f"  [信息] inno_setup.iss 已同步: v{version} ({release_type})")
+        print(f"  [信息] inno_setup.iss 已同步: v{full_version(version, release_type, snapshot)}")
 
 
 def restore_backups():

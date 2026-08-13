@@ -20,7 +20,7 @@ from pathlib import Path
 from build_common import (
     OUTPUT_DIR, PROJECT_DIR,
     run_gradle, resolve_version, check_version_consistency,
-    BuildConfig, BuildEnvironment,
+    BuildConfig, BuildEnvironment, full_version,
 )
 
 
@@ -70,11 +70,11 @@ def build_apk(env: BuildEnvironment) -> str | None:
     return apk_file
 
 
-def copy_outputs(apk_file: str, version: str, release_type: str):
+def copy_outputs(apk_file: str, version: str, release_type: str, snapshot: str):
     """复制 APK 到 output 目录"""
     print("[复制] 复制成品到 output 目录...")
     output_dir = OUTPUT_DIR
-    tag = f"v{version}-{release_type}"
+    tag = "v" + full_version(version, release_type, snapshot)
     dst = output_dir / f"qingfeng_setup_android_{tag}.apk"
     shutil.copy2(apk_file, dst)
     print(f"[成功] APK: {dst.name}")
@@ -83,9 +83,9 @@ def copy_outputs(apk_file: str, version: str, release_type: str):
 def main():
     os.chdir(str(PROJECT_DIR))
 
-    version, release_type, app_version_int = resolve_version()
+    version, release_type, app_version_int, snapshot = resolve_version()
     check_version_consistency(version)
-    tag = f"v{version}-{release_type}"
+    tag = "v" + full_version(version, release_type, snapshot)
 
     print("=" * 44)
     print(f"   氢风 Android 打包: {tag}")
@@ -102,7 +102,7 @@ def main():
     apk_file = build_apk(env)
     ok = apk_file is not None
     if ok:
-        copy_outputs(apk_file, version, release_type)
+        copy_outputs(apk_file, version, release_type, snapshot)
 
     print()
     print("=" * 44)

@@ -27,6 +27,7 @@ from build_common import (
     BuildConfig, BuildEnvironment,
     input_version_interactive, confirm_version_change,
     update_version_files, restore_backups, confirm_platform,
+    full_version,
 )
 
 # 平台定义：(标识, 脚本文件名, 显示名)。询问顺序即此顺序。
@@ -58,7 +59,7 @@ def detect_all_and_save():
     config.save()
 
 
-def dispatch(script_name: str, version: str, release_type: str, app_version_int: int) -> bool:
+def dispatch(script_name: str, version: str, release_type: str, app_version_int: int, snapshot: str) -> bool:
     """以子进程运行平台脚本，环境变量传入版本。返回是否成功。"""
     script = SCRIPT_DIR / script_name
     if not script.exists():
@@ -68,6 +69,7 @@ def dispatch(script_name: str, version: str, release_type: str, app_version_int:
     env["PACKAGE_VERSION"] = version
     env["RELEASE_TYPE"] = release_type
     env["APP_VERSION_INT"] = str(app_version_int)
+    env["APP_VERSION_SNAPSHOT"] = snapshot
     # 标记为分发模式：平台脚本末尾不再单独"按 Enter 退出"，由主编排器全部完成后统一提示
     env["PACKAGE_DISPATCHED"] = "1"
     cmd = [sys.executable, str(script)]
@@ -97,14 +99,14 @@ def main():
         return
 
     # 版本确认 + 统一写入版本文件
-    version, release_type, app_version_int = input_version_interactive()
+    version, release_type, app_version_int, snapshot = input_version_interactive()
     print()
     print("=" * 44)
-    print(f"   开始打包: v{version}-{release_type}")
+    print(f"   开始打包: v{full_version(version, release_type, snapshot)}")
     print("=" * 44)
     print()
-    confirm_version_change(version, release_type, app_version_int)
-    update_version_files(version, release_type, app_version_int)
+    confirm_version_change(version, release_type, app_version_int, snapshot)
+    update_version_files(version, release_type, app_version_int, snapshot)
     print()
 
     # 逐平台询问（或按参数指定）
@@ -123,7 +125,7 @@ def main():
         results = {}
         for pid, script, label in chosen:
             print(f"\n[平台] 打包 {label} ...")
-            results[pid] = dispatch(script, version, release_type, app_version_int)
+            results[pid] = dispatch(script, version, release_type, app_version_int, snapshot)
     finally:
         # 无论成败都还原被临时修改的配置文件（inno_setup.iss）
         restore_backups()

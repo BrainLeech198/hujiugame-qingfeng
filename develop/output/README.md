@@ -83,6 +83,7 @@ python scripts/build_package_mac.py
    ```
    请输入版本号 (例如 1.0.0) [上次: 1.0.0]:
    请输入发布类型 (beta/release) [上次: release]:
+   请输入 beta 快照码 (回车使用自动: 26w33a):   ← 仅 beta；release 不询问、强制空
    请输入版本整型编码 (通常递增) [上次: 1]:
    ```
 
@@ -117,7 +118,7 @@ update_version_files       → 统一写入版本文件（gradle.properties / ap
     ↓
 confirm_platform × 4       → 逐平台询问（Enter / Esc）
     ↓
-dispatch × N               → 子进程分发平台脚本（env 传 PACKAGE_VERSION / RELEASE_TYPE / APP_VERSION_INT / PACKAGE_DISPATCHED）
+dispatch × N               → 子进程分发平台脚本（env 传 PACKAGE_VERSION / RELEASE_TYPE / APP_VERSION_INT / APP_VERSION_SNAPSHOT / PACKAGE_DISPATCHED）
     ↓
 restore_backups            → 还原 inno_setup.iss（并汇总结果，统一提示按 Enter 退出）
 ```
@@ -202,6 +203,7 @@ build_dmg                → 可选 .dmg（--dmg，仅 macOS 原生）
 | `app_version` | int | 单调递增的整型编码 | 运行时更新检测的主依据 |
 | `app_version_string` | string | `major.minor.patch` 格式 | 展示给用户看 |
 | `app_version_type` | int | `0`=beta, `1`=release | 同版本号时判断 beta→release 升级 |
+| `app_version_snapshot` | string | beta 细分快照码 `YYwWWa`（Minecraft 法则），release 恒空 | 同一 `major.minor.patch` 的多次 beta 区分 |
 
 ### 版本存储位置
 
@@ -219,6 +221,7 @@ build_dmg                → 可选 .dmg（--dmg，仅 macOS 原生）
 - **app_version（整型）**: 每次发布递增 1。原则上不跳跃、不回退
 - **app_version_string**: 遵循语义化版本 `major.minor.patch`。major 不兼容时递增 major，功能新增递增 minor，bug 修复递增 patch
 - **app_version_type**: beta 阶段用 `0`，正式发布用 `1`。同版本号从 beta 升级到 release 时触发更新提醒
+- **app_version_snapshot**: 仅 beta 有，格式 `YYwWWa`（ISO 年两位 + `w` + ISO 周两位 + 修订字母，如 `26w33a`）。打包器选 beta 时按当天 ISO 周自动生成默认（同周字母递增 a→b→c，跨周回到 a），可手动覆盖，严格校验格式；release 恒为空串。一个 `major.minor.patch` 可对应多个快照码，每次 beta 是一次独立构建，新旧靠 `app_version` 整型递增区分
 
 ---
 

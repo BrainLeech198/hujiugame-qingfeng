@@ -43,6 +43,7 @@ public final class UpdateChecker
 
     private int internalAppVersion;
     private int internalAppVersionType;
+    private String internalAppVersionSnapshot;
 
     private boolean doDetectUpdateFinish = false;
     private boolean doDetectSuccess = false;
@@ -189,14 +190,22 @@ public final class UpdateChecker
     /**
      * 生成格式化的版本显示字符串
      *
-     * @param appVersionType   应用版本类型
-     * @param appVersionString 应用版本号字符串
-     * @return 格式化后的版本显示字符串，格式如 "v1.0.0-beta"
+     * @param appVersionType     应用版本类型
+     * @param appVersionString   应用版本号字符串
+     * @param appVersionSnapshot beta 细分快照码（仅 beta 且非空时追加），release 恒为空
+     * @return 格式化后的版本显示字符串，如 "v1.0.0-beta"、"v1.0.0-beta-26w32a"
      */
-    private String generateVersionString (int appVersionType, String appVersionString)
+    private String generateVersionString (int appVersionType, String appVersionString, String appVersionSnapshot)
     {
-        // v1.0.0(0)-beta
-        return "v" + appVersionString + "-" + VersionType.getVersionTypeName(appVersionType);
+        // v1.0.0(0)-beta[-26w32a]
+        String result = "v" + appVersionString + "-" + VersionType.getVersionTypeName(appVersionType);
+        if (appVersionType == VersionType.BETA
+            && appVersionSnapshot != null
+            && !appVersionSnapshot.isEmpty())
+        {
+            result += "-" + appVersionSnapshot;
+        }
+        return result;
     }
 
     /**
@@ -219,6 +228,11 @@ public final class UpdateChecker
             int internalAppVersion = internalAppVersionJson.getInt(VersionKey.APP_VERSION);
             int internalAppVersionType = internalAppVersionJson.getInt(VersionKey.APP_VERSION_TYPE);
             String internalAppVersionString = internalAppVersionJson.getString(VersionKey.APP_VERSION_STRING);
+            String internalAppVersionSnapshot = internalAppVersionJson.getString(VersionKey.APP_VERSION_SNAPSHOT);
+            if (internalAppVersionSnapshot == null)
+            {
+                internalAppVersionSnapshot = "";
+            }
 
             // 是否需要差异更新
             boolean needUpdate = false;
@@ -236,14 +250,20 @@ public final class UpdateChecker
                 JsonEntity externalAppVersionJson = new JsonEntity(externalVersionFileHandle);
                 int externalAppVersionType = externalAppVersionJson.getInt(VersionKey.APP_VERSION_TYPE);
                 String externalAppVersionString = externalAppVersionJson.getString(VersionKey.APP_VERSION_STRING);
+                String externalAppVersionSnapshot = externalAppVersionJson.getString(VersionKey.APP_VERSION_SNAPSHOT);
+                if (externalAppVersionSnapshot == null)
+                {
+                    externalAppVersionSnapshot = "";
+                }
 
-                // 版本不一致
-                if (!internalAppVersionString.equals(externalAppVersionString))
+                // 版本不一致（含 beta 细分快照：同一 major.minor.patch 的多次 beta 需触发资源同步）
+                if (!internalAppVersionString.equals(externalAppVersionString)
+                    || !internalAppVersionSnapshot.equals(externalAppVersionSnapshot))
                 {
                     needUpdate = true;
                     LogUtils.info(UpdateChecker.class, "doVersionDifferent 资源文件版本不一致，进行文件更新 "
-                        + "文件版本号: " + generateVersionString(internalAppVersionType, internalAppVersionString) + " "
-                        + "运行版本号: " + generateVersionString(externalAppVersionType, externalAppVersionString));
+                        + "文件版本号: " + generateVersionString(internalAppVersionType, internalAppVersionString, internalAppVersionSnapshot) + " "
+                        + "运行版本号: " + generateVersionString(externalAppVersionType, externalAppVersionString, externalAppVersionSnapshot));
                 }
             }
 
@@ -251,7 +271,8 @@ public final class UpdateChecker
             this.internalVersionString = internalAppVersionString;
             this.internalAppVersion = internalAppVersion;
             this.internalAppVersionType = internalAppVersionType;
-            this.displayVersionString = generateVersionString(internalAppVersionType, internalAppVersionString);
+            this.internalAppVersionSnapshot = internalAppVersionSnapshot;
+            this.displayVersionString = generateVersionString(internalAppVersionType, internalAppVersionString, internalAppVersionSnapshot);
             int[] parts = parseVersion(internalVersionString);
             this.internalMajor = parts[0];
             this.internalMinor = parts[1];

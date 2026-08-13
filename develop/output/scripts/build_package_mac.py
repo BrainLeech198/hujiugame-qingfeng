@@ -35,6 +35,7 @@ from pathlib import Path
 from build_common import (
     OUTPUT_DIR, PROJECT_DIR, CONSTRUO_OUTPUT_DIR,
     _decode, run_gradle, resolve_version, check_version_consistency,
+    full_version,
 )
 
 # construo target -> 产物平台标签（macX64 命名沿用主脚本的 "mac"）
@@ -155,12 +156,12 @@ def package_zip(app_dir, dest_zip) -> bool:
     return True
 
 
-def build_dmg(app_dir, dest_dmg, version, release_type) -> bool:
+def build_dmg(app_dir, dest_dmg, version, release_type, snapshot) -> bool:
     """macOS 原生：hdiutil 生成 .dmg（双击打开，拖入 Applications）。"""
     print(f"[DMG] 生成 {dest_dmg.name} ...")
     r = subprocess.run([
         "hdiutil", "create",
-        "-volname", f"QingFeng-{version}-{release_type}",
+        "-volname", f"QingFeng-{full_version(version, release_type, snapshot)}",
         "-srcfolder", str(app_dir),
         "-ov", "-format", "UDZO",
         str(dest_dmg),
@@ -278,9 +279,9 @@ def main():
         print(f"[提示] 当前平台 {sys.platform}，执行交叉编译兜底（无签名/DMG）")
 
     # 只读版本（环境变量优先，否则 app_version.json；绝不修改项目文件）
-    version, release_type, _ = resolve_version()
+    version, release_type, _, snapshot = resolve_version()
     check_version_consistency(version)
-    tag = f"v{version}-{release_type}"
+    tag = "v" + full_version(version, release_type, snapshot)
     print(f"[版本] {tag}（只读，不改动项目文件）")
     print()
 
@@ -319,7 +320,7 @@ def main():
                 print("[跳过] --dmg 仅支持 macOS 原生执行")
             else:
                 dest_dmg = OUTPUT_DIR / f"qingfeng_setup_{platform_label}_{tag}.dmg"
-                if build_dmg(app_dir, dest_dmg, version, release_type):
+                if build_dmg(app_dir, dest_dmg, version, release_type, snapshot):
                     produced.append(dest_dmg)
                 else:
                     ok = False

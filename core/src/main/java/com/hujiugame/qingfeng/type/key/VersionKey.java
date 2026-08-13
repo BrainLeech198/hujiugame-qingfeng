@@ -19,6 +19,8 @@ public final class VersionKey
     public static final String APP_VERSION_TYPE = "app_version_type";
     /** 内部版本字符串 */
     public static final String APP_VERSION_STRING = "app_version_string";
+    /** beta 细分快照码（Minecraft 法则 YYwWWa），仅 beta 填充，release 为空 */
+    public static final String APP_VERSION_SNAPSHOT = "app_version_snapshot";
 
     // ====================================================================================================
     // 远程 versions.json 字段

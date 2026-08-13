@@ -77,6 +77,7 @@
 | **UiObject 支持 JsonEntity 构造** | [develop/plans/2026-08-09-uiobject-jsonentity-constructor.md](develop/plans/2026-08-09-uiobject-jsonentity-constructor.md) | UiObject 从 JsonEntity 解析 type/tag 构造（键收进 UiKey.UiObject），VirtualInputHandler 复用替换 |
 | **运行时切换主题/语言技术路径** | [develop/plans/2026-08-09-runtime-switch-theme-language.md](develop/plans/2026-08-09-runtime-switch-theme-language.md) | reload 为何无效 + 语言切换只差 blockMap 清空 + 主题切换需重建 UI 层 + 分阶段实现建议 |
 | **日志三维改造 + Script throw 统一** | [develop/plans/2026-08-10-log-3d-refactor.md](develop/plans/2026-08-10-log-3d-refactor.md) | LogUtils 空间/异常/上下文/时间四维改造 + Script 90 处 throw 消息中文化溯源 + GraphicsObject tag 可空优化（已确认，暂未实施） |
+| **Beta 快照细分版本** | [develop/plans/2026-08-13-beta-snapshot-version.md](develop/plans/2026-08-13-beta-snapshot-version.md) | app_version_snapshot 字段（YYwWWa）+ 打包器自动联想 + 产物命名带细分 + 资源同步加快照（已实施） |
 
 ---
 
