@@ -14,8 +14,30 @@
     --ease-out: cubic-bezier(0.25, 0.8, 0.25, 1);
     --font-body: 'Noto Sans SC', 'Segoe UI', Roboto, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
     --radius-card: 32px;
-    --shadow-soft: 0 15px 30px -15px rgba(0,35,70,0.15);
-    --shadow-hover: 0 40px 60px -15px rgba(20,80,120,0.4);
+
+    /* ===== 深色深邃底色板（全站统一） ===== */
+    --bg-0: #0a0f1f;
+    --bg-1: #0b1f33;
+    --bg-2: #0e2b3a;
+    --bg-3: #14303c;
+    --card-bg: rgba(17, 36, 60, 0.62);
+    --card-bg-strong: rgba(30, 56, 84, 0.78);
+    --card-bg-soft: rgba(10, 24, 42, 0.5);
+    --border-glass: rgba(120, 190, 230, 0.14);
+    --border-glass-strong: rgba(126, 224, 208, 0.32);
+    --text-1: #f2f8fb;
+    --text-2: #b6cede;
+    --text-3: #7e9fb8;
+    --accent: #4fc3d8;
+    --accent-2: #7ee0d0;
+    --accent-deep: #167a9c;
+    --accent-warm: #f0b864;
+    --accent-purple: #9a8fe0;
+    --btn-grad: linear-gradient(135deg, #2aa9b8, #167a9c);
+    --grad-text: linear-gradient(135deg, #f2fbff, #7ee0d0);
+    --glow: rgba(79, 195, 216, 0.35);
+    --shadow-soft: 0 15px 30px -15px rgba(0, 0, 0, 0.6);
+    --shadow-hover: 0 30px 60px -15px rgba(0, 0, 0, 0.8);
 }
 
 /* ================================
@@ -58,14 +80,14 @@
     pointer-events: auto;
 }
 .modal-content {
-    background: rgba(255,255,255,0.95);
+    background: rgba(15, 34, 58, 0.97);
     backdrop-filter: blur(16px);
     border-radius: var(--radius-card);
     max-width: 500px;
     width: 90%;
     padding: 30px 25px;
-    box-shadow: 0 25px 45px -12px rgba(0,20,40,0.5);
-    border: 1px solid rgba(255,255,255,0.8);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--border-glass-strong);
+    border: 1px solid var(--border-glass-strong);
     opacity: 0;
     transform: translateY(16px) scale(0.97);
     transition: opacity 0.28s var(--ease-out), transform 0.28s var(--ease-out), max-width 0.35s var(--ease-out);
@@ -100,7 +122,7 @@
     justify-content: space-between;
     gap: 10px;
     margin-bottom: 15px;
-    border-bottom: 1px solid rgba(160,196,217,0.6);
+    border-bottom: 1px solid rgba(120, 190, 230, 0.25);
     padding-bottom: 12px;
 }
 .modal-title {
@@ -108,7 +130,7 @@
     text-align: center;
     font-size: 1.8rem;
     font-weight: 600;
-    color: #0d4057;
+    color: var(--text-1);
 }
 .modal-title::before {
     content: '📥';
@@ -119,7 +141,7 @@
     border: none;
     font-size: 0.95rem;
     font-weight: 500;
-    color: #4f6f8a;
+    color: var(--text-3);
     cursor: pointer;
     padding: 6px 12px;
     border-radius: 20px;
@@ -130,8 +152,8 @@
     visibility: hidden;
 }
 .modal-back:hover {
-    color: #083445;
-    background: rgba(70,120,160,0.12);
+    color: var(--accent-2);
+    background: rgba(79, 195, 216, 0.1);
 }
 .modal-back.show {
     visibility: visible;
@@ -144,7 +166,7 @@
 
 .modal-error {
     text-align: center;
-    color: #b52b2b;
+    color: #ff9090;
 }
 
 .modal-close {
@@ -154,11 +176,11 @@
     line-height: 1;
     cursor: pointer;
     padding: 0 6px;
-    color: #4f6f8a;
+    color: var(--text-3);
     transition: color 0.25s var(--ease-out), transform 0.25s var(--ease-out);
 }
 .modal-close:hover {
-    color: #083445;
+    color: var(--accent-2);
 }
 
 /* 阶段一：平台选择按钮 */
@@ -169,38 +191,38 @@
     margin-top: 10px;
 }
 .platform-select-btn {
-    background: rgba(255,255,255,0.7);
-    border: 1px solid rgba(70,120,160,0.3);
+    background: var(--card-bg-soft);
+    border: 1px solid var(--border-glass);
     border-radius: 28px;
     padding: 22px 16px;
     font-size: 1.15rem;
     font-weight: 600;
-    color: #1e3a4a;
+    color: var(--text-2);
     cursor: pointer;
     transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
 }
 .platform-select-btn:hover {
-    background: white;
+    background: var(--card-bg-strong);
     transform: translateY(-2px);
-    box-shadow: 0 12px 20px -8px rgba(20,80,120,0.3);
+    box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--border-glass-strong);
 }
 
 .download-option {
-    background: rgba(255,255,255,0.7);
+    background: var(--card-bg-soft);
     border-radius: 28px;
     padding: 16px 20px;
     margin-bottom: 16px;
-    border: 1px solid rgba(70,120,160,0.3);
+    border: 1px solid var(--border-glass);
     transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
 }
 .download-option:hover {
-    background: white;
+    background: var(--card-bg-strong);
     transform: translateY(-2px);
-    box-shadow: 0 0 0 4px rgba(47,107,143,0.12), 0 12px 20px -8px rgba(20,80,120,0.3);
+    box-shadow: 0 0 0 1px var(--border-glass-strong), 0 12px 24px -8px rgba(0, 0, 0, 0.6);
 }
 .option-description {
     font-size: 1rem;
-    color: #1e3a4a;
+    color: var(--text-2);
     margin-bottom: 12px;
     line-height: 1.5;
 }
@@ -219,7 +241,7 @@
 .download-option-row .option-arrow {
     font-size: 1.3rem;
     font-weight: 700;
-    color: #2f6b8f;
+    color: var(--accent);
     flex-shrink: 0;
     margin-left: 12px;
 }
@@ -227,14 +249,17 @@
 /* ================================
    滚动进入动画（JS 运行时才加 .reveal）
    ================================ */
-.reveal {
+/* 选择器加 html 前缀提权，避免被页面专属类的同优先级 transition 覆盖 */
+html .reveal {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
+    transform: translateY(26px) scale(0.985);
+    filter: blur(5px);
+    transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out), filter 0.5s var(--ease-out);
 }
-.reveal.in {
+html .reveal.in {
     opacity: 1;
     transform: none;
+    filter: none;
 }
 
 /* 减动效偏好：关闭动画/过渡，布局不受影响 */
@@ -245,9 +270,10 @@
         transition-duration: 0.01ms !important;
         transition-delay: 0ms !important;
     }
-    .reveal {
+    html .reveal {
         opacity: 1;
         transform: none;
+        filter: none;
     }
 }
 
@@ -262,5 +288,71 @@ html {
    按钮 hover 光晕（美化共用）
    ================================ */
 .platform-select-btn:hover {
-    box-shadow: 0 0 0 4px rgba(47,107,143,0.12), 0 12px 20px -8px rgba(20,80,120,0.4);
+    box-shadow: 0 0 0 4px var(--glow), 0 12px 24px -8px rgba(0, 0, 0, 0.6);
+}
+
+/* ================================
+   背景灵动氛围层（浮动光晕）
+   ================================ */
+body {
+    isolation: isolate;
+}
+body::before, body::after {
+    content: '';
+    position: fixed;
+    z-index: -1;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+}
+body::before {
+    width: 55vmax;
+    height: 55vmax;
+    left: -16vmax;
+    top: -12vmax;
+    background: radial-gradient(circle at center, rgba(45, 130, 180, 0.4), transparent 60%);
+    animation: orbDrift1 26s ease-in-out infinite alternate;
+}
+body::after {
+    width: 50vmax;
+    height: 50vmax;
+    right: -14vmax;
+    bottom: -12vmax;
+    background: radial-gradient(circle at center, rgba(136, 118, 214, 0.34), transparent 60%);
+    animation: orbDrift2 32s ease-in-out infinite alternate;
+}
+@keyframes orbDrift1 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(9vmax, 11vmax) scale(1.15); }
+}
+@keyframes orbDrift2 {
+    0% { transform: translate(0, 0) scale(1.1); }
+    100% { transform: translate(-7vmax, -8vmax) scale(0.95); }
+}
+
+/* ================================
+   图标/emoji 微交互
+   ================================ */
+.sec-emoji {
+    display: inline-block;
+}
+.card-header:hover .sec-emoji,
+.page-title:hover .sec-emoji {
+    animation: emojiPop 0.55s var(--ease-out);
+}
+@keyframes emojiPop {
+    0% { transform: scale(1) rotate(0); }
+    35% { transform: scale(1.35) rotate(-10deg); }
+    65% { transform: scale(0.88) rotate(4deg); }
+    100% { transform: scale(1) rotate(0); }
+}
+.tip-card:hover .highlight {
+    animation: emojiWiggle 0.5s var(--ease-out);
+}
+@keyframes emojiWiggle {
+    0% { transform: rotate(0); }
+    25% { transform: rotate(-14deg) scale(1.2); }
+    50% { transform: rotate(10deg); }
+    75% { transform: rotate(-6deg); }
+    100% { transform: rotate(0); }
 }
