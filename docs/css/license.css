@@ -3,9 +3,9 @@
    ================================ */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-    font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif;
-    background: linear-gradient(145deg, #f0f6fa 0%, #e2edf5 100%);
-    color: #1f3f50;
+    font-family: var(--font-body);
+    background: linear-gradient(160deg, var(--bg-0) 0%, var(--bg-2) 60%, var(--bg-3) 100%);
+    color: var(--text-2);
     line-height: 1.9;
     padding: 40px 20px;
     min-height: 100vh;
@@ -13,58 +13,59 @@ body {
 .container {
     max-width: 900px;
     margin: 0 auto;
-    background: rgba(255,255,255,0.85);
+    background: var(--card-bg);
     backdrop-filter: blur(12px);
     border-radius: 20px;
     padding: 48px 56px;
-    box-shadow: 0 20px 45px -18px rgba(30,80,110,0.18);
-    border: 1px solid rgba(255,255,255,0.8);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-glass);
 }
 h1 {
     font-size: 1.8rem;
-    color: #0a2e3e;
+    color: var(--text-1);
     margin-bottom: 24px;
     padding-bottom: 12px;
-    border-bottom: 2px solid rgba(60,130,170,0.3);
+    border-bottom: 2px solid var(--border-glass-strong);
 }
 blockquote {
-    background: #e8f0f6;
-    border-left: 4px solid #3a82a0;
+    background: var(--card-bg-soft);
+    border-left: 4px solid var(--accent);
     padding: 16px 20px;
     margin: 16px 0 28px;
     border-radius: 0 8px 8px 0;
     font-size: 0.95rem;
-    color: #2a5a70;
+    color: var(--text-2);
 }
 blockquote ul { margin: 8px 0 0 20px; }
 h2 {
     font-size: 1.35rem;
-    color: #0a2e3e;
+    color: var(--text-1);
     margin: 36px 0 16px;
     padding-bottom: 8px;
-    border-bottom: 1px dashed rgba(60,130,170,0.25);
+    border-bottom: 1px dashed rgba(120, 190, 230, 0.22);
 }
 h3 {
     font-size: 1.1rem;
-    color: #1a4a60;
+    color: var(--text-2);
     margin: 24px 0 12px;
 }
 h4 {
     font-size: 1rem;
-    color: #1a4a60;
+    color: var(--text-2);
     margin: 20px 0 10px;
 }
 ul, ol { margin: 8px 0 16px 24px; }
 li { margin-bottom: 4px; }
 p { margin: 8px 0 14px; }
-strong { color: #0a2e3e; }
-a { color: #1f6f93; text-decoration: none; border-bottom: 1px dotted; }
-a:hover { color: #083445; border-bottom-style: solid; }
+strong { color: var(--text-1); }
+a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted; }
+a:hover { color: var(--accent-2); border-bottom-style: solid; }
 code {
-    background: #dce8f0;
+    background: var(--card-bg-soft);
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 0.88rem;
+    color: var(--accent-2);
 }
 table {
     width: 100%;
@@ -75,17 +76,17 @@ table {
 th, td {
     padding: 10px 14px;
     text-align: left;
-    border-bottom: 1px solid #d0dfe8;
+    border-bottom: 1px solid rgba(120, 190, 230, 0.18);
 }
 th {
-    background: #dce8f0;
+    background: var(--card-bg-soft);
     font-weight: 600;
-    color: #0a2e3e;
+    color: var(--text-1);
 }
-tr:hover td { background: #edf4f8; }
+tr:hover td { background: rgba(79, 195, 216, 0.08); }
 hr {
     border: none;
-    border-top: 1px solid #d0dfe8;
+    border-top: 1px solid rgba(120, 190, 230, 0.2);
     margin: 36px 0;
 }
 .footer-note {
@@ -93,28 +94,29 @@ hr {
     padding: 20px;
     text-align: center;
     font-size: 0.85rem;
-    color: #5f7f90;
-    background: rgba(255,255,255,0.55);
+    color: var(--text-3);
+    background: var(--card-bg-soft);
     backdrop-filter: blur(8px);
     border-radius: 24px;
-    border-top: 1px solid rgba(255,255,255,0.7);
+    border-top: 1px solid var(--border-glass);
 }
 .footer-note a {
-    color: #1f5f83;
+    color: var(--text-2);
     text-decoration: none;
     font-weight: 500;
     position: relative;
     padding-bottom: 2px;
     border-bottom: none;
-    background-image: linear-gradient(90deg, #2f6b8f, #2f6b8f);
+    background-image: linear-gradient(90deg, var(--accent), var(--accent-2));
     background-repeat: no-repeat;
     background-size: 0% 2px;
     background-position: 0 100%;
-    transition: color 0.2s, background-size 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: color 0.25s var(--ease-out), background-size 0.3s var(--ease-out);
 }
 .footer-note a:hover {
-    color: #083445;
+    color: var(--accent-2);
     background-size: 100% 2px;
+    text-shadow: 0 0 14px rgba(79, 195, 216, 0.4);
 }
 @media (max-width: 700px) {
     .container { padding: 28px 20px; }

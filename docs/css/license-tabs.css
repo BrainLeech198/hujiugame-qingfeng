@@ -9,29 +9,29 @@
     flex-wrap: wrap;
 }
 .tab-btn {
-    background: #dce8f0;
-    border: none;
+    background: var(--card-bg-soft);
+    border: 1px solid var(--border-glass);
     padding: 8px 20px;
     border-radius: 20px;
     font-size: 0.95rem;
-    color: #0a2e3e;
+    color: var(--text-2);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s var(--ease-out);
 }
 .tab-btn:hover {
-    background: #c8dce8;
-    box-shadow: 0 0 0 3px rgba(47,107,143,0.12);
+    background: var(--card-bg-strong);
+    box-shadow: 0 0 0 3px var(--glow);
 }
 .tab-btn.active {
-    background: #1f6f93;
+    background: var(--btn-grad);
     color: #fff;
-    box-shadow: 0 0 0 3px rgba(31,111,147,0.18);
+    box-shadow: 0 0 0 3px var(--glow), 0 4px 14px -4px rgba(42, 169, 184, 0.6);
 }
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 .license-text {
-    background: #f5fafd;
-    border: 1px solid #d0dfe8;
+    background: var(--card-bg-strong);
+    border: 1px solid var(--border-glass);
     border-radius: 12px;
     padding: 24px 28px;
     font-family: "Microsoft YaHei", -apple-system, sans-serif;
@@ -41,4 +41,5 @@
     word-wrap: break-word;
     max-height: 70vh;
     overflow-y: auto;
+    color: var(--text-2);
 }
