@@ -24,6 +24,7 @@
 """
 
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -343,7 +344,8 @@ if __name__ == "__main__":
         traceback.print_exc()
         print(f"\n[错误] 未捕获的异常: {e}")
     finally:
-        if sys.stdin and sys.stdin.isatty():
+        # 主编排器分发时（PACKAGE_DISPATCHED=1）跳过等待，由主编排器全部完成后统一提示
+        if not os.environ.get("PACKAGE_DISPATCHED") and sys.stdin and sys.stdin.isatty():
             try:
                 input("按 Enter 键退出...")
             except (EOFError, OSError):

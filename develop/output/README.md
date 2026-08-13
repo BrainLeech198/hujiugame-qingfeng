@@ -97,8 +97,10 @@ python scripts/build_package_mac.py
    是否打包 macOS 平台安装包？[Enter=是 / Esc=跳过] 
    ```
 
-5. 依次分发各平台脚本（子进程 + 环境变量传版本）
-6. 还原临时配置（inno_setup.iss）并汇总结果
+5. 依次分发各平台脚本（子进程 + 环境变量传版本；各平台脚本被分发时不再单独等待，全部完成后统一退出）
+6. 还原临时配置（inno_setup.iss）并汇总结果，最后统一显示 **"全部选中的平台已打包完毕，按 Enter 键退出"**
+
+> 交互结束时机：**所有选中的平台（含跳过的）全部处理完毕后**才统一提示按 Enter 退出。中途某个平台打包失败不影响流程继续，最终汇总会逐一列出每个平台的成功/失败。
 
 ---
 
@@ -115,10 +117,12 @@ update_version_files       → 统一写入版本文件（gradle.properties / ap
     ↓
 confirm_platform × 4       → 逐平台询问（Enter / Esc）
     ↓
-dispatch × N               → 子进程分发平台脚本（env 传 PACKAGE_VERSION / RELEASE_TYPE / APP_VERSION_INT）
+dispatch × N               → 子进程分发平台脚本（env 传 PACKAGE_VERSION / RELEASE_TYPE / APP_VERSION_INT / PACKAGE_DISPATCHED）
     ↓
-restore_backups            → 还原 inno_setup.iss
+restore_backups            → 还原 inno_setup.iss（并汇总结果，统一提示按 Enter 退出）
 ```
+
+> `PACKAGE_DISPATCHED=1`：主编排器分发时设置，平台脚本据此跳过各自的"按 Enter 退出"等待，由主编排器全部完成后统一提示。
 
 ### Windows（build_package_windows.py）
 

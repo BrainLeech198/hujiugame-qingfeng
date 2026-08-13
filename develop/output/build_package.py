@@ -68,6 +68,8 @@ def dispatch(script_name: str, version: str, release_type: str, app_version_int:
     env["PACKAGE_VERSION"] = version
     env["RELEASE_TYPE"] = release_type
     env["APP_VERSION_INT"] = str(app_version_int)
+    # 标记为分发模式：平台脚本末尾不再单独"按 Enter 退出"，由主编排器全部完成后统一提示
+    env["PACKAGE_DISPATCHED"] = "1"
     cmd = [sys.executable, str(script)]
     print(f"\n===== 分发: {script_name} =====")
     r = subprocess.run(cmd, env=env)
@@ -147,6 +149,6 @@ if __name__ == "__main__":
         print(f"\n[错误] 未捕获的异常: {e}")
     finally:
         try:
-            input("按 Enter 键退出...")
+            input("全部选中的平台已打包完毕，按 Enter 键退出...")
         except (EOFError, OSError):
             pass
