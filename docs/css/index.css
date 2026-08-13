@@ -19,7 +19,7 @@ body {
 .hero-card {
     max-width: 1100px;
     width: 100%;
-    background: linear-gradient(165deg, rgba(28, 58, 90, 0.8), rgba(16, 36, 60, 0.55));
+    background: linear-gradient(165deg, rgba(52, 48, 54, 0.85), rgba(30, 28, 33, 0.6));
     border-radius: 40px;
     padding: 30px 20px;
     margin-bottom: 30px;
@@ -322,7 +322,7 @@ body {
     box-shadow: var(--shadow-soft);
 }
 .download-item:hover {
-    background: rgba(24, 50, 80, 0.85);
+    background: rgba(54, 51, 58, 0.92);
     box-shadow: var(--shadow-hover), 0 0 30px -10px var(--glow);
     transform: translateY(-4px);
 }
@@ -337,7 +337,7 @@ body {
     font-size: 1.3rem;
     font-weight: 550;
     color: var(--text-2);
-    background: rgba(20, 44, 70, 0.6);
+    background: rgba(28, 26, 32, 0.85);
     padding: 6px 18px;
     border-radius: 40px;
     width: fit-content;
@@ -479,13 +479,13 @@ body {
     padding-bottom: 2px;
     background-image: linear-gradient(90deg, var(--accent), var(--accent-2));
     background-repeat: no-repeat;
-    background-size: 0% 2px;
+    background-size: 0% 3px;
     background-position: 0 100%;
-    transition: color 0.25s var(--ease-out), background-size 0.3s var(--ease-out);
+    transition: color 0.25s var(--ease-out), background-size 0.45s var(--ease-out);
 }
 .footnote a:hover {
     color: var(--accent-2);
-    background-size: 100% 2px;
+    background-size: 100% 3px;
     text-shadow: 0 0 14px rgba(79, 195, 216, 0.4);
 }
 

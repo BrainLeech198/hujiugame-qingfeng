@@ -20,9 +20,9 @@
     --bg-1: #0b1f33;
     --bg-2: #0e2b3a;
     --bg-3: #14303c;
-    --card-bg: rgba(17, 36, 60, 0.62);
-    --card-bg-strong: rgba(30, 56, 84, 0.78);
-    --card-bg-soft: rgba(10, 24, 42, 0.5);
+    --card-bg: rgba(32, 31, 35, 0.75);
+    --card-bg-strong: rgba(43, 41, 47, 0.82);
+    --card-bg-soft: rgba(20, 20, 25, 0.55);
     --border-glass: rgba(120, 190, 230, 0.14);
     --border-glass-strong: rgba(126, 224, 208, 0.32);
     --text-1: #f2f8fb;
@@ -80,7 +80,7 @@
     pointer-events: auto;
 }
 .modal-content {
-    background: rgba(15, 34, 58, 0.97);
+    background: rgba(27, 26, 32, 0.97);
     backdrop-filter: blur(16px);
     border-radius: var(--radius-card);
     max-width: 500px;
