@@ -188,7 +188,7 @@ build_dmg                → 可选 .dmg（--dmg，仅 macOS 原生）
 | Linux | `qingfeng_setup_linux_v{version}-{type}.deb` | deb 安装包 |
 | Linux | `qingfeng_setup_linux_v{version}-{type}.sh` | 自解压一键安装脚本 |
 | macOS | `qingfeng_setup_mac{M1}_{version}-{type}.zip` | .app zip |
-| macOS | `氢风一键安装_{M1|Intel}_{version}-{type}.command` | 一键安装器（AirDrop 免确认） |
+| macOS | `qingfeng_setup_mac{M1}_{version}-{type}.command` | 一键安装器（AirDrop 免确认） |
 | macOS | `qingfeng_setup_mac{M1}_{version}-{type}.dmg` | 可选 dmg |
 
 ---

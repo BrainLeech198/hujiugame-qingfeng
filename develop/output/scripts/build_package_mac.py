@@ -12,7 +12,7 @@
     python build_package_mac.py --dmg                # 额外生成 .dmg（仅 macOS 原生执行时有效）
 
 产物（每个架构产出 zip + 自解压安装器）：
-    氢风一键安装_M1_v1.0.0-release.command   ← 发给朋友的首选：双击即自动安装并启动
+    qingfeng_setup_macM1_v1.0.0-release.command   ← 发给朋友的首选：双击即自动安装并启动
     qingfeng_setup_macM1_v1.0.0-release.zip
 
 平台行为：
@@ -308,7 +308,7 @@ def main():
             ok = False
             continue
 
-        dest_installer = OUTPUT_DIR / f"氢风一键安装_{arch_label}_{tag}.command"
+        dest_installer = OUTPUT_DIR / f"qingfeng_setup_{platform_label}_{tag}.command"
         if build_installer_command(app_dir, dest_installer, version, release_type, arch_label):
             produced.append(dest_installer)
         else:
