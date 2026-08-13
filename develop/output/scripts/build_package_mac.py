@@ -334,6 +334,8 @@ def main():
     if "macX64" in arch_names:
         print("[提示] Intel 版 .app 在 Apple Silicon Mac 上运行需安装 Rosetta")
     print("=" * 44)
+    if not ok:
+        sys.exit(1)
 
 
 if __name__ == "__main__":

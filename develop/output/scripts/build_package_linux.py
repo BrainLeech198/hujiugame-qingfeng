@@ -416,6 +416,8 @@ def main():
     print("=" * 44)
     print("   打包完成" if ok else "   打包失败")
     print("=" * 44)
+    if not ok:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
