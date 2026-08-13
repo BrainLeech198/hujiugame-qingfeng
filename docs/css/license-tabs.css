@@ -1,0 +1,40 @@
+/* ================================
+   LICENSE 许可页：标签切换 + h1 间距微调（其余两页不引用）
+   ================================ */
+.container h1 { margin-bottom: 12px; }
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin: 24px 0 16px;
+    flex-wrap: wrap;
+}
+.tab-btn {
+    background: #dce8f0;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    color: #0a2e3e;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.tab-btn:hover { background: #c8dce8; }
+.tab-btn.active {
+    background: #1f6f93;
+    color: #fff;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.license-text {
+    background: #f5fafd;
+    border: 1px solid #d0dfe8;
+    border-radius: 12px;
+    padding: 24px 28px;
+    font-family: "Microsoft YaHei", -apple-system, sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 70vh;
+    overflow-y: auto;
+}

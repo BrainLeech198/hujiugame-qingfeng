@@ -67,5 +67,7 @@
   "mac_button": "Mac",
   "mac_intel_group": "Intel Processor",
   "game_intro_desc4": "Games and resource packs use dedicated file formats (.qfg, .qfl, .qft, .qfgl, .qfgt), registered across Windows, Linux, and Android, so you can load and run them directly with a double-click. Visual editors, 2D maps, and video playback are on the roadmap, opening up more possibilities for creators.",
-  "community_description": "A community space for feature suggestions, feedback, creative content sharing, and player discussions. Please keep the conversation civil!"
+  "community_description": "A community space for feature suggestions, feedback, creative content sharing, and player discussions. Please keep the conversation civil!",
+  "select_platform": "Select Platform",
+  "back_button": "Back"
 }

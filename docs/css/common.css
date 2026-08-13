@@ -1,0 +1,242 @@
+/* ================================
+   共用基础：重置 + 动效变量
+   ================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+:root {
+    --ease-out: cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ================================
+   加载占位
+   ================================ */
+.loading-skeleton {
+    color: #7a9eb5;
+    font-style: italic;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+/* ================================
+   模态框（两阶段下载弹窗）
+   ================================ */
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.28s ease, visibility 0.28s;
+}
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+.modal-content {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(16px);
+    border-radius: 48px;
+    max-width: 500px;
+    width: 90%;
+    padding: 30px 25px;
+    box-shadow: 0 25px 45px -12px rgba(0,20,40,0.5);
+    border: 1px solid rgba(255,255,255,0.8);
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+    transition: opacity 0.28s var(--ease-out), transform 0.28s var(--ease-out), max-width 0.35s var(--ease-out);
+}
+.modal.show .modal-content {
+    opacity: 1;
+    transform: none;
+}
+/* 阶段二：展示具体下载文件的大弹窗 */
+.modal-content-lg {
+    max-width: 720px;
+}
+/* 弹窗内容逐项淡入（阶段切换重渲染时天然重放） */
+.modal-body > * {
+    animation: modalItemIn 0.28s var(--ease-out) both;
+}
+.modal-body > *:nth-child(2) { animation-delay: 0.04s; }
+.modal-body > *:nth-child(3) { animation-delay: 0.08s; }
+.modal-body > *:nth-child(4) { animation-delay: 0.12s; }
+@keyframes modalItemIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+    border-bottom: 2px dashed #a0c4d9;
+    padding-bottom: 12px;
+}
+.modal-title {
+    flex: 1;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #0d4057;
+}
+.modal-back {
+    background: none;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #4f6f8a;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: opacity 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
+    visibility: hidden;
+}
+.modal-back:hover {
+    color: #083445;
+    background: rgba(70,120,160,0.12);
+}
+.modal-back.show {
+    visibility: visible;
+}
+.modal-body {
+    max-height: 60vh;
+    overflow-y: auto;
+    margin: 15px 0;
+}
+
+.modal-error {
+    text-align: center;
+    color: #b52b2b;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 6px;
+    color: #4f6f8a;
+    transition: color 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+}
+.modal-close:hover {
+    color: #083445;
+}
+
+/* 阶段一：平台选择按钮 */
+.platform-select-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 10px;
+}
+.platform-select-btn {
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(70,120,160,0.3);
+    border-radius: 28px;
+    padding: 22px 16px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #1e3a4a;
+    cursor: pointer;
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
+}
+.platform-select-btn:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px -8px rgba(20,80,120,0.3);
+}
+
+.download-option {
+    background: rgba(255,255,255,0.7);
+    border-radius: 28px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(70,120,160,0.3);
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
+}
+.download-option:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 18px -10px rgba(20,80,120,0.3);
+}
+.option-description {
+    font-size: 1rem;
+    color: #1e3a4a;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+/* 整行可点的下载列表项 */
+.download-option-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    text-decoration: none;
+    cursor: pointer;
+}
+.download-option-row .option-description {
+    margin-bottom: 0;
+}
+.download-option-row .option-arrow {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2f6b8f;
+    flex-shrink: 0;
+    margin-left: 12px;
+}
+
+/* ================================
+   滚动进入动画（JS 运行时才加 .reveal）
+   ================================ */
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
+}
+.reveal.in {
+    opacity: 1;
+    transform: none;
+}
+
+/* 减动效偏好：关闭动画/过渡，布局不受影响 */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+    }
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
+}

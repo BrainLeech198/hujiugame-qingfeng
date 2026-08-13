@@ -5,6 +5,8 @@ import os
 additional_keys = {
     "zh": {
         "select_download_method": "选择下载方式",
+        "select_platform": "选择下载平台",
+        "back_button": "返回",
         "no_download_options": "该平台暂无可用下载链接，请联系管理员。",
         "no_valid_download_source": "没有有效的下载链接",
         "download_from_github": "GitHub 下载",
@@ -25,6 +27,8 @@ additional_keys = {
     },
     "zh-TW": {
         "select_download_method": "選擇下載方式",
+        "select_platform": "選擇下載平台",
+        "back_button": "返回",
         "no_download_options": "該平台暫無可用下載連結，請聯絡管理員。",
         "no_valid_download_source": "沒有有效的下載連結",
         "download_from_github": "GitHub 下載",
@@ -45,6 +49,8 @@ additional_keys = {
     },
     "en": {
         "select_download_method": "Select Download Method",
+        "select_platform": "Select Platform",
+        "back_button": "Back",
         "no_download_options": "No download links available for this platform. Please contact the administrator.",
         "no_valid_download_source": "No valid download source",
         "download_from_github": "Download from GitHub",
@@ -65,6 +71,8 @@ additional_keys = {
     },
     "de": {
         "select_download_method": "Downloadmethode auswählen",
+        "select_platform": "Plattform auswählen",
+        "back_button": "Zurück",
         "no_download_options": "Für diese Plattform sind keine Downloadlinks verfügbar. Bitte kontaktieren Sie den Administrator.",
         "no_valid_download_source": "Keine gültige Downloadquelle",
         "download_from_github": "Von GitHub herunterladen",
@@ -85,6 +93,8 @@ additional_keys = {
     },
     "fr": {
         "select_download_method": "Choisissez la méthode de téléchargement",
+        "select_platform": "Choisissez la plateforme",
+        "back_button": "Retour",
         "no_download_options": "Aucun lien de téléchargement disponible pour cette plateforme. Veuillez contacter l'administrateur.",
         "no_valid_download_source": "Aucune source de téléchargement valide",
         "download_from_github": "Télécharger depuis GitHub",
@@ -105,6 +115,8 @@ additional_keys = {
     },
     "ja": {
         "select_download_method": "ダウンロード方法を選択",
+        "select_platform": "プラットフォームを選択",
+        "back_button": "戻る",
         "no_download_options": "このプラットフォームには利用可能なダウンロードリンクがありません。管理者にお問い合わせください。",
         "no_valid_download_source": "有効なダウンロードソースがありません",
         "download_from_github": "GitHubからダウンロード",
@@ -125,6 +137,8 @@ additional_keys = {
     },
     "ko": {
         "select_download_method": "다운로드 방법 선택",
+        "select_platform": "플랫폼 선택",
+        "back_button": "뒤로",
         "no_download_options": "이 플랫폼에 사용 가능한 다운로드 링크가 없습니다. 관리자에게 문의하세요.",
         "no_valid_download_source": "유효한 다운로드 소스가 없음",
         "download_from_github": "GitHub에서 다운로드",
@@ -145,6 +159,8 @@ additional_keys = {
     },
     "pt": {
         "select_download_method": "Selecione o método de download",
+        "select_platform": "Selecione a plataforma",
+        "back_button": "Voltar",
         "no_download_options": "Não há links de download disponíveis para esta plataforma. Contate o administrador.",
         "no_valid_download_source": "Nenhuma fonte de download válida",
         "download_from_github": "Baixar do GitHub",
@@ -165,6 +181,8 @@ additional_keys = {
     },
     "ru": {
         "select_download_method": "Выберите способ загрузки",
+        "select_platform": "Выберите платформу",
+        "back_button": "Назад",
         "no_download_options": "Нет доступных ссылок для загрузки для этой платформы. Пожалуйста, свяжитесь с администратором.",
         "no_valid_download_source": "Нет действительного источника загрузки",
         "download_from_github": "Скачать с GitHub",

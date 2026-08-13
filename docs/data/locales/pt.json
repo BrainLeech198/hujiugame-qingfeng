@@ -67,5 +67,7 @@
   "mac_button": "Mac",
   "mac_intel_group": "Processador Intel",
   "community_description": "Um espaço da comunidade para sugestões de funcionalidades, feedback de melhorias, compartilhamento de conteúdo criativo e discussões entre jogadores. Mantenha a conversa civilizada!",
-  "game_intro_desc4": "Jogos e pacotes de recursos usam formatos de arquivo dedicados (.qfg, .qfl, .qft, .qfgl, .qfgt), registrados em Windows, Linux e Android, permitindo carregamento e execução diretos com um clique duplo. Editores visuais, mapas 2D e reprodução de vídeo estão em planejamento, abrindo mais possibilidades para os criadores."
+  "game_intro_desc4": "Jogos e pacotes de recursos usam formatos de arquivo dedicados (.qfg, .qfl, .qft, .qfgl, .qfgt), registrados em Windows, Linux e Android, permitindo carregamento e execução diretos com um clique duplo. Editores visuais, mapas 2D e reprodução de vídeo estão em planejamento, abrindo mais possibilidades para os criadores.",
+  "select_platform": "Selecione a plataforma",
+  "back_button": "Voltar"
 }

@@ -18,6 +18,33 @@
 > 7. 【如果】本次更新比较重要、与项目关键设计相关 → 同步写入 `temp/CLAUDE_MEMORY.md`（gitignored 本地工作记忆，仅当前开发机可见），便于后续 AI 对话延续上下文
 > 8. 【必须】CHANGELOG 条目不独立提交：每个内容改动 = 一笔提交，同时包含对应改动的文件 + 本文档中该改动对应的条目。先改文件并写对应条目 → 一并提交 → 再改下一个文件、写下一条目；按内容逐条拆分提交，禁止攒一堆 CHANGELOG 更新最后统一提交（例：文件 `a`、`b` 均有改动 → 提交 1 = `a` + 「更新了 a」条目；提交 2 = `b` + 「更新了 b」条目）
 
+## 2026-08-13 — 官网样式/脚本外置 + 共用 JS + onerror 抽离
+
+### 网站
+
+- **样式/脚本外置** — `index.html`/`html/history_versions.html`/`html/community_share.html`/`LICENSE.html`/`THIRDPARTY_LICENSES.html`/`PROJECT_THIRDPARTY.html` 内联 `<style>`（约 800 行）与 `<script>` 全部抽离到 `css/`、`js/` 目录，页面改为 `<link>`/`<script src>` 引用，可缓存、符合 CSP
+- **共用 JS** — i18n 三函数（localeMap/getBrowserLang/loadMessages/applyI18n）+ 图片加载失败兜底抽为 `js/common.js`（数据路径由 `<script data-base>` 传入，index 用 `data/`、html/ 子页用 `../data/`）；两阶段下载弹窗（showPlatformSelection 等）抽为 `js/common-modal.js`，index 与历史页共用；页面专属逻辑分 `main.js`/`history.js`/`community.js`/`license.js`
+- **内联 onerror 抽离** — 删除全部手写长 SVG data-URI 兜底，改为 `data-fallback*` 属性 + common.js 捕获阶段 error 监听统一处理（`imgErrorSvg` 生成兜底图，参数化保持原视觉：下载图标深蓝底白字、logo 浅蓝底深字 + grayscale）
+- **死 CSS 清理** — 删除从未被引用的 `.option-btn`、`.modal-group-header`；修复步骤占位 div 的内联 `style="display:none"` 归入 `.img-placeholder` 类
+
+---
+
+## 2026-08-13 — 官网动效优化 + 修复指引面板 Bug
+
+### 修复
+
+- **修复指引面板图片放大后消失** — 展开修复步骤面板后点击面板内图片放大、关闭 lightbox 时会误触「点击面板外部关闭」逻辑导致面板收起。外部点击关闭判断增加忽略 `.lightbox` 内的点击
+
+### 网站
+
+- **弹窗动效** — 下载弹窗遮罩淡入淡出（`.show` 类 + opacity/visibility 过渡）、弹窗本体入场/出场位移缩放、阶段一→二宽度 500↔720px 平滑过渡、弹窗内容逐项 stagger 淡入、返回按钮淡入
+- **滚动进入动画** — 首页 hero/提示/卡片与历史版本卡片进入视口时从下方淡入浮现（IntersectionObserver one-shot + 兄弟 stagger），无 IO 或 JS 失效时页面照常显示
+- **hover 统一** — 统一 `--ease-out` 缓动曲线；hover 位移收敛（卡片 -4px、按钮 -2px）；`transition: all` 改为具体属性，渐变背景按钮改用 inset 阴影暗化平滑过渡，消除渐变 snap
+- **减动效支持** — `prefers-reduced-motion` 下关闭全部动画/过渡，布局不受影响
+- **版本介绍文案** — `versions.json` 1.0.0 条目的更新日志改为「首个公开测试版 + 客套话」，去除技术性条目
+
+---
+
 ## 2026-08-13 — Beta 快照细分版本（Minecraft 法则 YYwWWa）
 
 ### 新增
