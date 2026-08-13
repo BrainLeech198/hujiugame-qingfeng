@@ -122,7 +122,8 @@ python develop/output/build_package.py
 | `qingfeng_setup_android_v{ver}-{type}.apk`  | APK    | Android 安装包                |
 | `qingfeng_setup_windows_v{ver}-{type}.exe`  | EXE    | Windows 安装包（Inno Setup）    |
 | `qingfeng_setup_linux_v{ver}-{type}.sh`     | SH     | Linux 自解压安装包（双击运行，自动图形化安装） |
-| `qingfeng_setup_mac_v{ver}-{type}.tar.gz`   | tar.gz | macOS 压缩包                  |
+| `qingfeng_setup_mac_apple_silicon_v{ver}-{type}.zip` / `.command` | ZIP/CMD | macOS Apple Silicon（M 芯片）压缩包 / 一键安装器 |
+| `qingfeng_setup_mac_intel_v{ver}-{type}.zip` / `.command`        | ZIP/CMD | macOS Intel 压缩包 / 一键安装器 |
 
 **命令行选项：**
 

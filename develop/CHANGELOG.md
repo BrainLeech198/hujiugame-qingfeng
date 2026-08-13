@@ -18,6 +18,15 @@
 > 7. 【如果】本次更新比较重要、与项目关键设计相关 → 同步写入 `temp/CLAUDE_MEMORY.md`（gitignored 本地工作记忆，仅当前开发机可见），便于后续 AI 对话延续上下文
 > 8. 【必须】CHANGELOG 条目不独立提交：每个内容改动 = 一笔提交，同时包含对应改动的文件 + 本文档中该改动对应的条目。先改文件并写对应条目 → 一并提交 → 再改下一个文件、写下一条目；按内容逐条拆分提交，禁止攒一堆 CHANGELOG 更新最后统一提交（例：文件 `a`、`b` 均有改动 → 提交 1 = `a` + 「更新了 a」条目；提交 2 = `b` + 「更新了 b」条目）
 
+## 2026-08-13 — mac 交付物改 zip 内嵌安装器 + 产物命名更直观
+
+### 构建
+
+- **mac 交付物改 zip 内嵌安装器** — 蓝奏云不接受 `.command` 直传，`build_package_mac.py` 改为把自解压 `.command` 压成 zip（zip 内置 `Install QingFeng.command` + 「安装氢风」中文 symlink，`zipfile` 写 `external_attr` 保留可执行位，Windows 交叉编译亦可）；移除裸 `.app` zip，独立 `.command` 保留（AirDrop 免确认）；新增一次性补救脚本 `repack_mac_command_zip.py` 批量转换现有产物
+- **mac 产物命名** — `build_package_mac.py` 产物文件名架构标签由 `mac`/`macM1` 改为 `mac_apple_silicon`/`mac_intel`（zip / .command / .dmg 同步），Apple Silicon（M 芯片）与 Intel 一目了然；打包时打印「目标架构 → 产物前缀」便于核对；`develop/output/README.md` 产物表按双架构拆分列出，并同步 `CONTRIBUTING.md` 输出成品表（顺手修正过时的 `tar.gz` 记录）
+
+---
+
 ## 2026-08-13 — 文档(计划)：beta 快照版本方案更新
 
 ### 文档

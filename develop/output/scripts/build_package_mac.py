@@ -11,9 +11,11 @@
     python build_package_mac.py --arch macX64        # 仅 Intel
     python build_package_mac.py --dmg                # 额外生成 .dmg（仅 macOS 原生执行时有效）
 
-产物（每个架构产出 zip + 自解压安装器）：
-    qingfeng_setup_macM1_v1.0.0-release.command   ← 发给朋友的首选：双击即自动安装并启动
-    qingfeng_setup_macM1_v1.0.0-release.zip
+产物（每个架构产出 .command + 内嵌安装器的 zip）：
+    qingfeng_setup_mac_apple_silicon_v1.0.0-release.command   ← AirDrop 首选：双击即自动安装并启动
+    qingfeng_setup_mac_apple_silicon_v1.0.0-release.zip       ← 蓝奏云/网盘传这个：解压后双击「安装氢风」
+    qingfeng_setup_mac_intel_v1.0.0-release.command            ← Intel 芯片（AirDrop）
+    qingfeng_setup_mac_intel_v1.0.0-release.zip                ← Intel 芯片（蓝奏云/网盘）
 
 平台行为：
     macOS 原生  → 构建 + ad-hoc 签名 + ditto zip + 自解压安装器（tar 保符号链接）+ 可选 dmg
@@ -38,16 +40,16 @@ from build_common import (
     full_version,
 )
 
-# construo target -> 产物平台标签（macX64 命名沿用主脚本的 "mac"）
+# construo target -> 产物文件名里的架构标签（直白面向用户）
 CONSTRUO_TARGETS = {
-    "macX64": "mac",
-    "macM1": "macM1",
+    "macX64": "mac_intel",
+    "macM1": "mac_apple_silicon",
 }
 
-# construo target -> 安装器文件名里的架构标签（直白面向用户）
+# construo target -> 安装器打包临时文件名里的架构标签（仅内部临时文件用，无空格）
 ARCH_LABEL = {
     "macX64": "Intel",
-    "macM1": "M1",
+    "macM1": "AppleSilicon",
 }
 
 
@@ -132,27 +134,6 @@ def postprocess_app(app_dir) -> bool:
         print(f"[错误] 签名失败: {r.stderr or r.stdout}")
         return False
     print("[通过] 签名完成")
-    return True
-
-
-def package_zip(app_dir, dest_zip) -> bool:
-    """打包 .app 为 zip。macOS 用 ditto 保留符号链接/可执行位；其他平台用 zipfile。"""
-    dest_zip.parent.mkdir(parents=True, exist_ok=True)
-    if is_mac():
-        r = subprocess.run(
-            ["ditto", "-c", "-k", "--keepParent", str(app_dir), str(dest_zip)],
-            capture_output=True, text=True,
-        )
-        if r.returncode != 0:
-            print(f"[错误] ditto 打包失败: {r.stderr or r.stdout}")
-            return False
-    else:
-        # 交叉编译兜底：zipfile 无法保留符号链接，但对可解压运行的 .app 影响有限
-        with zipfile.ZipFile(dest_zip, "w", zipfile.ZIP_DEFLATED) as zf:
-            for f in app_dir.rglob("*"):
-                if f.is_file():
-                    zf.write(f, f.relative_to(app_dir.parent))
-    print(f"[成功] zip: {dest_zip.name}")
     return True
 
 
@@ -246,6 +227,32 @@ def build_installer_command(app_dir, dest_command, version, release_type, arch_l
     return True
 
 
+def package_installer_zip(installer_path, dest_zip) -> bool:
+    """把自解压 .command 压成 zip（蓝奏云可传），zip 内置中文 symlink 快捷入口。
+
+    zip 内两个条目：
+        1. Install QingFeng.command  自解压安装器本体（英文名，0o755 可执行）
+        2. 安装氢风                   中文 symlink → 指向 Install QingFeng.command
+    macOS 归档实用工具按 zip UNIX 字段还原 symlink 与可执行位。
+    """
+    dest_zip.parent.mkdir(parents=True, exist_ok=True)
+    data = installer_path.read_bytes()
+    with zipfile.ZipFile(dest_zip, "w", zipfile.ZIP_DEFLATED) as zf:
+        zi = zipfile.ZipInfo("Install QingFeng.command")
+        zi.create_system = 3
+        zi.external_attr = 0o100755 << 16
+        zf.writestr(zi, data)
+        zi2 = zipfile.ZipInfo("安装氢风")
+        zi2.create_system = 3
+        zi2.external_attr = 0o120777 << 16
+        zf.writestr(zi2, "Install QingFeng.command")
+    mb = dest_zip.stat().st_size // 1024 // 1024
+    print(f"[成功] zip: {dest_zip.name} ({mb} MB)")
+    if mb >= 100:
+        print("[警告] 超过蓝奏云免费 100MB 上限，需付费提升或精简产物")
+    return True
+
+
 def main():
     os.chdir(str(PROJECT_DIR))
     args = sys.argv[1:]
@@ -290,6 +297,8 @@ def main():
     for target_name in arch_names:
         platform_label = CONSTRUO_TARGETS[target_name]
         arch_label = ARCH_LABEL[target_name]
+        chip_desc = "Apple Silicon（M 芯片）" if target_name == "macM1" else "Intel"
+        print(f"[信息] 目标架构: {chip_desc} → 产物前缀 qingfeng_setup_{platform_label}")
 
         app_dir = build_target(target_name, platform_label)
         if app_dir is None:
@@ -302,16 +311,14 @@ def main():
             ok = False
             continue
 
-        dest_zip = OUTPUT_DIR / f"qingfeng_setup_{platform_label}_{tag}.zip"
-        if package_zip(app_dir, dest_zip):
-            produced.append(dest_zip)
-        else:
-            ok = False
-            continue
-
         dest_installer = OUTPUT_DIR / f"qingfeng_setup_{platform_label}_{tag}.command"
         if build_installer_command(app_dir, dest_installer, version, release_type, arch_label):
             produced.append(dest_installer)
+            dest_zip = OUTPUT_DIR / f"qingfeng_setup_{platform_label}_{tag}.zip"
+            if package_installer_zip(dest_installer, dest_zip):
+                produced.append(dest_zip)
+            else:
+                ok = False
         else:
             ok = False
 

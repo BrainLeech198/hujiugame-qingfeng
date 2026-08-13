@@ -188,9 +188,12 @@ build_dmg                → 可选 .dmg（--dmg，仅 macOS 原生）
 | Android | `qingfeng_setup_android_v{version}-{type}.apk` | APK |
 | Linux | `qingfeng_setup_linux_v{version}-{type}.deb` | deb 安装包 |
 | Linux | `qingfeng_setup_linux_v{version}-{type}.sh` | 自解压一键安装脚本 |
-| macOS | `qingfeng_setup_mac{M1}_{version}-{type}.zip` | .app zip |
-| macOS | `qingfeng_setup_mac{M1}_{version}-{type}.command` | 一键安装器（AirDrop 免确认） |
-| macOS | `qingfeng_setup_mac{M1}_{version}-{type}.dmg` | 可选 dmg |
+| macOS | `qingfeng_setup_mac_apple_silicon_{version}-{type}.zip` | Apple Silicon（M 芯片）压缩包 |
+| macOS | `qingfeng_setup_mac_apple_silicon_{version}-{type}.command` | Apple Silicon 一键安装器（AirDrop 免确认） |
+| macOS | `qingfeng_setup_mac_apple_silicon_{version}-{type}.dmg` | Apple Silicon 可选 dmg |
+| macOS | `qingfeng_setup_mac_intel_{version}-{type}.zip` | Intel 压缩包 |
+| macOS | `qingfeng_setup_mac_intel_{version}-{type}.command` | Intel 一键安装器（AirDrop 免确认） |
+| macOS | `qingfeng_setup_mac_intel_{version}-{type}.dmg` | Intel 可选 dmg |
 
 ---
 
