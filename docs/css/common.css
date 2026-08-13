@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700&display=swap');
+
 /* ================================
    共用基础：重置 + 动效变量
    ================================ */
@@ -5,11 +7,15 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    font-family: var(--font-body);
 }
 
 :root {
     --ease-out: cubic-bezier(0.25, 0.8, 0.25, 1);
+    --font-body: 'Noto Sans SC', 'Segoe UI', Roboto, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --radius-card: 32px;
+    --shadow-soft: 0 15px 30px -15px rgba(0,35,70,0.15);
+    --shadow-hover: 0 40px 60px -15px rgba(20,80,120,0.4);
 }
 
 /* ================================
@@ -239,4 +245,11 @@
         opacity: 1;
         transform: none;
     }
+}
+
+/* ================================
+   锚点平滑滚动（prefers-reduced-motion 由上方全局规则降级）
+   ================================ */
+html {
+    scroll-behavior: smooth;
 }
