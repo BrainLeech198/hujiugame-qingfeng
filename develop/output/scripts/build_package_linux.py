@@ -26,7 +26,7 @@ import zipfile
 from pathlib import Path
 
 from build_common import (
-    SCRIPT_DIR, PROJECT_DIR, CONSTRUO_OUTPUT_DIR,
+    OUTPUT_DIR, PROJECT_DIR, CONSTRUO_OUTPUT_DIR,
     run_gradle, resolve_version, check_version_consistency,
     BuildConfig, BuildEnvironment,
 )
@@ -158,7 +158,7 @@ def build_deb(version: str, release_type: str) -> Path | None:
 
     tag = f"v{version}-{release_type}"
     deb_name = f"qingfeng_setup_{PLATFORM_LABEL}_{tag}"
-    deb_path = SCRIPT_DIR / f"{deb_name}.deb"
+    deb_path = OUTPUT_DIR / f"{deb_name}.deb"
 
     # 生成 .desktop 文件
     desktop_content = (

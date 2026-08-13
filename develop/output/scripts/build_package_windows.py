@@ -25,7 +25,7 @@ import tempfile
 from pathlib import Path
 
 from build_common import (
-    SCRIPT_DIR, PROJECT_DIR, SETUP_DIR, CONFIG_FILE,
+    OUTPUT_DIR, PROJECT_DIR, SETUP_DIR, CONFIG_FILE,
     _exe, _is_windows, run_gradle, resolve_version, check_version_consistency,
     BuildConfig, BuildEnvironment,
 )
@@ -160,7 +160,7 @@ def assemble_launcher(env: BuildEnvironment, version: str) -> bool:
         jre_target / "bin" / dll_name,      # java.exe 启动需要
     ]
     if not all(t.exists() for t in dll_targets):
-        dll_cache = SCRIPT_DIR / ".dll_cache"
+        dll_cache = OUTPUT_DIR / ".dll_cache"
         dll_cache.mkdir(parents=True, exist_ok=True)
         cache_extracted = dll_cache / dll_name
 
@@ -289,7 +289,7 @@ def build_installer(env: BuildEnvironment, version: str) -> bool:
 def copy_outputs(version: str, release_type: str):
     """复制 Windows 安装包到 output 目录"""
     print("[复制] 复制成品到 output 目录...")
-    output_dir = SCRIPT_DIR
+    output_dir = OUTPUT_DIR
     tag = f"v{version}-{release_type}"
 
     setup_exe = SETUP_DIR / "dist" / "qingfeng_setup_windows.exe"

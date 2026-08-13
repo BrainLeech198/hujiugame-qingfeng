@@ -27,7 +27,8 @@ from tkinter import filedialog
 from typing import Optional
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-PROJECT_DIR = SCRIPT_DIR.parent.parent
+PROJECT_DIR = SCRIPT_DIR.parent.parent.parent
+OUTPUT_DIR = PROJECT_DIR / "develop" / "output"
 SETUP_DIR = PROJECT_DIR / "lwjgl3" / "setup"
 CONFIG_FILE = SCRIPT_DIR / "build_config.env"
 CONSTRUO_OUTPUT_DIR = PROJECT_DIR / "lwjgl3" / "build" / "construo"

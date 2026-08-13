@@ -29,17 +29,19 @@
 
 ```
 develop/output/
-├── build_package.py            主编排器（版本确认 + 逐平台询问 + 分发）
-├── build_common.py             公共模块（各脚本共用）
-├── build_package_windows.py    Windows 安装包
-├── build_package_linux.py      Linux 安装包
-├── build_package_android.py    Android APK
-├── build_package_mac.py        macOS 安装包
-├── build_config.env            环境配置（自动生成）
-└── build_package_server.py     官网更新服务器脚本（独立，不受影响）
+├── build_package.py                    主编排器（版本确认 + 逐平台询问 + 分发，置于根目录便于直接运行）
+├── scripts/                            平台脚本与公共模块（收拢于此）
+│   ├── build_common.py                 公共模块（各脚本共用）
+│   ├── build_package_windows.py        Windows 安装包
+│   ├── build_package_linux.py          Linux 安装包
+│   ├── build_package_android.py        Android APK
+│   ├── build_package_mac.py            macOS 安装包
+│   ├── build_package_server.py         官网更新服务器脚本（独立，不受影响）
+│   └── build_config.env                环境配置（自动生成）
+└── qingfeng_setup_*.{exe/apk/deb/sh/zip/command}   打包产物（安装包）
 ```
 
-每个平台脚本**独立自包含**：可被主编排器分发调用，也可单独运行。版本来源环境变量优先，否则只读 `app_version.json`——**只有主编排器会写入版本文件**。
+每个平台脚本**独立自包含**：可被主编排器分发调用，也可单独运行。版本来源环境变量优先，否则只读 `app_version.json`——**只有主编排器会写入版本文件**。平台脚本收拢在 `scripts/` 子目录，主编排器置于根目录方便 `python build_package.py` 直接运行，产物统一输出到 `develop/output/` 根目录。
 
 ---
 
@@ -68,10 +70,10 @@ python build_package.py --windows --linux --android --mac
 python build_package.py --config-only
 
 # 单独运行某平台脚本（使用 app_version.json 的版本）
-python build_package_windows.py
-python build_package_linux.py
-python build_package_android.py
-python build_package_mac.py
+python scripts/build_package_windows.py
+python scripts/build_package_linux.py
+python scripts/build_package_android.py
+python scripts/build_package_mac.py
 ```
 
 ### 交互流程

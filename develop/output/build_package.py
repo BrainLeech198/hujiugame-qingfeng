@@ -19,6 +19,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+# 主编排器置于 output 根目录，公共模块与平台脚本在 scripts/ 子目录，注入 sys.path 以正常 import
+sys.path.insert(0, str(Path(__file__).resolve().parent / "scripts"))
+
 from build_common import (
     SCRIPT_DIR, PROJECT_DIR,
     BuildConfig, BuildEnvironment,

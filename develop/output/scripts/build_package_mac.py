@@ -32,7 +32,7 @@ import zipfile
 from pathlib import Path
 
 from build_common import (
-    SCRIPT_DIR, PROJECT_DIR, CONSTRUO_OUTPUT_DIR,
+    OUTPUT_DIR, PROJECT_DIR, CONSTRUO_OUTPUT_DIR,
     _decode, run_gradle, resolve_version, check_version_consistency,
 )
 
@@ -300,14 +300,14 @@ def main():
             ok = False
             continue
 
-        dest_zip = SCRIPT_DIR / f"qingfeng_setup_{platform_label}_{tag}.zip"
+        dest_zip = OUTPUT_DIR / f"qingfeng_setup_{platform_label}_{tag}.zip"
         if package_zip(app_dir, dest_zip):
             produced.append(dest_zip)
         else:
             ok = False
             continue
 
-        dest_installer = SCRIPT_DIR / f"氢风一键安装_{arch_label}_{tag}.command"
+        dest_installer = OUTPUT_DIR / f"氢风一键安装_{arch_label}_{tag}.command"
         if build_installer_command(app_dir, dest_installer, version, release_type, arch_label):
             produced.append(dest_installer)
         else:
@@ -317,7 +317,7 @@ def main():
             if not is_native_mac:
                 print("[跳过] --dmg 仅支持 macOS 原生执行")
             else:
-                dest_dmg = SCRIPT_DIR / f"qingfeng_setup_{platform_label}_{tag}.dmg"
+                dest_dmg = OUTPUT_DIR / f"qingfeng_setup_{platform_label}_{tag}.dmg"
                 if build_dmg(app_dir, dest_dmg, version, release_type):
                     produced.append(dest_dmg)
                 else:

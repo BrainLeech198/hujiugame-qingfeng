@@ -38,8 +38,8 @@ def get_local_ips():
 
 
 def main():
-    # 切换工作目录到脚本所在目录，确保双击运行时正确提供打包产物
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    # 切换工作目录到上一级 output 目录，确保双击运行时正确提供打包产物
+    os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir))
 
     ips = get_local_ips()
     print("=" * 50)

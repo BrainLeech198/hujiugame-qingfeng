@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 from build_common import (
-    SCRIPT_DIR, PROJECT_DIR,
+    OUTPUT_DIR, PROJECT_DIR,
     run_gradle, resolve_version, check_version_consistency,
     BuildConfig, BuildEnvironment,
 )
@@ -73,7 +73,7 @@ def build_apk(env: BuildEnvironment) -> str | None:
 def copy_outputs(apk_file: str, version: str, release_type: str):
     """复制 APK 到 output 目录"""
     print("[复制] 复制成品到 output 目录...")
-    output_dir = SCRIPT_DIR
+    output_dir = OUTPUT_DIR
     tag = f"v{version}-{release_type}"
     dst = output_dir / f"qingfeng_setup_android_{tag}.apk"
     shutil.copy2(apk_file, dst)
