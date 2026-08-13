@@ -31,6 +31,7 @@
 - 本目录仅用于 GitHub Pages 分发，不包含源代码
 - 中国大陆用户如遇下载缓慢，可尝试官网推荐的加速工具
 - 问题反馈请通过 GitHub Issues：<https://github.com/BrainLeech198/hujiugame.qingfeng/issues>
+- 邮件反馈：<mailto:brainleech198@foxmail.com>
 - 源代码请访问 Gitee：<https://gitee.com/Mr_brainleech/hujiugame.qingfeng>
 
 ---

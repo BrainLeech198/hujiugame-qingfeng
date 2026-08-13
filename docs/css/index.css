@@ -112,6 +112,20 @@ body {
     box-shadow: 0 12px 28px -8px rgba(42, 169, 184, 0.6), inset 0 0 0 999px rgba(0,0,0,0.06);
 }
 
+.feedback-email {
+    color: var(--accent-2);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(126, 224, 208, 0.4);
+    word-break: break-all;
+    transition: color 0.25s var(--ease-out), text-decoration-color 0.25s var(--ease-out);
+}
+.feedback-email:hover {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
+}
+
 /* ================================
    修复步骤面板
    ================================ */

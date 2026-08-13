@@ -18,6 +18,16 @@
 > 7. 【如果】本次更新比较重要、与项目关键设计相关 → 同步写入 `temp/CLAUDE_MEMORY.md`（gitignored 本地工作记忆，仅当前开发机可见），便于后续 AI 对话延续上下文
 > 8. 【必须】CHANGELOG 条目不独立提交：每个内容改动 = 一笔提交，同时包含对应改动的文件 + 本文档中该改动对应的条目。先改文件并写对应条目 → 一并提交 → 再改下一个文件、写下一条目；按内容逐条拆分提交，禁止攒一堆 CHANGELOG 更新最后统一提交（例：文件 `a`、`b` 均有改动 → 提交 1 = `a` + 「更新了 a」条目；提交 2 = `b` + 「更新了 b」条目）
 
+## 2026-08-13 — 官网(新增)：首页反馈卡片与页脚邮件反馈入口
+
+### 网站
+
+- **首页新增邮件反馈卡片** — `docs/index.html` 提示卡片区新增第三张反馈卡片（反馈文案 + 可点击邮箱 + 发送邮件按钮，指向 mailto:brainleech198@foxmail.com），9 语言 i18n 同步新增 5 个键（tip_feedback_title / tip_feedback_text / tip_feedback_button / copy_button / copied_feedback）
+- **页脚新增邮箱显示与复制** — `docs/index.html`、`docs/html/history_versions.html`、`docs/html/community_share.html` 三个页面页脚品牌列新增邮箱链接与「复制」按钮；`docs/js/common.js` 新增复制逻辑（clipboard API + execCommand 兜底，复制后按钮短暂提示「已复制」）；`docs/css/common.css`、`docs/css/index.css` 新增配套样式
+- **官网 README 补充邮件反馈渠道** — `docs/README.md` 说明段新增邮件反馈条目
+
+---
+
 ## 2026-08-13 — 网站(beta)：下载区五个平台链接换新
 
 ### 网站

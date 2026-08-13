@@ -124,7 +124,40 @@ document.addEventListener('error', function (e) {
     });
 }, true);
 
+// ================================
+// 页脚邮箱复制
+// ================================
+
+function copyToClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+    }
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+    return Promise.resolve();
+}
+
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.footer-copy-btn');
+    if (!btn) return;
+    copyToClipboard(btn.dataset.copy).then(() => {
+        const label = btn.querySelector('[data-i18n]');
+        if (!label) return;
+        const original = (currentMessages && currentMessages.copy_button) || '复制';
+        const copied = (currentMessages && currentMessages.copied_feedback) || '已复制';
+        label.textContent = copied;
+        setTimeout(() => { label.textContent = original; }, 2000);
+    });
+});
+
 window.getBrowserLang = getBrowserLang;
 window.loadMessages = loadMessages;
 window.applyI18n = applyI18n;
 window.imgErrorSvg = imgErrorSvg;
+window.copyToClipboard = copyToClipboard;
