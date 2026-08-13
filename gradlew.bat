@@ -78,14 +78,14 @@ echo.
 echo [qingfeng] JDK 21+ not found, downloading from TUNA mirror (清华镜像)...
 mkdir "%JDK_DIR%" 2>nul
 echo This may take a while (~180MB).
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$url='https://mirrors.tuna.tsinghua.edu.cn/Adoptium/21/jdk/x64/windows/OpenJDK21U-jdk_x64_windows_hotspot_21.0.11_10.zip'; $zip='%JDK_DIR%\jdk.zip'; Write-Host 'Downloading...'; [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; try { Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing -TimeoutSec 300 } catch { Write-Host 'Failed: '+$_.Exception.Message; exit 1 }; Write-Host 'Extracting...'; Expand-Archive -Path $zip -DestinationPath '%JDK_DIR%' -Force; Remove-Item $zip"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$url='https://mirrors.tuna.tsinghua.edu.cn/Adoptium/21/jdk/x64/windows/OpenJDK21U-jdk_x64_windows_hotspot_21.0.12_8.zip'; $zip='%JDK_DIR%\jdk.zip'; Write-Host 'Downloading...'; [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; try { Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing -TimeoutSec 300 } catch { Write-Host 'Failed: '+$_.Exception.Message; exit 1 }; Write-Host 'Extracting...'; Expand-Archive -Path $zip -DestinationPath '%JDK_DIR%' -Force; Remove-Item $zip"
 if errorlevel 1 (
     echo [qingfeng] Failed to download JDK automatically.
     echo Please install JDK 21+ manually and set JAVA_HOME.
     pause
     exit /b 1
 )
-@rem Find extracted JDK folder (e.g. jdk-21.0.11+10)
+@rem Find extracted JDK folder (e.g. jdk-21.0.12+8)
 for /d %%d in ("%JDK_DIR%\jdk-*") do set "JAVA_HOME=%%d"
 echo JDK 21 ready.
 

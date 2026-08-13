@@ -127,6 +127,9 @@ tasks.register("jarWin") {
 construo {
     // name of the executable
     name.set(appName)
+    // 各 target 的 jdkUrl 指向 nju 镜像。镜像只保留 JDK 最新版，旧版（21.0.11_10 已下线）
+    // 会返回 404。升级 JDK 时需同步更新本文件 + gradlew + gradlew.bat 三处的版本号。
+
     // human-readable name, used for example in the `.app` name for macOS
     humanName.set(appName)
 
@@ -141,14 +144,14 @@ construo {
     targets.configure {
       register("linuxX64", Target.Linux) {
         architecture.set(Target.Architecture.X86_64)
-        jdkUrl.set("https://mirror.nju.edu.cn/adoptium/21/jdk/x64/linux/OpenJDK21U-jdk_x64_linux_hotspot_21.0.11_10.tar.gz")
+        jdkUrl.set("https://mirror.nju.edu.cn/adoptium/21/jdk/x64/linux/OpenJDK21U-jdk_x64_linux_hotspot_21.0.12_8.tar.gz")
         // Linux does not currently have a way to set the icon on the executable
         // 如需不捆绑 JRE，取消下面注释即可（体积从 ~100MB 降到 ~5MB）
         // targetJdkEnv.set(Target.JdkEnv.NONE)
       }
       register("macM1", Target.MacOs) {
         architecture.set(Target.Architecture.AARCH64)
-        jdkUrl.set("https://mirror.nju.edu.cn/adoptium/21/jdk/aarch64/mac/OpenJDK21U-jdk_aarch64_mac_hotspot_21.0.11_10.tar.gz")
+        jdkUrl.set("https://mirror.nju.edu.cn/adoptium/21/jdk/aarch64/mac/OpenJDK21U-jdk_aarch64_mac_hotspot_21.0.12_8.tar.gz")
         // macOS needs an identifier
         identifier.set("com.hujiugame.qingfeng." + appName)
         // Optional: icon for macOS, as an ICNS file
@@ -156,7 +159,7 @@ construo {
       }
       register("macX64", Target.MacOs) {
         architecture.set(Target.Architecture.X86_64)
-        jdkUrl.set("https://mirror.nju.edu.cn/adoptium/21/jdk/x64/mac/OpenJDK21U-jdk_x64_mac_hotspot_21.0.11_10.tar.gz")
+        jdkUrl.set("https://mirror.nju.edu.cn/adoptium/21/jdk/x64/mac/OpenJDK21U-jdk_x64_mac_hotspot_21.0.12_8.tar.gz")
         // macOS needs an identifier
         identifier.set("com.hujiugame.qingfeng." + appName)
         // Optional: icon for macOS, as an ICNS file
@@ -166,7 +169,7 @@ construo {
         architecture.set(Target.Architecture.X86_64)
         // Optional: icon for Windows, as a PNG
         icon.set(project.file("icons/logo.png"))
-        jdkUrl.set("https://mirror.nju.edu.cn/adoptium/21/jdk/x64/windows/OpenJDK21U-jdk_x64_windows_hotspot_21.0.11_10.zip")
+        jdkUrl.set("https://mirror.nju.edu.cn/adoptium/21/jdk/x64/windows/OpenJDK21U-jdk_x64_windows_hotspot_21.0.12_8.zip")
         // Uncomment the next line to show a console when the game runs, to print messages.
         //useConsole.set(true)
       }
