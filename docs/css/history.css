@@ -144,7 +144,7 @@ body {
 
 .download-row {
     display: grid;
-    grid-template-columns: repeat(3, minmax(140px, 1fr));
+    grid-template-columns: repeat(4, minmax(130px, 1fr));
     gap: 20px;
     border-top: 1px dashed rgba(120, 190, 230, 0.22);
     padding-top: 22px;
@@ -318,7 +318,7 @@ body {
     .page-title { font-size: 2.2rem; }
     .version-name { font-size: 1.7rem; }
     .version-card { padding: 20px; }
-    .download-row { gap: 15px; }
+    .download-row { gap: 15px; grid-template-columns: repeat(2, 1fr); }
     .footnote { margin-top: 30px; }
     .modal-content { padding: 20px; }
     .modal-title { font-size: 1.5rem; }

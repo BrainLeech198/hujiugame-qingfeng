@@ -138,6 +138,12 @@
                          ${fallbackAttrs('Linux', 'Linux下载')}>
                     <span>${currentMessages?.linux_button || 'Linux版'}</span>
                 </a>`;
+            const macBtnHtml = `
+                <a href="#" class="download-btn" data-platform="mac" data-download='${downloadJson}'>
+                    <img src="../resource/image/download-mac.png" alt="Mac下载" class="download-icon-small"
+                         ${fallbackAttrs('Mac', 'Mac下载')}>
+                    <span>${currentMessages?.mac_button || 'Mac版'}</span>
+                </a>`;
 
             htmlStr += `
                 <div class="version-card">
@@ -150,6 +156,7 @@
                         <div class="download-item-small">${windowsBtnHtml}</div>
                         <div class="download-item-small">${androidBtnHtml}</div>
                         <div class="download-item-small">${linuxBtnHtml}</div>
+                        <div class="download-item-small">${macBtnHtml}</div>
                     </div>
                 </div>
             `;
