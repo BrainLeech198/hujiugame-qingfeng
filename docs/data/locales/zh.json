@@ -69,5 +69,6 @@
   "game_intro_desc4": "游戏与资源包采用专属文件格式（.qfg、.qfl、.qft、.qfgl、.qfgt），并已在 Windows、Linux、Android 多平台完成文件关联，双击即可直接加载运行。可视化编辑器、2D 地图与视频播放等扩展能力正在规划中，将持续为创作者释放更多可能。",
   "community_description": "这里是功能建议与改进反馈、创作内容分享、玩家间讨论的社区空间。欢迎文明交流！",
   "select_platform": "选择下载平台",
-  "back_button": "返回"
+  "back_button": "返回",
+  "hero_tagline": "Roblox 式叙事创作平台"
 }

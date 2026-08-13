@@ -57,6 +57,18 @@ body {
     text-shadow: 0 2px 5px rgba(255,255,255,0.5);
 }
 
+.hero-tagline {
+    margin-top: 8px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #2f6b8f, #5a8fae);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0.92;
+}
+
 /* ================================
    提示卡片
    ================================ */
