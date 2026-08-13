@@ -45,6 +45,26 @@
 
 ---
 
+## 2026-08-13 — 官网发布 Beta 26w33a（蓝奏云单源）+ UpdateChecker 日期码更新判断
+
+### 新增
+
+- **远程快照字段** — `versions.json` 新增 `newest_version_snapshot`（beta 日期码）；`VersionKey` 同步新增 `NEWEST_VERSION_SNAPSHOT` 常量
+
+### 功能
+
+- **Beta 日期码更新判断** — `checkWebVersion` 整型 `newest_version` 相同时，双方都是 beta 则再按日期码（`YYwWWa` 定宽，字典序即时间序）细分新旧，`26w33a` → `26w33b` 也能触发更新提示
+- **更新弹窗区分测试版/正式版** — 检测到新版本时按远程最新类型区分弹窗：最新为测试版 → 标题「发现测试版更新」并告知可能不稳定；正式版 → 沿用原描述。`UpdateChecker` 新增 `isNewestVersionBeta()`，`MessageBox` 新增 `update_detected_beta.title/content` 语言键（zh_CN/zh_TW/en_US）
+
+### 网站
+
+- **版本数据** — `newest_version_type` 置为 beta（0），写入 `versions["1"]` 条目：名称 `v1.0.0-beta-26w33a`、更新日志、四平台下载
+- **蓝奏云单源** — 本次 beta 下载全部走蓝奏云：Windows `.exe`、Android `.apk`、Linux `.deb`（蓝奏云不支持 `.sh`）、macOS M1 / Intel 两组 `.zip`（Intel 用 `lanzouyun_intel` 源归入「Intel 处理器」分组）；URL 暂为占位符，待上传后替换
+- **下载项数组支持** — 阶段二弹窗渲染兼容 `download.<平台>.<源>` 的单个对象与对象数组两种格式，同一来源可配置多个具体文件，逐项列出
+- **两阶段下载弹窗** — 点击下载入口先弹「选择下载平台」：只显示该系统的下载来源按钮（蓝奏云 / GitHub / Gitee，按版本实际可下载来源动态显示，mac 的 M1 / Intel 作为两个独立来源按钮），不含任何文件信息；点击某来源后切到更大的第二层弹窗，左上角「返回」回到来源选择、右上角「关闭」关掉全部下载窗口，内容为该来源的「描述 + 下载超链接」逐项列表。主页四平台卡片与历史版本页各版本下载按钮均先进来源选择
+
+---
+
 ## 2026-08-13 — Beta 快照细分版本（Minecraft 法则 YYwWWa）
 
 ### 新增
