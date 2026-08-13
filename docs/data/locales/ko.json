@@ -15,14 +15,14 @@
   "repair_step2_text": "복구 완료 후 알림 창이 나타납니다. \"확인\"을 클릭하여 프로그램을 종료하세요. QingFeng를 다시 시작하면 리소스 파일이 완전히 복원됩니다.",
   "repair_img_placeholder": "이미지 로딩에 실패했습니다. 네트워크 연결을 확인하세요.",
   "download_section_title": "다운로드",
-  "history_button": "이력 →",
+  "history_button": "모든 버전 →",
   "windows_button": "Windows용",
   "android_button": "Android용",
   "loading_version": "버전 로딩 중...",
   "loading_log": "변경 로그 가져오는 중…",
   "latest_tag": "최신",
   "community_title": "커뮤니티",
-  "community_button": "커뮤니티 →",
+  "community_button": "커뮤니티 자료 →",
   "footer_text": "QingFeng · 공식",
   "footer_all_versions": "모든 버전",
   "footer_community_resources": "커뮤니티 자료",
@@ -73,5 +73,6 @@
   "nav_intro": "게임 소개",
   "nav_download": "다운로드",
   "nav_community": "커뮤니티",
+  "nav_community_resources": "커뮤니티 자료 →",
   "nav_menu_label": "내비게이션 메뉴 열기"
 }

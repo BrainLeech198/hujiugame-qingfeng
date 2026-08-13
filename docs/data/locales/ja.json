@@ -15,14 +15,14 @@
   "repair_step2_text": "修復完了後、プロンプトウィンドウが表示されます。「OK」をクリックしてプログラムを終了してください。再起動後、リソースファイルは完全に復元されています。",
   "repair_img_placeholder": "画像の読み込みに失敗しました。ネットワーク接続を確認してください。",
   "download_section_title": "ダウンロード",
-  "history_button": "履歴 →",
+  "history_button": "全バージョン →",
   "windows_button": "Windows版",
   "android_button": "Android版",
   "loading_version": "バージョンを読み込み中...",
   "loading_log": "更新履歴を取得中…",
   "latest_tag": "最新",
   "community_title": "コミュニティ",
-  "community_button": "コミュニティ →",
+  "community_button": "コミュニティリソース →",
   "footer_text": "QingFeng · 公式",
   "footer_all_versions": "すべてのバージョン",
   "footer_community_resources": "コミュニティリソース",
@@ -73,5 +73,6 @@
   "nav_intro": "ゲーム紹介",
   "nav_download": "ダウンロード",
   "nav_community": "コミュニティ",
+  "nav_community_resources": "コミュニティリソース →",
   "nav_menu_label": "ナビゲーションメニューを開く"
 }

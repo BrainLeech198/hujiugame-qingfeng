@@ -15,14 +15,14 @@
   "repair_step2_text": "修復完成後自動彈出提示視窗，點擊「確定」退出程式。再次啟動QingFeng，資源檔案即已修復完成，可正常使用。",
   "repair_img_placeholder": "圖片載入失敗，請檢查網路連接",
   "download_section_title": "資源下載",
-  "history_button": "歷史版本 →",
+  "history_button": "所有版本 →",
   "windows_button": "Windows端",
   "android_button": "Android端",
   "loading_version": "載入版本中...",
   "loading_log": "正在獲取更新日誌…",
   "latest_tag": "最新",
   "community_title": "社群分享",
-  "community_button": "社群分享 →",
+  "community_button": "社群資源 →",
   "footer_text": "QingFeng · 官方站",
   "footer_all_versions": "所有版本",
   "footer_community_resources": "社群資源",
@@ -73,5 +73,6 @@
   "nav_intro": "遊戲介紹",
   "nav_download": "資源下載",
   "nav_community": "社區分享",
+  "nav_community_resources": "社群資源 →",
   "nav_menu_label": "展開導航選單"
 }

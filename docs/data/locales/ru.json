@@ -15,14 +15,14 @@
   "repair_step2_text": "После восстановления появится окно с подсказкой. Нажмите «OK», чтобы выйти из программы. Перезапустите QingFeng — файлы ресурсов будут полностью восстановлены.",
   "repair_img_placeholder": "Не удалось загрузить изображение. Проверьте подключение к сети.",
   "download_section_title": "Загрузки",
-  "history_button": "История →",
+  "history_button": "Все версии →",
   "windows_button": "Windows",
   "android_button": "Android",
   "loading_version": "Загрузка версии...",
   "loading_log": "Получение журнала изменений…",
   "latest_tag": "Последняя",
   "community_title": "Сообщество",
-  "community_button": "Сообщество →",
+  "community_button": "Ресурсы сообщества →",
   "footer_text": "QingFeng · Официальный",
   "footer_all_versions": "Все версии",
   "footer_community_resources": "Ресурсы сообщества",
@@ -73,5 +73,6 @@
   "nav_intro": "Об игре",
   "nav_download": "Скачать",
   "nav_community": "Сообщество",
+  "nav_community_resources": "Ресурсы сообщества →",
   "nav_menu_label": "Открыть меню навигации"
 }

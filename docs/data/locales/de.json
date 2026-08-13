@@ -15,14 +15,14 @@
   "repair_step2_text": "Nach der Reparatur erscheint ein Hinweisfenster. Klicken Sie auf „OK\", um das Programm zu beenden. Starten Sie QingFeng neu – die Ressourcendateien sind dann vollständig wiederhergestellt.",
   "repair_img_placeholder": "Bild konnte nicht geladen werden. Bitte überprüfen Sie Ihre Netzwerkverbindung.",
   "download_section_title": "Downloads",
-  "history_button": "Verlauf →",
+  "history_button": "Alle Versionen →",
   "windows_button": "Windows",
   "android_button": "Android",
   "loading_version": "Version wird geladen...",
   "loading_log": "Änderungsprotokoll wird abgerufen…",
   "latest_tag": "Neueste",
   "community_title": "Community",
-  "community_button": "Community →",
+  "community_button": "Community-Ressourcen →",
   "footer_text": "QingFeng · Offiziell",
   "footer_all_versions": "Alle Versionen",
   "footer_community_resources": "Community-Ressourcen",
@@ -73,5 +73,6 @@
   "nav_intro": "Einführung",
   "nav_download": "Download",
   "nav_community": "Community",
+  "nav_community_resources": "Community-Ressourcen →",
   "nav_menu_label": "Navigationsmenü öffnen"
 }

@@ -15,14 +15,14 @@
   "repair_step2_text": "After repair, a prompt window will appear. Click \"OK\" to exit the program. Restart QingFeng and the resource files will be fully restored.",
   "repair_img_placeholder": "Image failed to load. Please check your network connection.",
   "download_section_title": "Downloads",
-  "history_button": "History →",
+  "history_button": "All Versions →",
   "windows_button": "Windows",
   "android_button": "Android",
   "loading_version": "Loading version...",
   "loading_log": "Fetching changelog…",
   "latest_tag": "Latest",
   "community_title": "Community",
-  "community_button": "Community →",
+  "community_button": "Community Resources →",
   "footer_text": "QingFeng · Official",
   "footer_all_versions": "All Versions",
   "footer_community_resources": "Community Resources",
@@ -73,5 +73,6 @@
   "nav_intro": "Intro",
   "nav_download": "Download",
   "nav_community": "Community",
+  "nav_community_resources": "Community Resources →",
   "nav_menu_label": "Open navigation menu"
 }
