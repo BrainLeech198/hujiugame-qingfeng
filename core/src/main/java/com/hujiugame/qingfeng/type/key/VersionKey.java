@@ -31,6 +31,8 @@ public final class VersionKey
     public static final String NEWEST_VERSION_TYPE = "newest_version_type";
     /** 最新版本字符串 */
     public static final String NEWEST_VERSION_STRING = "newest_version_string";
+    /** 最新版本 beta 细分快照码（Minecraft 法则 YYwWWa），release 为空 */
+    public static final String NEWEST_VERSION_SNAPSHOT = "newest_version_snapshot";
 
     // ====================================================================================================
     // update_config.json 字段

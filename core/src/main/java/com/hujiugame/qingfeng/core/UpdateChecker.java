@@ -44,6 +44,8 @@ public final class UpdateChecker
     private int internalAppVersion;
     private int internalAppVersionType;
     private String internalAppVersionSnapshot;
+    /** 远程最新版本类型（UNKNOWN 表示尚未成功检测） */
+    private int webVersionType = VersionType.UNKNOWN;
 
     private boolean doDetectUpdateFinish = false;
     private boolean doDetectSuccess = false;
@@ -889,6 +891,16 @@ public final class UpdateChecker
         return needVersionUpdate;
     }
 
+    /**
+     * 查询远程最新版本是否为 beta（测试版）
+     *
+     * @return true 表示最新版本为测试版；检测失败时返回 false
+     */
+    public boolean isNewestVersionBeta ()
+    {
+        return webVersionType == VersionType.BETA;
+    }
+
     // 网站版本更新情况
 
     /**
@@ -985,8 +997,15 @@ public final class UpdateChecker
 
                         // 获取版本信息
                         int webVersionInt = json.getInt(VersionKey.NEWEST_VERSION, -1);
-                        int webVersionType = json.getInt(VersionKey.NEWEST_VERSION_TYPE, -1);
+                        int webVersionType = json.getInt(VersionKey.NEWEST_VERSION_TYPE, VersionType.UNKNOWN);
                         String webVersionStr = json.getString(VersionKey.NEWEST_VERSION_STRING, null);
+                        String webVersionSnapshot = json.getString(VersionKey.NEWEST_VERSION_SNAPSHOT, null);
+                        if (webVersionSnapshot == null)
+                        {
+                            webVersionSnapshot = "";
+                        }
+                        // 记录远程最新版本类型，供弹窗区分 测试版更新 / 正式版更新
+                        UpdateChecker.this.webVersionType = webVersionType;
 
                         // 主判断: 远程有整型字段 → 整型比较
                         if (webVersionInt != -1)
@@ -997,6 +1016,29 @@ public final class UpdateChecker
                                     "checkWebVersion 需要更新 整型版本升级: "
                                     + internalAppVersion + " → " + webVersionInt);
                                 needVersionUpdate = true;
+                            }
+                            else if (webVersionInt == internalAppVersion)
+                            {
+                                // 整型相同: 双方都是 beta 时再按日期码（快照码 YYwWWa，定宽字典序即时间序）细分新旧
+                                boolean webIsBeta = webVersionType == VersionType.BETA;
+                                boolean internalIsBeta = internalAppVersionType == VersionType.BETA;
+                                boolean snapshotNewer = webIsBeta && internalIsBeta
+                                    && !webVersionSnapshot.isEmpty()
+                                    && webVersionSnapshot.compareTo(internalAppVersionSnapshot) > 0;
+                                if (snapshotNewer)
+                                {
+                                    LogUtils.info(UpdateChecker.class,
+                                        "checkWebVersion 需要更新 整型一致但 beta 日期码升级: "
+                                        + internalAppVersionSnapshot + " → " + webVersionSnapshot);
+                                    needVersionUpdate = true;
+                                }
+                                else
+                                {
+                                    LogUtils.info(UpdateChecker.class,
+                                        "checkWebVersion 当前已是最新版本: "
+                                        + internalVersionString + " (code=" + internalAppVersion + ")");
+                                    needVersionUpdate = false;
+                                }
                             }
                             else
                             {

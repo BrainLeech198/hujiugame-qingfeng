@@ -7,6 +7,7 @@ public final class VersionType
         throw new UnsupportedOperationException("Utility class cannot be instantiated");
     }
 
+    public static final int UNKNOWN = -1;
     public static final int BETA = 0;
     public static final int RELEASE = 1;
     private static final String[] VERSION_TYPE_MAP = {"beta", "release"};
