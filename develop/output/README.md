@@ -158,6 +158,11 @@ use_viewport=stretch     → 恢复桌面端视口模式（无论成败）
 copy_outputs             → 复制 apk 到 output
 ```
 
+> **Android 签名密钥安全规范（必须遵守）**：
+> - 签名密码（storePassword / keyPassword）**只允许**通过环境变量（`STORE_PASSWORD` / `KEY_PASSWORD`）或交互式输入传入，**绝对不允许**写入任何文件（脚本、配置、JSON、属性文件等）
+> - 密钥库文件 `release.jks` 已被 `.gitignore` 忽略，不得提交到仓库
+> - 一旦密码被写入文件并提交，即视为密钥泄露，必须更换密钥库
+
 ### macOS（build_package_mac.py）
 
 ```
