@@ -38,7 +38,8 @@
 
 | 文档 | 位置 | 说明 |
 |------|------|------|
-| **变更日志** | [develop/CHANGELOG.md](develop/CHANGELOG.md) | 每次开发的变更记录（时间倒序），提交前必须更新 |
+| **变更日志** | [develop/CHANGELOG.md](develop/CHANGELOG.md) | 每次开发的变更记录（时间倒序，按日期归组 + 条目绑定 commit 哈希），提交前必须更新 |
+| **版本发布记录** | [develop/PUBLISH.md](develop/PUBLISH.md) | 版本发布信息记录（版本号/发布时间戳/最后一次更新 commit/面向玩家摘要），发布新版本时必须更新 |
 
 ### 编码规范
 
