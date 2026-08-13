@@ -133,9 +133,17 @@ public final class MenuMain implements GameRender
             {
                 if (updateChecker.isNeedVersionUpdate())
                 {
+                    // 测试版更新：提示可能不稳定；正式版更新：沿用普通提示
+                    boolean isBetaUpdate = updateChecker.isNewestVersionBeta();
+                    String updateTitleKey = isBetaUpdate
+                        ? RequirementKey.Language.MessageBox.UPDATE_DETECTED_BETA_TITLE
+                        : RequirementKey.Language.MessageBox.UPDATE_DETECTED_TITLE;
+                    String updateContentKey = isBetaUpdate
+                        ? RequirementKey.Language.MessageBox.UPDATE_DETECTED_BETA_CONTENT
+                        : RequirementKey.Language.MessageBox.UPDATE_DETECTED_CONTENT;
                     uiManager.getMessageBox().showAsk(RequirementKey.Language.MessageBox.UPDATE_DETECTED,
-                        "{language$" + RequirementKey.Language.REQUIREMENT_BLOCK + "#" + RequirementKey.Language.MESSAGE_BOX + "." + RequirementKey.Language.MessageBox.UPDATE_DETECTED_TITLE + "}",
-                        "{language$" + RequirementKey.Language.REQUIREMENT_BLOCK + "#" + RequirementKey.Language.MESSAGE_BOX + "." + RequirementKey.Language.MessageBox.UPDATE_DETECTED_CONTENT + "}");
+                        "{language$" + RequirementKey.Language.REQUIREMENT_BLOCK + "#" + RequirementKey.Language.MESSAGE_BOX + "." + updateTitleKey + "}",
+                        "{language$" + RequirementKey.Language.REQUIREMENT_BLOCK + "#" + RequirementKey.Language.MESSAGE_BOX + "." + updateContentKey + "}");
                 }
             }
             // 请求失败

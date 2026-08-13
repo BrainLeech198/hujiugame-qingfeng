@@ -134,6 +134,8 @@ public final class RequirementKey
             public static final String QUIT_GAME_CONTENT = "quit_game.content";
             public static final String UPDATE_DETECTED_TITLE = "update_detected.title";
             public static final String UPDATE_DETECTED_CONTENT = "update_detected.content";
+            public static final String UPDATE_DETECTED_BETA_TITLE = "update_detected_beta.title";
+            public static final String UPDATE_DETECTED_BETA_CONTENT = "update_detected_beta.content";
             public static final String UPDATE_REQUEST_FAILED_TITLE = "update_request_failed.title";
             public static final String UPDATE_REQUEST_FAILED_CONTENT = "update_request_failed.content";
             public static final String GAME_VERSION_DIFFERENT_TITLE = "game_version_different.title";

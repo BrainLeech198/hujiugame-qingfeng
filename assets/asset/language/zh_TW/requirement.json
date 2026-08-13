@@ -6,6 +6,8 @@
     "quit_game.content" : "確定要離開遊戲嗎？",
     "update_detected.title" : "檢測到新版本！",
     "update_detected.content" : "是否開啟瀏覽器前往官網下載最新版本？",
+    "update_detected_beta.title" : "發現測試版更新！",
+    "update_detected_beta.content" : "目前更新為測試版，功能可能不穩定或存在未知問題。是否開啟瀏覽器前往官網下載？",
     "update_request_failed.title" : "版本檢測失敗！",
     "update_request_failed.content" : "請檢查網路連線權限，是否打開瀏覽器前往官網並查看版本更新？",
     "game_version_different.title" : "版本不一致！",

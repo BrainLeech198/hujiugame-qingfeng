@@ -6,6 +6,8 @@
     "quit_game.content" : "确定要退出游戏吗？",
     "update_detected.title" : "检测到新版本！",
     "update_detected.content" : "是否打开浏览器前往官网下载最新版本？",
+    "update_detected_beta.title" : "发现测试版更新！",
+    "update_detected_beta.content" : "当前更新为测试版，功能可能不稳定或存在未知问题。是否打开浏览器前往官网下载？",
     "update_request_failed.title" : "版本检测失败！",
     "update_request_failed.content" : "请检查软件网络连接权限，是否打开浏览器前往官网并查看版本更新？",
     "game_version_different.title" : "版本不一致！",
