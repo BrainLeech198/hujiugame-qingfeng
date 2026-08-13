@@ -86,6 +86,9 @@ public final class Init implements GameRender
 
     // ===================================================================================================================
 
+    /**
+     * 显示进度条
+     */
     private void showProcess ()
     {
         // 计算进度
@@ -145,6 +148,9 @@ public final class Init implements GameRender
         LogUtils.debug(Init.class, "loadProcessColor 使用默认进度条颜色: " + processColor);
     }
 
+    /**
+     * 修复游戏资源
+     */
     private void repairGame ()
     {
         // 防重入：双击过快会触发两次并发修复，两个线程同时同步资源导致文件损坏
@@ -158,6 +164,9 @@ public final class Init implements GameRender
 
     // ===================================================================================================================
 
+    /**
+     * 初始化用户配置
+     */
     private void initUserConfig ()
     {
         // 等待文件差异化更新
@@ -180,6 +189,9 @@ public final class Init implements GameRender
         }
     }
 
+    /**
+     * 初始化音频
+     */
     private void initAudio ()
     {
         if (!audioManager.init())
@@ -195,6 +207,9 @@ public final class Init implements GameRender
         initState++;
     }
 
+    /**
+     * 初始化图形
+     */
     private void initGraphics ()
     {
         if (!graphicsManager.init())
@@ -210,6 +225,9 @@ public final class Init implements GameRender
         initState++;
     }
 
+    /**
+     * 初始化 UI
+     */
     private void initUi ()
     {
         if (!uiManager.init(themeManager))
@@ -225,6 +243,9 @@ public final class Init implements GameRender
         initState++;
     }
 
+    /**
+     * 初始化完成，跳转菜单
+     */
     private void initStop()
     {
         // 链接到网页判断需不需要更新
@@ -236,6 +257,9 @@ public final class Init implements GameRender
 
     // ===================================================================================================================
 
+    /**
+     * 检查更新
+     */
     private void checkUpdate()
     {
         updateChecker.checkWebVersion();

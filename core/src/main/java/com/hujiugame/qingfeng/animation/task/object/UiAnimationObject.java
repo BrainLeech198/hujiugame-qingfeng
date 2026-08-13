@@ -30,7 +30,7 @@ public class UiAnimationObject extends AnimationObject
     public UiAnimationObject (JsonEntity objectNode)
     {
         this.target = new UiObject(objectNode);
-        this.valid = target != null && target.getUiKind() != null;
+        this.valid = target.getUiKind() != null;
         this.json = objectNode;
     }
 

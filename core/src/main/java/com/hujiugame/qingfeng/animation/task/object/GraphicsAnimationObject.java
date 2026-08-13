@@ -30,7 +30,7 @@ public class GraphicsAnimationObject extends AnimationObject
     public GraphicsAnimationObject (JsonEntity objectNode)
     {
         this.target = new GraphicsObject(objectNode);
-        this.valid = target != null && target.getGraphicsKind() != null;
+        this.valid = target.getGraphicsKind() != null;
         this.json = objectNode;
     }
 
