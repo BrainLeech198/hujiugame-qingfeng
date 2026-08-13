@@ -78,6 +78,8 @@
 | **运行时切换主题/语言技术路径** | [develop/plans/2026-08-09-runtime-switch-theme-language.md](develop/plans/2026-08-09-runtime-switch-theme-language.md) | reload 为何无效 + 语言切换只差 blockMap 清空 + 主题切换需重建 UI 层 + 分阶段实现建议 |
 | **日志三维改造 + Script throw 统一** | [develop/plans/2026-08-10-log-3d-refactor.md](develop/plans/2026-08-10-log-3d-refactor.md) | LogUtils 空间/异常/上下文/时间四维改造 + Script 90 处 throw 消息中文化溯源 + GraphicsObject tag 可空优化（已确认，暂未实施） |
 | **Beta 快照细分版本** | [develop/plans/2026-08-13-beta-snapshot-version.md](develop/plans/2026-08-13-beta-snapshot-version.md) | app_version_snapshot 字段（YYwWWa）+ 打包器自动联想 + 产物命名带细分 + 资源同步加快照（已实施） |
+| **mac 交付物改 zip 内嵌安装器** | [develop/plans/2026-08-13-mac-zip-delivery.md](develop/plans/2026-08-13-mac-zip-delivery.md) | mac 交付物改为 zip 内嵌自解压 .command + 中文 symlink，绕过蓝奏云扩展名白名单 |
+| **mac zip 交付实施计划** | [develop/plans/2026-08-13-mac-zip-delivery-plan.md](develop/plans/2026-08-13-mac-zip-delivery-plan.md) | zip 内嵌安装器逐任务实施计划（build_package_mac 改造 + 一次性补救脚本） |
 
 ---
 
