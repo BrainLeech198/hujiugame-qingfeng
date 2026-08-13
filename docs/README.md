@@ -1,4 +1,4 @@
-# QingFeng Launcher — 安装包分发站
+# QingFeng — 安装包分发站
 
 本仓库的 `docs/` 目录为 **GitHub Pages 发布站**，提供 Windows (.exe) 和 Android (.apk) 安装包下载。
 
@@ -6,7 +6,7 @@
 
 ## 功能简介
 
-氢风启动器是一款以 [libGDX](https://libgdx.com/) 构建的视觉小说游戏启动器，遵循开发团队统一规范的标准化文件结构。主要特性：
+氢风是一款以 [libGDX](https://libgdx.com/) 构建的视觉小说游戏启动器，遵循开发团队统一规范的标准化文件结构。主要特性：
 
 - **扩展游戏内容** — 除传统对话叙事外，支持 2D 地图探索、视频播放等扩展功能
 - **创作者工具** — 内置可视化编辑器，支持多语言文本配置
@@ -35,4 +35,4 @@
 
 ---
 
-QingFeng Launcher
+QingFeng
