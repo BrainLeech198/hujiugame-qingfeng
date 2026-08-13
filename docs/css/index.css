@@ -3,6 +3,8 @@
    ================================ */
 body {
     background: linear-gradient(145deg, #eef2f6 0%, #d9e2ec 100%);
+    background-size: 220% 220%;
+    animation: bgFlow 28s ease-in-out infinite alternate;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -230,7 +232,7 @@ body {
     gap: 15px;
 }
 .card-header h2 {
-    font-size: 2.2rem;
+    font-size: 2.6rem;
     font-weight: 600;
     color: #0d4057;
     letter-spacing: 1px;
@@ -260,8 +262,9 @@ body {
 }
 
 .intro-body {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     line-height: 1.8;
+    letter-spacing: 0.01em;
     color: #1e3a4a;
     padding: 0 10px;
 }
@@ -402,6 +405,7 @@ body {
 .version-badge {
     font-size: 2rem;
     font-weight: 700;
+    font-variant-numeric: tabular-nums;
     color: #0b3b4e;
     display: flex;
     align-items: center;
@@ -422,7 +426,7 @@ body {
 
 .log-content {
     font-size: 1.25rem;
-    line-height: 1.6;
+    line-height: 1.7;
     color: #1e3a4a;
     background: #f3f9ff;
     padding: 22px 25px;
@@ -648,4 +652,12 @@ body {
    ================================ */
 .tip-btn:hover {
     box-shadow: 0 0 0 4px rgba(47,107,143,0.12), 0 12px 20px -8px rgba(20,80,120,0.4);
+}
+
+/* ================================
+   背景流动渐变
+   ================================ */
+@keyframes bgFlow {
+    0%   { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
 }
