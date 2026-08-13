@@ -70,5 +70,9 @@
   "community_description": "A community space for feature suggestions, feedback, creative content sharing, and player discussions. Please keep the conversation civil!",
   "select_platform": "Select Platform",
   "back_button": "Back",
-  "hero_tagline": "Roblox-style narrative creation platform"
+  "hero_tagline": "Roblox-style narrative creation platform",
+  "nav_intro": "Intro",
+  "nav_download": "Download",
+  "nav_community": "Community",
+  "nav_menu_label": "Open navigation menu"
 }

@@ -70,5 +70,9 @@
   "game_intro_desc4": "Jogos e pacotes de recursos usam formatos de arquivo dedicados (.qfg, .qfl, .qft, .qfgl, .qfgt), registrados em Windows, Linux e Android, permitindo carregamento e execução diretos com um clique duplo. Editores visuais, mapas 2D e reprodução de vídeo estão em planejamento, abrindo mais possibilidades para os criadores.",
   "select_platform": "Selecione a plataforma",
   "back_button": "Voltar",
-  "hero_tagline": "Plataforma de criação narrativa estilo Roblox"
+  "hero_tagline": "Plataforma de criação narrativa estilo Roblox",
+  "nav_intro": "Introdução",
+  "nav_download": "Download",
+  "nav_community": "Comunidade",
+  "nav_menu_label": "Abrir menu de navegação"
 }

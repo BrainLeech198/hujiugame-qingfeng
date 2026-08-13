@@ -70,5 +70,9 @@
   "community_description": "기능 제안 및 개선 피드백, 창작 콘텐츠 공유, 플레이어 간 토론을 위한 커뮤니티 공간입니다. 예의 바른 교류 부탁드립니다.",
   "select_platform": "플랫폼 선택",
   "back_button": "뒤로",
-  "hero_tagline": "Roblox식 스토리 제작 플랫폼"
+  "hero_tagline": "Roblox식 스토리 제작 플랫폼",
+  "nav_intro": "게임 소개",
+  "nav_download": "다운로드",
+  "nav_community": "커뮤니티",
+  "nav_menu_label": "내비게이션 메뉴 열기"
 }

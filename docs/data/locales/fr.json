@@ -70,5 +70,9 @@
   "game_intro_desc4": "Les jeux et packs de ressources utilisent des formats de fichiers dédiés (.qfg, .qfl, .qft, .qfgl, .qfgt), enregistrés sur Windows, Linux et Android, pour un chargement et un lancement directs en un double-clic. Éditeurs visuels, cartes 2D et lecture vidéo sont en cours de planification, ouvrant davantage de possibilités aux créateurs.",
   "select_platform": "Choisissez la plateforme",
   "back_button": "Retour",
-  "hero_tagline": "Plateforme de création narrative style Roblox"
+  "hero_tagline": "Plateforme de création narrative style Roblox",
+  "nav_intro": "Présentation",
+  "nav_download": "Téléchargement",
+  "nav_community": "Communauté",
+  "nav_menu_label": "Ouvrir le menu de navigation"
 }

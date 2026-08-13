@@ -517,6 +517,71 @@ body {
 }
 
 /* ================================
+   吸顶导航
+   ================================ */
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 28px;
+    background: rgba(255,255,255,0.35);
+    backdrop-filter: blur(8px);
+    transition: background-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+.top-nav.scrolled {
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 6px 20px -10px rgba(0,30,50,0.2);
+    border-bottom: 1px solid rgba(255,255,255,0.6);
+}
+.nav-brand {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0d4057;
+    text-decoration: none;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+.nav-links {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.nav-links a {
+    color: #1d4d6b;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 50px;
+    transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
+}
+.nav-links a:hover {
+    background: rgba(47,107,143,0.12);
+    color: #083445;
+}
+.nav-toggle {
+    display: none;
+    background: none;
+    border: 1px solid rgba(70,120,160,0.4);
+    border-radius: 12px;
+    font-size: 1.3rem;
+    line-height: 1;
+    padding: 8px 12px;
+    color: #1d4d6b;
+    cursor: pointer;
+}
+#intro, #download, #community {
+    scroll-margin-top: 72px;
+}
+
+/* ================================
    响应式
    ================================ */
 @media (max-width: 700px) {
@@ -541,4 +606,26 @@ body {
     .platform-grid { flex-direction: column; align-items: center; }
     .platform-select-grid { grid-template-columns: 1fr; }
     .log-content { font-size: 1.1rem; }
+}
+@media (max-width: 700px) {
+    .top-nav { padding: 10px 16px; }
+    .nav-toggle { display: block; }
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 12px;
+        right: 12px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        background: rgba(255,255,255,0.92);
+        backdrop-filter: blur(12px);
+        border-radius: 20px;
+        padding: 10px;
+        box-shadow: 0 20px 30px -15px rgba(0,30,50,0.25);
+        border: 1px solid rgba(255,255,255,0.8);
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 16px; border-radius: 12px; }
 }

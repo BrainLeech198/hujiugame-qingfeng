@@ -175,6 +175,30 @@
             .catch(error => showError(error.message));
     }
 
+    // ==================== 吸顶导航（滚动毛玻璃 + 汉堡菜单） ====================
+    function initTopNav() {
+        const topNav = document.getElementById('topNav');
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+        if (topNav) {
+            window.addEventListener('scroll', () => {
+                topNav.classList.toggle('scrolled', window.scrollY > 10);
+            }, { passive: true });
+        }
+        if (navToggle && navLinks) {
+            navToggle.addEventListener('click', () => {
+                const open = navLinks.classList.toggle('open');
+                navToggle.setAttribute('aria-expanded', String(open));
+            });
+            navLinks.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') {
+                    navLinks.classList.remove('open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+    }
+
     // ==================== 滚动进入动画 ====================
     function initScrollReveal() {
         const els = document.querySelectorAll('.hero-card, .tip-card, .card, .download-item');
@@ -207,6 +231,7 @@
     // ==================== 启动流程 ====================
     const userLang = getBrowserLang();
     initLightbox();
+    initTopNav();
     initScrollReveal();
     loadMessages(userLang).then(messages => {
         applyI18n(messages);

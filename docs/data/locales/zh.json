@@ -70,5 +70,9 @@
   "community_description": "这里是功能建议与改进反馈、创作内容分享、玩家间讨论的社区空间。欢迎文明交流！",
   "select_platform": "选择下载平台",
   "back_button": "返回",
-  "hero_tagline": "Roblox 式叙事创作平台"
+  "hero_tagline": "Roblox 式叙事创作平台",
+  "nav_intro": "游戏介绍",
+  "nav_download": "资源下载",
+  "nav_community": "社区分享",
+  "nav_menu_label": "展开导航菜单"
 }
