@@ -2,7 +2,7 @@
    历史版本页专属样式
    ================================ */
 body {
-    background: linear-gradient(145deg, #eef2f6 0%, #d9e2ec 100%);
+    background: linear-gradient(160deg, var(--bg-0) 0%, var(--bg-1) 30%, var(--bg-2) 65%, var(--bg-3) 100%);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -14,12 +14,12 @@ body {
 .main-wrapper {
     max-width: 1200px;
     width: 100%;
-    background-color: rgba(255,255,255,0.7);
+    background-color: var(--card-bg);
     backdrop-filter: blur(12px);
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-soft);
     padding: 40px;
-    border: 1px solid rgba(255,255,255,0.9);
+    border: 1px solid var(--border-glass);
     transition: box-shadow 0.3s var(--ease-out), transform 0.3s var(--ease-out);
 }
 .main-wrapper:hover {
@@ -40,19 +40,20 @@ body {
     background: transparent;
     padding: 12px 28px;
     border-radius: 50px;
-    border: 1.5px solid rgba(47,107,143,0.55);
-    color: #1d4d6b;
+    border: 1.5px solid var(--border-glass-strong);
+    color: var(--text-2);
     text-decoration: none;
     font-weight: 500;
     font-size: 1.2rem;
-    transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
-    box-shadow: 0 6px 12px rgba(0,20,30,0.05);
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out), border-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
 }
 .back-link:hover {
-    background: rgba(47,107,143,0.1);
-    border-color: #2f6b8f;
-    color: #083445;
+    background: rgba(79, 195, 216, 0.1);
+    border-color: var(--accent);
+    color: var(--accent-2);
     transform: translateX(-3px);
+    box-shadow: 0 10px 22px -8px rgba(0, 0, 0, 0.5), 0 0 18px -6px var(--glow);
 }
 .back-link span {
     font-size: 1.5rem;
@@ -62,7 +63,7 @@ body {
 .page-title {
     font-size: 2.6rem;
     font-weight: 600;
-    color: #0d4057;
+    color: var(--text-1);
     letter-spacing: 1px;
     position: relative;
     display: inline-block;
@@ -74,7 +75,7 @@ body {
     left: 0;
     width: 80px;
     height: 4px;
-    background: linear-gradient(90deg, #2f6b8f, #b1d0e8);
+    background: linear-gradient(90deg, var(--accent), rgba(126, 224, 208, 0.4));
     border-radius: 4px;
 }
 
@@ -86,16 +87,16 @@ body {
 }
 
 .version-card {
-    background: rgba(255,255,255,0.75);
+    background: var(--card-bg-strong);
     border-radius: var(--radius-card);
     padding: 28px 32px;
     box-shadow: var(--shadow-soft);
-    border: 1px solid rgba(255,255,255,0.8);
+    border: 1px solid var(--border-glass);
     transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
 }
 .version-card:hover {
-    background: rgba(255,255,255,0.88);
-    box-shadow: var(--shadow-hover);
+    background: rgba(24, 50, 80, 0.85);
+    box-shadow: var(--shadow-hover), 0 0 36px -14px var(--glow);
     transform: translateY(-4px);
 }
 
@@ -109,57 +110,58 @@ body {
 .version-name {
     font-size: 2rem;
     font-weight: 700;
-    color: #0b3b4e;
-    background: linear-gradient(135deg, #164863, #2b5f7a);
+    color: var(--text-1);
+    background: var(--grad-text);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 .latest-tag {
-    background: #1a5f7a;
-    color: white;
+    background: linear-gradient(135deg, rgba(240, 184, 100, 0.92), rgba(214, 146, 60, 0.92));
+    color: #3a2a12;
     font-size: 1rem;
     padding: 6px 20px;
     border-radius: 50px;
-    font-weight: 400;
+    font-weight: 600;
     white-space: nowrap;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: none;
+    box-shadow: 0 2px 10px rgba(240, 184, 100, 0.3);
 }
 
 .version-log {
     font-size: 1.2rem;
     line-height: 1.6;
-    color: #1e3a4a;
-    background: rgba(243,249,255,0.8);
+    color: var(--text-2);
+    background: var(--card-bg-soft);
     padding: 20px 25px;
     border-radius: 28px;
-    border: 1px solid #c7ddee;
+    border: 1px solid var(--border-glass);
     margin: 20px 0 22px;
     white-space: pre-wrap;
     word-break: break-word;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .download-row {
     display: grid;
     grid-template-columns: repeat(3, minmax(140px, 1fr));
     gap: 20px;
-    border-top: 1px dashed #b0cddf;
+    border-top: 1px dashed rgba(120, 190, 230, 0.22);
     padding-top: 22px;
     margin-top: 5px;
 }
 .download-item-small {
     text-align: center;
-    background: rgba(255,255,255,0.8);
+    background: var(--card-bg-strong);
     border-radius: 28px;
     padding: 18px 15px 14px 15px;
     transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
-    border: 1px solid rgba(255,255,255,0.9);
-    box-shadow: 0 5px 10px rgba(0,0,0,0.02);
+    border: 1px solid var(--border-glass);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
 }
 .download-item-small:hover {
-    background: white;
-    box-shadow: var(--shadow-hover);
+    background: rgba(24, 50, 80, 0.85);
+    box-shadow: var(--shadow-hover), 0 0 24px -10px var(--glow);
     transform: translateY(-4px);
 }
 .download-item-small a {
@@ -174,28 +176,28 @@ body {
     max-width: 130px;
     height: auto;
     border-radius: 20px;
-    border: 1px solid rgba(150,180,200,0.3);
-    background-color: #eef4f9;
+    border: 1px solid var(--border-glass);
+    background-color: rgba(20, 40, 64, 0.5);
     min-height: 60px;
     object-fit: contain;
 }
 .download-icon-small.error {
-    background: #d9e2ec;
+    background: var(--card-bg-strong);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #2f627c;
+    color: var(--text-3);
     font-size: 0.9rem;
     padding: 12px 0;
 }
 .download-item-small span {
     font-size: 1.2rem;
     font-weight: 550;
-    color: #1d4d6b;
-    background: rgba(230,240,250,0.8);
+    color: var(--text-2);
+    background: rgba(20, 44, 70, 0.6);
     padding: 5px 16px;
     border-radius: 40px;
-    border: 1px solid rgba(80,130,170,0.2);
+    border: 1px solid var(--border-glass);
 }
 
 .pagination {
@@ -208,23 +210,24 @@ body {
 }
 .page-btn {
     background: transparent;
-    border: 1.5px solid rgba(47,107,143,0.55);
-    color: #1d4d6b;
+    border: 1.5px solid var(--border-glass-strong);
+    color: var(--text-2);
     font-size: 1.2rem;
     font-weight: 500;
     padding: 12px 30px;
     border-radius: 50px;
     cursor: pointer;
-    transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
-    box-shadow: 0 6px 12px rgba(0,20,30,0.05);
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out), border-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
     min-width: 120px;
     text-align: center;
 }
 .page-btn:hover:not(:disabled) {
-    background: rgba(47,107,143,0.1);
-    border-color: #2f6b8f;
-    color: #083445;
+    background: rgba(79, 195, 216, 0.1);
+    border-color: var(--accent);
+    color: var(--accent-2);
     transform: scale(1.02);
+    box-shadow: 0 10px 22px -8px rgba(0, 0, 0, 0.5), 0 0 18px -6px var(--glow);
 }
 .page-btn:disabled {
     opacity: 0.4;
@@ -233,31 +236,31 @@ body {
 }
 .page-info {
     font-size: 1.2rem;
-    color: #2b5f7a;
-    background: rgba(255,255,255,0.5);
+    color: var(--text-2);
+    background: var(--card-bg-soft);
     padding: 8px 25px;
     border-radius: 50px;
     backdrop-filter: blur(2px);
-    border: 1px solid rgba(255,255,255,0.6);
+    border: 1px solid var(--border-glass);
 }
 
 .error-message {
     text-align: center;
     padding: 70px 20px;
-    background: rgba(255,255,255,0.5);
+    background: var(--card-bg-soft);
     border-radius: 50px;
-    color: #b52b2b;
+    color: #ff9090;
     font-size: 1.4rem;
     backdrop-filter: blur(4px);
-    border: 1px solid rgba(255,120,120,0.3);
+    border: 1px solid rgba(255, 144, 144, 0.3);
 }
 
 .no-versions {
     text-align: center;
     padding: 70px 20px;
-    background: rgba(255,255,255,0.5);
+    background: var(--card-bg-soft);
     border-radius: 50px;
-    color: #2f627c;
+    color: var(--text-2);
     font-size: 1.5rem;
     backdrop-filter: blur(4px);
 }
@@ -267,14 +270,14 @@ body {
     width: 100%;
     margin-top: 35px;
     text-align: center;
-    color: #4f6f8a;
+    color: var(--text-3);
     font-size: 1rem;
-    border-top: 1px solid rgba(90,130,160,0.25);
+    border-top: 1px solid rgba(120, 190, 230, 0.2);
     padding: 25px 20px 10px;
-    background: rgba(255,255,255,0.55);
+    background: var(--card-bg-soft);
     backdrop-filter: blur(8px);
     border-radius: 24px;
-    border-top: 1px solid rgba(255,255,255,0.7);
+    border-top: 1px solid var(--border-glass);
 }
 .footer-inner {
     display: grid;
@@ -287,23 +290,24 @@ body {
 }
 .footer-col { display: flex; flex-direction: column; gap: 6px; }
 .footer-brand { align-items: center; }
-.footer-logo { font-weight: 600; color: #0d4057; }
-.footer-copy { font-size: 0.9rem; color: #5f7f90; }
+.footer-logo { font-weight: 600; color: var(--text-1); }
+.footer-copy { font-size: 0.9rem; color: var(--text-3); }
 .footnote a {
-    color: #1f5f83;
+    color: var(--text-2);
     text-decoration: none;
     font-weight: 500;
     position: relative;
     padding-bottom: 2px;
-    background-image: linear-gradient(90deg, #2f6b8f, #2f6b8f);
+    background-image: linear-gradient(90deg, var(--accent), var(--accent-2));
     background-repeat: no-repeat;
     background-size: 0% 2px;
     background-position: 0 100%;
-    transition: color 0.2s, background-size 0.3s var(--ease-out);
+    transition: color 0.25s var(--ease-out), background-size 0.3s var(--ease-out);
 }
 .footnote a:hover {
-    color: #083445;
+    color: var(--accent-2);
     background-size: 100% 2px;
+    text-shadow: 0 0 14px rgba(79, 195, 216, 0.4);
 }
 
 /* ================================
