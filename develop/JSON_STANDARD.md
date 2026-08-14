@@ -750,20 +750,22 @@
 
 **位置**：`game/{game_id}/game.json`
 
-**解析**：手动读取，供游戏列表显示用
+**解析**：手动读取，供游戏列表显示与启动器版本校验用
 
 | 字段 | 类型 | 必需 | 说明 |
 |------|------|------|------|
-| `name` | String | — | 游戏名称 |
-| `author` | String | — | 作者 |
-| `profile` | String | — | 简介 |
+| `id` | String | ✓ | 游戏唯一 ID（形如 `com.hujiugame.xxx`） |
+| `name` | String | ✓ | 游戏名称 |
+| `version` | String | — | 游戏自身迭代版本号，字符串，第三方创作者自定规矩，启动器不做判断与干涉 |
+| `launcher_version` | int | ✓ | 该游戏要求的最低启动器版本码，与启动器 `app_version` 同一体系；启动器经 `AppVersionTable` 还原版本码后按 minor 兼容判断（主版本相等 + 次版本 ≥）；未知版本码或缺字段 → 弹「无法识别游戏版本要求」弹窗，建议不要强制运行 |
 
 **示例**：
 ```json
 {
-  "name": "GameSample",
-  "author": "hujiugame",
-  "profile": "The sample of normal game files."
+  "id": "com.hujiugame.banxian1975",
+  "name": "社畜魂穿1975半仙世家",
+  "version": "1.0.0",
+  "launcher_version": 1
 }
 ```
 

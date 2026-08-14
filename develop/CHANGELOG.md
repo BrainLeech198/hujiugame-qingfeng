@@ -22,12 +22,20 @@
 
 ## 2026-08-14 — 游戏 launcher_version 强制改为整型版本码
 
-**变更(launcher_version)：judgeGame minor 判定与未知码弹窗**
+**文档(JSON_STANDARD)：game.json 章节补全实际字段**
+
+### 文档
+
+- **JSON_STANDARD.md 5.1 补全实际字段** — game.json 表格补齐 `id`/`name`/`version`/`launcher_version`，标注 `launcher_version` 为整型版本码（对应启动器 `app_version`）、`version` 为字符串（第三方创作者自定，启动器不判断不干涉）
+
+---
+
+**变更(launcher_version)：judgeGame minor 判定与未知码弹窗**（commit 78d7f8a）
 
 ### 变更
 
-- **判定保留 minor 兼容语义** — `MenuList.judgeGame()` 经 `AppVersionTable` 还原版本码为字符串后走 `doMinorCompatible(String)`（主版本相等 + 次版本 ≥，保持原语义）；未知版本码或缺字段（还原为 null）→ 弹「无法识别游戏版本要求」弹窗，建议不要强制运行（`UpdateChecker.doAppVersionCompatible` 无调用者，已删除）
-- **三语言新增「无法识别游戏版本要求」弹窗文案** — `RequirementKey.Language.MessageBox` 新增 `GAME_LAUNCHER_VERSION_UNKNOWN` 键，zh_CN/zh_TW/en_US 的 `requirement.json` 补 `game_launcher_version_unknown.title/content.1/content.2`
+- **判定保留 minor 兼容语义** — `MenuList.judgeGame()` 经 `AppVersionTable` 还原版本码为字符串后走 `doMinorCompatible(String)`（主版本相等 + 次版本 ≥，保持原语义）；未知版本码或缺字段（还原为 null）→ 弹「无法识别游戏版本要求」弹窗，建议不要强制运行（`UpdateChecker.doAppVersionCompatible` 无调用者，已删除）（commit 78d7f8a）
+- **三语言新增「无法识别游戏版本要求」弹窗文案** — `RequirementKey.Language.MessageBox` 新增 `GAME_LAUNCHER_VERSION_UNKNOWN` 键，zh_CN/zh_TW/en_US 的 `requirement.json` 补 `game_launcher_version_unknown.title/content.1/content.2`（commit 78d7f8a）
 
 ---
 
