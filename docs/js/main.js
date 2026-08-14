@@ -81,20 +81,9 @@
         IMAGE_CONFIG_PATH: 'data/image.json'
     };
 
-    const versionNameEl = document.getElementById('version-name');
-    const versionLogEl = document.getElementById('version-log');
-    const windowsLink = document.getElementById('windows-link');
-    const androidLink = document.getElementById('android-link');
-    const linuxLink = document.getElementById('linux-link');
-    const macLink = document.getElementById('mac-link');
+    const latestCard = document.getElementById('latestVersionCard');
 
     const logoImg = document.getElementById('logoImg');
-    const windowsIcon = document.getElementById('windowsIcon');
-    const androidIcon = document.getElementById('androidIcon');
-    const linuxIcon = document.getElementById('linuxIcon');
-    const macIcon = document.getElementById('macIcon');
-
-    let currentVersionInfo = null;
 
     function loadImageConfig() {
         fetch(CONFIG.IMAGE_CONFIG_PATH, { cache: 'no-cache' })
@@ -104,22 +93,72 @@
             })
             .then(config => {
                 if (logoImg && config.logo) logoImg.src = config.logo;
-                if (windowsIcon && config['download-windows']) windowsIcon.src = config['download-windows'];
-                if (androidIcon && config['download-android']) androidIcon.src = config['download-android'];
-                if (linuxIcon && config['download-linux']) linuxIcon.src = config['download-linux'];
-                if (macIcon && config['download-mac']) macIcon.src = config['download-mac'];
             })
             .catch(err => console.warn('图片配置加载失败，使用默认路径', err));
     }
 
     function setLoadingState() {
-        if (versionNameEl && currentMessages) versionNameEl.textContent = currentMessages.loading_version;
-        if (versionLogEl && currentMessages) versionLogEl.innerHTML = `<span class="loading-skeleton">${currentMessages.loading_log}</span>`;
+        if (latestCard && currentMessages) {
+            latestCard.innerHTML = `<div class="loading-skeleton" style="text-align:center; padding:40px;">${currentMessages.loading_version}</div>`;
+        }
     }
 
     function showError(message) {
-        if (versionNameEl) versionNameEl.textContent = '❌ ' + (currentMessages?.error_load_failed || '加载失败：') + message;
-        if (versionLogEl) versionLogEl.innerHTML = `<span style="color:#b52b2b;">${message}</span>`;
+        if (latestCard) {
+            latestCard.innerHTML = `<div class="error-message">❌ ${(currentMessages?.error_load_failed || '加载失败：')}${message}</div>`;
+        }
+    }
+
+    function buildDownloadBtns(downloadData) {
+        const downloadJson = JSON.stringify(downloadData || {});
+        const platforms = [
+            { key: 'windows', label: 'Win', alt: 'Windows下载', icon: 'download-windows' },
+            { key: 'android', label: 'Android', alt: 'Android下载', icon: 'download-android' },
+            { key: 'linux', label: 'Linux', alt: 'Linux下载', icon: 'download-linux' },
+            { key: 'mac', label: 'Mac', alt: 'Mac下载', icon: 'download-mac' }
+        ];
+        const fallbackAttrs = (label, alt) =>
+            `data-fallback="${label}" data-fallback-alt="${alt}" data-fallback-w="130" data-fallback-h="70"` +
+            ` data-fallback-font="18" data-fallback-bg="#3b6f8c" data-fallback-color="#ffffff" data-fallback-y="38"`;
+        return platforms.map(p => `
+            <div class="download-item-small">
+                <a href="#" class="download-btn" data-platform="${p.key}" data-download='${downloadJson}'>
+                    <img src="resource/image/${p.icon}.png" alt="${p.alt}" class="download-icon-small"
+                         ${fallbackAttrs(p.label, p.alt)}>
+                    <span>${(currentMessages && currentMessages[p.key + '_button']) || p.label + '版'}</span>
+                </a>
+            </div>`).join('');
+    }
+
+    function renderLatestVersionCard(versionInfo) {
+        if (!latestCard) return;
+        const isLatest = `<span class="latest-tag">${currentMessages?.latest_tag || '最新'}</span>`;
+        const verDate = versionInfo.date
+            ? `<div class="version-date">${(currentMessages?.update_time || '更新时间')}：${versionInfo.date}</div>`
+            : '';
+        const safeLog = (versionInfo.log || '暂无更新日志').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+
+        latestCard.innerHTML = `
+            <div class="version-header">
+                <span class="version-name">${versionInfo.name}</span>
+                ${isLatest}
+            </div>
+            ${verDate}
+            <div class="version-log">${safeLog}</div>
+            <div class="download-row">
+                ${buildDownloadBtns(versionInfo.download)}
+            </div>
+        `;
+
+        latestCard.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const platform = btn.getAttribute('data-platform');
+                let download = null;
+                try { download = JSON.parse(btn.getAttribute('data-download')); } catch (err) { download = null; }
+                window.showPlatformSelection(platform, download);
+            });
+        });
     }
 
     function fetchVersionAndUpdate() {
@@ -136,41 +175,7 @@
                 const versionInfo = data.versions[String(newestKey)];
                 if (!versionInfo || !versionInfo.name) throw new Error(`未找到键 ${newestKey} 对应的版本信息`);
 
-                if (versionNameEl) {
-                    versionNameEl.textContent = versionInfo.name;
-                    versionNameEl.classList.remove('loading-skeleton');
-                }
-                if (versionLogEl) {
-                    versionLogEl.textContent = versionInfo.log;
-                    versionLogEl.classList.remove('loading-skeleton');
-                }
-
-                currentVersionInfo = versionInfo;
-
-                if (windowsLink) {
-                    windowsLink.onclick = (e) => {
-                        e.preventDefault();
-                        window.showPlatformSelection('windows', currentVersionInfo.download);
-                    };
-                }
-                if (androidLink) {
-                    androidLink.onclick = (e) => {
-                        e.preventDefault();
-                        window.showPlatformSelection('android', currentVersionInfo.download);
-                    };
-                }
-                if (linuxLink) {
-                    linuxLink.onclick = (e) => {
-                        e.preventDefault();
-                        window.showPlatformSelection('linux', currentVersionInfo.download);
-                    };
-                }
-                if (macLink) {
-                    macLink.onclick = (e) => {
-                        e.preventDefault();
-                        window.showPlatformSelection('mac', currentVersionInfo.download);
-                    };
-                }
+                renderLatestVersionCard(versionInfo);
             })
             .catch(error => showError(error.message));
     }
