@@ -178,29 +178,28 @@ public final class GameLogicService
     }
 
     /**
-     * 从游戏配置中解析需要的启动器版本号
+     * 从游戏配置中解析需要的启动器版本码（与启动器 app_version 同体系）
      * @param gameConfigJson 游戏配置JSON对象
-     * @return 启动器版本号，若缺少字段则返回null
+     * @return 启动器版本码，若缺少字段则返回 -1（视为未声明，由消费端决定处理）
      */
-    @javax.annotation.Nullable
-    public String parseGameLauncherVersion (JsonEntity gameConfigJson)
+    public int parseGameLauncherVersion (JsonEntity gameConfigJson)
     {
         try
         {
             if (gameConfigJson.containsKey(ConfigKey.Game.LAUNCHER_VERSION))
             {
-                return gameConfigJson.getString(ConfigKey.Game.LAUNCHER_VERSION);
+                return gameConfigJson.getInt(ConfigKey.Game.LAUNCHER_VERSION);
             }
             else
             {
-                LogUtils.error(GameLogicService.class, "parseGameLauncherVersion 配置文件缺少 " + ConfigKey.Game.LAUNCHER_VERSION + " 字段");
-                return null;
+                LogUtils.debug(GameLogicService.class, "parseGameLauncherVersion 配置文件缺少 " + ConfigKey.Game.LAUNCHER_VERSION + " 字段，视为未声明");
+                return -1;
             }
         }
         catch (Exception e)
         {
             LogUtils.error(GameLogicService.class, "parseGameLauncherVersion", e);
-            return null;
+            return -1;
         }
     }
 

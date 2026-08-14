@@ -15,7 +15,7 @@ public class EnterGame implements EventObject
     private final String gameId;
     private final String gameName;
     private final String gameVersion;
-    private final String gameLauncherVersion;
+    private final int gameLauncherVersion;
 
     /**
      * 注入关键游戏数据
@@ -24,9 +24,9 @@ public class EnterGame implements EventObject
      * @param gameId              游戏ID
      * @param gameName            游戏名称
      * @param gameVersion         游戏版本
-     * @param gameLauncherVersion 游戏启动器版本
+     * @param gameLauncherVersion 游戏要求的启动器版本码
      */
-    public EnterGame (FileHandle gamePathHandle, String gameId, String gameName, String gameVersion, String gameLauncherVersion)
+    public EnterGame (FileHandle gamePathHandle, String gameId, String gameName, String gameVersion, int gameLauncherVersion)
     {
         eventName = Event.ENTER_GAME;
         this.gamePathHandle = gamePathHandle;
@@ -88,11 +88,11 @@ public class EnterGame implements EventObject
     }
 
     /**
-     * 获取游戏启动器版本
+     * 获取游戏要求的启动器版本码
      *
-     * @return 游戏启动器版本
+     * @return 游戏要求的启动器版本码
      */
-    public String getGameLauncherVersion ()
+    public int getGameLauncherVersion ()
     {
         return gameLauncherVersion;
     }

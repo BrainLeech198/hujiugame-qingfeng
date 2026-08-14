@@ -17,7 +17,7 @@ public final class Player
     private String gameId;
     private String gameName;
     private String gameVersion;
-    private String gameLauncherVersion;
+    private int gameLauncherVersion;
 
     private Role role;
     private Hoster hoster;
@@ -108,17 +108,17 @@ public final class Player
     }
 
     /**
-     * 获取游戏启动器版本
+     * 获取游戏要求的启动器版本码
      */
-    public String getGameLauncherVersion ()
+    public int getGameLauncherVersion ()
     {
         return gameLauncherVersion;
     }
 
     /**
-     * 设置游戏启动器版本并同步到游戏信息管理器
+     * 设置游戏要求的启动器版本码并同步到游戏信息管理器
      */
-    public void setGameLauncherVersion (String gameLauncherVersion)
+    public void setGameLauncherVersion (int gameLauncherVersion)
     {
         this.gameLauncherVersion = gameLauncherVersion;
         gameInfoManager.putInfo(GameInfoKey.Game.LAUNCHER_VERSION, gameLauncherVersion);

@@ -121,7 +121,7 @@ public final class GameSessionManager
             String gameId = gameLogicService.parseGameId(gameConfigJson);
             String gameName = gameLogicService.parseGameName(gameConfigJson);
             String gameVersion = gameLogicService.parseGameVersion(gameConfigJson);
-            String gameLauncherVersion = gameLogicService.parseGameLauncherVersion(gameConfigJson);
+            int gameLauncherVersion = gameLogicService.parseGameLauncherVersion(gameConfigJson);
 
             // 存储游戏信息
             player.setGameId(gameId);

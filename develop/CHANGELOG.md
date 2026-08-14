@@ -20,6 +20,19 @@
 > 9. 【必须】每次发布新版本（beta 或正式版）→ 在 `develop/PUBLISH.md` 顶部新增该版本发布记录（版本号 + 版本类型 + 发布时间戳 + 该版本最后一次更新 commit + 面向玩家的 bug 修复/新增功能摘要）；发布时间戳 = 最后一次更新版本下载地址（`docs/data/versions.json`）的 git 提交时间
 > 10. 【必须】CHANGELOG 条目按日期归组：同一天的所有提交主题共同包含在同一个 `## <日期> — <概括标题>` 下，禁止拆成多个 `## ` 日期标题；每个提交块以 `**<主题>**（commit <7位短哈希>）` 标记，块内每条 `- ` 条目行尾标注引入它的提交短哈希 `（commit <7位短哈希>）`。新条目随内容改动提交后，其哈希在下一笔内容改动提交中一并补写（补写仅改 hash，不新增条目）
 
+## 2026-08-14 — 游戏 launcher_version 强制改为整型版本码
+
+**重构(launcher_version)：launcher_version 解析与存储链 int 化**
+
+### 重构
+
+- **游戏 `launcher_version` 值改为整型版本码** — `game/<id>/game.json` 的 `launcher_version` 由字符串 `"1.0.0"` 改为整型码 `1`（对应当前启动器 `app_version` 码），与启动器版本码体系对齐
+- **解析返回值 String→int** — `GameLogicService.parseGameLauncherVersion()` 由 `getString` 改为 `getInt`，缺字段返回 `-1`（不再打印 error，视为未声明，由消费端决定处理）
+- **存储链类型统一** — `Player`/`EnterGame`/`GameSessionManager` 中 `gameLauncherVersion` 类型由 String 统一改为 int
+- **新增 `type/AppVersionTable` 对照表** — 版本码 → 版本字符串映射（当前 `1 → "1.0.0"`），供 `MenuList.judgeGame()` 还原版本码后做 minor 兼容判断，发版时手动维护
+
+---
+
 ## 2026-08-13 — mac 死锁修复 + 官网深色主题美化 + 测试版发布与快照细分 + 打包重构 + 版权素材清理
 
 **文档(发布)：建立版本发布记录体系 + CHANGELOG 条目绑定提交哈希**（commit 10d6d92）
