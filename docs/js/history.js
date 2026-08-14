@@ -77,6 +77,7 @@
         const rawArray = Object.keys(versionsObj).map(key => ({
             key: key,
             name: versionsObj[key].name || '未知版本',
+            date: versionsObj[key].date || '',
             log: versionsObj[key].log || '暂无更新日志',
             download: versionsObj[key].download || {}
         }));
@@ -109,6 +110,7 @@
         let htmlStr = '';
         pageData.forEach(ver => {
             const isLatest = ver.isLatest ? `<span class="latest-tag">${currentMessages?.latest_tag || '最新'}</span>` : '';
+            const verDate = ver.date ? `<div class="version-date">${currentMessages?.update_time || '更新时间'}：${ver.date}</div>` : '';
             const safeLog = ver.log.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
 
             // 整份下载对象（四平台）存入 data 属性，点击任意平台按钮都先进入平台选择
@@ -151,6 +153,7 @@
                         <span class="version-name">${ver.name}</span>
                         ${isLatest}
                     </div>
+                    ${verDate}
                     <div class="version-log">${safeLog}</div>
                     <div class="download-row">
                         <div class="download-item-small">${windowsBtnHtml}</div>
