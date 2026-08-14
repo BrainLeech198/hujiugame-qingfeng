@@ -22,6 +22,15 @@
 
 ## 2026-08-14 — 游戏 launcher_version 强制改为整型版本码
 
+**变更(AppVersionTable)：追加版本码 2 → "1.0.0" 映射 + 打包 README 同步**
+
+### 变更
+
+- **AppVersionTable 追加版本码 2 映射** — `type/AppVersionTable` 新增 `2 → "1.0.0"`（26w33b 发布，`app_version` 递增至 2；发版手动维护，`build_package.py` 不自动同步）
+- **打包 README 补充 AppVersionTable 发版维护说明** — `develop/output/README.md`「版本管理体系」新增小节，说明版本码 → 版本字符串对照表及其发版手动维护要求
+
+---
+
 **文档(CLAUDE.md)：新增非项目更新不落盘约定**（commit 405209b）
 
 ### 文档

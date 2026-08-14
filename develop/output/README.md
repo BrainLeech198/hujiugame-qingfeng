@@ -226,6 +226,10 @@ build_dmg                → 可选 .dmg（--dmg，仅 macOS 原生）
 - **app_version_type**: beta 阶段用 `0`，正式发布用 `1`。同版本号从 beta 升级到 release 时触发更新提醒
 - **app_version_snapshot**: 仅 beta 有，格式 `YYwWWa`（ISO 年两位 + `w` + ISO 周两位 + 修订字母，如 `26w33a`）。打包器选 beta 时按当天 ISO 周自动生成默认（同周字母递增 a→b→c，跨周回到 a），可手动覆盖，严格校验格式；release 恒为空串。一个 `major.minor.patch` 可对应多个快照码，每次 beta 是一次独立构建，新旧靠 `app_version` 整型递增区分
 
+### AppVersionTable 发版维护
+
+`core/.../type/AppVersionTable.java` 是**版本码 → 版本字符串对照表**（如 `1 → "1.0.0"`、`2 → "1.0.0"`），供启动器还原游戏 `launcher_version` 版本码后做 minor 兼容判断。**`build_package.py` 不自动同步**，每次发布新版本（`app_version` 递增）须**手动追加一条映射**，否则启动器遇到声明了该版本码的游戏会误弹「无法识别游戏版本要求」。
+
 ---
 
 ## 常见问题

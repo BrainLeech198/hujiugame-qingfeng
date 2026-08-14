@@ -22,6 +22,7 @@ public final class AppVersionTable
     static
     {
         VERSION_CODE_TO_STRING.put(1, "1.0.0");
+        VERSION_CODE_TO_STRING.put(2, "1.0.0");
     }
 
     /**
