@@ -23,12 +23,12 @@
 
 ## 2026-08-15 — 官网下载区优化（恢复提取码 / 首页卡片化 / 更新时间）+ 26w33a mac Intel 提取码文案补删
 
-**网站(更新时间)：版本卡显示更新时间（精确到分钟）**（commit ）
+**网站(更新时间)：版本卡显示更新时间（精确到分钟）**（commit e3b7bb3）
 
 ### 网站
 
-- **versions.json 各版本新增 date 字段** — 版本条目补充发布时间戳（`YYYY-MM-DD HH:MM`，与 PUBLISH.md 发布时间一致：26w33b=2026-08-14 23:51、26w33a=2026-08-13 17:56）（commit ）
-- **历史版本页/首页版本卡显示更新时间** — `docs/js/history.js`/`docs/js/main.js` 在版本名下方一行小字显示「更新时间：时间戳」（date 为空则不显示），`docs/css/history.css`/`docs/css/index.css` 配套样式；9 语言 locale 新增 `update_time` 键（commit ）
+- **versions.json 各版本新增 date 字段** — 版本条目补充发布时间戳（`YYYY-MM-DD HH:MM`，与 PUBLISH.md 发布时间一致：26w33b=2026-08-14 23:51、26w33a=2026-08-13 17:56）（commit e3b7bb3）
+- **历史版本页/首页版本卡显示更新时间** — `docs/js/history.js`/`docs/js/main.js` 在版本名下方一行小字显示「更新时间：时间戳」（date 为空则不显示），`docs/css/history.css`/`docs/css/index.css` 配套样式；9 语言 locale 新增 `update_time` 键（commit e3b7bb3）
 
 ---
 
