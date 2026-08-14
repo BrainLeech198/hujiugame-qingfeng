@@ -27,7 +27,7 @@
 
 ### 重构
 
-- **26w33a mac Intel 描述补删遗留「提取码 1698」** — `docs/data/versions.json` 旧版 `versions."1"`（26w33a）mac Intel 条目描述补删上批（commit e0bd53e）遗漏的「提取码 1698」；蓝奏云旧文件已改为免密，链接地址不变（commit <待补>）
+- **26w33a mac Intel 描述补删遗留「提取码 1698」** — `docs/data/versions.json` 旧版 `versions."1"`（26w33a）mac Intel 条目描述补删上批（commit e0bd53e）遗漏的「提取码 1698」；蓝奏云旧文件已改为免密，链接地址不变（commit cafa0c4）
 
 ---
 
