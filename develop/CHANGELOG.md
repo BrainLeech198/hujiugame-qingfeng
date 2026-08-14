@@ -22,12 +22,12 @@
 
 ## 2026-08-14 — 游戏 launcher_version 强制改为整型版本码 + 发布 v1.0.0-beta-26w33b
 
-**版本(beta)：26w33b 版本号写入打包文件**
+**版本(beta)：26w33b 版本号写入打包文件**（commit f00949c）
 
 ### 变更
 
-- **app_version.json 升至版本码 2（快照 26w33b）** — `assets/asset/app_version.json` 的 `app_version` 由 `1` → `2`、`app_version_snapshot` 由 `26w33a` → `26w33b`（26w33b 打包写入；`app_version_string` 保持 `1.0.0`、`app_version_type` 保持 `0`=beta）
-- **Android versionCode 升至 2** — `android/build.gradle` 的 `versionCode` 由 `1` → `2`（`versionName` 保持 `"1.0.0"`，与版本码递增同步；`gradle.properties` 的 `projectVersion` 保持 `1.0.0` 无需改动）
+- **app_version.json 升至版本码 2（快照 26w33b）** — `assets/asset/app_version.json` 的 `app_version` 由 `1` → `2`、`app_version_snapshot` 由 `26w33a` → `26w33b`（26w33b 打包写入；`app_version_string` 保持 `1.0.0`、`app_version_type` 保持 `0`=beta）（commit f00949c）
+- **Android versionCode 升至 2** — `android/build.gradle` 的 `versionCode` 由 `1` → `2`（`versionName` 保持 `"1.0.0"`，与版本码递增同步；`gradle.properties` 的 `projectVersion` 保持 `1.0.0` 无需改动）（commit f00949c）
 
 ---
 
