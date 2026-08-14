@@ -22,11 +22,20 @@
 
 ## 2026-08-14 — 游戏 launcher_version 强制改为整型版本码 + 发布 v1.0.0-beta-26w33b
 
-**文档(发布)：新增 v1.0.0-beta-26w33b 发布记录**
+**版本(beta)：26w33b 版本号写入打包文件**
+
+### 变更
+
+- **app_version.json 升至版本码 2（快照 26w33b）** — `assets/asset/app_version.json` 的 `app_version` 由 `1` → `2`、`app_version_snapshot` 由 `26w33a` → `26w33b`（26w33b 打包写入；`app_version_string` 保持 `1.0.0`、`app_version_type` 保持 `0`=beta）
+- **Android versionCode 升至 2** — `android/build.gradle` 的 `versionCode` 由 `1` → `2`（`versionName` 保持 `"1.0.0"`，与版本码递增同步；`gradle.properties` 的 `projectVersion` 保持 `1.0.0` 无需改动）
+
+---
+
+**文档(发布)：新增 v1.0.0-beta-26w33b 发布记录**（commit f76adf0）
 
 ### 文档
 
-- **PUBLISH.md 新增 v1.0.0-beta-26w33b 发布记录** — 发布信息：发布时间戳 = versions.json 提交 `9500e9d` 时间（2026-08-14 23:51），最后一次更新 `9500e9d`；面向玩家摘要细化（版本判定升级 / 修复误弹「版本不一致」 / 新增「无法识别游戏版本要求」提示 / 测试版下载免密）
+- **PUBLISH.md 新增 v1.0.0-beta-26w33b 发布记录** — 发布信息：发布时间戳 = versions.json 提交 `9500e9d` 时间（2026-08-14 23:51），最后一次更新 `9500e9d`；面向玩家摘要细化（版本判定升级 / 修复误弹「版本不一致」 / 新增「无法识别游戏版本要求」提示 / 测试版下载免密）（commit f76adf0）
 
 ---
 
