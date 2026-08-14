@@ -22,14 +22,23 @@
 
 ## 2026-08-14 — 游戏 launcher_version 强制改为整型版本码
 
-**重构(launcher_version)：launcher_version 解析与存储链 int 化**
+**变更(launcher_version)：judgeGame minor 判定与未知码弹窗**
+
+### 变更
+
+- **判定保留 minor 兼容语义** — `MenuList.judgeGame()` 经 `AppVersionTable` 还原版本码为字符串后走 `doMinorCompatible(String)`（主版本相等 + 次版本 ≥，保持原语义）；未知版本码或缺字段（还原为 null）→ 弹「无法识别游戏版本要求」弹窗，建议不要强制运行（`UpdateChecker.doAppVersionCompatible` 无调用者，已删除）
+- **三语言新增「无法识别游戏版本要求」弹窗文案** — `RequirementKey.Language.MessageBox` 新增 `GAME_LAUNCHER_VERSION_UNKNOWN` 键，zh_CN/zh_TW/en_US 的 `requirement.json` 补 `game_launcher_version_unknown.title/content.1/content.2`
+
+---
+
+**重构(launcher_version)：launcher_version 解析与存储链 int 化**（commit 94c8600）
 
 ### 重构
 
-- **游戏 `launcher_version` 值改为整型版本码** — `game/<id>/game.json` 的 `launcher_version` 由字符串 `"1.0.0"` 改为整型码 `1`（对应当前启动器 `app_version` 码），与启动器版本码体系对齐
-- **解析返回值 String→int** — `GameLogicService.parseGameLauncherVersion()` 由 `getString` 改为 `getInt`，缺字段返回 `-1`（不再打印 error，视为未声明，由消费端决定处理）
-- **存储链类型统一** — `Player`/`EnterGame`/`GameSessionManager` 中 `gameLauncherVersion` 类型由 String 统一改为 int
-- **新增 `type/AppVersionTable` 对照表** — 版本码 → 版本字符串映射（当前 `1 → "1.0.0"`），供 `MenuList.judgeGame()` 还原版本码后做 minor 兼容判断，发版时手动维护
+- **游戏 `launcher_version` 值改为整型版本码** — `game/<id>/game.json` 的 `launcher_version` 由字符串 `"1.0.0"` 改为整型码 `1`（对应当前启动器 `app_version` 码），与启动器版本码体系对齐（commit 94c8600）
+- **解析返回值 String→int** — `GameLogicService.parseGameLauncherVersion()` 由 `getString` 改为 `getInt`，缺字段返回 `-1`（不再打印 error，视为未声明，由消费端决定处理）（commit 94c8600）
+- **存储链类型统一** — `Player`/`EnterGame`/`GameSessionManager` 中 `gameLauncherVersion` 类型由 String 统一改为 int（commit 94c8600）
+- **新增 `type/AppVersionTable` 对照表** — 版本码 → 版本字符串映射（当前 `1 → "1.0.0"`），供 `MenuList.judgeGame()` 还原版本码后做 minor 兼容判断，发版时手动维护（commit 94c8600）
 
 ---
 

@@ -12,6 +12,7 @@ import com.hujiugame.qingfeng.event.imp.PopGameState;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.input.VirtualInputHandler;
 import com.hujiugame.qingfeng.scene.GameRender;
+import com.hujiugame.qingfeng.type.AppVersionTable;
 import com.hujiugame.qingfeng.type.file.FileSuffix;
 import com.hujiugame.qingfeng.type.file.PathName;
 import com.hujiugame.qingfeng.type.key.DialogKey;
@@ -60,7 +61,7 @@ public final class MenuList implements GameRender
     private String selectedGamePath = "";
     private FileHandle selectedGamePathDirectory;
     private String selectedGameName = "";
-    private String selectedGameLauncherVersion = "";
+    private int selectedGameLauncherVersion = -1;
 
     // ===================================================================================================================
 
@@ -259,7 +260,7 @@ public final class MenuList implements GameRender
         selectedGamePath = "";
         selectedGamePathDirectory = null;
         selectedGameName = "";
-        selectedGameLauncherVersion = "";
+        selectedGameLauncherVersion = -1;
         refreshPage();
     }
 
@@ -325,8 +326,23 @@ public final class MenuList implements GameRender
 
     private void judgeGame ()
     {
-        // 判断版本是否一致
-        if (!updateChecker.doMinorCompatible(selectedGameLauncherVersion))
+        // 版本码能查表还原成字符串则按 minor 兼容判断
+        String requiredVersionString = AppVersionTable.getVersionString(selectedGameLauncherVersion);
+
+        // 未知版本码（含缺字段）→ 无法识别版本要求弹窗，建议不要运行
+        if (requiredVersionString == null)
+        {
+            uiManager.getMessageBox().showInfo(RequirementKey.Language.MessageBox.GAME_LAUNCHER_VERSION_UNKNOWN,
+                "{language$" + RequirementKey.Language.REQUIREMENT_BLOCK + "#" + RequirementKey.Language.MESSAGE_BOX + "." + RequirementKey.Language.MessageBox.GAME_LAUNCHER_VERSION_UNKNOWN_TITLE + "}",
+                "{language$" + RequirementKey.Language.REQUIREMENT_BLOCK + "#" + RequirementKey.Language.MESSAGE_BOX + "." + RequirementKey.Language.MessageBox.GAME_LAUNCHER_VERSION_UNKNOWN_CONTENT_1 + "}"
+                    + "{game$" + GameInfoKey.GameList.SELECTED_NAME + "}"
+                    + "{language$" + RequirementKey.Language.REQUIREMENT_BLOCK + "#" + RequirementKey.Language.MESSAGE_BOX + "." + RequirementKey.Language.MessageBox.GAME_LAUNCHER_VERSION_UNKNOWN_CONTENT_2 + "}"
+            );
+            return;
+        }
+
+        // 已知版本码 + 不兼容 → 版本不一致弹窗
+        if (!updateChecker.doMinorCompatible(requiredVersionString))
         {
             uiManager.getMessageBox().showInfo(RequirementKey.Language.MessageBox.GAME_VERSION_DIFFERENT,
                 "{language$" + RequirementKey.Language.REQUIREMENT_BLOCK + "#" + RequirementKey.Language.MESSAGE_BOX + "." + RequirementKey.Language.MessageBox.GAME_VERSION_DIFFERENT_TITLE + "}",
@@ -464,6 +480,9 @@ public final class MenuList implements GameRender
 
         // 检测弹窗返回值
         uiManager.getMessageBox().handleInfo(RequirementKey.Language.MessageBox.GAME_VERSION_DIFFERENT, () ->
+        {
+        });
+        uiManager.getMessageBox().handleInfo(RequirementKey.Language.MessageBox.GAME_LAUNCHER_VERSION_UNKNOWN, () ->
         {
         });
     }

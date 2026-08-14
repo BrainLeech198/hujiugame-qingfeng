@@ -14,7 +14,10 @@
     "game_version_different.content.1" : "当前游戏《",
     "game_version_different.content.2" : "》最佳启动器版本为:",
     "game_version_different.content.3" : "而当前版本为:",
-    "game_version_different.content.4" : "强行运行可能导致崩溃"
+    "game_version_different.content.4" : "强行运行可能导致崩溃",
+    "game_launcher_version_unknown.title" : "无法识别游戏版本要求！",
+    "game_launcher_version_unknown.content.1" : "当前游戏《",
+    "game_launcher_version_unknown.content.2" : "》未声明可识别的启动器版本要求，建议不要强制运行"
   },
   "menu.main" : {
     "button.start" : "开始",

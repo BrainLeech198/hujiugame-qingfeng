@@ -126,6 +126,7 @@ public final class RequirementKey
             public static final String UPDATE_DETECTED = "update_detected";
             public static final String UPDATE_REQUEST_FAILED = "update_request_failed";
             public static final String GAME_VERSION_DIFFERENT = "game_version_different";
+            public static final String GAME_LAUNCHER_VERSION_UNKNOWN = "game_launcher_version_unknown";
 
             // JSON 子 key
             public static final String OPEN_OFFICIAL_WEBSITE_TITLE = "open_official_website.title";
@@ -143,6 +144,9 @@ public final class RequirementKey
             public static final String GAME_VERSION_DIFFERENT_CONTENT_2 = "game_version_different.content.2";
             public static final String GAME_VERSION_DIFFERENT_CONTENT_3 = "game_version_different.content.3";
             public static final String GAME_VERSION_DIFFERENT_CONTENT_4 = "game_version_different.content.4";
+            public static final String GAME_LAUNCHER_VERSION_UNKNOWN_TITLE = "game_launcher_version_unknown.title";
+            public static final String GAME_LAUNCHER_VERSION_UNKNOWN_CONTENT_1 = "game_launcher_version_unknown.content.1";
+            public static final String GAME_LAUNCHER_VERSION_UNKNOWN_CONTENT_2 = "game_launcher_version_unknown.content.2";
         }
 
         // ====================================================================================================

@@ -14,7 +14,10 @@
     "game_version_different.content.1" : "當前遊戲《",
     "game_version_different.content.2" : "》最佳啟動器版本為:",
     "game_version_different.content.3" : "而當前版本為:",
-    "game_version_different.content.4" : "強行執行可能導致崩潰"
+    "game_version_different.content.4" : "強行執行可能導致崩潰",
+    "game_launcher_version_unknown.title" : "無法識別遊戲版本要求！",
+    "game_launcher_version_unknown.content.1" : "當前遊戲《",
+    "game_launcher_version_unknown.content.2" : "》未聲明可識別的啟動器版本要求，建議不要強制運行"
   },
   "menu.main" : {
     "button.start" : "開始",

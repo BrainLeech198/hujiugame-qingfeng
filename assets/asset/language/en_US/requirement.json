@@ -14,7 +14,10 @@
     "game_version_different.content.1" : "The current game \"",
     "game_version_different.content.2" : "\" best launcher version is:",
     "game_version_different.content.3" : ", while the current version is:",
-    "game_version_different.content.4" : ". Forcing it to run may cause crashes"
+    "game_version_different.content.4" : ". Forcing it to run may cause crashes",
+    "game_launcher_version_unknown.title" : "Unknown Game Version Requirement!",
+    "game_launcher_version_unknown.content.1" : "The current game \"",
+    "game_launcher_version_unknown.content.2" : "\" does not declare a recognizable launcher version requirement. It is recommended not to force it to run."
   },
   "menu.main" : {
     "button.start" : "Start",
