@@ -22,11 +22,11 @@
 
 ## 2026-08-14 — 游戏 launcher_version 强制改为整型版本码
 
-**文档(CLAUDE.md)：新增非项目更新不落盘约定**
+**文档(CLAUDE.md)：新增非项目更新不落盘约定**（commit 405209b）
 
 ### 文档
 
-- **CLAUDE.md 新增「非项目更新/项目外创作不写入工作区」约定** — 项目外创作（如外部小说改编游戏）的决策与素材只记入 Claude 持久记忆，不写入本项目工作区任何文件（含 `temp/CLAUDE_MEMORY.md`、`develop/`、`CLAUDE.md` 等）；确需落盘时先征求用户同意
+- **CLAUDE.md 新增「非项目更新/项目外创作不写入工作区」约定** — 项目外创作（如外部小说改编游戏）的决策与素材只记入 Claude 持久记忆，不写入本项目工作区任何文件（含 `temp/CLAUDE_MEMORY.md`、`develop/`、`CLAUDE.md` 等）；确需落盘时先征求用户同意（commit 405209b）
 
 ---
 
