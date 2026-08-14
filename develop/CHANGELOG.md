@@ -22,11 +22,19 @@
 
 ## 2026-08-14 — 游戏 launcher_version 强制改为整型版本码
 
-**文档(JSON_STANDARD)：game.json 章节补全实际字段**
+**文档(CLAUDE.md)：新增非项目更新不落盘约定**
 
 ### 文档
 
-- **JSON_STANDARD.md 5.1 补全实际字段** — game.json 表格补齐 `id`/`name`/`version`/`launcher_version`，标注 `launcher_version` 为整型版本码（对应启动器 `app_version`）、`version` 为字符串（第三方创作者自定，启动器不判断不干涉）
+- **CLAUDE.md 新增「非项目更新/项目外创作不写入工作区」约定** — 项目外创作（如外部小说改编游戏）的决策与素材只记入 Claude 持久记忆，不写入本项目工作区任何文件（含 `temp/CLAUDE_MEMORY.md`、`develop/`、`CLAUDE.md` 等）；确需落盘时先征求用户同意
+
+---
+
+**文档(JSON_STANDARD)：game.json 章节补全实际字段**（commit a66e6d8）
+
+### 文档
+
+- **JSON_STANDARD.md 5.1 补全实际字段** — game.json 表格补齐 `id`/`name`/`version`/`launcher_version`，标注 `launcher_version` 为整型版本码（对应启动器 `app_version`）、`version` 为字符串（第三方创作者自定，启动器不判断不干涉）（commit a66e6d8）
 
 ---
 

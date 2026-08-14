@@ -48,6 +48,7 @@ Allman 风格（左括号独占一行）：
 - 主循环链路：`Main.render` → `GameHost.run` → `renderPipeline.updateFrame` → `while eventQueue.hasEvent / eventDispatcher.handleEvent` → `renderPipeline.render`
 - 服务定位器在 `InstanceContent.java`
 - 不要随意修改 `GameHost`、`UiManager`、`Main` 的核心流程
+- **非项目更新/项目外创作（如外部小说改编游戏等内容）不得写入本项目工作区任何文件**（含 `temp/CLAUDE_MEMORY.md`、`develop/`、`CLAUDE.md` 等），相关决策与素材记录只放 Claude 持久记忆（`C:\Users\11067\.claude\projects\...\memory\`）；确需在项目内落盘时，先征求用户同意
 
 ## 文档维护
 
