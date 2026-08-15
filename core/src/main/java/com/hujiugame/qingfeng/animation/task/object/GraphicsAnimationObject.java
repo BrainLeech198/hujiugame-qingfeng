@@ -48,7 +48,7 @@ public class GraphicsAnimationObject extends AnimationObject
     private void buildJson ()
     {
         json = new JsonEntity();
-        json.put(AnimationKey.Target.CLASS, AnimationKey.Target.CLASS_GRAPHICS);
+        json.put(AnimationKey.Task.Object.CLASS, AnimationKey.Task.Object.CLASS_GRAPHICS);
         json.put(UiKey.UiObject.TYPE, target.getGraphicsKind().getDisplayString());
         json.put(UiKey.UiObject.TAG, target.getTag());
     }

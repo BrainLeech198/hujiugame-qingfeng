@@ -38,13 +38,13 @@ public abstract class AnimationObject
             throw new IllegalArgumentException("AnimationObject.fromJson 需要 Map 数据 (json): " + objectNode);
         }
 
-        String targetClass = objectNode.getString(AnimationKey.Target.CLASS);
+        String targetClass = objectNode.getString(AnimationKey.Task.Object.CLASS);
         AnimationObject object;
-        if (AnimationKey.Target.CLASS_UI.equals(targetClass))
+        if (AnimationKey.Task.Object.CLASS_UI.equals(targetClass))
         {
             object = new UiAnimationObject(objectNode);
         }
-        else if (AnimationKey.Target.CLASS_GRAPHICS.equals(targetClass))
+        else if (AnimationKey.Task.Object.CLASS_GRAPHICS.equals(targetClass))
         {
             object = new GraphicsAnimationObject(objectNode);
         }

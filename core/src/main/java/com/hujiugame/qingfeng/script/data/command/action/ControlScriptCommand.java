@@ -20,7 +20,7 @@ public class ControlScriptCommand implements ScriptCommand
 
     // ==============================================================================
 
-    private static final Map<ScriptCommandAction, Class<?>> ACTION_PARAM_MAP;
+    private static final Map<ScriptCommandAction, Class<? extends ScriptCommandParam>> ACTION_PARAM_MAP;
 
     static
     {

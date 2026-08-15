@@ -48,7 +48,7 @@ public class UiAnimationObject extends AnimationObject
     private void buildJson ()
     {
         json = new JsonEntity();
-        json.put(AnimationKey.Target.CLASS, AnimationKey.Target.CLASS_UI);
+        json.put(AnimationKey.Task.Object.CLASS, AnimationKey.Task.Object.CLASS_UI);
         json.put(UiKey.UiObject.TYPE, target.getUiKind().getDisplayString());
         json.put(UiKey.UiObject.TAG, target.getTag());
     }
