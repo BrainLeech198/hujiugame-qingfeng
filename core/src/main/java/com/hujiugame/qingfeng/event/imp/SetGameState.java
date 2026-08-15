@@ -1,7 +1,8 @@
 package com.hujiugame.qingfeng.event.imp;
 
-import com.hujiugame.qingfeng.type.game.Event;
 import com.hujiugame.qingfeng.event.EventObject;
+import com.hujiugame.qingfeng.type.game.Event;
+import com.hujiugame.qingfeng.type.game.GameState;
 
 /**
  * 设置游戏状态事件，用于直接替换当前游戏状态。
@@ -9,39 +10,27 @@ import com.hujiugame.qingfeng.event.EventObject;
 public class SetGameState implements EventObject
 {
     private final String eventName;
-    private final int state;
-    private final int subState;
+    private final GameState state;
 
     /**
      * 构造设置游戏状态事件
      *
-     * @param state    目标状态
-     * @param subState 目标子状态
+     * @param state 目标状态
      */
-    public SetGameState (int state, int subState)
+    public SetGameState (GameState state)
     {
         eventName = Event.SET_GAME_STATE;
         this.state = state;
-        this.subState = subState;
     }
 
     /**
      * 获取目标状态
      *
-     * @return 状态值
+     * @return 目标状态
      */
-    public int getState ()
+    public GameState getState ()
     {
         return state;
-    }
-
-    /**
-     * 获取目标子状态
-     * @return 子状态值
-     */
-    public int getSubState ()
-    {
-        return subState;
     }
 
     /**

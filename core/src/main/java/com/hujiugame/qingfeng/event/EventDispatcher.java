@@ -1,7 +1,6 @@
 package com.hujiugame.qingfeng.event;
 
 import com.hujiugame.qingfeng.core.SceneStack;
-import com.hujiugame.qingfeng.data.game.StateStructure;
 import com.hujiugame.qingfeng.data.play.PlayLocalData;
 import com.hujiugame.qingfeng.di.InstanceContent;
 import com.hujiugame.qingfeng.event.imp.PushGameState;
@@ -9,8 +8,7 @@ import com.hujiugame.qingfeng.event.imp.RefreshUiManager;
 import com.hujiugame.qingfeng.event.imp.ResetGameState;
 import com.hujiugame.qingfeng.event.imp.SetGameState;
 import com.hujiugame.qingfeng.type.game.Event;
-import com.hujiugame.qingfeng.type.game.state.GameState;
-import com.hujiugame.qingfeng.type.game.state.GameSubState;
+import com.hujiugame.qingfeng.type.game.GameState;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 import com.hujiugame.qingfeng.util.system.SafePostRunnable;
@@ -143,8 +141,8 @@ public final class EventDispatcher
     private void handleEventOfPushGameState (EventObject event)
     {
         PushGameState pushEvent = (PushGameState) event;
-        LogUtils.debug(EventDispatcher.class, "handleEventOfPushGameState 尝试执行推入游戏状态 (PushGameState):{ (State): " + pushEvent.getState() + ", (SubState): " + pushEvent.getSubState() + " }");
-        sceneStack.pushGameState(new StateStructure(pushEvent.getState(), pushEvent.getSubState()));
+        LogUtils.debug(EventDispatcher.class, "handleEventOfPushGameState 尝试执行推入游戏状态 (PushGameState):{ (State): " + pushEvent.getState() + " }");
+        sceneStack.pushGameState(pushEvent.getState());
         LogUtils.debug(EventDispatcher.class, "handleEventOfPushGameState 执行推入游戏状态成功");
     }
 
@@ -168,8 +166,8 @@ public final class EventDispatcher
     private void handleEventOfSetGameState (EventObject eventObject)
     {
         SetGameState setEvent = (SetGameState) eventObject;
-        LogUtils.debug(EventDispatcher.class, "handleEventOfSetGameState 尝试执行设置游戏状态 (SetGameState):{ (State): " + setEvent.getState() + ", (SubState): " + setEvent.getSubState() + " }");
-        sceneStack.setGameState(new StateStructure(setEvent.getState(), setEvent.getSubState()));
+        LogUtils.debug(EventDispatcher.class, "handleEventOfSetGameState 尝试执行设置游戏状态 (SetGameState):{ (State): " + setEvent.getState() + " }");
+        sceneStack.setGameState(setEvent.getState());
         LogUtils.debug(EventDispatcher.class, "handleEventOfSetGameState 执行设置游戏状态成功");
     }
 
@@ -196,8 +194,8 @@ public final class EventDispatcher
     private void handleEventOfEnterGame ()
     {
         // 进入游戏统一从游戏菜单页开始，其余状态由玩家在游戏内逐步进入
-        PushGameState pushGameStateEvent = new PushGameState(GameState.GAME, GameSubState.GAME_MENU);
-        LogUtils.debug(EventDispatcher.class, "handleEventOfEnterGame 尝试执行进入游戏状态 (PushGameState):{ (State): " + pushGameStateEvent.getState() + ", (SubState): " + pushGameStateEvent.getSubState() + " }");
+        PushGameState pushGameStateEvent = new PushGameState(GameState.GAME_MENU);
+        LogUtils.debug(EventDispatcher.class, "handleEventOfEnterGame 尝试执行进入游戏状态 (PushGameState):{ (State): " + pushGameStateEvent.getState() + " }");
         handleEventOfPushGameState(pushGameStateEvent);
         LogUtils.debug(EventDispatcher.class, "handleEventOfEnterGame 执行进入游戏状态成功");
     }
@@ -221,8 +219,8 @@ public final class EventDispatcher
     public void handleEventOfPlayGame ()
     {
         // 开始游戏压入游戏播放页，从玩家选择的角色故事进入实际游玩
-        PushGameState pushGameStateEvent = new PushGameState(GameState.GAME, GameSubState.GAME_PLAY);
-        LogUtils.debug(EventDispatcher.class, "handleEventOfPlayGame 尝试执行游戏开始状态 (PushGameState):{ (State): " + pushGameStateEvent.getState() + ", (SubState): " + pushGameStateEvent.getSubState() + " }");
+        PushGameState pushGameStateEvent = new PushGameState(GameState.GAME_PLAY);
+        LogUtils.debug(EventDispatcher.class, "handleEventOfPlayGame 尝试执行游戏开始状态 (PushGameState):{ (State): " + pushGameStateEvent.getState() + " }");
         handleEventOfPushGameState(pushGameStateEvent);
         LogUtils.debug(EventDispatcher.class, "handleEventOfPlayGame 执行游戏开始状态成功");
     }

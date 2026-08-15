@@ -7,10 +7,9 @@ import com.hujiugame.qingfeng.game.GameSessionManager;
 import com.hujiugame.qingfeng.game.loader.GamePlayDataLoader;
 import com.hujiugame.qingfeng.game.loader.GameResourceLoader;
 import com.hujiugame.qingfeng.game.loader.GameUserConfigLoader;
-import com.hujiugame.qingfeng.data.game.StateStructure;
 import com.hujiugame.qingfeng.data.play.PlayLocalData;
 import com.hujiugame.qingfeng.data.play.PlayRuntimeData;
-import com.hujiugame.qingfeng.type.game.state.GameState;
+import com.hujiugame.qingfeng.type.game.GameState;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.ui.UiManager;
@@ -182,7 +181,7 @@ public final class GameHost
             }
 
             // 推入 INIT 状态开始渲染
-            sceneStack.pushGameState(new StateStructure(GameState.INIT, 0));
+            sceneStack.pushGameState(GameState.INIT);
 
             LogUtils.debug(GameHost.class, "init 成功启动游戏");
             return true;

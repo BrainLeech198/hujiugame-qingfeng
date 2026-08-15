@@ -2,8 +2,7 @@ package com.hujiugame.qingfeng.scene.impl;
 
 import com.hujiugame.qingfeng.core.GameHost;
 import com.hujiugame.qingfeng.data.game.GameStateDataContainer;
-import com.hujiugame.qingfeng.type.game.state.GameState;
-import com.hujiugame.qingfeng.type.game.state.GameSubState;
+import com.hujiugame.qingfeng.type.game.GameState;
 import com.hujiugame.qingfeng.type.key.RequirementKey;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
@@ -63,7 +62,7 @@ public final class GameMenu implements GameRender
         // 开始按钮
         if (gameUiManager.isButtonClicked(RequirementKey.Ui.GAME_MENU_BUTTON_START))
         {
-            eventQueue.addEvent(new PushGameState(GameState.GAME, GameSubState.GAME_ROLE));
+            eventQueue.addEvent(new PushGameState(GameState.GAME_ROLE));
         }
 
         // 按下返回按钮

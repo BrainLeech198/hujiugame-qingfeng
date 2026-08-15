@@ -9,11 +9,9 @@ import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.util.system.CrashUtils;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 import com.hujiugame.qingfeng.data.game.GameStateDataContainer;
-import com.hujiugame.qingfeng.data.game.StateStructure;
 import com.hujiugame.qingfeng.data.play.PlayLocalData;
 import com.hujiugame.qingfeng.type.file.PathName;
-import com.hujiugame.qingfeng.type.game.state.GameState;
-import com.hujiugame.qingfeng.type.game.state.GameStatePageInfo;
+import com.hujiugame.qingfeng.type.game.GameState;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.ui.UiManager;
@@ -22,20 +20,19 @@ import com.hujiugame.qingfeng.manager.LayoutManager;
 import com.hujiugame.qingfeng.manager.ThemeManager;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
-import java.util.Map;
 import java.util.Stack;
 
 public final class SceneStack
 {
-    private final Stack<StateStructure> stateStack = new Stack<>();
+    private final Stack<GameState> stateStack = new Stack<>();
     private ThemeManager themeManager;
     private LayoutManager layoutManager;
     private PlayLocalData playLocalData;
     private RenderPipeline renderPipeline;
 
-    // 游戏状态栈，初始化时推入默认状态 (0,0)，后续通过 push/pop/set/reset 管理
+    // 游戏状态栈，初始化时推入默认状态 INIT，后续通过 push/pop/set/reset 管理
     {
-        stateStack.push(new StateStructure(0, 0));
+        stateStack.push(GameState.INIT);
     }
     private boolean isInGame = false;
 
@@ -92,8 +89,8 @@ public final class SceneStack
         try
         {
             // debug更新状态
-            LogUtils.debug(SceneStack.class, "updateGameState 状态 (stateStructure): " + getCurrentState()
-                + " (name): " + GameState.getGameStateName(getCurrentState().getState(), getCurrentState().getSubState()));
+            LogUtils.debug(SceneStack.class, "updateGameState 状态 (gameState): " + getCurrentState()
+                + " (name): " + getCurrentState().getDisplayName());
 
             // 读取页面结构
             Layout layout = loadGameLayout();
@@ -147,9 +144,9 @@ public final class SceneStack
     /**
      * 推入新状态到状态栈并更新
      *
-     * @param newState 新状态结构
+     * @param newState 新状态
      */
-    public void pushGameState (StateStructure newState)
+    public void pushGameState (GameState newState)
     {
         stateStack.push(newState);
 
@@ -205,9 +202,9 @@ public final class SceneStack
     /**
      * 设置新状态（清空栈后推入）并更新
      *
-     * @param newState 新状态结构
+     * @param newState 新状态
      */
-    public void setGameState (StateStructure newState)
+    public void setGameState (GameState newState)
     {
         try
         {
@@ -239,7 +236,7 @@ public final class SceneStack
         try
         {
             stateStack.clear();
-            stateStack.push(new StateStructure(GameState.MENU, 0));
+            stateStack.push(GameState.MENU_MAIN);
 
             if (!updateGameState())
             {
@@ -270,8 +267,7 @@ public final class SceneStack
             // 判断栈是否为空
             if (!stateStack.empty())
             {
-                StateStructure nowStateStructure = stateStack.peek();
-                setGameState(nowStateStructure);
+                setGameState(stateStack.peek());
             }
             else
             {
@@ -298,11 +294,11 @@ public final class SceneStack
 
 
     /**
-     * 获取当前状态结构
+     * 获取当前游戏状态
      *
-     * @return 当前状态结构
+     * @return 当前游戏状态
      */
-    public StateStructure getStateStructure ()
+    public GameState getGameState ()
     {
         return getCurrentState();
     }
@@ -312,9 +308,9 @@ public final class SceneStack
     /**
      * 获取当前栈顶状态，栈永不为空（初始化时已推入默认状态）
      *
-     * @return 当前栈顶状态结构
+     * @return 当前栈顶游戏状态
      */
-    private StateStructure getCurrentState ()
+    private GameState getCurrentState ()
     {
         return stateStack.peek();
     }
@@ -329,66 +325,39 @@ public final class SceneStack
             FileHandle layoutFilePathHandle = null;
             FileHandle resourceRootPathHandle = null;
 
-            // 获取当前状态结构
-            StateStructure currentState = getCurrentState();
-            int state = currentState.getState();
-            int subState = currentState.getSubState();
-            boolean isInGame = state == GameState.GAME;
+            // 获取当前游戏状态
+            GameState currentState = getCurrentState();
+            boolean isInGame = currentState.isInGame();
 
             // 设置加载到哪个管理器theme,auid,graphics
             ThemeManager usedThemeManager = isInGame ? playLocalData.getThemeManager() : themeManager;
 
             // 判断以及获取游戏页面结构路径
             boolean isNeedLayout = true;
-            if (GameStatePageInfo.GAME_STATE_LAYOUT_MAP.containsKey(state))
+            String layoutDirName = currentState.getLayoutDirName();
+            if (layoutDirName == null)
             {
-                // 获取游戏子页面结构
-                Map<Integer, String> subStateMap = GameStatePageInfo.GAME_STATE_LAYOUT_MAP.get(state);
-                // 主页面结构如果不需要
-                if (subStateMap == null)
-                {
-                    isNeedLayout = false;
-                    newLayout = new Layout();
-                    LogUtils.debug(SceneStack.class, "updateGameLayout 不需要页面结构 (state): " + state + " (subState): " + subState);
-                }
-                // 获取游戏页面结构
-                else if (subStateMap.containsKey(subState))
-                {
-                    // 页面结构文件名为 null 表示该状态不需要布局
-                    if (subStateMap.get(subState) == null)
-                    {
-                        isNeedLayout = false;
-                        newLayout = new Layout();
-                        LogUtils.debug(SceneStack.class, "updateGameLayout 不需要页面结构 (state): " + state + " (subState): " + subState);
-                    }
-                    // 游戏页面结构存在于游戏子目录
-                    else if (isInGame)
-                    {
-                        layoutFilePathHandle = usedThemeManager.getPathHandle()
-                            .child(PathName.IN_GAME_ASSET_S_PAGE)
-                            .child(subStateMap.get(subState))
-                            .child(FileName.IN_GAME_PAGE_LAYOUT);
-                        resourceRootPathHandle = usedThemeManager.getPathHandle();
-                    }
-                    // 启动器页面结构存在固定目录
-                    else
-                    {
-                        layoutFilePathHandle = usedThemeManager.getPathHandle()
-                            .child(PathName.ASSET_S_PAGE)
-                            .child(subStateMap.get(subState))
-                            .child(FileName.PAGE_LAYOUT);
-                        resourceRootPathHandle = usedThemeManager.getPathHandle();
-                    }
-                }
-                // 子页面结构未知
-                else
-                {
-                    LogUtils.error(SceneStack.class, "updateGameLayout 未定义的子页面结构 (state): " + state + " (subState): " + subState);
-                }
+                isNeedLayout = false;
+                newLayout = new Layout();
+                LogUtils.debug(SceneStack.class, "updateGameLayout 不需要页面结构 (gameState): " + currentState);
             }
+            // 游戏页面结构存在于游戏子目录
+            else if (isInGame)
+            {
+                layoutFilePathHandle = usedThemeManager.getPathHandle()
+                    .child(PathName.IN_GAME_ASSET_S_PAGE)
+                    .child(layoutDirName)
+                    .child(FileName.IN_GAME_PAGE_LAYOUT);
+                resourceRootPathHandle = usedThemeManager.getPathHandle();
+            }
+            // 启动器页面结构存在固定目录
             else
             {
-                LogUtils.error(SceneStack.class, "updateGameLayout 未定义的游戏页面结构 (state): " + state);
+                layoutFilePathHandle = usedThemeManager.getPathHandle()
+                    .child(PathName.ASSET_S_PAGE)
+                    .child(layoutDirName)
+                    .child(FileName.PAGE_LAYOUT);
+                resourceRootPathHandle = usedThemeManager.getPathHandle();
             }
 
             // 加载游戏页面结构
@@ -424,79 +393,37 @@ public final class SceneStack
             JsonEntity newConfig = null;
             FileHandle configFilePathHandle = null;
 
-            // 获取当前状态结构
-            StateStructure currentState = getCurrentState();
-            int state = currentState.getState();
-            int subState = currentState.getSubState();
-            boolean isInGame = state == GameState.GAME;
+            // 获取当前游戏状态
+            GameState currentState = getCurrentState();
+            boolean isInGame = currentState.isInGame();
 
             // 设置加载到哪个管理器
             ThemeManager usedThemeManager = isInGame ? playLocalData.getThemeManager() : themeManager;
 
             // 判断以及获取游戏页面配置路径
             boolean isNeedConfig = true;
-            if (GameStatePageInfo.GAME_STATE_CONFIG_MAP.containsKey(state))
+            String pageDirName = currentState.getLayoutDirName();
+            if (!currentState.isNeedConfig() || pageDirName == null)
             {
-                // 获取游戏子页面配置
-                Map<Integer, Boolean> subStateMap = GameStatePageInfo.GAME_STATE_CONFIG_MAP.get(state);
-                // 主页面结构如果不需要
-                if (subStateMap == null)
-                {
-                    isNeedConfig = false;
-                    newConfig = new JsonEntity();
-                    LogUtils.debug(SceneStack.class, "loadGameConfig 不需要页面配置 (state): " + state + " (subState): " + subState);
-                }
-                // 获取游戏页面配置
-                else if (subStateMap.containsKey(subState))
-                {
-                    // 页面配置为 null 或 false 表示该状态不需要配置
-                    Boolean needConfig = subStateMap.get(subState);
-                    if (needConfig == null || !needConfig)
-                    {
-                        isNeedConfig = false;
-                        newConfig = new JsonEntity();
-                        LogUtils.debug(SceneStack.class, "loadGameConfig 不需要页面配置 (state): " + state + " (subState): " + subState);
-                    }
-                    // 需要配置，从 GAME_STATE_LAYOUT_MAP 获取页面目录名
-                    else
-                    {
-                        String pageDirName = null;
-                        Map<Integer, String> layoutSubStateMap = GameStatePageInfo.GAME_STATE_LAYOUT_MAP.get(state);
-                        if (layoutSubStateMap != null && layoutSubStateMap.containsKey(subState))
-                        {
-                            pageDirName = layoutSubStateMap.get(subState);
-                        }
-
-                        if (pageDirName != null)
-                        {
-                            // 游戏页面配置存在于游戏子目录
-                            if (isInGame)
-                            {
-                                configFilePathHandle = usedThemeManager.getPathHandle()
-                                    .child(PathName.IN_GAME_ASSET_S_PAGE)
-                                    .child(pageDirName)
-                                    .child(FileName.IN_GAME_PAGE_CONFIG);
-                            }
-                            // 启动器页面配置存在固定目录
-                            else
-                            {
-                                configFilePathHandle = usedThemeManager.getPathHandle()
-                                    .child(PathName.ASSET_S_PAGE)
-                                    .child(pageDirName)
-                                    .child(FileName.PAGE_CONFIG);
-                            }
-                        }
-                    }
-                }
-                // 子页面配置未知
-                else
-                {
-                    LogUtils.error(SceneStack.class, "loadGameConfig 未定义的子页面配置 (state): " + state + " (subState): " + subState);
-                }
+                isNeedConfig = false;
+                newConfig = new JsonEntity();
+                LogUtils.debug(SceneStack.class, "loadGameConfig 不需要页面配置 (gameState): " + currentState);
             }
+            // 游戏页面配置存在于游戏子目录
+            else if (isInGame)
+            {
+                configFilePathHandle = usedThemeManager.getPathHandle()
+                    .child(PathName.IN_GAME_ASSET_S_PAGE)
+                    .child(pageDirName)
+                    .child(FileName.IN_GAME_PAGE_CONFIG);
+            }
+            // 启动器页面配置存在固定目录
             else
             {
-                LogUtils.error(SceneStack.class, "loadGameConfig 未定义的页面配置 (state): " + state);
+                configFilePathHandle = usedThemeManager.getPathHandle()
+                    .child(PathName.ASSET_S_PAGE)
+                    .child(pageDirName)
+                    .child(FileName.PAGE_CONFIG);
             }
 
             // 加载页面配置

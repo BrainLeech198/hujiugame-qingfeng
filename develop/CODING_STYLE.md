@@ -65,13 +65,13 @@ public final class ClassName
 - **方法/构造函数声明**：左括号前要有一个空格：
   ```java
   public void setGamePath (String gamePath)
-  public StateStructure (int state, int subState)
+  public PushGameState (GameState state)
   ```
 
 - **方法调用**：左括号前**没有**空格（标准 Java）：
   ```java
   player.setGamePath(gamePath);
-  sceneStack.pushGameState(new StateStructure(...));
+  sceneStack.pushGameState(GameState.MENU_MAIN);
   ```
 
 - **接口方法**：同样要遵循声明空格规则：
@@ -185,12 +185,12 @@ LogUtils.error(ClassName.class, "methodName", e); // 带异常的日志
 
 | 类型                 | 规范                      | 示例                                    |
 |--------------------|-------------------------|---------------------------------------|
-| 类/接口               | PascalCase              | `GameHost`, `StateStructure`    |
-| 方法                 | camelCase               | `getGameStateName()`, `loadGame()`    |
+| 类/接口               | PascalCase              | `GameHost`, `PushGameState`    |
+| 方法                 | camelCase               | `getDisplayName()`, `loadGame()`    |
 | 字段/变量              | camelCase               | `gamePathDirectory`, `player`         |
 | 常量（`static final`） | UPPER_SNAKE_CASE        | `MENU_MAIN`, `STRING_PARSE_LEVEL_MAP` |
 | 枚举常量和值             | UPPER_SNAKE_CASE        | `LOCAL_HOST`, `ROOT`                  |
-| 参数                 | camelCase               | `String gamePath`, `int subState`     |
+| 参数                 | camelCase               | `String gamePath`, `int pageId`     |
 | Getter/Setter      | `getXxx()` / `setXxx()` | `getState()`, `setGamePath()`         |
 | 消耗型 getter         | `consumeXxx()`          | `consumeClicked()`（会重置状态的 getter）     |
 | 布尔查询               | `isXxx()` / `hasXxx()`  | `isClicked()`, `hasEvent()`           |

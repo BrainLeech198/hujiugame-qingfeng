@@ -1,35 +1,36 @@
 package com.hujiugame.qingfeng.data.game;
 
 import com.hujiugame.qingfeng.data.JsonEntity;
+import com.hujiugame.qingfeng.type.game.GameState;
 
 public final class GameStateDataContainer
 {
-    private final StateStructure stateStructure;
+    private final GameState gameState;
     private final Layout layout;
     private final JsonEntity configJson;
 
     /**
      * 创建游戏状态数据容器
      *
-     * @param stateStructure 状态结构
+     * @param gameState  游戏状态
      * @param layout   布局配置
      */
-    public GameStateDataContainer (StateStructure stateStructure,
+    public GameStateDataContainer (GameState gameState,
                                    Layout layout,
                                    JsonEntity configJson
     )
     {
-        this.stateStructure = stateStructure;
+        this.gameState = gameState;
         this.layout = layout;
         this.configJson = configJson;
     }
 
     /**
-     * 获取状态结构
+     * 获取游戏状态
      */
-    public StateStructure getStateStructure ()
+    public GameState getGameState ()
     {
-        return stateStructure;
+        return gameState;
     }
 
     /**

@@ -54,7 +54,7 @@ public final class RenderPipeline
             LogUtils.debug(RenderPipeline.class, "update 开始创建游戏渲染机");
 
             // 创建游戏渲染机
-            this.gameRender = registry.get(gameStateDataContainer.getStateStructure());
+            this.gameRender = registry.get(gameStateDataContainer.getGameState());
             LogUtils.debug(RenderPipeline.class, "update 获取游戏渲染机成功");
 
             // 初始化游戏渲染机
@@ -62,15 +62,13 @@ public final class RenderPipeline
             {
                 this.gameRender.init(gameStateDataContainer);
                 LogUtils.debug(RenderPipeline.class, "update 游戏渲染机初始化成功" +
-                    " (state): " + gameStateDataContainer.getStateStructure().getState() +
-                    " (subState): " + gameStateDataContainer.getStateStructure().getSubState());
+                    " (gameState): " + gameStateDataContainer.getGameState());
                 return true;
             }
             else
             {
                 LogUtils.error(RenderPipeline.class, "update 游戏渲染机为null" +
-                    " (state): " + gameStateDataContainer.getStateStructure().getState() +
-                    " (subState): " + gameStateDataContainer.getStateStructure().getSubState());
+                    " (gameState): " + gameStateDataContainer.getGameState());
                 return false;
             }
         }

@@ -10,8 +10,7 @@ import com.hujiugame.qingfeng.core.UpdateChecker;
 import com.hujiugame.qingfeng.event.EventDispatcher;
 import com.hujiugame.qingfeng.event.EventQueue;
 import com.hujiugame.qingfeng.game.GameLogicService;
-import com.hujiugame.qingfeng.type.game.state.GameState;
-import com.hujiugame.qingfeng.type.game.state.GameSubState;
+import com.hujiugame.qingfeng.type.game.GameState;
 import com.hujiugame.qingfeng.type.ui.UseViewport;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
@@ -84,43 +83,47 @@ public final class InstanceContent
     private static void registerRenderRegistry ()
     {
         GameRenderRegistry registry = new GameRenderRegistry();
-        registry.register(GameState.INIT, GameSubState.INIT,
+        registry.register(GameState.INIT,
             () -> new Init(instanceContent.updateChecker, instanceContent.gameHost,
                 instanceContent.userConfigManager,
                 instanceContent.languageManager, instanceContent.themeManager, instanceContent.audioManager,
                 instanceContent.graphicsManager, instanceContent.uiManager,
                 instanceContent.eventQueue));
 
-        registry.register(GameState.MENU, GameSubState.MENU_MAIN,
+        registry.register(GameState.MENU_MAIN,
             () -> new MenuMain(instanceContent.updateChecker, instanceContent.audioManager,
                 instanceContent.graphicsManager, instanceContent.themeManager,
                 instanceContent.uiManager,
                 instanceContent.eventQueue,
                 instanceContent.useViewport,
                 instanceContent.virtualInputHandler));
-        registry.register(GameState.MENU, GameSubState.MENU_LIST,
+        registry.register(GameState.MENU_LIST,
             () -> new MenuList(instanceContent.updateChecker, instanceContent.audioManager,
                 instanceContent.graphicsManager, instanceContent.uiManager,
                 instanceContent.eventQueue,
                 instanceContent.gameHost, instanceContent.rootPath,
                 instanceContent.virtualInputHandler));
-        registry.register(GameState.MENU, GameSubState.MENU_LOAD,
+        registry.register(GameState.MENU_LOAD,
             () -> new MenuLoad(instanceContent.audioManager, instanceContent.graphicsManager,
                 instanceContent.uiManager, instanceContent.eventQueue,
                 instanceContent.gameHost));
 
-        registry.register(GameState.CONFIG, GameSubState.CONFIG_BASIC,
+        registry.register(GameState.CONFIG_BASIC,
             () -> new ConfigBasic(instanceContent.eventQueue, instanceContent.audioManager,
                 instanceContent.graphicsManager, instanceContent.uiManager,
                 instanceContent.virtualInputHandler));
+        registry.register(GameState.CONFIG_DISPLAY,
+            () -> new ConfigDisplay(instanceContent.eventQueue, instanceContent.audioManager,
+                instanceContent.graphicsManager, instanceContent.uiManager,
+                instanceContent.virtualInputHandler));
 
-        registry.register(GameState.GAME, GameSubState.GAME_MENU,
+        registry.register(GameState.GAME_MENU,
             () -> new GameMenu(instanceContent.eventQueue, instanceContent.gameHost,
                 instanceContent.virtualInputHandler));
-        registry.register(GameState.GAME, GameSubState.GAME_ROLE,
+        registry.register(GameState.GAME_ROLE,
             () -> new GameRole(instanceContent.eventQueue, instanceContent.layoutManager,
                 instanceContent.gameHost, instanceContent.virtualInputHandler));
-        registry.register(GameState.GAME, GameSubState.GAME_PLAY,
+        registry.register(GameState.GAME_PLAY,
             () -> new GamePlay(instanceContent.eventQueue, instanceContent.layoutManager,
                 instanceContent.gameHost));
         instanceContent.renderPipeline = new RenderPipeline(registry, deltaTime -> instanceContent.update(deltaTime));

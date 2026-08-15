@@ -14,8 +14,7 @@ import com.hujiugame.qingfeng.type.ScreenSize;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.file.PathName;
 import com.hujiugame.qingfeng.type.game.InitState;
-import com.hujiugame.qingfeng.type.game.state.GameState;
-import com.hujiugame.qingfeng.type.game.state.GameSubState;
+import com.hujiugame.qingfeng.type.game.GameState;
 import com.hujiugame.qingfeng.type.key.GameInfoKey;
 import com.hujiugame.qingfeng.type.key.ThemeKey;
 import com.hujiugame.qingfeng.audio.AudioManager;
@@ -252,7 +251,7 @@ public final class Init implements GameRender
         checkUpdate();
 
         // 跳转菜单
-        eventQueue.addEvent(new PushGameState(GameState.MENU, GameSubState.MENU_MAIN));
+        eventQueue.addEvent(new PushGameState(GameState.MENU_MAIN));
     }
 
     // ===================================================================================================================

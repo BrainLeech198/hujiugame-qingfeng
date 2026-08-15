@@ -12,8 +12,7 @@ import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.data.play.PlayLocalData;
 import com.hujiugame.qingfeng.data.play.Player;
 import com.hujiugame.qingfeng.data.story.Role;
-import com.hujiugame.qingfeng.type.game.state.GameState;
-import com.hujiugame.qingfeng.type.game.state.GameSubState;
+import com.hujiugame.qingfeng.type.game.GameState;
 import com.hujiugame.qingfeng.type.play.Hoster;
 import com.hujiugame.qingfeng.event.imp.EnterGame;
 import com.hujiugame.qingfeng.event.imp.PlayGame;
@@ -91,7 +90,7 @@ public final class GameSessionManager
             playLocalData.setGamePathHandle(gamePathDirectory);
 
             // 进入加载页面
-            eventQueue.addEvent(new PushGameState(GameState.MENU, GameSubState.MENU_LOAD));
+            eventQueue.addEvent(new PushGameState(GameState.MENU_LOAD));
 
             LogUtils.debug(GameSessionManager.class, "loadGame 成功进入加载界面 (path): " + gamePathDirectory.path());
             return true;
@@ -219,7 +218,7 @@ public final class GameSessionManager
      */
     public boolean isInGame ()
     {
-        return sceneStack.getStateStructure().getState() == GameState.GAME;
+        return sceneStack.getGameState().isInGame();
     }
 
     /**
