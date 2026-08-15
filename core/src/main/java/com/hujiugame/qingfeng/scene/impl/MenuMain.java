@@ -102,22 +102,22 @@ public final class MenuMain implements GameRender
         }
 
         // 按下开始按钮
-        if (uiManager.isButtonClicked(RequirementKey.Ui.MENU_MAIN_BUTTON_START))
+        if (uiManager.isButtonClicked(RequirementKey.Ui.MenuMain.BUTTON_START))
         {
             eventQueue.addEvent(new PushGameState(GameState.MENU_LIST));
         }
         // 按下创作按钮
-        else if (uiManager.isButtonClicked(RequirementKey.Ui.MENU_MAIN_BUTTON_CREATE))
+        else if (uiManager.isButtonClicked(RequirementKey.Ui.MenuMain.BUTTON_CREATE))
         {
 
         }
         // 按下配置按钮
-        else if (uiManager.isButtonClicked(RequirementKey.Ui.MENU_MAIN_BUTTON_CONFIG))
+        else if (uiManager.isButtonClicked(RequirementKey.Ui.MenuMain.BUTTON_CONFIG))
         {
             eventQueue.addEvent(new PushGameState(GameState.CONFIG_BASIC));
         }
         // 按下退出按钮
-        else if (uiManager.isButtonClicked(RequirementKey.Ui.MENU_MAIN_BUTTON_QUIT))
+        else if (uiManager.isButtonClicked(RequirementKey.Ui.MenuMain.BUTTON_QUIT))
         {
             uiManager.getMessageBox().showAsk(RequirementKey.Language.MessageBox.QUIT_GAME,
                 "{language$" + RequirementKey.Language.REQUIREMENT_BLOCK + "#" + RequirementKey.Language.MESSAGE_BOX + "." + RequirementKey.Language.MessageBox.QUIT_GAME_TITLE + "}",

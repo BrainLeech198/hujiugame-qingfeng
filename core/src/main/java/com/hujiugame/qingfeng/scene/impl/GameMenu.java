@@ -60,13 +60,13 @@ public final class GameMenu implements GameRender
     public void update (float deltaTime)
     {
         // 开始按钮
-        if (gameUiManager.isButtonClicked(RequirementKey.Ui.GAME_MENU_BUTTON_START))
+        if (gameUiManager.isButtonClicked(RequirementKey.Ui.GameMenu.BUTTON_START))
         {
             eventQueue.addEvent(new PushGameState(GameState.GAME_ROLE));
         }
 
         // 按下返回按钮
-        if (gameUiManager.isButtonClicked(RequirementKey.Ui.GAME_MENU_BUTTON_QUIT))
+        if (gameUiManager.isButtonClicked(RequirementKey.Ui.GameMenu.BUTTON_QUIT))
         {
             gameUiManager.getMessageBox().showAsk(RequirementKey.Language.InGame.MessageBox.QUIT_GAME,
                 "{language$" + RequirementKey.Language.REQUIREMENT_BLOCK + "#" + RequirementKey.Language.InGame.MESSAGE_BOX + "." + RequirementKey.Language.InGame.MessageBox.QUIT_GAME_TITLE + "}",

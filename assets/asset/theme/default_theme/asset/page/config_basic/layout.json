@@ -60,21 +60,6 @@
         "font_size" : 1,
         "font_color" : "#FFFFFFFF",
         "font_flag" : "w"
-      },
-      "language_selected" : {
-        "kind" : "default3",
-        "position" : {
-          "x" : 595,
-          "y" : 1075
-        },
-        "size" : {
-          "width" : 1855,
-          "height" : 110
-        },
-        "text_key" : "{language$requirement.json#config.basic.language} : {game$user.language.name} ({game$user.language})",
-        "font_size" : 1,
-        "font_color" : "#FFFFFFFF",
-        "font_flag" : "w"
       }
     },
     "button" : {

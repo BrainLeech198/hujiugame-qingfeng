@@ -17,40 +17,79 @@ public final class RequirementKey
             throw new UnsupportedOperationException("Utility class cannot be instantiated");
         }
 
-        // menu main
-        public static final String MENU_MAIN_BUTTON_START = "start";
-        public static final String MENU_MAIN_BUTTON_CREATE = "create";
-        public static final String MENU_MAIN_BUTTON_CONFIG = "config";
-        public static final String MENU_MAIN_BUTTON_QUIT = UniversalUiKey.BUTTON_QUIT;
+        // ====================================================================================================
+        // menu_main 页面
 
-        // menu list
-        public static final String MENU_LIST_IMAGE_GAME_COVER = "game_cover";
-        public static final String MENU_LIST_IMAGE_GAME_COVER_KIND = "game_cover.image";
-        public static final String MENU_LIST_IMAGE_SELECT_FRAME = "select_frame";
-        public static final String MENU_LIST_IMAGE_SELECT_FRAME_KIND = "select_frame.image";
-        public static final String MENU_LIST_IMAGE_UNSELECT_FRAME = "unselect_frame";
-        public static final String MENU_LIST_IMAGE_UNSELECT_FRAME_KIND = "unselect_frame.image";
+        public static final class MenuMain
+        {
+            private MenuMain()
+            {
+                throw new UnsupportedOperationException("Utility class cannot be instantiated");
+            }
 
-        public static final String MENU_LIST_LABEL_ABSOLUTE_PATH = "absolute_path";
-        public static final String MENU_LIST_LABEL_SELECTED_PATH = "selected_path";
-        public static final String MENU_LIST_LABEL_PAGE = "page";
+            public static final String BUTTON_START = "start";
+            public static final String BUTTON_CREATE = "create";
+            public static final String BUTTON_CONFIG = "config";
+            public static final String BUTTON_QUIT = UniversalUiKey.BUTTON_QUIT;
+        }
 
-        public static final String MENU_LIST_BUTTON_BACK = UniversalUiKey.BUTTON_BACK;
-        public static final String MENU_LIST_BUTTON_IMPORT = "import";
-        public static final String MENU_LIST_BUTTON_PROFILE = "profile";
-        public static final String MENU_LIST_BUTTON_SHARE = "share";
-        public static final String MENU_LIST_BUTTON_DELETE = "delete";
+        // ====================================================================================================
+        // menu_list 页面
 
-        public static final String MENU_LIST_BUTTON_SELECT_LAST_PAGE = "select.last_page";
-        public static final String MENU_LIST_BUTTON_SELECT_NEXT_PAGE = "select.next_page";
+        public static final class MenuList
+        {
+            private MenuList()
+            {
+                throw new UnsupportedOperationException("Utility class cannot be instantiated");
+            }
 
-        // config_basic
-        public static final String CONFIG_BASIC_LANGUAGE = "language";
-        public static final String CONFIG_BASIC_LANGUAGE_SELECTED = "language_selected";
+            public static final String IMAGE_GAME_COVER = "game_cover";
+            public static final String IMAGE_GAME_COVER_KIND = "game_cover.image";
+            public static final String IMAGE_SELECT_FRAME = "select_frame";
+            public static final String IMAGE_SELECT_FRAME_KIND = "select_frame.image";
+            public static final String IMAGE_UNSELECT_FRAME = "unselect_frame";
+            public static final String IMAGE_UNSELECT_FRAME_KIND = "unselect_frame.image";
 
-        // game_menu
-        public static final String GAME_MENU_BUTTON_START = "start";
-        public static final String GAME_MENU_BUTTON_QUIT = UniversalUiKey.BUTTON_QUIT;
+            public static final String LABEL_ABSOLUTE_PATH = "absolute_path";
+            public static final String LABEL_SELECTED_PATH = "selected_path";
+            public static final String LABEL_PAGE = "page";
+
+            public static final String BUTTON_BACK = UniversalUiKey.BUTTON_BACK;
+            public static final String BUTTON_IMPORT = "import";
+            public static final String BUTTON_PROFILE = "profile";
+            public static final String BUTTON_SHARE = "share";
+            public static final String BUTTON_DELETE = "delete";
+
+            public static final String BUTTON_SELECT_LAST_PAGE = "select.last_page";
+            public static final String BUTTON_SELECT_NEXT_PAGE = "select.next_page";
+        }
+
+        // ====================================================================================================
+        // config_basic 页面
+
+        public static final class ConfigBasic
+        {
+            private ConfigBasic()
+            {
+                throw new UnsupportedOperationException("Utility class cannot be instantiated");
+            }
+
+            public static final String LABEL_LANGUAGE = "language";
+        }
+
+        // ====================================================================================================
+        // game_menu 页面
+
+        public static final class GameMenu
+        {
+            private GameMenu()
+            {
+                throw new UnsupportedOperationException("Utility class cannot be instantiated");
+            }
+
+            public static final String BUTTON_START = "start";
+            public static final String BUTTON_QUIT = UniversalUiKey.BUTTON_QUIT;
+        }
     }
 
     // ====================================================================================================

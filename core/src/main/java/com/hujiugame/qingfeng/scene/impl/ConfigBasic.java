@@ -1,7 +1,6 @@
 package com.hujiugame.qingfeng.scene.impl;
 
 import com.hujiugame.qingfeng.data.game.GameStateDataContainer;
-import com.hujiugame.qingfeng.type.key.RequirementKey;
 import com.hujiugame.qingfeng.type.key.UniversalUiKey;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
@@ -10,12 +9,6 @@ import com.hujiugame.qingfeng.scene.GameRender;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventQueue;
 import com.hujiugame.qingfeng.event.imp.PopGameState;
-import com.hujiugame.qingfeng.util.system.LogUtils;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public final class ConfigBasic implements GameRender
 {
@@ -25,29 +18,6 @@ public final class ConfigBasic implements GameRender
     private final UiManager uiManager;
     private final VirtualInputHandler virtualInputHandler;
     private GameStateDataContainer gameStateDataContainer;
-
-    private static final List<String> itemTagList;
-    private static final List<String> ItemSelectedTagList;
-    static
-    {
-        List<String> list = new ArrayList<>();
-        list.add(RequirementKey.Ui.CONFIG_BASIC_LANGUAGE);
-        itemTagList = list;
-
-        List<String> listSelected = new ArrayList<>();
-        listSelected.add(RequirementKey.Ui.CONFIG_BASIC_LANGUAGE_SELECTED);
-        ItemSelectedTagList = listSelected;
-    }
-    private static final Map<String, Boolean> itemSelectStateMap;
-    static
-    {
-        Map<String, Boolean> map = new HashMap<>();
-        for (String tag : itemTagList)
-        {
-            map.put(tag, false);
-        }
-        itemSelectStateMap = map;
-    }
 
     // ===================================================================================================================
 
@@ -60,32 +30,6 @@ public final class ConfigBasic implements GameRender
         this.graphicsManager = graphicsManager;
         this.uiManager = uiManager;
         this.virtualInputHandler = virtualInputHandler;
-    }
-
-    /**
-     * 刷新配置项显示
-     */
-    private void refreshItems ()
-    {
-        LogUtils.debug(ConfigBasic.class, "refreshItems 配置项状态 (map): " + itemSelectStateMap);
-        for (int i = 0; i < itemTagList.size(); i++)
-        {
-            String tag = itemTagList.get(i);
-            String selectedTag = ItemSelectedTagList.get(i);
-            if (itemSelectStateMap.containsKey(tag))
-            {
-                if (itemSelectStateMap.get(tag))
-                {
-                    uiManager.hideLabel(tag);
-                    uiManager.showLabel(selectedTag);
-                }
-                else
-                {
-                    uiManager.showLabel(tag);
-                    uiManager.hideLabel(selectedTag);
-                }
-            }
-        }
     }
 
     /**
@@ -102,7 +46,6 @@ public final class ConfigBasic implements GameRender
 
         // 虚拟输入优先选中：必须在 addLayout 之后，否则 getLabel 拿不到控件
         virtualInputHandler.setPriorityConfirmSelectObject(gameStateDataContainer.getConfigJson());
-        refreshItems();
     }
 
     /**

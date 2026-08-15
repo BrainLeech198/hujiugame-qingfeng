@@ -52,10 +52,10 @@ public final class MenuList implements GameRender
     private int tailIndex = -1;
     private int selectedIndex = -1;
 
-    private final String unSelectFrameTag = RequirementKey.Ui.MENU_LIST_IMAGE_UNSELECT_FRAME;
-    private final String selectFrameTag = RequirementKey.Ui.MENU_LIST_IMAGE_SELECT_FRAME;
-    private final String gameCoverTag = RequirementKey.Ui.MENU_LIST_IMAGE_GAME_COVER;
-    private final String gameCoverKind = RequirementKey.Ui.MENU_LIST_IMAGE_GAME_COVER_KIND;
+    private final String unSelectFrameTag = RequirementKey.Ui.MenuList.IMAGE_UNSELECT_FRAME;
+    private final String selectFrameTag = RequirementKey.Ui.MenuList.IMAGE_SELECT_FRAME;
+    private final String gameCoverTag = RequirementKey.Ui.MenuList.IMAGE_GAME_COVER;
+    private final String gameCoverKind = RequirementKey.Ui.MenuList.IMAGE_GAME_COVER_KIND;
 
     private final List<String> gamePathNameList = new LinkedList<>();
     private String selectedGamePath = "";
@@ -182,20 +182,20 @@ public final class MenuList implements GameRender
         if (selectedIndex == -1)
         {
             // 隐藏功能按键
-            uiManager.hideButton(RequirementKey.Ui.MENU_LIST_BUTTON_PROFILE);
-            uiManager.hideButton(RequirementKey.Ui.MENU_LIST_BUTTON_SHARE);
-            uiManager.hideButton(RequirementKey.Ui.MENU_LIST_BUTTON_DELETE);
-            uiManager.hideLabel(RequirementKey.Ui.MENU_LIST_LABEL_SELECTED_PATH);
-            uiManager.showLabel(RequirementKey.Ui.MENU_LIST_LABEL_ABSOLUTE_PATH);
+            uiManager.hideButton(RequirementKey.Ui.MenuList.BUTTON_PROFILE);
+            uiManager.hideButton(RequirementKey.Ui.MenuList.BUTTON_SHARE);
+            uiManager.hideButton(RequirementKey.Ui.MenuList.BUTTON_DELETE);
+            uiManager.hideLabel(RequirementKey.Ui.MenuList.LABEL_SELECTED_PATH);
+            uiManager.showLabel(RequirementKey.Ui.MenuList.LABEL_ABSOLUTE_PATH);
         }
         else
         {
             // 显示功能按键
-            uiManager.showButton(RequirementKey.Ui.MENU_LIST_BUTTON_PROFILE);
-            uiManager.showButton(RequirementKey.Ui.MENU_LIST_BUTTON_SHARE);
-            uiManager.showButton(RequirementKey.Ui.MENU_LIST_BUTTON_DELETE);
-            uiManager.showLabel(RequirementKey.Ui.MENU_LIST_LABEL_SELECTED_PATH);
-            uiManager.hideLabel(RequirementKey.Ui.MENU_LIST_LABEL_ABSOLUTE_PATH);
+            uiManager.showButton(RequirementKey.Ui.MenuList.BUTTON_PROFILE);
+            uiManager.showButton(RequirementKey.Ui.MenuList.BUTTON_SHARE);
+            uiManager.showButton(RequirementKey.Ui.MenuList.BUTTON_DELETE);
+            uiManager.showLabel(RequirementKey.Ui.MenuList.LABEL_SELECTED_PATH);
+            uiManager.hideLabel(RequirementKey.Ui.MenuList.LABEL_ABSOLUTE_PATH);
         }
 
         // 设置页数显示
@@ -205,36 +205,36 @@ public final class MenuList implements GameRender
         // 判断是否单独一页
         if (maxPage == 1)
         {
-            uiManager.hideLabel(RequirementKey.Ui.MENU_LIST_LABEL_PAGE);
-            uiManager.hideButton(RequirementKey.Ui.MENU_LIST_BUTTON_SELECT_NEXT_PAGE);
-            uiManager.hideButton(RequirementKey.Ui.MENU_LIST_BUTTON_SELECT_LAST_PAGE);
+            uiManager.hideLabel(RequirementKey.Ui.MenuList.LABEL_PAGE);
+            uiManager.hideButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_NEXT_PAGE);
+            uiManager.hideButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_LAST_PAGE);
         }
         else
         {
-            uiManager.showLabel(RequirementKey.Ui.MENU_LIST_LABEL_PAGE);
-            uiManager.showButton(RequirementKey.Ui.MENU_LIST_BUTTON_SELECT_NEXT_PAGE);
-            uiManager.showButton(RequirementKey.Ui.MENU_LIST_BUTTON_SELECT_LAST_PAGE);
+            uiManager.showLabel(RequirementKey.Ui.MenuList.LABEL_PAGE);
+            uiManager.showButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_NEXT_PAGE);
+            uiManager.showButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_LAST_PAGE);
         }
 
         // 判断翻页情况
         // 第一页
         if (nowPage == 1)
         {
-            uiManager.disableButton(RequirementKey.Ui.MENU_LIST_BUTTON_SELECT_LAST_PAGE);
+            uiManager.disableButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_LAST_PAGE);
         }
         else
         {
-            uiManager.enableButton(RequirementKey.Ui.MENU_LIST_BUTTON_SELECT_LAST_PAGE);
+            uiManager.enableButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_LAST_PAGE);
         }
 
         // 最后一页
         if (nowPage == maxPage)
         {
-            uiManager.disableButton(RequirementKey.Ui.MENU_LIST_BUTTON_SELECT_NEXT_PAGE);
+            uiManager.disableButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_NEXT_PAGE);
         }
         else
         {
-            uiManager.enableButton(RequirementKey.Ui.MENU_LIST_BUTTON_SELECT_NEXT_PAGE);
+            uiManager.enableButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_NEXT_PAGE);
         }
     }
 
@@ -442,25 +442,25 @@ public final class MenuList implements GameRender
         }
 
         // 按下返回按钮
-        if (uiManager.isButtonClicked(RequirementKey.Ui.MENU_LIST_BUTTON_BACK))
+        if (uiManager.isButtonClicked(RequirementKey.Ui.MenuList.BUTTON_BACK))
         {
             eventQueue.addEvent(new PopGameState());
         }
 
         // 点击路径标签
-        if (uiManager.isLabelClicked(RequirementKey.Ui.MENU_LIST_LABEL_ABSOLUTE_PATH))
+        if (uiManager.isLabelClicked(RequirementKey.Ui.MenuList.LABEL_ABSOLUTE_PATH))
         {
             FileHandle gameListPathHandle = Objects.requireNonNull(Gdx.files.external(gameListPath));
             FileExplorer.showInExplorer(gameListPathHandle);
         }
-        else if (uiManager.isLabelClicked(RequirementKey.Ui.MENU_LIST_LABEL_SELECTED_PATH))
+        else if (uiManager.isLabelClicked(RequirementKey.Ui.MenuList.LABEL_SELECTED_PATH))
         {
             FileHandle selectedGamePathHandle = Objects.requireNonNull(Gdx.files.external(selectedGamePath));
             FileExplorer.showInExplorer(selectedGamePathHandle);
         }
 
         // 功能按钮
-        if (uiManager.isButtonClicked(RequirementKey.Ui.MENU_LIST_BUTTON_IMPORT))
+        if (uiManager.isButtonClicked(RequirementKey.Ui.MenuList.BUTTON_IMPORT))
         {
             FileChooser.createFileChooser(DialogKey.FileChooser.IMPORT_GAME_TAG);
             FileChooser.showFileChooser(DialogKey.FileChooser.IMPORT_GAME_TAG, DialogKey.FileChooser.IMPORT_GAME_NAME,
@@ -468,12 +468,12 @@ public final class MenuList implements GameRender
         }
 
         // 按下上一页按钮
-        else if (uiManager.isButtonClicked(RequirementKey.Ui.MENU_LIST_BUTTON_SELECT_LAST_PAGE))
+        else if (uiManager.isButtonClicked(RequirementKey.Ui.MenuList.BUTTON_SELECT_LAST_PAGE))
         {
             lastPage();
         }
         // 按下下一页按钮
-        else if (uiManager.isButtonClicked(RequirementKey.Ui.MENU_LIST_BUTTON_SELECT_NEXT_PAGE))
+        else if (uiManager.isButtonClicked(RequirementKey.Ui.MenuList.BUTTON_SELECT_NEXT_PAGE))
         {
             nextPage();
         }

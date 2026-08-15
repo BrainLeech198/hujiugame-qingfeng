@@ -7,7 +7,7 @@
     "fade_in" : {
       "default" : {
         "duration" : 0.2,
-        "action" : {
+        "task" : {
           "synchronization" : [
             {
               "object" : {
@@ -129,7 +129,7 @@
     "fade_out" : {
       "default" : {
         "duration" : 0.2,
-        "action" : {
+        "task" : {
           "synchronization" : [
             {
               "object" : {
