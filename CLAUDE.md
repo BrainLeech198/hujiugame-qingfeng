@@ -42,6 +42,7 @@ Allman 风格（左括号独占一行）：
 - 日志：`LogUtils.debug/info/error(ClassName.class, "message")`
 - 节分隔符：100 个 `=` 号
 - 公开 API 必须有 Javadoc，关键逻辑写中文注释说明"为什么"
+- 耗性能的方法（每帧调用、频繁查找、复杂计算等）Javadoc 必须标注性能表现与适用场景
 
 ## 注意
 

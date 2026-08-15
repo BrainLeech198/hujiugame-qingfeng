@@ -21,23 +21,32 @@
 > 10. 【必须】CHANGELOG 条目按日期归组：同一天的所有提交主题共同包含在同一个 `## <日期> — <概括标题>` 下，禁止拆成多个 `## ` 日期标题；每个提交块以 `**<主题>**（commit <7位短哈希>）` 标记，块内每条 `- ` 条目行尾标注引入它的提交短哈希 `（commit <7位短哈希>）`。新条目随内容改动提交后，其哈希在下一笔内容改动提交中一并补写（补写仅改 hash，不新增条目）
 > 11. 【必须】写版本发布说明（官网 `docs/data/versions.json` 的 `log`、`develop/PUBLISH.md` 面向玩家摘要）时，按「上一版本发布点 → 本版本发布点」之间的 commit 区间梳理玩家可见改动（修复的 Bug / 新增功能 / 优化），逐一写入，不要遗漏跨版本才生效的修复（打包之后完成的 bug 修复会随下一个版本发出，须算入下一版本的说明）；beta 测试版按此梳理书写即可，release 正式版属重要更新，需正式、系统地书写
 
-## 2026-08-15 — 动画数据层落地 + 官网下载区优化（恢复提取码 / 首页卡片化 / 更新时间）+ 26w33a mac Intel 提取码文案补删 + GameState 扁平化重构 + UiKey 嵌套类化
+## 2026-08-15 — 动画数据层落地 + Javadoc 性能标注规范 + 官网下载区优化（恢复提取码 / 首页卡片化 / 更新时间）+ 26w33a mac Intel 提取码文案补删 + GameState 扁平化重构 + UiKey 嵌套类化
+
+**编码规范(注释)：耗性能方法 Javadoc 必须标注性能表现与适用场景**
+
+### 编码规范
+
+- **CLAUDE.md 新增性能标注规范** — 耗性能的方法（每帧调用、频繁查找、复杂计算等）Javadoc 必须标注性能表现与适用场景，供调用者判断是否适合在每帧/热路径使用（commit <hash>）
+- **CODING_STYLE.md「13. 注释」补充性能标注规范** — 同规则 + 正例（findObject Javadoc 含 `<p>` 性能段落）与反例（缺少性能说明，调用者无法判断能否在每帧循环使用）示例（commit <hash>）
+
+---
 
 **动画(数据层)：动画数据模型与配置解析落地**
 
 ### 新增
 
-- **动画容器 `Animation`** — 对应 config 的 `animation` 节点 `{fade_in, fade_out}`，持有整组动画组件；字段构造 + JsonEntity 构造双构造器，携带 valid 与 json，解析失败标记 valid=false（fail-soft），由上层动画加载点跳过该容器（commit <hash>）
-- **`AnimationComponent` 接口 + FadeIn/FadeOut 组件** — `animation/component` 包：组件接口统一暴露有效性判断与构造来源 JSON；`FadeIn`/`FadeOut` 各自持有通用动画窗口（default）与来源页特例窗口（from_page.xxx）两组对象，`getObject(state)` 特例优先、无特例回退通用窗口（commit <hash>）
-- **`FadeInObject`/`FadeOutObject` 动画窗口对象** — 持有整段窗口时长（duration）与同步/串行两组任务（synchronization 同时启动、schedule 按序执行），字段构造 + JsonEntity 构造双构造器，任务解析 fail-soft（commit <hash>）
-- **`AnimationTask` 动画任务信封** — 持有动画目标（`AnimationObject`）与动画动作（`AnimationAction`），目标解析 fail-fast 捕获降级、动作解析 fail-soft，双构造器（commit <hash>）
-- **`AnimationAction` 动作信封 + 参数体系** — `animation/task/action` 包：动作持有类型（`AnimationActionType`：none/smooth_move）+ 相对延迟 + 参数对象，构造时按类型校验参数实现类匹配；`AnimationActionParser` 解析器 + `AnimationActionParam`/`NoneAnimationActionParam`/`SmoothMoveAnimationActionParam` 参数类（commit <hash>）
-- **`AnimationKey` 嵌套键常量** — 嵌套类按 `animation/` 包层级组织：`Component`（FadeIn/FadeOut 节点与窗口键）、`Task`（object/action）、`Task.Object`（class 类别）、`Task.Action`（type/delay/param + none/smooth_move 值）、`Task.Action.Param`（orientation/speed/duration）（commit <hash>）
+- **动画容器 `Animation`** — 对应 config 的 `animation` 节点 `{fade_in, fade_out}`，持有整组动画组件；字段构造 + JsonEntity 构造双构造器，携带 valid 与 json，解析失败标记 valid=false（fail-soft），由上层动画加载点跳过该容器（commit b6864a5）
+- **`AnimationComponent` 接口 + FadeIn/FadeOut 组件** — `animation/component` 包：组件接口统一暴露有效性判断与构造来源 JSON；`FadeIn`/`FadeOut` 各自持有通用动画窗口（default）与来源页特例窗口（from_page.xxx）两组对象，`getObject(state)` 特例优先、无特例回退通用窗口（commit b6864a5）
+- **`FadeInObject`/`FadeOutObject` 动画窗口对象** — 持有整段窗口时长（duration）与同步/串行两组任务（synchronization 同时启动、schedule 按序执行），字段构造 + JsonEntity 构造双构造器，任务解析 fail-soft（commit b6864a5）
+- **`AnimationTask` 动画任务信封** — 持有动画目标（`AnimationObject`）与动画动作（`AnimationAction`），目标解析 fail-fast 捕获降级、动作解析 fail-soft，双构造器（commit b6864a5）
+- **`AnimationAction` 动作信封 + 参数体系** — `animation/task/action` 包：动作持有类型（`AnimationActionType`：none/smooth_move）+ 相对延迟 + 参数对象，构造时按类型校验参数实现类匹配；`AnimationActionParser` 解析器 + `AnimationActionParam`/`NoneAnimationActionParam`/`SmoothMoveAnimationActionParam` 参数类（commit b6864a5）
+- **`AnimationKey` 嵌套键常量** — 嵌套类按 `animation/` 包层级组织：`Component`（FadeIn/FadeOut 节点与窗口键）、`Task`（object/action）、`Task.Object`（class 类别）、`Task.Action`（type/delay/param + none/smooth_move 值）、`Task.Action.Param`（orientation/speed/duration）（commit b6864a5）
 
 ### 重构
 
-- **`AnimationObject` 目标键迁入 `AnimationKey.Task.Object`** — `AnimationObject`/`UiAnimationObject`/`GraphicsAnimationObject` 的 class 类别键由 `AnimationKey.Target` 迁入 `AnimationKey.Task.Object` 嵌套类（commit <hash>）
-- **`ControlScriptCommand` 动作参数表泛型收紧** — `Map<ScriptCommandAction, Class<?>>` 收紧为 `Map<ScriptCommandAction, Class<? extends ScriptCommandParam>>`，编译期校验参数类型（commit <hash>）
+- **`AnimationObject` 目标键迁入 `AnimationKey.Task.Object`** — `AnimationObject`/`UiAnimationObject`/`GraphicsAnimationObject` 的 class 类别键由 `AnimationKey.Target` 迁入 `AnimationKey.Task.Object` 嵌套类（commit b6864a5）
+- **`ControlScriptCommand` 动作参数表泛型收紧** — `Map<ScriptCommandAction, Class<?>>` 收紧为 `Map<ScriptCommandAction, Class<? extends ScriptCommandParam>>`，编译期校验参数类型（commit b6864a5）
 
 ---
 
