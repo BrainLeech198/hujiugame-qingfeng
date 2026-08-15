@@ -227,6 +227,13 @@ public class ScriptExecutor
         }
     }
 
+    /**
+     * 每帧推进任务栈，执行脚本指令
+     * <p>
+     * 性能：每帧 1 次。对任务栈 map 逐帧 new ArrayList + Collections.shuffle 打乱后遍历执行指令，
+     * 存在集合分配与重排开销，并受 MAX_COMMAND_COUNT_PER_FRAME 指令数上限约束；
+     * 任务栈为空时应尽早返回，避免无意义分配。
+     */
     public void update (float deltaTime)
     {
         remainingCommandsCount = MAX_COMMAND_COUNT_PER_FRAME;

@@ -82,6 +82,9 @@ public final class MenuMain implements GameRender
 
     /**
      * 处理主菜单按钮点击和版本更新检测
+     * <p>
+     * 性能：每帧 1 次。含 4 次 isButtonClicked 轮询（各做 map 查询）与 4 次 messageBox.handleAsk（map 查询），
+     * 仅当 justTouched 时才做坐标反投影；整体为轻量轮询，但均属每帧固定开销，不应在其中新增重活。
      *
      * @param deltaTime 距上一帧的时间差
      */
@@ -172,6 +175,9 @@ public final class MenuMain implements GameRender
 
     /**
      * 渲染主菜单布局和版本号文字
+     * <p>
+     * 性能：每帧 1 次。playLayout 驱动音频 + putLayout 遍历绘制全量布局图片/GIF + putText 内含 getFont map 查询，
+     * 是主菜单渲染热路径；绘制资源应预加载，避免在渲染路径内创建。
      *
      * @param deltaTime 距上一帧的时间差
      */

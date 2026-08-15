@@ -91,6 +91,10 @@ public class ControllerInputHandler implements ControllerListener
 
     /**
      * 必须在游戏主循环的每帧调用，传入帧时间增量（秒），用于平滑移动虚拟鼠标。
+     * <p>
+     * 性能：每帧 1 次，轮询左摇杆并平滑移动虚拟鼠标，逻辑本身较轻量；但属于帧更新链固定成员，
+     * 内部不应引入加载、资源创建等重活。
+     *
      * @param deltaTime 帧时间增量（秒）
      */
     public void update (float deltaTime)

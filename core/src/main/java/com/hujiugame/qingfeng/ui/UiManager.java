@@ -486,6 +486,9 @@ public final class UiManager
 
     /**
      * 使用合并后的纹理区域填充所有暂存的样式（图片、标签、按钮）
+     * <p>
+     * 性能：UiManager 初始化时一次性调用，遍历全部暂存 kind 绑定 TextureRegion，
+     * 属初始化阶段的高开销操作，只应在 init 链路中执行。
      */
     private void fillKindsWithRegions ()
     {
@@ -572,6 +575,9 @@ public final class UiManager
 
     /**
      * 将所有暂存的小 Pixmap 合并为一张大纹理，生成对应的 TextureRegion
+     * <p>
+     * 性能：UiManager 初始化时一次性调用，执行大量 Pixmap 合并 + GPU 纹理上传，
+     * 是初始化阶段开销最大的操作之一，只应在 init 链路中执行。
      *
      * @return 合并成功返回 true，失败返回 false
      */
@@ -640,6 +646,9 @@ public final class UiManager
 
     /**
      * 初始化 UiManager，依次加载字体、图像、标签和按钮样式，最后合并所有小图纹理
+     * <p>
+     * 性能：启动/主题切换时一次性调用，内部做大量字体/图片/标签/按钮加载 + Pixmap 合图 + GPU 纹理上传，
+     * 属启动阶段高开销操作，会阻塞主线程；应避免在运行期重复调用。
      *
      * @param themeManager 主题管理器，提供所有 UI 资源的配置路径
      * @return 初始化成功返回 true，失败返回 false
@@ -819,6 +828,9 @@ public final class UiManager
 
     /**
      * 获取指定标签和大小的字体
+     * <p>
+     * 性能：每帧文本绘制路径被调用（GraphicsManager.putText 内），内部为 map 查询 + 字体缩放查找，
+     * 单次开销小但逐帧重复查询属于浪费，高频绘制时应优先在绘制建立阶段缓存字体引用。
      *
      * @param tag      字体标签，为 null 时使用默认字体
      * @param fontSize 字体大小缩放系数
@@ -850,6 +862,9 @@ public final class UiManager
 
     /**
      * 获取图片的标准标签（添加 ui.image. 前缀）
+     * <p>
+     * 性能：内部做字符串拼接（无缓存），单次开销小；但被日志/音频等路径频繁调用，
+     * 高频时应优先复用已拼接结果而非反复拼接。
      *
      * @param imageTag 图片原始标签
      * @return 标准化的标签字符串
@@ -1475,6 +1490,9 @@ public final class UiManager
 
     /**
      * 获取指定标签的图片控件
+     * <p>
+     * 性能：纯 HashMap 查询（O(1)），单次开销小；但被虚拟输入命中与每帧轮询高频调用，
+     * 对同一目标应缓存控件引用而非逐帧重复查找。
      *
      * @param imageTag 图片标签
      * @return 图片控件对象，不存在返回 null
@@ -1637,6 +1655,9 @@ public final class UiManager
 
     /**
      * 删除所有图片控件
+     * <p>
+     * 性能：场景切换时一次性调用，遍历整个 imageMap 逐个删除并移除容器，属 O(n) 批量删除；
+     * 应在切换间隙执行，避免在每帧更新链中触发。
      *
      * @return 全部删除成功返回 true，否则返回 false
      */
@@ -1664,6 +1685,9 @@ public final class UiManager
 
     /**
      * 获取标签的标准标签（添加 ui.label. 前缀）
+     * <p>
+     * 性能：内部做字符串拼接（无缓存），单次开销小；但被日志/音频等路径频繁调用，
+     * 高频时应优先复用已拼接结果而非反复拼接。
      *
      * @param labelTag 标签原始标签
      * @return 标准化的标签字符串
@@ -2643,6 +2667,9 @@ public final class UiManager
 
     /**
      * 获取指定标识的标签控件
+     * <p>
+     * 性能：纯 HashMap 查询（O(1)），单次开销小；但被虚拟输入命中与每帧轮询高频调用，
+     * 对同一目标应缓存控件引用而非逐帧重复查找。
      *
      * @param labelTag 标签标识
      * @return 标签控件对象，不存在返回 null
@@ -2879,6 +2906,9 @@ public final class UiManager
 
     /**
      * 删除所有标签控件
+     * <p>
+     * 性能：场景切换时一次性调用，遍历整个 labelMap 逐个删除并移除容器，属 O(n) 批量删除；
+     * 应在切换间隙执行，避免在每帧更新链中触发。
      *
      * @return 全部删除成功返回 true，否则返回 false
      */
@@ -2906,6 +2936,9 @@ public final class UiManager
 
     /**
      * 获取按钮的标准标签（添加 ui.button. 前缀）
+     * <p>
+     * 性能：内部做字符串拼接（无缓存），单次开销小；但被点击回调/音频触发路径频繁调用，
+     * 高频时应优先复用已拼接结果而非反复拼接。
      *
      * @param buttonTag 按钮原始标签
      * @return 标准化的标签字符串
@@ -3620,6 +3653,10 @@ public final class UiManager
 
     /**
      * 根据 UI 对象标识查找交互控件
+     * <p>
+     * 性能：按 UiKind switch 后转发 getButton/getLabel/getImage 各做一次 map 查询（O(1)），
+     * 单次开销小；但每次调用都有类型分支判断，动画逐帧对同一目标重复调用属于浪费，
+     * 应在动画/交互建立阶段解析一次并缓存控件引用。适合事件分发时的单次命中查询。
      *
      * @param uiObject UI 对象标识（类型 + tag）
      * @return 对应交互控件，类型不支持或对象不存在返回 null
@@ -3654,6 +3691,9 @@ public final class UiManager
 
     /**
      * 获取指定标签的按钮控件
+     * <p>
+     * 性能：纯 HashMap 查询（O(1)），单次开销小；但被虚拟输入命中与每帧轮询高频调用，
+     * 对同一目标应缓存控件引用而非逐帧重复查找。
      *
      * @param buttonTag 按钮标签
      * @return 按钮控件对象，不存在返回 null
@@ -3900,6 +3940,9 @@ public final class UiManager
 
     /**
      * 检查按钮控件是否被点击（消费型，读取后重置状态）
+     * <p>
+     * 性能：每帧被按钮轮询路径调用，内部做两次 map 查询（containsKey + get）后消费点击状态，
+     * 每帧每个按钮固定 1 次，属于轻量轮询；若无需轮询语义，可改用 setButtonClickCallback 回调避免逐帧查询。
      *
      * @param buttonTag 按钮标签
      * @return 被点击返回 true，否则返回 false
@@ -3956,6 +3999,9 @@ public final class UiManager
 
     /**
      * 删除所有按钮控件
+     * <p>
+     * 性能：场景切换时一次性调用，遍历整个 buttonMap 逐个删除并移除容器，属 O(n) 批量删除；
+     * 应在切换间隙执行，避免在每帧更新链中触发。
      *
      * @return 全部删除成功返回 true，否则返回 false
      */
@@ -4923,6 +4969,9 @@ static final class CustomImage extends Image implements InteractableObject
 
     /**
      * 判断指定坐标是否在图片控件区域内
+     * <p>
+     * 性能：矩形命中检测，每次比较 4 次坐标读取（getRect*），单次开销小；
+     * 但被输入事件/命中测试调用，在每帧对多个候选触发时成本线性累积。
      *
      * @param x 检测点的 x 坐标
      * @param y 检测点的 y 坐标
@@ -4956,6 +5005,9 @@ static final class CustomImage extends Image implements InteractableObject
 
     /**
      * 检查图片控件是否真正可见（考虑遮挡检测）
+     * <p>
+     * 性能：每帧被交互对象网格刷新对每个候选控件调用，内部 new Vector2 + localToStageCoordinates + stage.hit
+     * 触发全 Actor 命中测试，属单次开销较大的每帧操作；无虚拟输入需求时应避免对大量候选高频调用。
      *
      * @return 可见且未被遮挡返回 true，否则返回 false
      */
@@ -5291,6 +5343,9 @@ static final class CustomLabel extends Group implements InteractableObject
 
     /**
      * 判断指定坐标是否在标签控件区域内
+     * <p>
+     * 性能：矩形命中检测，每次比较 4 次坐标读取（getRect*），单次开销小；
+     * 但被输入事件/命中测试调用，在每帧对多个候选触发时成本线性累积。
      *
      * @param x 检测点的 x 坐标
      * @param y 检测点的 y 坐标
@@ -5324,6 +5379,9 @@ static final class CustomLabel extends Group implements InteractableObject
 
     /**
      * 检查标签是否真正可见（考虑遮挡检测）
+     * <p>
+     * 性能：每帧被交互对象网格刷新对每个候选控件调用，内部 new Vector2 + localToStageCoordinates + stage.hit
+     * 触发全 Actor 命中测试，属单次开销较大的每帧操作；无虚拟输入需求时应避免对大量候选高频调用。
      *
      * @return 可见且未被遮挡返回 true，否则返回 false
      */
@@ -5651,6 +5709,9 @@ static final class CustomTextButton extends Actor implements InteractableObject
 
     /**
      * 判断指定坐标是否在按钮控件区域内
+     * <p>
+     * 性能：矩形命中检测，每次比较 4 次坐标读取（getRect*），单次开销小；
+     * 但被输入事件/命中测试调用，在每帧对多个候选触发时成本线性累积。
      *
      * @param x 检测点的 x 坐标
      * @param y 检测点的 y 坐标
@@ -5684,6 +5745,9 @@ static final class CustomTextButton extends Actor implements InteractableObject
 
     /**
      * 检查按钮是否真正可见（考虑遮挡检测）
+     * <p>
+     * 性能：每帧被交互对象网格刷新对每个候选控件调用，内部 new Vector2 + localToStageCoordinates + stage.hit
+     * 触发全 Actor 命中测试，属单次开销较大的每帧操作；无虚拟输入需求时应避免对大量候选高频调用。
      *
      * @return 可见且未被遮挡返回 true，否则返回 false
      */

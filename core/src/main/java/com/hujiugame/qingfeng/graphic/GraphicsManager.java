@@ -213,6 +213,9 @@ public final class GraphicsManager
 
     /**
      * 获取文件对应的纹理，优先从缓存返回。文件不存在时返回错误纹理。
+     * <p>
+     * 性能：缓存命中为纯 map 查询（O(1)）；缓存未命中则同步执行 new Texture(file) 纹理解码，
+     * 属高开销 IO + 解码，应避免在每帧/渲染路径触发未命中，资源应在加载阶段预解码。
      *
      * @param file 文件句柄
      * @return 纹理对象，文件不存在时返回错误纹理，null 入参返回 null
@@ -255,6 +258,9 @@ public final class GraphicsManager
 
     /**
      * 加载普通图片资源。如果该标签已存在，旧纹理加入待销毁队列。
+     * <p>
+     * 性能：一次性加载操作，内部同步执行纹理解码（getTexture 未命中时 new Texture），
+     * 属高开销 IO + 解码，会在主线程造成卡顿；应在加载阶段集中调用，避免在每帧渲染路径中触发。
      *
      * @param tag  图片标签
      * @param file 图片文件句柄
@@ -316,6 +322,10 @@ public final class GraphicsManager
     /**
      * 在指定位置绘制图片。
      *
+     * <p>
+     * 性能：每帧每张图片调用 1 次，内部为 pictureMap 查询（O(1)）+ spriteBatch.draw 提交绘制，
+     * 属绘制提交/批处理路径；应避免在绘制路径内做纹理解码或资源创建。
+     *
      * @param tag    图片标签
      * @param x      绘制位置 x 坐标
      * @param y      绘制位置 y 坐标
@@ -345,6 +355,11 @@ public final class GraphicsManager
 
     /**
      * 在指定位置绘制图片（带颜色叠加）。
+     *
+     * <p>
+     * 性能：每帧每张图片调用 1 次，内部为 pictureMap 查询（O(1)）+ spriteBatch.draw 提交绘制；
+     * 带 tint 版本还会 new Color + setColor 两次，开销略高于无 tint 版本，
+     * 无颜色叠加需求时优先使用不带 tint 的重载。
      *
      * @param tag    图片标签
      * @param x      绘制位置 x 坐标
@@ -584,6 +599,9 @@ public final class GraphicsManager
 
     /**
      * 加载 GIF 动画资源。将多帧图片合并为单纹理或独立纹理。
+     * <p>
+     * 性能：一次性加载操作，内部对每帧执行 new Pixmap 解码并合图/上传 GPU 纹理，
+     * 属高开销 IO + 解码，帧数越多成本越高；应在加载阶段集中调用，避免在每帧渲染路径中触发。
      *
      * @param tag      动画标签
      * @param fileList 各帧图片文件列表
@@ -641,6 +659,9 @@ public final class GraphicsManager
     /**
      * 将多个 Pixmap 帧合并为单纹理，返回对应的 Gif 对象。
      * 如果尺寸超出最大纹理限制，回退为独立纹理（每帧一个纹理）。
+     * <p>
+     * 性能：一次性合图操作，内部对全部帧做 Pixmap 合并 + GPU 纹理上传，
+     * 属高开销操作，帧数多或纹理大时成本显著；只应在 loadGif 加载阶段调用。
      *
      * @param pixList  各帧 Pixmap 列表
      * @param duration 动画总时长（秒）
@@ -716,6 +737,10 @@ public final class GraphicsManager
 
     /**
      * 在指定位置绘制 GIF 动画的当前帧。
+     *
+     * <p>
+     * 性能：每帧每个 GIF 调用 1 次，内部为 gifMap 查询（O(1)）+ 动画帧推进（累加时间取帧），
+     * 帧推进成本随 GIF 帧率与数量线性累积；静止画面应优先使用普通图片而非 GIF。
      *
      * @param tag    动画标签
      * @param x      绘制位置 x 坐标
@@ -867,6 +892,10 @@ public final class GraphicsManager
 
     /**
      * 根据布局配置绘制完整的界面层（背景图片、普通图片和 GIF 动画）。
+     * <p>
+     * 性能：每帧 1 次整页绘制聚合；内部 new ArrayList(layout.getPictureMap().values()) 做集合分配，
+     * 并遍历绘制全部图片/GIF，开销随元素数量线性增长，是页面渲染热路径的主要开销点；
+     * 元素应在加载阶段预解码，避免绘制时触发纹理解码。
      *
      * @param layout 布局配置对象
      * @param delta        距上一帧的时间差（秒）
@@ -921,6 +950,9 @@ public final class GraphicsManager
 
     /**
      * 执行异步销毁操作，清理待销毁队列中的普通图片、背景图片和 GIF 资源。
+     * <p>
+     * 性能：后台线程延迟批量执行，遍历待销毁队列逐个 dispose 纹理 + 从缓存移除，
+     * 属 O(n) 批量销毁；不阻塞主线程，但销毁期间应避免访问同名资源。
      */
     private void executeAsyncDispose ()
     {
@@ -967,6 +999,9 @@ public final class GraphicsManager
 
     /**
      * 从纹理缓存中安全移除已销毁的纹理，避免并发问题。
+     * <p>
+     * 性能：同步遍历 textureCache 匹配并移除（依赖纹理对象相等性），为 O(n) 扫描；
+     * 由异步销毁路径调用，非每帧热路径，但缓存较大时开销随其增长。
      *
      * @param tex 要移除的纹理对象
      */

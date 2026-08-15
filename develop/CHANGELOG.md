@@ -21,14 +21,25 @@
 > 10. 【必须】CHANGELOG 条目按日期归组：同一天的所有提交主题共同包含在同一个 `## <日期> — <概括标题>` 下，禁止拆成多个 `## ` 日期标题；每个提交块以 `**<主题>**（commit <7位短哈希>）` 标记，块内每条 `- ` 条目行尾标注引入它的提交短哈希 `（commit <7位短哈希>）`。新条目随内容改动提交后，其哈希在下一笔内容改动提交中一并补写（补写仅改 hash，不新增条目）
 > 11. 【必须】写版本发布说明（官网 `docs/data/versions.json` 的 `log`、`develop/PUBLISH.md` 面向玩家摘要）时，按「上一版本发布点 → 本版本发布点」之间的 commit 区间梳理玩家可见改动（修复的 Bug / 新增功能 / 优化），逐一写入，不要遗漏跨版本才生效的修复（打包之后完成的 bug 修复会随下一个版本发出，须算入下一版本的说明）；beta 测试版按此梳理书写即可，release 正式版属重要更新，需正式、系统地书写
 
-## 2026-08-15 — 动画数据层落地 + Javadoc 性能标注规范 + 官网下载区优化（恢复提取码 / 首页卡片化 / 更新时间）+ 26w33a mac Intel 提取码文案补删 + GameState 扁平化重构 + UiKey 嵌套类化
+## 2026-08-15 — 动画数据层落地 + Javadoc 性能标注规范 + 热路径 Javadoc 性能标注 + 官网下载区优化（恢复提取码 / 首页卡片化 / 更新时间）+ 26w33a mac Intel 提取码文案补删 + GameState 扁平化重构 + UiKey 嵌套类化
+
+**优化(Javadoc)：热路径方法补充性能表现与适用场景标注**
+
+### 优化
+
+- **主循环链路性能标注** — `GameHost.run`（每帧热路径入口，帧耗时决定帧率下限）、`RenderPipeline.updateFrame`/`render`（每帧更新/绘制入口）、`InstanceContent.update`（每帧输入聚合点）、`SceneStack.updateGameState`/`loadGameLayout`/`loadGameConfig`（切换时同步 IO + JSON 解析，一次性高开销）、`EventDispatcher.handleEvent`（事件分发 switch + 日志拼接）（commit <hash>）
+- **输入处理性能标注** — `VirtualInputHandler` 的 update/getLists/refreshInteractableObjectMap（每帧，HashSet 相等性判断 + 全量 isShown + stage.hit）、`ControllerInputHandler.update`（每帧摇杆轮询）（commit <hash>）
+- **场景渲染性能标注** — `GamePlay` 的 update/render/localHostUpdate（每帧 + 任务栈 map 查询）、`MenuMain` 的 update/render（每帧 4×isButtonClicked + 4×handleAsk）、`ScriptExecutor.update`（每帧 new ArrayList + shuffle + 指令数上限）（commit <hash>）
+- **资源与 UI 工具性能标注** — `UiManager` 查找类方法（O(1) map 查询，动画应缓存引用）、`GraphicsManager` 纹理与绘制方法（缓存命中 O(1) vs 未命中解码、putGif 每帧帧推进）、`MessageBox.showAsk`/`handleAsk`、`LogUtils` 时间格式化与同步 IO（commit <hash>）
+
+---
 
 **编码规范(注释)：耗性能方法 Javadoc 必须标注性能表现与适用场景**
 
 ### 编码规范
 
-- **CLAUDE.md 新增性能标注规范** — 耗性能的方法（每帧调用、频繁查找、复杂计算等）Javadoc 必须标注性能表现与适用场景，供调用者判断是否适合在每帧/热路径使用（commit <hash>）
-- **CODING_STYLE.md「13. 注释」补充性能标注规范** — 同规则 + 正例（findObject Javadoc 含 `<p>` 性能段落）与反例（缺少性能说明，调用者无法判断能否在每帧循环使用）示例（commit <hash>）
+- **CLAUDE.md 新增性能标注规范** — 耗性能的方法（每帧调用、频繁查找、复杂计算等）Javadoc 必须标注性能表现与适用场景，供调用者判断是否适合在每帧/热路径使用（commit 8d2f30f）
+- **CODING_STYLE.md「13. 注释」补充性能标注规范** — 同规则 + 正例（findObject Javadoc 含 `<p>` 性能段落）与反例（缺少性能说明，调用者无法判断能否在每帧循环使用）示例（commit 8d2f30f）
 
 ---
 

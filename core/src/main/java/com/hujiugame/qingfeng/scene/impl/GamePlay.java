@@ -87,6 +87,9 @@ public final class GamePlay implements GameRender
 
     /**
      * 本地主机更新逻辑
+     * <p>
+     * 性能：每帧 1 次（仅本地主机），内含对任务栈的多次 map 查询（hasTask/removeTask/isTaskFinished）与任务推进，
+     * 脚本任务较多时是游戏内逻辑热路径的主要开销点。
      */
     private void localHostUpdate (float deltaTime)
     {
@@ -199,6 +202,9 @@ public final class GamePlay implements GameRender
 
     /**
      * 处理游戏播放逻辑（当前暂无帧更新逻辑）
+     * <p>
+     * 性能：每帧 1 次，按玩家主机类型分派本地/远程主机更新，耗时计入帧更新链；
+     * 只做逻辑推进，不应在更新路径内插入加载、解析等重活。
      *
      * @param deltaTime 距上一帧的时间差
      */
@@ -212,6 +218,9 @@ public final class GamePlay implements GameRender
 
     /**
      * 渲染游戏播放布局和音频
+     * <p>
+     * 性能：每帧 1 次，playLayout 驱动音频 + putLayout 遍历绘制全量图片/GIF 地图，绘制开销随元素数量增长，
+     * 是游戏内渲染热路径；绘制资源应预加载，避免在渲染路径内做纹理解码或资源创建。
      *
      * @param deltaTime 距上一帧的时间差
      */

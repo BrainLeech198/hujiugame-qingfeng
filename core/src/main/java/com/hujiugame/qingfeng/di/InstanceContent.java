@@ -540,6 +540,11 @@ public final class InstanceContent
 
     /**
      * 每帧更新输入处理器状态
+     * <p>
+     * 性能：每帧 1 次，作为 RenderPipeline 的 inputUpdater 被调用，串行驱动手柄虚拟鼠标平滑移动与虚拟输入刷新
+     * （后者含交互对象网格重建与命中检测），耗时计入帧更新链，是输入热路径的聚合点；
+     * 只应做输入状态推进，不适合承载加载、解析等其他逻辑。
+     *
      * @param deltaTime 帧时间增量
      */
     public void update (float deltaTime)

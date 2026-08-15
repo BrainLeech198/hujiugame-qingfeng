@@ -81,6 +81,9 @@ public final class RenderPipeline
 
     /**
      * 调用当前渲染机的帧更新（包含输入处理）
+     * <p>
+     * 性能：每帧调用 gameRender.update 与 inputUpdater（输入处理），是帧逻辑更新链的入口，其耗时全部计入帧耗时。
+     * 单帧内只应做必要的更新推进，避免在更新链中插入加载、解析等一次性重活。
      *
      * @param deltaTime 距上一帧的时间差
      */
@@ -109,6 +112,9 @@ public final class RenderPipeline
 
     /**
      * 渲染当前渲染机的内容
+     * <p>
+     * 性能：每帧提交绘制，耗时直接影响帧率。绘制所需的纹理、字体、批处理资源应提前加载，
+     * 避免在渲染路径内做纹理解码、资源创建等重活。
      *
      * @param deltaTime 距上一帧的时间差
      */

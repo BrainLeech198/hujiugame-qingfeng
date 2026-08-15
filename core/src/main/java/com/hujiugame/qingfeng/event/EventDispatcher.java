@@ -44,6 +44,9 @@ public final class EventDispatcher
 
     /**
      * 分发事件到对应的处理方法（REFRESH_UI_MANAGER/PUSH/POP/SET/RESET/ENTER/QUIT/PLAY）
+     * <p>
+     * 性能：事件分发回调，调用频率随事件量变化（页面切换、点击等）；内部 switch 分派 + 各 handler 日志拼接，
+     * 单次开销小，但 DEBUG 级日志在热路径累积；应避免在事件 handler 内做重活。
      *
      * @param eventObject 事件对象
      */

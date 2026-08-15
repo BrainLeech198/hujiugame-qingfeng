@@ -81,6 +81,9 @@ public final class SceneStack
 
     /**
      * 更新游戏状态：重新加载布局并切换渲染机
+     * <p>
+     * 性能：页面切换时一次性调用，内部链式触发 loadGameLayout/loadGameConfig 的同步文件 IO + JSON 解析
+     * 及渲染机创建，属高开销切换操作，会造成短暂卡顿；应在切换间隙调用，避免在每帧更新链中触发。
      *
      * @return 是否更新成功
      */
@@ -317,6 +320,14 @@ public final class SceneStack
 
     // ===================================================================================================================
 
+    /**
+     * 加载当前游戏状态的页面结构（Layout）
+     * <p>
+     * 性能：页面切换时一次性调用，内部做同步文件 IO + 布局 JSON 解析（首次进游戏强制重读），
+     * 属高开销操作；不应在每帧更新链中调用。
+     *
+     * @return 页面结构，加载失败返回 null
+     */
     private Layout loadGameLayout ()
     {
         try
@@ -386,6 +397,14 @@ public final class SceneStack
         }
     }
 
+    /**
+     * 加载当前游戏状态的页面配置（JsonEntity）
+     * <p>
+     * 性能：页面切换时一次性调用，内部做同步文件 IO + JSON 解析，属高开销操作；
+     * 不应在每帧更新链中调用。
+     *
+     * @return 页面配置，不存在或失败时返回空 JsonEntity
+     */
     private JsonEntity loadGameConfig ()
     {
         try

@@ -455,6 +455,10 @@ public class VirtualInputHandler
 
     /**
      * 每帧更新虚拟输入状态，包含时间计算、交互对象刷新、活动对象检测和位置更新
+     * <p>
+     * 性能：每帧 1 次，为虚拟输入热路径入口。内部 refreshInteractableObjectMap 在交互对象集合变化时
+     * 会对全部可见对象做 isShown 遮挡检测并排序分组，开销随交互对象数量增长；
+     * 应尽量保持交互对象集合稳定，避免频繁触发的全量重建。
      */
     public void update ()
     {
@@ -494,6 +498,11 @@ public class VirtualInputHandler
 
     /**
      * 将可见的交互对象按行分组，每行内按水平位置排序
+     * <p>
+     * 性能：仅在交互对象集合变化的当帧调用，对可见对象逐行分组、每行多次排序，
+     * 并对每对象多次调用 getRectTop/getRectBottom 取坐标，整体约为 O(n log n)；
+     * 交互对象数量较多时属于一次较高开销操作，不适合在集合稳定的每帧中反复触发。
+     *
      * @param visibleObjects 可见交互对象列表
      * @param rowThreshold   行合并阈值，垂直中心距离小于此值视为同一行
      * @return 按行分组的交互对象列表
@@ -800,6 +809,10 @@ public class VirtualInputHandler
 
     /**
      * 刷新可交互对象映射表，将当前可见的交互对象按行分组
+     * <p>
+     * 性能：每帧调用。先对整体交互对象集合做 HashSet 相等性判断（O(n)），仅当集合变化时才重建——
+     * 遍历全部对象逐个调用 isShown（含 stage.hit 遮挡检测）并排序分组，属于虚拟输入链路中的潜在最高开销点；
+     * 应尽量保持交互对象集合稳定，减少集合变更触发的全量重建。
      */
     public void refreshInteractableObjectMap ()
     {

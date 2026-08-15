@@ -167,6 +167,10 @@ public final class LogUtils
 
     /**
      * 生成当前时间的格式化字符串
+     * <p>
+     * 性能：每次日志调用执行一次 LocalDateTime.now + DateTimeFormatter 格式化，
+     * 属中等开销（时间对象创建 + 格式串解析），DEBUG 级热路径高频触发时成本累积；
+     * 仅在日志被文件/控制台等级过滤放行时才会走到这里。
      *
      * @return 格式为 "yyyy-MM-dd HH:mm:ss.SSS" 的时间字符串
      */
@@ -179,6 +183,9 @@ public final class LogUtils
 
     /**
      * 将日志消息写入文件（按日志等级过滤，同时避免在写入过程中使用 LogUtils 防止死循环）
+     * <p>
+     * 性能：内部执行同步文件追加写（createStringFileOfLog），属阻塞 IO，且每次调用前做 updateFileByDayTime
+     * 时间判断；DEBUG 级热路径中每次日志都触发文件写，成本较高，生产环境应通过提高 fileLogLevel 过滤。
      *
      * @param level   日志等级
      * @param message 日志消息内容
@@ -203,6 +210,10 @@ public final class LogUtils
 
     /**
      * 在控制台输出日志并写入日志文件
+     * <p>
+     * 性能：每次日志调用做时间格式化字符串拼接 + 控制台输出 +（受文件日志等级控制的）同步文件写，
+     * DEBUG 级在热路径大量出现时开销显著，实际影响取决于 fileLogLevel 是否放行；
+     * 热路径内应避免低频日志被高频触发，或通过提高日志等级过滤。
      *
      * @param level   日志等级
      * @param tag     日志标签（通常为类名）
