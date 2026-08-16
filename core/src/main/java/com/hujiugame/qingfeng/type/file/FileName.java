@@ -33,7 +33,22 @@ public final class FileName
     public static final String APP_CONFIG = "app_config.json";
     public static final String USER_CONFIG = "user_config.json";
 
-    public static final String DEFAULT_LANGUAGE_PATH = "zh_CN";
+    public static final String LANGUAGE_ZH_CN_PATH = "zh_CN";
+    public static final String LANGUAGE_ZH_TW_PATH = "zh_TW";
+    public static final String LANGUAGE_ZH_HK_PATH = "zh_HK";
+    public static final String LANGUAGE_EN_US_PATH = "en_US";
+    public static final String LANGUAGE_EN_GB_PATH = "en_GB";
+    public static final String LANGUAGE_ES_ES_PATH = "es_ES";
+    public static final String LANGUAGE_ES_MX_PATH = "es_MX";
+    public static final String LANGUAGE_FR_FR_PATH = "fr_FR";
+    public static final String LANGUAGE_FR_CA_PATH = "fr_CA";
+    public static final String LANGUAGE_PT_BR_PATH = "pt_BR";
+    public static final String LANGUAGE_PT_PT_PATH = "pt_PT";
+    public static final String LANGUAGE_RU_RU_PATH = "ru_RU";
+    public static final String LANGUAGE_JA_JP_PATH = "ja_JP";
+    public static final String LANGUAGE_KO_KR_PATH = "ko_KR";
+    public static final String LANGUAGE_DE_DE_PATH = "de_DE";
+    public static final String DEFAULT_LANGUAGE_PATH = LANGUAGE_EN_US_PATH;
     public static final String LANGUAGE_DICTIONARY_CONFIG = "language_config.json";
     public static final String LANGUAGE_S_CONFIG = "language.json";
 
