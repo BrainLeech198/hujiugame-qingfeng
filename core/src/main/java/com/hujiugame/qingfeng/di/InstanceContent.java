@@ -12,6 +12,7 @@ import com.hujiugame.qingfeng.event.EventQueue;
 import com.hujiugame.qingfeng.game.GameLogicService;
 import com.hujiugame.qingfeng.type.game.GameState;
 import com.hujiugame.qingfeng.type.ui.UseViewport;
+import com.hujiugame.qingfeng.animation.AnimationManager;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.scene.GameRenderRegistry;
@@ -47,6 +48,7 @@ public final class InstanceContent
     private AudioManager audioManager;
 
     private UiManager uiManager;
+    private AnimationManager animationManager;
 
     private TextManager textManager;
     private LayoutManager layoutManager;
@@ -183,6 +185,11 @@ public final class InstanceContent
             start = System.nanoTime();
             instanceContent.uiManager = new UiManager(instanceContent.stage, instanceContent.audioManager, instanceContent.graphicsManager, instanceContent.textManager);
             LogUtils.debug(InstanceContent.class, "init - UiManager 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
+
+            // 动画管理类
+            start = System.nanoTime();
+            instanceContent.animationManager = new AnimationManager();
+            LogUtils.debug(InstanceContent.class, "init - AnimationManager 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
 
             // 游戏管理类
             start = System.nanoTime();
@@ -427,6 +434,15 @@ public final class InstanceContent
     }
 
     /**
+     * 获取动画管理器
+     * @return 动画管理器
+     */
+    public AnimationManager getAnimationManager ()
+    {
+        return animationManager;
+    }
+
+    /**
      * 设置 UI 管理器，并连带切换其依赖者的引用（切换主题整体替换 UiManager 实例时使用）
      * <p>
      * 连带项：图形管理器字体来源、布局管理器引用、虚拟输入引用；对应对象未初始化（null）时跳过，
@@ -551,6 +567,7 @@ public final class InstanceContent
     {
         if (controllerInputHandler != null) controllerInputHandler.update(deltaTime);
         if (virtualInputHandler != null) virtualInputHandler.update();
+        if (animationManager != null) animationManager.update(deltaTime);
     }
 
     /**
@@ -571,6 +588,7 @@ public final class InstanceContent
         gameHost.dispose();
 
         uiManager.dispose();
+        animationManager.dispose();
 
         graphicsManager.dispose();
         audioManager.dispose();

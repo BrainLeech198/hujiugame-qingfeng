@@ -3,6 +3,7 @@ package com.hujiugame.qingfeng.game.loader;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.hujiugame.qingfeng.data.play.PlayLocalData;
+import com.hujiugame.qingfeng.animation.AnimationManager;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.script.ScriptExecutor;
@@ -124,6 +125,19 @@ public final class GameResourceLoader
                 LogUtils.debug(GameResourceLoader.class, "loadResource script初始化成功");
             }
 
+            // 动画
+            AnimationManager gameAnimationManager = new AnimationManager();
+            if (!gameAnimationManager.init())
+            {
+                LogUtils.error(GameResourceLoader.class, "loadResource 动画初始化失败");
+                return false;
+            }
+            else
+            {
+                playLocalData.setAnimationManager(gameAnimationManager);
+                LogUtils.debug(GameResourceLoader.class, "loadResource 动画初始化成功");
+            }
+
             LogUtils.debug(GameResourceLoader.class, "loadResource 加载游戏资源成功");
             return true;
         }
@@ -142,6 +156,14 @@ public final class GameResourceLoader
     {
         try
         {
+            // 销毁动画
+            AnimationManager gameAnimationManager = playLocalData.getAnimationManager();
+            if (gameAnimationManager != null)
+            {
+                gameAnimationManager.dispose();
+                LogUtils.debug(GameResourceLoader.class, "disposeResource animation销毁成功");
+            }
+
             // 销毁脚本执行器
             ScriptExecutor scriptExecutor = playLocalData.getScriptExecutor();
             if (scriptExecutor != null)

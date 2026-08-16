@@ -1,6 +1,7 @@
 package com.hujiugame.qingfeng.data.play;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.hujiugame.qingfeng.animation.AnimationManager;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.game.*;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
@@ -27,6 +28,7 @@ public final class PlayLocalData
     private GraphicsManager graphicsManager;
     private UiManager uiManager;
     private ScriptExecutor scriptExecutor;
+    private AnimationManager animationManager;
 
     // 游戏信息管理器
     private GameTemplateManager gameTemplateManager;
@@ -207,6 +209,22 @@ public final class PlayLocalData
         this.scriptExecutor = scriptExecutor;
     }
 
+    /**
+     * 获取动画管理器
+     */
+    public AnimationManager getAnimationManager ()
+    {
+        return animationManager;
+    }
+
+    /**
+     * 设置动画管理器
+     */
+    public void setAnimationManager (AnimationManager animationManager)
+    {
+        this.animationManager = animationManager;
+    }
+
     // ===================================================================================================================
     // 游戏信息管理器
     // ===================================================================================================================
@@ -304,6 +322,7 @@ public final class PlayLocalData
             if (audioManager != null && !audioManager.dispose()) return false;
             if (graphicsManager != null && !graphicsManager.dispose()) return false;
             if (uiManager != null && !uiManager.dispose()) return false;
+            if (animationManager != null) animationManager.dispose();
 
             LogUtils.info(PlayLocalData.class, "dispose 销毁资源成功");
             return true;
