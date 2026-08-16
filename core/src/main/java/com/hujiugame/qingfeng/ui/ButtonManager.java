@@ -314,6 +314,9 @@ public final class ButtonManager
     // Public API
     // ===================================================================================================================
 
+    /**
+     * 获取按钮的标准日志标签（标签前缀 [Button] <buttonTag>）
+     */
     public String getButtonStandardTag (String buttonTag)
     {
         return "[Button] " + buttonTag;

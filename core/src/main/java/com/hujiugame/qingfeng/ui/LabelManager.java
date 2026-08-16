@@ -409,6 +409,9 @@ public final class LabelManager
     // Public API
     // ===================================================================================================================
 
+    /**
+     * 获取标签的标准日志标签（标签前缀 [Label] <labelTag>）
+     */
     public String getLabelStandardTag (String labelTag)
     {
         return "[Label] " + labelTag;

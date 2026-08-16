@@ -245,6 +245,9 @@ public final class ImageManager
     // Public API
     // ===================================================================================================================
 
+    /**
+     * 获取图片的标准日志标签（标签前缀 [Image] <imageTag>）
+     */
     public String getImageStandardTag (String imageTag)
     {
         return "[Image] " + imageTag;

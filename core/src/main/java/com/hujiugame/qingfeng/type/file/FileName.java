@@ -28,7 +28,7 @@ public final class FileName
 
     public static final String LOG_CONFIG = "log_config.json";
     public static final String UPDATE_CONFIG = "update_config.json";
-    public static final String CRASH_LOG = "crash-";       // 崩溃日志前缀（后接时间戳）
+    public static final String CRASH_LOG = "crash-";       // 崩溃日志前缀（crash-<时间戳>）
     public static final String APP_VERSION = "app_version.json";
     public static final String APP_CONFIG = "app_config.json";
     public static final String USER_CONFIG = "user_config.json";

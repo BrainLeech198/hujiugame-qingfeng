@@ -59,7 +59,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class UiManager
 {
-    // Pixmap 合并时用于标识不同类型的 key 前缀
+    // Pixmap 合并时用于标识不同类型的 key 前缀（IMG_<imageKindName> / LB_<labelKindName> / BT_<buttonKindName>_up|_down|_disabled）
     public static final String PIXMAP_IMAGE = "IMG_";
     public static final String PIXMAP_LABEL = "LB_";
     public static final String PIXMAP_BUTTON = "BT_";
@@ -861,7 +861,7 @@ public final class UiManager
     // ===================================================================================================================
 
     /**
-     * 获取图片的标准标签（添加 ui.image. 前缀）
+     * 获取图片的标准标签（标准标签键前缀 ui.image.<imageTag>）
      * <p>
      * 性能：内部做字符串拼接（无缓存），单次开销小；但被日志/音频等路径频繁调用，
      * 高频时应优先复用已拼接结果而非反复拼接。
@@ -1684,7 +1684,7 @@ public final class UiManager
     // ===================================================================================================================
 
     /**
-     * 获取标签的标准标签（添加 ui.label. 前缀）
+     * 获取标签的标准标签（标准标签键前缀 ui.label.<labelTag>）
      * <p>
      * 性能：内部做字符串拼接（无缓存），单次开销小；但被日志/音频等路径频繁调用，
      * 高频时应优先复用已拼接结果而非反复拼接。
@@ -2935,7 +2935,7 @@ public final class UiManager
     // ===================================================================================================================
 
     /**
-     * 获取按钮的标准标签（添加 ui.button. 前缀）
+     * 获取按钮的标准标签（标准标签键前缀 ui.button.<buttonTag>）
      * <p>
      * 性能：内部做字符串拼接（无缓存），单次开销小；但被点击回调/音频触发路径频繁调用，
      * 高频时应优先复用已拼接结果而非反复拼接。
