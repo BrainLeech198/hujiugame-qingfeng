@@ -37,6 +37,10 @@ public final class UserConfigManager
     // 是否全屏
     private boolean fullscreen;
 
+    // 窗口化尺寸记忆（进入全屏前保存，退出全屏时恢复）
+    private int windowedWidth = 1280;
+    private int windowedHeight = 720;
+
     // 窗口分辨率
     private int resolutionWidth;
     private int resolutionHeight;
@@ -537,6 +541,37 @@ public final class UserConfigManager
         LogUtils.info(UserConfigManager.class, "initDisplayConfig 视窗 (viewport): " + useViewport);
 
         return useViewport;
+    }
+
+    /**
+     * 切换全屏/窗口模式，保存或恢复窗口尺寸
+     * <p>
+     * 全屏状态以 Gdx.graphics 实际窗口状态为准（不依赖 fullscreen 配置字段，避免与实际窗口漂移）；
+     * 进入全屏前记忆窗口化尺寸，退出时恢复。fullscreen 配置字段仍由 isFullscreen/setFullscreen 单独维护。
+     * <p>
+     * 性能：用户触发时调用一次（含全屏模式切换），非热路径。
+     */
+    public void toggleFullscreen ()
+    {
+        Graphics graphics = Gdx.graphics;
+
+        if (graphics.isFullscreen())
+        {
+            // 退出全屏：恢复保存的窗口状态
+            graphics.setWindowedMode(windowedWidth, windowedHeight);
+            LogUtils.info(UserConfigManager.class, "toggleFullscreen 退出全屏");
+        }
+        else
+        {
+            // 进入全屏：保存当前窗口状态
+            windowedWidth = graphics.getWidth();
+            windowedHeight = graphics.getHeight();
+
+            // 切换到全屏模式
+            Graphics.DisplayMode displayMode = graphics.getDisplayMode();
+            graphics.setFullscreenMode(displayMode);
+            LogUtils.info(UserConfigManager.class, "toggleFullscreen 切换到全屏模式");
+        }
     }
 
     /**

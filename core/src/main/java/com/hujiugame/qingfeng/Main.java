@@ -53,11 +53,6 @@ public class Main extends ApplicationAdapter
     // 输入管理类
     private InputMultiplexer inputMultiplexer;
 
-    // 类变量保存全屏前的状态
-    private static volatile int windowedWidth = 1280;
-    private static volatile int windowedHeight = 720;
-    private static volatile boolean isFullscreen = false;
-
     // 实例管理类
     // ===================================================================================================================
     private InstanceContent instanceContent;
@@ -112,36 +107,6 @@ public class Main extends ApplicationAdapter
         if (argsList != null) return;
         argsList = Arrays.asList(args);
         System.out.println("Application set args : " + argsList);
-    }
-
-    // =====================================================================================================================
-
-    /**
-     * 切换全屏/窗口模式，保存或恢复窗口尺寸
-     */
-    public static void toggleFullscreen ()
-    {
-        Graphics graphics = Gdx.graphics;
-
-        if (isFullscreen)
-        {
-            // 退出全屏：恢复保存的窗口状态
-            graphics.setWindowedMode(windowedWidth, windowedHeight);
-            isFullscreen = false;
-            LogUtils.info(Main.class, "toggleFullscreen 退出全屏");
-        }
-        else
-        {
-            // 进入全屏：保存当前窗口状态
-            windowedWidth = graphics.getWidth();
-            windowedHeight = graphics.getHeight();
-
-            // 切换到全屏模式
-            Graphics.DisplayMode displayMode = graphics.getDisplayMode();
-            graphics.setFullscreenMode(displayMode);
-            isFullscreen = true;
-            LogUtils.info(Main.class, "toggleFullscreen 切换到全屏模式");
-        }
     }
 
     // =====================================================================================================================

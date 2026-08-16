@@ -1,7 +1,7 @@
 package com.hujiugame.qingfeng.input;
 
-import com.hujiugame.qingfeng.Main;
 import com.hujiugame.qingfeng.core.GameHost;
+import com.hujiugame.qingfeng.di.InstanceContent;
 import com.hujiugame.qingfeng.type.key.UniversalUiKey;
 import com.hujiugame.qingfeng.ui.MessageBox;
 import com.hujiugame.qingfeng.ui.UiManager;
@@ -156,7 +156,7 @@ public final class UniversalInputHandlerFunction
     {
         try
         {
-            Main.toggleFullscreen();
+            InstanceContent.getInstance().getUserConfigManager().toggleFullscreen();
             return true;
         }
         catch (Exception e)
