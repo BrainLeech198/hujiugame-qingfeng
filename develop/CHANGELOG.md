@@ -21,7 +21,7 @@
 > 10. 【必须】CHANGELOG 条目按日期归组：同一天的所有提交主题共同包含在同一个 `## <日期> — <概括标题>` 下，禁止拆成多个 `## ` 日期标题；每个提交块以 `**<主题>**（commit <7位短哈希>）` 标记，块内每条 `- ` 条目行尾标注引入它的提交短哈希 `（commit <7位短哈希>）`。新条目随内容改动提交后，其哈希在下一笔内容改动提交中一并补写（补写仅改 hash，不新增条目）
 > 11. 【必须】写版本发布说明（官网 `docs/data/versions.json` 的 `log`、`develop/PUBLISH.md` 面向玩家摘要）时，按「上一版本发布点 → 本版本发布点」之间的 commit 区间梳理玩家可见改动（修复的 Bug / 新增功能 / 优化），逐一写入，不要遗漏跨版本才生效的修复（打包之后完成的 bug 修复会随下一个版本发出，须算入下一版本的说明）；beta 测试版按此梳理书写即可，release 正式版属重要更新，需正式、系统地书写
 
-## 2026-08-16 — 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新
+## 2026-08-16 — 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新 + 全屏切换调用空值防御
 
 **编码规范(注释)：键前缀/标签前缀常量注释补充动态段占位标注**
 
@@ -58,9 +58,9 @@
 
 ### 重构
 
-- **UserConfigManager 新增 `toggleFullscreen`** — 承接全屏/窗口模式切换，进入全屏前记忆窗口化尺寸（windowedWidth/Height 字段），退出时恢复；全屏状态以 `Gdx.graphics.isFullscreen()` 实际窗口为准，不再依赖字段记忆，避免与 fullscreen 配置字段漂移（commit <hash>）
-- **Main 移除全屏职责** — 删除 `toggleFullscreen` 静态方法与 windowedWidth/windowedHeight/isFullscreen 三个静态字段，Main 不再承担窗口状态职责（commit <hash>）
-- **UniversalInputHandlerFunction 改走 UserConfigManager** — `Main.toggleFullscreen()` 改为 `InstanceContent.getInstance().getUserConfigManager().toggleFullscreen()`（commit <hash>）
+- **UserConfigManager 新增 `toggleFullscreen`** — 承接全屏/窗口模式切换，进入全屏前记忆窗口化尺寸（windowedWidth/Height 字段），退出时恢复；全屏状态以 `Gdx.graphics.isFullscreen()` 实际窗口为准，不再依赖字段记忆，避免与 fullscreen 配置字段漂移（commit 5cc6979）
+- **Main 移除全屏职责** — 删除 `toggleFullscreen` 静态方法与 windowedWidth/windowedHeight/isFullscreen 三个静态字段，Main 不再承担窗口状态职责（commit 5cc6979）
+- **UniversalInputHandlerFunction 改走 UserConfigManager** — `Main.toggleFullscreen()` 改为 `InstanceContent.getInstance().getUserConfigManager().toggleFullscreen()`（commit 5cc6979）
 
 ---
 
@@ -68,8 +68,8 @@
 
 ### 重构
 
-- **CrashUtils 新增静态 `safeCrash`** — 安全崩溃处理入口，先尝试 `crash(Throwable)`，失败时退化为 System.err 打印 + 抛 RuntimeException，避免崩溃处理自身不可用（类加载失败、弹窗组件异常等）导致原始崩溃信息丢失；崩溃处理职责完整收拢到 CrashUtils（commit <hash>）
-- **Main 移除崩溃处理实现** — 删除私有 `safeCrash` 方法与 5 处调用改为 `CrashUtils.safeCrash(...)`，Main 只负责调用崩溃处理，不再自行实现（commit <hash>）
+- **CrashUtils 新增静态 `safeCrash`** — 安全崩溃处理入口，先尝试 `crash(Throwable)`，失败时退化为 System.err 打印 + 抛 RuntimeException，避免崩溃处理自身不可用（类加载失败、弹窗组件异常等）导致原始崩溃信息丢失；崩溃处理职责完整收拢到 CrashUtils（commit 2152719）
+- **Main 移除崩溃处理实现** — 删除私有 `safeCrash` 方法与 5 处调用改为 `CrashUtils.safeCrash(...)`，Main 只负责调用崩溃处理，不再自行实现（commit 2152719）
 
 ---
 
@@ -77,8 +77,16 @@
 
 ### 重构
 
-- **RenderPipeline 方法职责拆分命名** — 原 `update(GameStateDataContainer)`（按状态从注册表获取并初始化渲染机）改名 `register(...)`，原 `updateFrame(float)`（每帧调用渲染机更新与输入处理）改名 `update(...)`，方法名与职责对齐，消除"更新"一词歧义（commit <hash>）
-- **调用方同步更新** — `GameHost.run` 的 `renderPipeline.updateFrame(deltaTime)` 改为 `renderPipeline.update(deltaTime)`；`SceneStack.updateGameRender` 的 `renderPipeline.update(...)` 改为 `renderPipeline.register(...)`（commit <hash>）
+- **RenderPipeline 方法职责拆分命名** — 原 `update(GameStateDataContainer)`（按状态从注册表获取并初始化渲染机）改名 `register(...)`，原 `updateFrame(float)`（每帧调用渲染机更新与输入处理）改名 `update(...)`，方法名与职责对齐，消除"更新"一词歧义（commit ac5ec56）
+- **调用方同步更新** — `GameHost.run` 的 `renderPipeline.updateFrame(deltaTime)` 改为 `renderPipeline.update(deltaTime)`；`SceneStack.updateGameRender` 的 `renderPipeline.update(...)` 改为 `renderPipeline.register(...)`（commit ac5ec56）
+
+---
+
+**优化(输入)：全屏切换调用增加 InstanceContent 空值防御**
+
+### 优化
+
+- **UniversalInputHandlerFunction 空值防御** — `handleToggleFullscreen` 中 `InstanceContent.getInstance()` 以 `Objects.requireNonNull` 包裹，防止单例未初始化时调用空指针（commit <hash>）
 
 ## 2026-08-15 — 动画数据层落地 + Javadoc 性能标注规范 + 热路径 Javadoc 性能标注 + 官网下载区优化（恢复提取码 / 首页卡片化 / 更新时间）+ 26w33a mac Intel 提取码文案补删 + GameState 扁平化重构 + UiKey 嵌套类化
 

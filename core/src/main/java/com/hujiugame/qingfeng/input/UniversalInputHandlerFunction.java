@@ -7,6 +7,8 @@ import com.hujiugame.qingfeng.ui.MessageBox;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
+import java.util.Objects;
+
 public final class UniversalInputHandlerFunction
 {
 
@@ -156,7 +158,7 @@ public final class UniversalInputHandlerFunction
     {
         try
         {
-            InstanceContent.getInstance().getUserConfigManager().toggleFullscreen();
+            Objects.requireNonNull(InstanceContent.getInstance()).getUserConfigManager().toggleFullscreen();
             return true;
         }
         catch (Exception e)
