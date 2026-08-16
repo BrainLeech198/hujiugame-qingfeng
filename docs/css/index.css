@@ -703,7 +703,7 @@ body {
     color: var(--text-2);
     cursor: pointer;
 }
-#intro, #download, #community {
+#intro, #download, #community, #tipCardWatt {
     scroll-margin-top: 72px;
 }
 
