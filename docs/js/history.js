@@ -154,7 +154,12 @@
                         ${isLatest}
                     </div>
                     ${verDate}
-                    <div class="version-log">${safeLog}</div>
+                    <div class="log-fold">
+                        <div class="version-log">${safeLog}</div>
+                        <button class="log-toggle" type="button" hidden>
+                            <span>展开全部</span><span class="fold-arrow">▾</span>
+                        </button>
+                    </div>
                     <div class="download-row">
                         <div class="download-item-small">${windowsBtnHtml}</div>
                         <div class="download-item-small">${androidBtnHtml}</div>
@@ -167,6 +172,7 @@
 
         container.innerHTML = htmlStr;
         observeNewCards();
+        initLogFolds();
         // 绑定所有下载按钮的点击事件
         document.querySelectorAll('.download-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -216,6 +222,34 @@
                 renderPage(currentPage + 1);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
+        });
+    }
+
+    // ==================== 更新日志折叠（固定像素高度超阈值才折叠） ====================
+    const LOG_FOLD_MAX_HEIGHT = 110;
+
+    function initLogFolds() {
+        container.querySelectorAll('.log-fold').forEach(foldEl => {
+            const log = foldEl.querySelector('.version-log');
+            const toggle = foldEl.querySelector('.log-toggle');
+            if (!log || !toggle) return;
+            // 折叠前测量完整内容高度（折叠样式尚未生效时的 scrollHeight），超过阈值才折叠
+            if (log.scrollHeight <= LOG_FOLD_MAX_HEIGHT) return;
+
+            const updateText = (open) => {
+                const span = toggle.querySelector('span');
+                const key = open ? 'expand_log' : 'collapse_log';
+                span.textContent = (currentMessages && currentMessages[key]) || (open ? '展开全部' : '收起');
+            };
+            toggle.addEventListener('click', () => {
+                const open = foldEl.classList.toggle('folded');
+                toggle.setAttribute('aria-expanded', String(open));
+                updateText(open);
+            });
+            foldEl.classList.add('folded');
+            toggle.setAttribute('aria-expanded', 'false');
+            updateText(true);
+            toggle.hidden = false;
         });
     }
 

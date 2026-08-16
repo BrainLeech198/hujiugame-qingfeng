@@ -33,6 +33,54 @@
 <!-- ==================== 主内容 ==================== -->
 <main>
 
+    <!-- 游戏介绍 -->
+    <section class="card card-intro" id="intro">
+        <div class="card-header" style="margin-bottom: 20px;">
+            <h2><span class="sec-emoji">🎮</span> <span data-i18n="game_intro_title">游戏介绍</span></h2>
+        </div>
+        <div class="intro-fold" id="introFold">
+            <div class="intro-body">
+                <p data-i18n="game_intro_desc1">
+                    氢风（QingFeng）是一款基于 libGDX 构建的视觉小说游戏引擎与跨平台游戏启动器。项目采用标准化的文件结构与 JSON 数据驱动的资源体系，以清晰、规范的格式组织游戏内容，为创作者提供统一而稳定的运行环境。
+                </p>
+                <p data-i18n="game_intro_desc2">
+                    氢风原生支持简体中文、繁体中文与英文三种界面语言，并提供可切换的主题系统，满足不同地区用户的个性化需求。Windows、Linux 与 Android 三大平台同步支持，覆盖桌面与移动端多种使用场景。
+                </p>
+                <p data-i18n="game_intro_desc3">
+                    氢风内置完善的资源包管理体系，支持语言包、主题包、游戏语言包与游戏主题包等资源的导入与切换，帮助创作者灵活扩展游戏内容。同时附带版本检测与一键资源修复功能，确保游戏资源始终完整可用。
+                </p>
+                <p data-i18n="game_intro_desc4">
+                    游戏与资源包采用专属文件格式（.qfg、.qfl、.qft、.qfgl、.qfgt），并已在 Windows、Linux、Android 多平台完成文件关联，双击即可直接加载运行。可视化编辑器、2D 地图与视频播放等扩展能力正在规划中，将持续为创作者释放更多可能。
+                </p>
+            </div>
+            <button class="fold-toggle" id="introFoldToggle" type="button" aria-expanded="false" hidden>
+                <span data-i18n="expand_all">展开全部</span><span class="fold-arrow">▾</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- 资源下载 -->
+    <section class="card" id="download">
+        <div class="card-header">
+            <h2><span class="sec-emoji">📥</span> <span data-i18n="download_section_title">资源下载</span></h2>
+            <a href="html/history_versions.html" class="history-link">📜 <span data-i18n="history_button">历史版本 →</span></a>
+        </div>
+        <div class="version-card" id="latestVersionCard">
+            <div class="loading-skeleton" style="text-align:center; padding:40px;" data-i18n="loading_version">加载版本中...</div>
+        </div>
+    </section>
+
+    <!-- 社区分享 -->
+    <section class="card" id="community">
+        <div class="card-header">
+            <h2><span class="sec-emoji">💬</span> <span data-i18n="community_title">社区分享</span></h2>
+            <a href="html/community_share.html" class="history-link">💬 <span data-i18n="community_button">社区分享 →</span></a>
+        </div>
+        <div class="community-description">
+            <p>✨ <span data-i18n="community_description">这里是功能建议与改进反馈、创作内容分享、玩家间讨论的社区空间。欢迎文明交流！</span></p>
+        </div>
+    </section>
+
     <!-- 提示卡片：Watt Toolkit -->
     <section class="tip-card" id="tipCardWatt">
         <div class="tip-text">
@@ -76,49 +124,6 @@
             <a href="mailto:brainleech198@foxmail.com" class="feedback-email">brainleech198@foxmail.com</a>
         </div>
         <a href="mailto:brainleech198@foxmail.com" class="tip-btn" target="_blank" rel="noopener">📧 <span data-i18n="tip_feedback_button">发送邮件</span></a>
-    </section>
-
-    <!-- 游戏介绍 -->
-    <section class="card card-intro" id="intro">
-        <div class="card-header" style="margin-bottom: 20px;">
-            <h2><span class="sec-emoji">🎮</span> <span data-i18n="game_intro_title">游戏介绍</span></h2>
-        </div>
-        <div class="intro-body">
-            <p data-i18n="game_intro_desc1">
-                氢风（QingFeng）是一款基于 libGDX 构建的视觉小说游戏引擎与跨平台游戏启动器。项目采用标准化的文件结构与 JSON 数据驱动的资源体系，以清晰、规范的格式组织游戏内容，为创作者提供统一而稳定的运行环境。
-            </p>
-            <p data-i18n="game_intro_desc2">
-                氢风原生支持简体中文、繁体中文与英文三种界面语言，并提供可切换的主题系统，满足不同地区用户的个性化需求。Windows、Linux 与 Android 三大平台同步支持，覆盖桌面与移动端多种使用场景。
-            </p>
-            <p data-i18n="game_intro_desc3">
-                氢风内置完善的资源包管理体系，支持语言包、主题包、游戏语言包与游戏主题包等资源的导入与切换，帮助创作者灵活扩展游戏内容。同时附带版本检测与一键资源修复功能，确保游戏资源始终完整可用。
-            </p>
-            <p data-i18n="game_intro_desc4">
-                游戏与资源包采用专属文件格式（.qfg、.qfl、.qft、.qfgl、.qfgt），并已在 Windows、Linux、Android 多平台完成文件关联，双击即可直接加载运行。可视化编辑器、2D 地图与视频播放等扩展能力正在规划中，将持续为创作者释放更多可能。
-            </p>
-        </div>
-    </section>
-
-    <!-- 资源下载 -->
-    <section class="card" id="download">
-        <div class="card-header">
-            <h2><span class="sec-emoji">📥</span> <span data-i18n="download_section_title">资源下载</span></h2>
-            <a href="html/history_versions.html" class="history-link">📜 <span data-i18n="history_button">历史版本 →</span></a>
-        </div>
-        <div class="version-card" id="latestVersionCard">
-            <div class="loading-skeleton" style="text-align:center; padding:40px;" data-i18n="loading_version">加载版本中...</div>
-        </div>
-    </section>
-
-    <!-- 社区分享 -->
-    <section class="card" id="community">
-        <div class="card-header">
-            <h2><span class="sec-emoji">💬</span> <span data-i18n="community_title">社区分享</span></h2>
-            <a href="html/community_share.html" class="history-link">💬 <span data-i18n="community_button">社区分享 →</span></a>
-        </div>
-        <div class="community-description">
-            <p>✨ <span data-i18n="community_description">这里是功能建议与改进反馈、创作内容分享、玩家间讨论的社区空间。欢迎文明交流！</span></p>
-        </div>
     </section>
 
 </main>

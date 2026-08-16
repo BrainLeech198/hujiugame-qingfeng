@@ -80,5 +80,9 @@
   "nav_community": "Сообщество",
   "nav_community_resources": "Ресурсы сообщества →",
   "nav_menu_label": "Открыть меню навигации",
-  "update_time": "Время обновления"
+  "update_time": "Время обновления",
+  "expand_all": "Развернуть всё",
+  "collapse_all": "Свернуть всё",
+  "expand_log": "Развернуть",
+  "collapse_log": "Свернуть"
 }

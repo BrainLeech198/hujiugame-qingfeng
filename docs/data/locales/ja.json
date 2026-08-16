@@ -80,5 +80,9 @@
   "nav_community": "コミュニティ",
   "nav_community_resources": "コミュニティリソース →",
   "nav_menu_label": "ナビゲーションメニューを開く",
-  "update_time": "更新時間"
+  "update_time": "更新時間",
+  "expand_all": "すべて展開",
+  "collapse_all": "すべて折りたたむ",
+  "expand_log": "展開",
+  "collapse_log": "折りたたむ"
 }

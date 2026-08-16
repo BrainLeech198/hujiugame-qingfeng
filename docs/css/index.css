@@ -68,7 +68,7 @@ body {
     background: var(--card-bg);
     border-radius: 40px;
     padding: 20px 30px;
-    margin-bottom: 30px;
+    margin: 30px 0;
     box-shadow: var(--shadow-soft);
     border: 1px solid var(--border-glass);
     display: flex;
@@ -276,6 +276,45 @@ body {
     margin-bottom: 0;
 }
 
+/* ================================
+   游戏介绍折叠
+   ================================ */
+.intro-body {
+    position: relative;
+}
+.intro-fold.folded .intro-body p:nth-child(n+3) {
+    display: none;
+}
+.fold-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 18px auto 0;
+    padding: 9px 26px;
+    border-radius: 50px;
+    border: 1.5px solid var(--border-glass-strong);
+    background: transparent;
+    color: var(--accent-2);
+    font-size: 1.05rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out), border-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+}
+.fold-toggle:hover {
+    background: rgba(79, 195, 216, 0.1);
+    border-color: var(--accent);
+    color: var(--accent-2);
+    transform: translateY(-2px);
+}
+.fold-arrow {
+    display: inline-block;
+    transition: transform 0.25s var(--ease-out);
+}
+.fold-toggle[aria-expanded="true"] .fold-arrow {
+    transform: rotate(180deg);
+}
+
 .history-link {
     font-size: 1.2rem;
     background: transparent;
@@ -369,6 +408,62 @@ body {
     white-space: pre-wrap;
     word-break: break-word;
     box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+.log-fold {
+    position: relative;
+}
+.log-fold .version-log {
+    max-height: none;
+}
+.log-fold.folded .version-log {
+    max-height: 110px;
+    overflow-y: auto;
+}
+.log-fold.folded .version-log::-webkit-scrollbar {
+    width: 22px;
+}
+.log-fold.folded .version-log::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(126, 224, 208, 0.7), rgba(79, 195, 216, 0.6));
+    border-radius: 5px;
+    min-height: 40px;
+}
+.log-fold.folded .version-log::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(126, 224, 208, 0.85), rgba(79, 195, 216, 0.75));
+}
+.log-fold.folded .version-log::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    margin: 4px 10px 4px 2px;
+}
+.log-fold.folded .version-log {
+    scrollbar-width: auto;
+    scrollbar-color: rgba(79, 195, 216, 0.6) rgba(0, 0, 0, 0.28);
+}
+.log-toggle {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 6px 0 0;
+    padding: 8px 24px;
+    border-radius: 50px;
+    border: 1.5px solid var(--border-glass-strong);
+    background: transparent;
+    color: var(--accent-2);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out), border-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+}
+.log-toggle:hover {
+    background: rgba(79, 195, 216, 0.1);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+.log-toggle[aria-expanded="true"] .fold-arrow {
+    transform: rotate(180deg);
 }
 
 .download-row {

@@ -34,6 +34,38 @@
         }
     }
 
+    // ==================== 游戏介绍折叠 ====================
+    function initIntroFold() {
+        const fold = document.getElementById('introFold');
+        if (!fold) return;
+        const toggle = document.getElementById('introFoldToggle');
+        const body = fold.querySelector('.intro-body');
+        if (!toggle || !body) return;
+
+        const paras = body.querySelectorAll('p');
+        if (paras.length <= 2) return;
+        // 第 3、4 段有实际内容时才折叠（单语言内容过短不显示按钮）
+        const overflow = paras.length > 2 &&
+            (paras[2].textContent.trim() !== '' || (paras[3] && paras[3].textContent.trim() !== ''));
+
+        const updateText = () => {
+            const span = toggle.querySelector('[data-i18n]');
+            if (span && currentMessages) {
+                const key = fold.classList.contains('folded') ? 'expand_all' : 'collapse_all';
+                span.textContent = currentMessages[key] || (fold.classList.contains('folded') ? '展开全部' : '收起全部');
+            }
+        };
+        toggle.addEventListener('click', () => {
+            fold.classList.toggle('folded');
+            toggle.setAttribute('aria-expanded', String(!fold.classList.contains('folded')));
+            updateText();
+        });
+        if (overflow) {
+            fold.classList.add('folded');
+            toggle.hidden = false;
+        }
+    }
+
     // ==================== Lightbox 图片放大 ====================
     function initLightbox() {
         const lightbox = document.getElementById('lightbox');
@@ -144,7 +176,12 @@
                 ${isLatest}
             </div>
             ${verDate}
-            <div class="version-log">${safeLog}</div>
+            <div class="log-fold">
+                <div class="version-log">${safeLog}</div>
+                <button class="log-toggle" type="button" hidden>
+                    <span>展开全部</span><span class="fold-arrow">▾</span>
+                </button>
+            </div>
             <div class="download-row">
                 ${buildDownloadBtns(versionInfo.download)}
             </div>
@@ -159,6 +196,34 @@
                 window.showPlatformSelection(platform, download);
             });
         });
+        initLatestLogFold();
+    }
+
+    // ==================== 主页最新版本日志折叠（固定像素超阈值才折叠） ====================
+    const LOG_FOLD_MAX_HEIGHT = 110;
+
+    function initLatestLogFold() {
+        const foldEl = latestCard.querySelector('.log-fold');
+        if (!foldEl) return;
+        const log = foldEl.querySelector('.version-log');
+        const toggle = foldEl.querySelector('.log-toggle');
+        if (!log || !toggle) return;
+        if (log.scrollHeight <= LOG_FOLD_MAX_HEIGHT) return;
+
+        const updateText = (open) => {
+            const span = toggle.querySelector('span');
+            const key = open ? 'expand_log' : 'collapse_log';
+            span.textContent = (currentMessages && currentMessages[key]) || (open ? '展开全部' : '收起');
+        };
+        toggle.addEventListener('click', () => {
+            const open = foldEl.classList.toggle('folded');
+            toggle.setAttribute('aria-expanded', String(open));
+            updateText(open);
+        });
+        foldEl.classList.add('folded');
+        toggle.setAttribute('aria-expanded', 'false');
+        updateText(true);
+        toggle.hidden = false;
     }
 
     function fetchVersionAndUpdate() {
@@ -241,6 +306,7 @@
     loadMessages(userLang).then(messages => {
         applyI18n(messages);
         bindRepairButton();
+        initIntroFold();
         loadImageConfig();
         fetchVersionAndUpdate();
     }).catch(err => {

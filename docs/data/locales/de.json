@@ -80,5 +80,9 @@
   "nav_community": "Community",
   "nav_community_resources": "Community-Ressourcen →",
   "nav_menu_label": "Navigationsmenü öffnen",
-  "update_time": "Aktualisierungszeit"
+  "update_time": "Aktualisierungszeit",
+  "expand_all": "Alles erweitern",
+  "collapse_all": "Alles einklappen",
+  "expand_log": "Erweitern",
+  "collapse_log": "Einklappen"
 }

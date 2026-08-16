@@ -80,5 +80,9 @@
   "nav_community": "Communauté",
   "nav_community_resources": "Ressources communautaires →",
   "nav_menu_label": "Ouvrir le menu de navigation",
-  "update_time": "Date de mise à jour"
+  "update_time": "Date de mise à jour",
+  "expand_all": "Tout déplier",
+  "collapse_all": "Tout replier",
+  "expand_log": "Déplier",
+  "collapse_log": "Replier"
 }
