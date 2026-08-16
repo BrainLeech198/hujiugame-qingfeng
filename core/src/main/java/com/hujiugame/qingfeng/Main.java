@@ -159,7 +159,7 @@ public class Main extends ApplicationAdapter
         }
         catch (Exception e)
         {
-            safeCrash(e);
+            CrashUtils.safeCrash(e);
             return;
         }
 
@@ -237,24 +237,6 @@ public class Main extends ApplicationAdapter
     // ===================================================================================================================
 
     /**
-     * 安全崩溃处理，CrashUtils 不可用时（如类加载失败）退化为 RuntimeException 抛出，
-     * 让 Lwjgl3Launcher 的上层 catch 区分 GL 兼容性异常后决定降级或崩溃
-     */
-    private static void safeCrash (Throwable e)
-    {
-        try
-        {
-            CrashUtils.crash(e);
-        }
-        catch (Throwable t)
-        {
-            System.err.println("[Main] 崩溃处理失败: " + t.getMessage());
-            e.printStackTrace(System.err);
-            throw new RuntimeException("程序异常退出: " + e.getMessage(), e);
-        }
-    }
-
-    /**
      * 每帧渲染循环，处理清屏、懒初始化、主绘制和顶层绘制
      */
     @Override
@@ -286,7 +268,7 @@ public class Main extends ApplicationAdapter
         }
         catch (Throwable e)
         {
-            safeCrash(e);
+            CrashUtils.safeCrash(e);
         }
     }
 
@@ -462,7 +444,7 @@ public class Main extends ApplicationAdapter
         }
         catch (Exception e)
         {
-            safeCrash(e);
+            CrashUtils.safeCrash(e);
         }
 
         isLazyInitialized = true;
@@ -553,7 +535,7 @@ public class Main extends ApplicationAdapter
             inputAdapterThread.setUncaughtExceptionHandler((t, e) ->
             {
                 LogUtils.error(Main.class, "inputAdapterThread异常", (Exception) e);
-                safeCrash(new RuntimeException("输入线程崩溃: " + e.getMessage(), e));
+                CrashUtils.safeCrash(new RuntimeException("输入线程崩溃: " + e.getMessage(), e));
             });
             inputAdapterThread.start();
 
@@ -611,7 +593,7 @@ public class Main extends ApplicationAdapter
                     Gdx.app.postRunnable(() ->
                     {
                         LogUtils.error(Main.class, "threadUpdateVersion updateChecker.init() 游戏更新检测失败");
-                        safeCrash(new RuntimeException("threadUpdateVersion updateChecker.init() 游戏更新检测失败"));
+                        CrashUtils.safeCrash(new RuntimeException("threadUpdateVersion updateChecker.init() 游戏更新检测失败"));
                     });
                 }
                 else

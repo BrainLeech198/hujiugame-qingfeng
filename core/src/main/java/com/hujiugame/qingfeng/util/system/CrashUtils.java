@@ -118,4 +118,28 @@ public final class CrashUtils
         Gdx.app.exit();
     }
 
+    /**
+     * 安全崩溃处理：先尝试 {@link #crash(Throwable)}，失败时退化为 System.err 打印并抛 RuntimeException，
+     * 避免崩溃处理自身不可用（类加载失败、弹窗组件异常等）导致原始崩溃信息丢失。
+     * <p>
+     * 性能：仅崩溃路径调用，非常用路径。
+     * <p>
+     * 抛出的 RuntimeException 会传播到调用方上层（如 Lwjgl3Launcher），由其对 GL 兼容性异常做降级判断。
+     *
+     * @param e 崩溃异常（Throwable）
+     */
+    public static void safeCrash (Throwable e)
+    {
+        try
+        {
+            crash(e);
+        }
+        catch (Throwable t)
+        {
+            System.err.println("[CrashUtils] 崩溃处理失败: " + t.getMessage());
+            e.printStackTrace(System.err);
+            throw new RuntimeException("程序异常退出: " + e.getMessage(), e);
+        }
+    }
+
 }
