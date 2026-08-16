@@ -21,13 +21,21 @@
 > 10. 【必须】CHANGELOG 条目按日期归组：同一天的所有提交主题共同包含在同一个 `## <日期> — <概括标题>` 下，禁止拆成多个 `## ` 日期标题；每个提交块以 `**<主题>**（commit <7位短哈希>）` 标记，块内每条 `- ` 条目行尾标注引入它的提交短哈希 `（commit <7位短哈希>）`。新条目随内容改动提交后，其哈希在下一笔内容改动提交中一并补写（补写仅改 hash，不新增条目）
 > 11. 【必须】写版本发布说明（官网 `docs/data/versions.json` 的 `log`、`develop/PUBLISH.md` 面向玩家摘要）时，按「上一版本发布点 → 本版本发布点」之间的 commit 区间梳理玩家可见改动（修复的 Bug / 新增功能 / 优化），逐一写入，不要遗漏跨版本才生效的修复（打包之后完成的 bug 修复会随下一个版本发出，须算入下一版本的说明）；beta 测试版按此梳理书写即可，release 正式版属重要更新，需正式、系统地书写
 
-## 2026-08-16 — 目录结构补全 + 12 个新语言翻译包 + 首次运行按设备语言改写默认语言 + 设备语言自动检测与 15 语言扩展 + 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新 + 全屏切换调用空值防御
+## 2026-08-16 — 默认语言改英文 + 目录结构补全 + 12 个新语言翻译包 + 首次运行按设备语言改写默认语言 + 设备语言自动检测与 15 语言扩展 + 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新 + 全屏切换调用空值防御
+
+**变更(配置)：user_config 默认语言由简体中文改为英文**
+
+### 变更
+
+- **user_config.json 默认语言改 en_US** — 内部默认配置 language 字段由 zh_CN 改为 en_US，与设备语言检测默认值一致（commit ）
+
+---
 
 **修复(资产)：directory_structure 补全新语言目录与 page 配置条目**
 
 ### 修复
 
-- **directory_structure.json 工具重新生成** — 补全 12 个新语言目录条目（含 language.json/requirement.json），并自动修复 config_basic/config_display/menu_main 三个 page 目录缺失的 config.json 条目（commit ）
+- **directory_structure.json 工具重新生成** — 补全 12 个新语言目录条目（含 language.json/requirement.json），并自动修复 config_basic/config_display/menu_main 三个 page 目录缺失的 config.json 条目（commit f680356）
 
 ---
 
