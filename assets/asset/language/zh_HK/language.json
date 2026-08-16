@@ -1,0 +1,6 @@
+{
+  "name" : "繁體中文·香港",
+  "version" : "1.0.0",
+  "default" : "requirement",
+  "blocks" : ["requirement.json"]
+}

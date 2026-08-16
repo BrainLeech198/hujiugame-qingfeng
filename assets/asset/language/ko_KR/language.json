@@ -1,0 +1,6 @@
+{
+  "name" : "한국어·대한민국",
+  "version" : "1.0.0",
+  "default" : "requirement",
+  "blocks" : ["requirement.json"]
+}

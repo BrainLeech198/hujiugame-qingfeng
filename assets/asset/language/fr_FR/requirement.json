@@ -1,0 +1,47 @@
+{
+  "message_box" : {
+    "open_official_website.title" : "Ouvrir le site officiel du jeu ?",
+    "open_official_website.content" : "Voulez-vous ouvrir le navigateur et aller sur le site officiel ?",
+    "quit_game.title" : "Quitter le jeu",
+    "quit_game.content" : "Êtes-vous sûr de vouloir quitter le jeu ?",
+    "update_detected.title" : "Nouvelle version détectée",
+    "update_detected.content" : "Voulez-vous ouvrir votre navigateur pour télécharger la dernière version depuis notre site officiel ?",
+    "update_detected_beta.title" : "Version bêta détectée",
+    "update_detected_beta.content" : "Il s'agit d'une version bêta. Elle peut être instable ou contenir des problèmes inconnus. Voulez-vous ouvrir votre navigateur pour la télécharger depuis notre site officiel ?",
+    "update_request_failed.title" : "Échec de la vérification de mise à jour",
+    "update_request_failed.content" : "Vérifiez les autorisations réseau et la connexion Internet. Voulez-vous ouvrir le navigateur pour visiter le site officiel et obtenir la dernière version ?",
+    "game_version_different.title" : "Incohérence de version !",
+    "game_version_different.content.1" : "Le jeu actuel \"",
+    "game_version_different.content.2" : "\" nécessite la version de lanceur suivante :",
+    "game_version_different.content.3" : ", alors que la version actuelle est :",
+    "game_version_different.content.4" : ". Le forcer à s'exécuter peut entraîner des plantages",
+    "game_launcher_version_unknown.title" : "Exigence de version inconnue !",
+    "game_launcher_version_unknown.content.1" : "Le jeu actuel \"",
+    "game_launcher_version_unknown.content.2" : "\" ne déclare pas d'exigence de version de lanceur reconnue. Il est recommandé de ne pas le forcer à s'exécuter."
+  },
+  "menu.main" : {
+    "button.start" : "Démarrer",
+    "button.create" : "Créer",
+    "button.config" : "Paramètres",
+    "button.quit" : "Quitter"
+  },
+  "menu.list" : {
+    "button.back" : "Retour",
+    "button.import" : "Importer",
+    "button.profile" : "Profil",
+    "button.share" : "Partager",
+    "button.delete" : "Supprimer",
+    "button.last_page" : "Page précédente",
+    "button.next_page" : "Page suivante",
+    "label.absolute_path" : "Chemin du dossier",
+    "label.selected_path" : "Dossier sélectionné",
+    "label.page" : "sur"
+  },
+  "menu.load" : {
+    "label.loading" : "Chargement..."
+  },
+  "config.basic" : {
+    "back" : "Retour",
+    "language" : "Langue"
+  }
+}

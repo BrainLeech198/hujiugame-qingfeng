@@ -1,0 +1,47 @@
+{
+  "message_box" : {
+    "open_official_website.title" : "Offizielle Spiel-Website öffnen?",
+    "open_official_website.content" : "Möchten Sie den Browser öffnen und zur offiziellen Website gehen?",
+    "quit_game.title" : "Spiel beenden",
+    "quit_game.content" : "Möchten Sie das Spiel wirklich beenden?",
+    "update_detected.title" : "Neue Version erkannt!",
+    "update_detected.content" : "Möchten Sie Ihren Browser öffnen, um die neueste Version von unserer offiziellen Website herunterzuladen?",
+    "update_detected_beta.title" : "Beta-Update erkannt!",
+    "update_detected_beta.content" : "Dies ist ein Beta-Update. Es kann instabil sein oder unbekannte Probleme enthalten. Möchten Sie Ihren Browser öffnen, um es von unserer offiziellen Website herunterzuladen?",
+    "update_request_failed.title" : "Update-Prüfung fehlgeschlagen!",
+    "update_request_failed.content" : "Überprüfen Sie Netzwerkberechtigungen und Internetverbindung. Möchten Sie den Browser öffnen, um die offizielle Website zu besuchen und die neueste Version zu erhalten?",
+    "game_version_different.title" : "Versionskonflikt!",
+    "game_version_different.content.1" : "Das aktuelle Spiel \"",
+    "game_version_different.content.2" : "\" erfordert die Launcher-Version:",
+    "game_version_different.content.3" : ", während die aktuelle Version ist:",
+    "game_version_different.content.4" : ". Ein erzwungener Start kann zu Abstürzen führen",
+    "game_launcher_version_unknown.title" : "Unbekannte Versionsanforderung!",
+    "game_launcher_version_unknown.content.1" : "Das aktuelle Spiel \"",
+    "game_launcher_version_unknown.content.2" : "\" deklariert keine erkennbare Launcher-Versionsanforderung. Es wird empfohlen, es nicht erzwungen auszuführen."
+  },
+  "menu.main" : {
+    "button.start" : "Starten",
+    "button.create" : "Erstellen",
+    "button.config" : "Einstellungen",
+    "button.quit" : "Beenden"
+  },
+  "menu.list" : {
+    "button.back" : "Zurück",
+    "button.import" : "Importieren",
+    "button.profile" : "Profil",
+    "button.share" : "Teilen",
+    "button.delete" : "Löschen",
+    "button.last_page" : "Vorherige Seite",
+    "button.next_page" : "Nächste Seite",
+    "label.absolute_path" : "Ordnerpfad",
+    "label.selected_path" : "Ausgewählter Ordner",
+    "label.page" : "von"
+  },
+  "menu.load" : {
+    "label.loading" : "Wird geladen..."
+  },
+  "config.basic" : {
+    "back" : "Zurück",
+    "language" : "Sprache"
+  }
+}

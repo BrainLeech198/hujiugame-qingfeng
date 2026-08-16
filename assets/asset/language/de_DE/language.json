@@ -1,0 +1,6 @@
+{
+  "name" : "Deutsch·Deutschland",
+  "version" : "1.0.0",
+  "default" : "requirement",
+  "blocks" : ["requirement.json"]
+}

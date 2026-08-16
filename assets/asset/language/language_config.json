@@ -1,14 +1,62 @@
 {
   "zh_CN": {
-    "name":"简体中文",
+    "name": "简体中文·中国大陆",
     "kind": "internal"
   },
   "zh_TW": {
-    "name":"繁體中文 (台灣)",
+    "name": "繁體中文·台灣",
+    "kind": "internal"
+  },
+  "zh_HK": {
+    "name": "繁體中文·香港",
     "kind": "internal"
   },
   "en_US": {
-    "name": "English (US)",
+    "name": "English·United States",
+    "kind": "internal"
+  },
+  "en_GB": {
+    "name": "English·United Kingdom",
+    "kind": "internal"
+  },
+  "es_ES": {
+    "name": "Español·España",
+    "kind": "internal"
+  },
+  "es_MX": {
+    "name": "Español·México",
+    "kind": "internal"
+  },
+  "fr_FR": {
+    "name": "Français·France",
+    "kind": "internal"
+  },
+  "fr_CA": {
+    "name": "Français·Canada",
+    "kind": "internal"
+  },
+  "pt_BR": {
+    "name": "Português·Brasil",
+    "kind": "internal"
+  },
+  "pt_PT": {
+    "name": "Português·Portugal",
+    "kind": "internal"
+  },
+  "ru_RU": {
+    "name": "Русский·Россия",
+    "kind": "internal"
+  },
+  "ja_JP": {
+    "name": "日本語·日本",
+    "kind": "internal"
+  },
+  "ko_KR": {
+    "name": "한국어·대한민국",
+    "kind": "internal"
+  },
+  "de_DE": {
+    "name": "Deutsch·Deutschland",
     "kind": "internal"
   }
 }

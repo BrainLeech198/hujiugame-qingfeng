@@ -1,0 +1,47 @@
+{
+  "message_box" : {
+    "open_official_website.title" : "開啟遊戲官方網站？",
+    "open_official_website.content" : "是否要開啟瀏覽器前往官方網站？",
+    "quit_game.title" : "退出遊戲？",
+    "quit_game.content" : "確定要退出遊戲嗎？",
+    "update_detected.title" : "偵測到新版本！",
+    "update_detected.content" : "是否開啟瀏覽器前往官方網站下載最新版本？",
+    "update_detected_beta.title" : "發現測試版更新！",
+    "update_detected_beta.content" : "此更新為測試版，功能可能不穩定或存在未知問題。是否開啟瀏覽器前往官方網站下載？",
+    "update_request_failed.title" : "版本偵測失敗！",
+    "update_request_failed.content" : "請檢查軟件的網絡連線權限，是否開啟瀏覽器前往官方網站查看版本更新？",
+    "game_version_different.title" : "版本不一致！",
+    "game_version_different.content.1" : "目前遊戲《",
+    "game_version_different.content.2" : "》的最佳啟動器版本為：",
+    "game_version_different.content.3" : "而目前版本為：",
+    "game_version_different.content.4" : "強行執行可能導致崩潰",
+    "game_launcher_version_unknown.title" : "無法識別遊戲版本要求！",
+    "game_launcher_version_unknown.content.1" : "目前遊戲《",
+    "game_launcher_version_unknown.content.2" : "》未聲明可識別的啟動器版本要求，建議不要強制執行"
+  },
+  "menu.main" : {
+    "button.start" : "開始",
+    "button.create" : "創作",
+    "button.config" : "設定",
+    "button.quit" : "退出"
+  },
+  "menu.list" : {
+    "button.back" : "返回",
+    "button.import" : "匯入",
+    "button.profile" : "設定檔",
+    "button.share" : "分享",
+    "button.delete" : "刪除",
+    "button.last_page" : "上一頁",
+    "button.next_page" : "下一頁",
+    "label.absolute_path" : "資料夾路徑",
+    "label.selected_path" : "已選擇的遊戲目錄",
+    "label.page" : "/"
+  },
+  "menu.load" : {
+    "label.loading" : "載入中..."
+  },
+  "config.basic" : {
+    "back" : "返回",
+    "language" : "使用的語言"
+  }
+}

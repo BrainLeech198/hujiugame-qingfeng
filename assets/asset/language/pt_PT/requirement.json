@@ -1,0 +1,47 @@
+{
+  "message_box" : {
+    "open_official_website.title" : "Abrir o site oficial do jogo?",
+    "open_official_website.content" : "Deseja abrir o navegador e ir para o site oficial?",
+    "quit_game.title" : "Sair do jogo",
+    "quit_game.content" : "Tem a certeza de que deseja sair do jogo?",
+    "update_detected.title" : "Nova versão detetada!",
+    "update_detected.content" : "Deseja abrir o seu navegador para descarregar a versão mais recente do nosso site oficial?",
+    "update_detected_beta.title" : "Atualização beta detetada!",
+    "update_detected_beta.content" : "Esta é uma atualização beta. Pode ser instável ou conter problemas desconhecidos. Deseja abrir o seu navegador para a descarregar do nosso site oficial?",
+    "update_request_failed.title" : "Falha na verificação de atualização!",
+    "update_request_failed.content" : "Verifique as permissões de rede e a ligação à Internet. Deseja abrir o navegador para visitar o site oficial e obter a versão mais recente?",
+    "game_version_different.title" : "Versão incompatível!",
+    "game_version_different.content.1" : "O jogo atual \"",
+    "game_version_different.content.2" : "\" requer a versão do lançador:",
+    "game_version_different.content.3" : ", enquanto a versão atual é:",
+    "game_version_different.content.4" : ". Forçá-lo a executar pode causar falhas",
+    "game_launcher_version_unknown.title" : "Requisito de versão desconhecido!",
+    "game_launcher_version_unknown.content.1" : "O jogo atual \"",
+    "game_launcher_version_unknown.content.2" : "\" não declara um requisito de versão de lançador reconhecível. Recomenda-se não forçá-lo a executar."
+  },
+  "menu.main" : {
+    "button.start" : "Iniciar",
+    "button.create" : "Criar",
+    "button.config" : "Definições",
+    "button.quit" : "Sair"
+  },
+  "menu.list" : {
+    "button.back" : "Voltar",
+    "button.import" : "Importar",
+    "button.profile" : "Perfil",
+    "button.share" : "Partilhar",
+    "button.delete" : "Eliminar",
+    "button.last_page" : "Página anterior",
+    "button.next_page" : "Página seguinte",
+    "label.absolute_path" : "Caminho da pasta",
+    "label.selected_path" : "Pasta selecionada",
+    "label.page" : "de"
+  },
+  "menu.load" : {
+    "label.loading" : "A carregar..."
+  },
+  "config.basic" : {
+    "back" : "Voltar",
+    "language" : "Idioma"
+  }
+}
