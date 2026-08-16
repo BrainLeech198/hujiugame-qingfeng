@@ -10,28 +10,24 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.hujiugame.qingfeng.di.InstanceContent;
 import com.hujiugame.qingfeng.core.GameHost;
 import com.hujiugame.qingfeng.core.UpdateChecker;
-import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.type.Numeric;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.file.PathName;
-import com.hujiugame.qingfeng.type.key.ConfigKey;
 import com.hujiugame.qingfeng.type.ui.UseViewport;
 import com.hujiugame.qingfeng.input.ControllerInputHandler;
 import com.hujiugame.qingfeng.input.KeyboardInputHandler;
 import com.hujiugame.qingfeng.input.VirtualInputHandler;
+import com.hujiugame.qingfeng.manager.UserConfigManager;
 import com.hujiugame.qingfeng.util.json.parser.JsonTextParser;
 import com.hujiugame.qingfeng.util.system.CrashUtils;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 import com.hujiugame.qingfeng.util.system.LogUtils;
-import com.hujiugame.qingfeng.util.system.PlatformUtils;
 
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * {@link ApplicationListener} 全平台一套代码
@@ -204,6 +200,76 @@ public class Main extends ApplicationAdapter
 
         LogUtils.debug(Main.class, "create 快速启动完成，剩余初始化延迟到首次render循环后");
     }
+
+    /**
+     * 初始化 libGDX 基础组件（画笔、视窗、舞台），分辨率/视窗由 UserConfigManager.initDisplayConfig 确定
+     *
+     * @return 是否初始化成功
+     */
+    private boolean initLibGDX ()
+    {
+        try
+        {
+            try
+            {
+                // 基础组件:画笔
+                spriteBatch = new SpriteBatch();
+            }
+            catch (IllegalArgumentException e)
+            {
+                // 错误信息
+                StringBuilder errorMessage = new StringBuilder();
+
+                // 捕获并打印错误，获取更详细的着色器编译信息
+                LogUtils.error(Main.class, "initLibGDX SpriteBatch创建失败", e);
+
+                // 这里可能还包含一个来自 ShaderProgram 内部的错误日志，需要一起打印
+                Throwable cause = e.getCause();
+                while (cause != null)
+                {
+                    LogUtils.error(Main.class, "initLibGDX SpriteBatch创建失败 Caused by: " + cause.getMessage());
+                    errorMessage.append(" Caused by: ").append(cause.getMessage());
+                    cause = cause.getCause();
+                }
+
+                // 尝试获取着色器编译日志
+                try
+                {
+                    // 反射或直接尝试编译默认着色器
+                    ShaderProgram.pedantic = false;
+                    ShaderProgram defaultShader = SpriteBatch.createDefaultShader();
+                    if (!defaultShader.isCompiled())
+                    {
+                        LogUtils.error(Main.class, "默认着色器编译日志: " + defaultShader.getLog());
+                        errorMessage.append(" 着色器编译日志: ").append(defaultShader.getLog());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogUtils.error(Main.class, "无法获取着色器编译日志", ex);
+                    errorMessage.append(" 无法获取着色器编译日志");
+                }
+
+                // 处理错误，例如抛出一个运行时异常以便开发者知晓
+                throw new RuntimeException("无法初始化SpriteBatch，请检查OpenGL环境。" + errorMessage, e);
+            }
+
+            // 初始化显示配置（特例函数）：读取user_config、应用分辨率、确定视窗
+            useViewport = UserConfigManager.initDisplayConfig();
+
+            // 给舞台stage配置使用的视窗
+            stage = new Stage(useViewport.getViewport(), spriteBatch);
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            LogUtils.error(Main.class, "initLibGDX", e);
+            throw e;
+        }
+    }
+
+    // ===================================================================================================================
 
     /**
      * 安全崩溃处理，CrashUtils 不可用时（如类加载失败）退化为 RuntimeException 抛出，
@@ -438,205 +504,6 @@ public class Main extends ApplicationAdapter
         LogUtils.debug(Main.class, "lazyInit 懒加载初始化完成");
     }
 
-    // ===================================================================================================================
-
-    /**
-     * 初始化 libGDX 基础组件（画笔、视口、分辨率、舞台）
-     *
-     * @return 是否初始化成功
-     */
-    private boolean initLibGDX ()
-    {
-        try
-        {
-            try
-            {
-                // 基础组件:画笔
-                spriteBatch = new SpriteBatch();
-            }
-            catch (IllegalArgumentException e)
-            {
-                // 错误信息
-                StringBuilder errorMessage = new StringBuilder();
-
-                // 捕获并打印错误，获取更详细的着色器编译信息
-                LogUtils.error(Main.class, "initLibGDX SpriteBatch创建失败", e);
-
-                // 这里可能还包含一个来自 ShaderProgram 内部的错误日志，需要一起打印
-                Throwable cause = e.getCause();
-                while (cause != null)
-                {
-                    LogUtils.error(Main.class, "initLibGDX SpriteBatch创建失败 Caused by: " + cause.getMessage());
-                    errorMessage.append(" Caused by: ").append(cause.getMessage());
-                    cause = cause.getCause();
-                }
-
-                // 尝试获取着色器编译日志
-                try
-                {
-                    // 反射或直接尝试编译默认着色器
-                    ShaderProgram.pedantic = false;
-                    ShaderProgram defaultShader = SpriteBatch.createDefaultShader();
-                    if (!defaultShader.isCompiled())
-                    {
-                        LogUtils.error(Main.class, "默认着色器编译日志: " + defaultShader.getLog());
-                        errorMessage.append(" 着色器编译日志: ").append(defaultShader.getLog());
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogUtils.error(Main.class, "无法获取着色器编译日志", ex);
-                    errorMessage.append(" 无法获取着色器编译日志");
-                }
-
-                // 处理错误，例如抛出一个运行时异常以便开发者知晓
-                throw new RuntimeException("无法初始化SpriteBatch，请检查OpenGL环境。" + errorMessage, e);
-            }
-
-            // 读取user_config
-            FileHandle userConfigHandle = Gdx.files.external(FileUtils.pathJoin(PathName.BASE, PathName.ASSET, FileName.USER_CONFIG));
-            JsonEntity userConfigJson = new JsonEntity();
-            if (FileUtils.isFileExist(userConfigHandle))
-            {
-                userConfigJson = new JsonEntity(userConfigHandle);
-            }
-            // 存在配置
-            if (!userConfigJson.isEmpty())
-            {
-                LogUtils.debug(Main.class, "initLibGDX 读取user_config成功");
-
-                // 配置分辨率
-                if (PlatformUtils.isNotDesktop())
-                {
-                    LogUtils.debug(Main.class, "initLibGDX 运行平台不支持调整分辨率 (platform): " + PlatformUtils.getPlatformType());
-                }
-                else if (userConfigJson.containsKey(ConfigKey.User.Resolution.KEY))
-                {
-                    // 分辨率
-                    JsonEntity resolutionJson = userConfigJson.getJsonEntityByKey(ConfigKey.User.Resolution.KEY);
-
-                    if (resolutionJson.containsKey(ConfigKey.User.Resolution.WIDTH) && resolutionJson.containsKey(ConfigKey.User.Resolution.HEIGHT))
-                    {
-                        int screenWidth = resolutionJson.getInt(ConfigKey.User.Resolution.WIDTH);
-                        int screenHeight = resolutionJson.getInt(ConfigKey.User.Resolution.HEIGHT);
-                        Gdx.graphics.setWindowedMode(screenWidth, screenHeight);
-                    }
-                }
-
-                // 配置视窗: stretch, fit, fill
-                if (userConfigJson.containsKey(ConfigKey.User.USE_VIEWPORT))
-                {
-                    String useViewportName = userConfigJson.getString(ConfigKey.User.USE_VIEWPORT).toUpperCase();
-                    useViewport = UseViewport.valueOf(useViewportName);
-                }
-                else
-                {
-                    useViewport = UseViewport.STRETCH;
-                }
-
-            }
-            // 不存在配置
-            else
-            {
-                LogUtils.debug(Main.class, "initLibGDX 读取user_config失败");
-
-                // 配置分辨率: 屏幕80%的16:9
-                if (PlatformUtils.isNotDesktop())
-                {
-                    LogUtils.debug(Main.class, "initLibGDX 运行平台不支持调整分辨率 (platform): " + PlatformUtils.getPlatformType());
-                }
-                else
-                {
-                    // 窗口占屏幕比例: 80%，即窗口尺寸约为屏幕可用区域的 80%
-                    // 按 16:9 等比缩放，保证窗口比例合理且不超出屏幕
-                    final float WINDOW_SCREEN_RATIO = 0.8f;
-
-                    // 检测失败/异常的 兜底分辨率
-                    int detectWidth = 1024;
-                    int detectHeight = 576;
-
-                    try
-                    {
-                        Graphics.DisplayMode displayMode = Gdx.graphics.getDisplayMode();
-                        if (displayMode != null && displayMode.width > 0 && displayMode.height > 0)
-                        {
-                            int screenWidth = displayMode.width;
-                            int screenHeight = displayMode.height;
-
-                            // 1. 以屏幕宽度为基准: 取 WINDOW_SCREEN_RATIO 作为窗口宽度
-                            int targetWidth = (int)(screenWidth * WINDOW_SCREEN_RATIO);
-                            // 2. 按 16:9 算出对应高度
-                            int targetHeight = targetWidth * 9 / 16;
-
-                            // 3. 检查高度是否超过屏幕高度的 WINDOW_SCREEN_RATIO
-                            //    若超出则改以高度为基准反算宽度，避免窗口超出屏幕垂直范围
-                            int maxHeight = (int)(screenHeight * WINDOW_SCREEN_RATIO);
-                            if (targetHeight > maxHeight)
-                            {
-                                targetHeight = maxHeight;
-                                targetWidth = targetHeight * 16 / 9;
-                            }
-
-                            detectWidth = targetWidth;
-                            detectHeight = targetHeight;
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogUtils.error(Main.class, "initLibGDX 无法获取屏幕尺寸，使用兜底 1024x576", e);
-                    }
-
-                    // 应用窗口尺寸
-                    Gdx.graphics.setWindowedMode(detectWidth, detectHeight);
-
-                    // 写入仅含 resolution 的配置文件到外部路径
-                    // 该文件后续会被 UpdateChecker.init() 的 protect 机制发现:
-                    //   - moveProtectExternalFile 将其备份到 temp/
-                    //   - 与 internal 默认完整配置 combined 合并
-                    //   - copyInternalFile 覆盖外部后, restoreProtectExternalFile 还原合并后的完整配置
-                    //   最终外部 user_config.json = 完整配置 + resolution 为本次检测值
-                    Map<String, Object> resolutionMap = new HashMap<>();
-                    resolutionMap.put(ConfigKey.User.Resolution.WIDTH, detectWidth);
-                    resolutionMap.put(ConfigKey.User.Resolution.HEIGHT, detectHeight);
-                    JsonEntity configJson = new JsonEntity();
-                    configJson.put(ConfigKey.User.Resolution.KEY, resolutionMap);
-                    FileUtils.createStringFile(configJson.toString(), userConfigHandle, false);
-
-                    LogUtils.info(Main.class, "initLibGDX 初次启动自适应分辨率: " + detectWidth + "x" + detectHeight);
-                }
-
-                // 配置视窗: Desktop默认使用stretch Android默认使用fit
-                if (PlatformUtils.isDesktop())
-                {
-                    useViewport = UseViewport.STRETCH;
-                    LogUtils.info(Main.class, "initLibGDX 使用平台 (platform): " + PlatformUtils.getPlatformType() + " 最佳视窗 (viewport): " + useViewport);
-                }
-                else if (PlatformUtils.isAndroid())
-                {
-                    useViewport = UseViewport.FIT;
-                    LogUtils.info(Main.class, "initLibGDX 使用平台 (platform): " + PlatformUtils.getPlatformType() + " 最佳视窗 (viewport): " + useViewport);
-                }
-                else
-                {
-                    useViewport = UseViewport.STRETCH;
-                    LogUtils.info(Main.class, "initLibGDX 未知平台 (platform): " + PlatformUtils.getPlatformType() + " 使用默认视窗 (viewport): " + useViewport);
-                }
-            }
-            LogUtils.info(Main.class, "initLibGDX 分辨率 (resolution): " + Gdx.graphics.getWidth() + "x" + Gdx.graphics.getHeight());
-            LogUtils.info(Main.class, "initLibGDX 视窗 (viewport): " + useViewport);
-
-            // 给舞台stage配置使用的视窗
-            stage = new Stage(useViewport.getViewport(), spriteBatch);
-
-            return true;
-        }
-        catch (Exception e)
-        {
-            LogUtils.error(Main.class, "initLibGDX", e);
-            throw e;
-        }
-    }
-
     /**
      * 初始化 InstanceContent 实例管理器并获取控制器引用
      *
@@ -803,6 +670,8 @@ public class Main extends ApplicationAdapter
             throw e;
         }
     }
+
+    // ===================================================================================================================
 
     /**
      * 中断并等待线程结束

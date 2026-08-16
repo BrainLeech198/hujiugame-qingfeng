@@ -21,7 +21,7 @@
 > 10. 【必须】CHANGELOG 条目按日期归组：同一天的所有提交主题共同包含在同一个 `## <日期> — <概括标题>` 下，禁止拆成多个 `## ` 日期标题；每个提交块以 `**<主题>**（commit <7位短哈希>）` 标记，块内每条 `- ` 条目行尾标注引入它的提交短哈希 `（commit <7位短哈希>）`。新条目随内容改动提交后，其哈希在下一笔内容改动提交中一并补写（补写仅改 hash，不新增条目）
 > 11. 【必须】写版本发布说明（官网 `docs/data/versions.json` 的 `log`、`develop/PUBLISH.md` 面向玩家摘要）时，按「上一版本发布点 → 本版本发布点」之间的 commit 区间梳理玩家可见改动（修复的 Bug / 新增功能 / 优化），逐一写入，不要遗漏跨版本才生效的修复（打包之后完成的 bug 修复会随下一个版本发出，须算入下一版本的说明）；beta 测试版按此梳理书写即可，release 正式版属重要更新，需正式、系统地书写
 
-## 2026-08-16 — 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化
+## 2026-08-16 — 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager
 
 **编码规范(注释)：键前缀/标签前缀常量注释补充动态段占位标注**
 
@@ -38,10 +38,19 @@
 
 ### 新增
 
-- **AnimationManager 空壳类** — 动画执行管理器骨架，承担页面切换控件级动画（fade_in/fade_out）执行与渲染机衔接，当前仅占位生命周期接口（init/update/dispose），执行逻辑待设计实现（commit <hash>）
-- **InstanceContent 接入动画管理器** — 新增 `animationManager` 字段（与 audio/graphics/ui 同级）、init 创建实例、`getAnimationManager()` getter、update() 每帧推进 `animationManager.update(deltaTime)`、dispose 销毁（commit <hash>）
-- **PlayLocalData 持有动画管理器** — 新增 `animationManager` 字段 + `getAnimationManager()`/`setAnimationManager()`（模仿 audioManager 模式）、dispose 销毁（commit <hash>）
-- **GameResourceLoader 创建游戏侧动画管理器** — loadResource 在 script 之后创建 `gameAnimationManager`（init + setAnimationManager），disposeResource 反向先销毁动画（commit <hash>）
+- **AnimationManager 空壳类** — 动画执行管理器骨架，承担页面切换控件级动画（fade_in/fade_out）执行与渲染机衔接，当前仅占位生命周期接口（init/update/dispose），执行逻辑待设计实现（commit e0a15e5）
+- **InstanceContent 接入动画管理器** — 新增 `animationManager` 字段（与 audio/graphics/ui 同级）、init 创建实例、`getAnimationManager()` getter、dispose 销毁；不主动每帧驱动动画，推进时机由 AnimationManager 内部自行安排（commit e0a15e5）
+- **PlayLocalData 持有动画管理器** — 新增 `animationManager` 字段 + `getAnimationManager()`/`setAnimationManager()`（模仿 audioManager 模式）、dispose 销毁（commit e0a15e5）
+- **GameResourceLoader 创建游戏侧动画管理器** — loadResource 在 script 之后创建 `gameAnimationManager`（init + setAnimationManager），disposeResource 反向先销毁动画（commit e0a15e5）
+
+---
+
+**重构(配置)：initLibGDX 显示配置逻辑下沉为 UserConfigManager 静态特例函数**
+
+### 重构
+
+- **UserConfigManager 新增静态特例函数 `initDisplayConfig`** — 把 Main.initLibGDX 里读取 user_config、应用分辨率、确定视窗的三段逻辑下沉为 UserConfigManager 静态方法（返回 UseViewport）；语义保留：配置优先应用、桌面首次启动按屏幕 80%/16:9 检测分辨率并写仅含 resolution 小配置（由 UpdateChecker protect 机制与内部默认配置合并）、视窗按平台默认（desktop→stretch / android→fit）（commit <hash>）
+- **Main.initLibGDX 简化调用** — 原手写文件读取/JSON 判断替换为一行 `useViewport = UserConfigManager.initDisplayConfig()`，删除搬走后失效的 import（JsonEntity/ConfigKey/PlatformUtils/HashMap/Map）（commit <hash>）
 
 ## 2026-08-15 — 动画数据层落地 + Javadoc 性能标注规范 + 热路径 Javadoc 性能标注 + 官网下载区优化（恢复提取码 / 首页卡片化 / 更新时间）+ 26w33a mac Intel 提取码文案补删 + GameState 扁平化重构 + UiKey 嵌套类化
 

@@ -1,6 +1,10 @@
 package com.hujiugame.qingfeng.manager;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.files.FileHandle;
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.type.file.FileName;
@@ -11,6 +15,7 @@ import com.hujiugame.qingfeng.type.key.GameInfoKey;
 import com.hujiugame.qingfeng.type.ui.UseViewport;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 import com.hujiugame.qingfeng.util.system.LogUtils;
+import com.hujiugame.qingfeng.util.system.PlatformUtils;
 
 public final class UserConfigManager
 {
@@ -380,6 +385,158 @@ public final class UserConfigManager
             LogUtils.error(UserConfigManager.class, "init", e);
             return false;
         }
+    }
+
+    /**
+     * 初始化显示配置（特例函数）：读取 user_config 并应用分辨率、确定视窗模式
+     * <p>
+     * 仅启动阶段（initLibGDX 建 Stage 前）调用一次，与 {@link #init(FileHandle)} 分工：
+     * 本函数只负责「分辨率 + 视窗」两块，供 Stage 选择视口；桌面首次启动（无 user_config）时
+     * 按屏幕 80%/16:9 检测分辨率，写入仅含 resolution 的小配置，后续由 UpdateChecker
+     * protect 机制与内部默认完整配置合并；完整 user_config 解析仍走 init()。
+     * <p>
+     * 性能：启动时调用一次（含一次外部文件读取 + 可能的屏幕检测），非热路径。
+     *
+     * @return 确定使用的视窗模式
+     */
+    public static UseViewport initDisplayConfig ()
+    {
+        // 读取user_config
+        FileHandle userConfigHandle = Gdx.files.external(FileUtils.pathJoin(PathName.BASE, PathName.ASSET, FileName.USER_CONFIG));
+        JsonEntity userConfigJson = new JsonEntity();
+        if (FileUtils.isFileExist(userConfigHandle))
+        {
+            userConfigJson = new JsonEntity(userConfigHandle);
+        }
+
+        // 使用的视窗
+        UseViewport useViewport;
+
+        // 存在配置
+        if (!userConfigJson.isEmpty())
+        {
+            LogUtils.debug(UserConfigManager.class, "initDisplayConfig 读取user_config成功");
+
+            // 配置分辨率
+            if (PlatformUtils.isNotDesktop())
+            {
+                LogUtils.debug(UserConfigManager.class, "initDisplayConfig 运行平台不支持调整分辨率 (platform): " + PlatformUtils.getPlatformType());
+            }
+            else if (userConfigJson.containsKey(ConfigKey.User.Resolution.KEY))
+            {
+                // 分辨率
+                JsonEntity resolutionJson = userConfigJson.getJsonEntityByKey(ConfigKey.User.Resolution.KEY);
+
+                if (resolutionJson.containsKey(ConfigKey.User.Resolution.WIDTH) && resolutionJson.containsKey(ConfigKey.User.Resolution.HEIGHT))
+                {
+                    int screenWidth = resolutionJson.getInt(ConfigKey.User.Resolution.WIDTH);
+                    int screenHeight = resolutionJson.getInt(ConfigKey.User.Resolution.HEIGHT);
+                    Gdx.graphics.setWindowedMode(screenWidth, screenHeight);
+                }
+            }
+
+            // 配置视窗: stretch, fit, fill
+            if (userConfigJson.containsKey(ConfigKey.User.USE_VIEWPORT))
+            {
+                String useViewportName = userConfigJson.getString(ConfigKey.User.USE_VIEWPORT).toUpperCase();
+                useViewport = UseViewport.valueOf(useViewportName);
+            }
+            else
+            {
+                useViewport = UseViewport.STRETCH;
+            }
+        }
+        // 不存在配置
+        else
+        {
+            LogUtils.debug(UserConfigManager.class, "initDisplayConfig 读取user_config失败");
+
+            // 配置分辨率: 屏幕80%的16:9
+            if (PlatformUtils.isNotDesktop())
+            {
+                LogUtils.debug(UserConfigManager.class, "initDisplayConfig 运行平台不支持调整分辨率 (platform): " + PlatformUtils.getPlatformType());
+            }
+            else
+            {
+                // 窗口占屏幕比例: 80%，即窗口尺寸约为屏幕可用区域的 80%
+                // 按 16:9 等比缩放，保证窗口比例合理且不超出屏幕
+                final float WINDOW_SCREEN_RATIO = 0.8f;
+
+                // 检测失败/异常的 兜底分辨率
+                int detectWidth = 1024;
+                int detectHeight = 576;
+
+                try
+                {
+                    Graphics.DisplayMode displayMode = Gdx.graphics.getDisplayMode();
+                    if (displayMode != null && displayMode.width > 0 && displayMode.height > 0)
+                    {
+                        int screenWidth = displayMode.width;
+                        int screenHeight = displayMode.height;
+
+                        // 1. 以屏幕宽度为基准: 取 WINDOW_SCREEN_RATIO 作为窗口宽度
+                        int targetWidth = (int)(screenWidth * WINDOW_SCREEN_RATIO);
+                        // 2. 按 16:9 算出对应高度
+                        int targetHeight = targetWidth * 9 / 16;
+
+                        // 3. 检查高度是否超过屏幕高度的 WINDOW_SCREEN_RATIO
+                        //    若超出则改以高度为基准反算宽度，避免窗口超出屏幕垂直范围
+                        int maxHeight = (int)(screenHeight * WINDOW_SCREEN_RATIO);
+                        if (targetHeight > maxHeight)
+                        {
+                            targetHeight = maxHeight;
+                            targetWidth = targetHeight * 16 / 9;
+                        }
+
+                        detectWidth = targetWidth;
+                        detectHeight = targetHeight;
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogUtils.error(UserConfigManager.class, "initDisplayConfig 无法获取屏幕尺寸，使用兜底 1024x576", e);
+                }
+
+                // 应用窗口尺寸
+                Gdx.graphics.setWindowedMode(detectWidth, detectHeight);
+
+                // 写入仅含 resolution 的配置文件到外部路径
+                // 该文件后续会被 UpdateChecker.init() 的 protect 机制发现:
+                //   - moveProtectExternalFile 将其备份到 temp/
+                //   - 与 internal 默认完整配置 combined 合并
+                //   - copyInternalFile 覆盖外部后, restoreProtectExternalFile 还原合并后的完整配置
+                //   最终外部 user_config.json = 完整配置 + resolution 为本次检测值
+                Map<String, Object> resolutionMap = new HashMap<>();
+                resolutionMap.put(ConfigKey.User.Resolution.WIDTH, detectWidth);
+                resolutionMap.put(ConfigKey.User.Resolution.HEIGHT, detectHeight);
+                JsonEntity configJson = new JsonEntity();
+                configJson.put(ConfigKey.User.Resolution.KEY, resolutionMap);
+                FileUtils.createStringFile(configJson.toString(), userConfigHandle, false);
+
+                LogUtils.info(UserConfigManager.class, "initDisplayConfig 初次启动自适应分辨率: " + detectWidth + "x" + detectHeight);
+            }
+
+            // 配置视窗: Desktop默认使用stretch Android默认使用fit
+            if (PlatformUtils.isDesktop())
+            {
+                useViewport = UseViewport.STRETCH;
+                LogUtils.info(UserConfigManager.class, "initDisplayConfig 使用平台 (platform): " + PlatformUtils.getPlatformType() + " 最佳视窗 (viewport): " + useViewport);
+            }
+            else if (PlatformUtils.isAndroid())
+            {
+                useViewport = UseViewport.FIT;
+                LogUtils.info(UserConfigManager.class, "initDisplayConfig 使用平台 (platform): " + PlatformUtils.getPlatformType() + " 最佳视窗 (viewport): " + useViewport);
+            }
+            else
+            {
+                useViewport = UseViewport.STRETCH;
+                LogUtils.info(UserConfigManager.class, "initDisplayConfig 未知平台 (platform): " + PlatformUtils.getPlatformType() + " 使用默认视窗 (viewport): " + useViewport);
+            }
+        }
+        LogUtils.info(UserConfigManager.class, "initDisplayConfig 分辨率 (resolution): " + Gdx.graphics.getWidth() + "x" + Gdx.graphics.getHeight());
+        LogUtils.info(UserConfigManager.class, "initDisplayConfig 视窗 (viewport): " + useViewport);
+
+        return useViewport;
     }
 
     /**

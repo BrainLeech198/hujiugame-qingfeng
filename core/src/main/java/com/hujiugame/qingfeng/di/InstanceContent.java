@@ -567,7 +567,6 @@ public final class InstanceContent
     {
         if (controllerInputHandler != null) controllerInputHandler.update(deltaTime);
         if (virtualInputHandler != null) virtualInputHandler.update();
-        if (animationManager != null) animationManager.update(deltaTime);
     }
 
     /**
