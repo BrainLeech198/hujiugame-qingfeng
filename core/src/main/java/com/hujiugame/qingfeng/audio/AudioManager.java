@@ -865,10 +865,14 @@ public final class AudioManager
                         {
                             if (bgMusicPlayingObjectMap.get(tag) == m)
                             {
+                                // 先 stop 再移除：自然播完瞬间 isPlaying() 已返回 false 但记录尚未移除，
+                                // 竞态窗口内 playLayout 可能已把它 resume（Android start() 会从头播放），
+                                // 若只移除记录，下一帧随机新曲时旧曲仍在播导致双播；stop 兜底保证单曲。
+                                m.stop();
                                 bgMusicPlayingObjectMap.remove(tag);
                                 bgMusicPlayingPathMap.remove(tag);
                                 LogUtils.debug(AudioManager.class,
-                                    "loadBackgroundMusic 背景音乐自然播放完毕 (tag): " + tag + " 已从播放记录中移除，允许 playLayout 随机下一首");
+                                    "loadBackgroundMusic 背景音乐自然播放完毕 (tag): " + tag + " 已停止并从播放记录中移除，允许 playLayout 随机下一首");
                             }
                         }
                     });

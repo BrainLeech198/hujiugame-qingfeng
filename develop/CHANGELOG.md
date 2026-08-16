@@ -86,7 +86,15 @@
 
 ### 优化
 
-- **UniversalInputHandlerFunction 空值防御** — `handleToggleFullscreen` 中 `InstanceContent.getInstance()` 以 `Objects.requireNonNull` 包裹，防止单例未初始化时调用空指针（commit <hash>）
+- **UniversalInputHandlerFunction 空值防御** — `handleToggleFullscreen` 中 `InstanceContent.getInstance()` 以 `Objects.requireNonNull` 包裹，防止单例未初始化时调用空指针（commit 53ee6fb）
+
+---
+
+**修复(音频)：背景音乐随机切换偶发双播修复**
+
+### 修复
+
+- **loadBackgroundMusic 自然播完回调先 stop 再移除播放记录** — 背景音乐随机切换时偶发双播：曲目自然播完瞬间 isPlaying() 已返回 false 但播放记录尚未移除（libGDX AndroidMusic 将 completion 回调 postRunnable 延迟到下一帧），playLayout 会误将其 resume（Android start() 从头播放），随后记录被移除、下一帧随机新曲导致两曲同播；completion 回调内改为先 m.stop() 兜底再移除记录，保证单曲（commit <hash>）
 
 ## 2026-08-15 — 动画数据层落地 + Javadoc 性能标注规范 + 热路径 Javadoc 性能标注 + 官网下载区优化（恢复提取码 / 首页卡片化 / 更新时间）+ 26w33a mac Intel 提取码文案补删 + GameState 扁平化重构 + UiKey 嵌套类化
 
