@@ -7,25 +7,37 @@
 // i18n 核心（顶层声明，跨 script 通过全局词法环境共享）
 let currentMessages = null;
 
+// key 统一小写；value 为实际语言文件名（zh-TW 存在独立的繁体语言包）
 const localeMap = {
     'zh': 'zh',
-    'zh-CN': 'zh',
-    'zh-TW': 'zh-TW',
-    'zh-HK': 'zh-TW',
+    'zh-cn': 'zh',
+    'zh-tw': 'zh-TW',
+    'zh-hk': 'zh-TW',
+    'zh-mo': 'zh-TW',
     'en': 'en',
+    'en-us': 'en',
+    'en-gb': 'en',
     'ja': 'ja',
     'ko': 'ko',
     'ru': 'ru',
     'pt': 'pt',
+    'pt-br': 'pt',
+    'pt-pt': 'pt',
     'fr': 'fr',
-    'de': 'de'
+    'fr-fr': 'fr',
+    'fr-ca': 'fr',
+    'de': 'de',
+    'es': 'es',
+    'es-es': 'es',
+    'es-mx': 'es'
 };
 const defaultLang = 'zh';
 
 function getBrowserLang() {
-    const lang = navigator.language || navigator.userLanguage;
+    const lang = (navigator.language || navigator.userLanguage || defaultLang).toLowerCase();
+    if (localeMap[lang]) return localeMap[lang];
     const baseLang = lang.split('-')[0];
-    return localeMap[baseLang] ? baseLang : defaultLang;
+    return localeMap[baseLang] || defaultLang;
 }
 
 // 语言文件路径前缀：由 <script data-base> 提供（缺省当前目录）

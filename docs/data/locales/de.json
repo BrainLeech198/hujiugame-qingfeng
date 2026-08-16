@@ -66,7 +66,7 @@
   "discussion_platform_txc": "Tuxiaochao",
   "game_intro_title": "Über das Spiel",
   "game_intro_desc1": "QingFeng ist eine mit libGDX entwickelte Visual-Novel-Engine und ein plattformübergreifender Game-Launcher. Das Projekt nutzt eine standardisierte Dateistruktur und ein JSON-gesteuertes Ressourcensystem, das Spielinhalte in einem klaren, konsistenten Format organisiert und Entwicklern eine einheitliche, stabile Laufzeitumgebung bietet.",
-  "game_intro_desc2": "QingFeng unterstützt nativ drei Benutzeroberflächensprachen – Vereinfachtes Chinesisch, Traditionelles Chinesisch und Englisch – sowie ein wechselbares Designsystem, das den persönlichen Vorlieben der Nutzer gerecht wird. Er läuft gleichzeitig auf Windows, Linux und Android und deckt damit Desktop- und Mobilgeräte ab.",
+  "game_intro_desc2": "QingFeng unterstützt nativ 15 Benutzeroberflächensprachen: 简体中文, 繁體中文 (Taiwan/Hongkong), English (US/UK), Español (España/México), Français (France/Canada), Português (Brasil/Portugal), Русский, 日本語, 한국어, Deutsch – sowie ein wechselbares Designsystem, das den persönlichen Vorlieben der Nutzer gerecht wird. Er läuft gleichzeitig auf Windows, Linux und Android und deckt damit Desktop- und Mobilgeräte ab.",
   "game_intro_desc3": "QingFeng verfügt über ein umfassendes Ressourcenpaket-Verwaltungssystem, das den Import und Wechsel von Sprachpaketen, Designschemata-Paketen, Spielsprachpaketen und Spielthemenpaketen unterstützt und Entwicklern eine flexible Erweiterung der Spielinhalte ermöglicht. Versionsprüfung und eine Ein-Klick-Reparaturfunktion stellen sicher, dass Ihre Spielressourcen stets vollständig und nutzbar bleiben.",
   "linux_button": "Linux",
   "mac_button": "Mac",
