@@ -3,7 +3,6 @@ package com.hujiugame.qingfeng.core;
 import com.badlogic.gdx.files.FileHandle;
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.data.game.Layout;
-import com.hujiugame.qingfeng.event.imp.SetGameState;
 import com.hujiugame.qingfeng.game.GameLogicService;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.util.system.CrashUtils;
@@ -487,8 +486,7 @@ public final class SceneStack
             LogUtils.debug(SceneStack.class, "updateGameRender 状态更新开始");
 
             // 渲染器销毁旧游戏渲染机
-            if (!renderPipeline.clear())
-                return false;
+            if (!renderPipeline.clear()) return false;
             LogUtils.debug(SceneStack.class, "updateGameRender 渲染器销毁旧游戏渲染机成功");
 
             // 整合游戏页面配置数据
@@ -496,8 +494,7 @@ public final class SceneStack
             LogUtils.debug(SceneStack.class, "updateGameRender 整合游戏页面配置数据成功");
 
             // 渲染器更新游戏渲染机
-            if (!renderPipeline.update(gameStateDataContainer))
-                return false;
+            if (!renderPipeline.register(gameStateDataContainer)) return false;
             LogUtils.debug(SceneStack.class, "updateGameRender 渲染器更新游戏渲染机成功");
 
             LogUtils.debug(SceneStack.class, "updateGameRender 状态更新成功");

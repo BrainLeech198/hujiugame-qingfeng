@@ -47,34 +47,34 @@ public final class RenderPipeline
      * @param gameStateDataContainer 游戏状态数据容器
      * @return 是否成功获取并初始化渲染机
      */
-    public boolean update (GameStateDataContainer gameStateDataContainer)
+    public boolean register (GameStateDataContainer gameStateDataContainer)
     {
         try
         {
-            LogUtils.debug(RenderPipeline.class, "update 开始创建游戏渲染机");
+            LogUtils.debug(RenderPipeline.class, "register 开始创建游戏渲染机");
 
             // 创建游戏渲染机
             this.gameRender = registry.get(gameStateDataContainer.getGameState());
-            LogUtils.debug(RenderPipeline.class, "update 获取游戏渲染机成功");
+            LogUtils.debug(RenderPipeline.class, "register 获取游戏渲染机成功");
 
             // 初始化游戏渲染机
             if (this.gameRender != null)
             {
                 this.gameRender.init(gameStateDataContainer);
-                LogUtils.debug(RenderPipeline.class, "update 游戏渲染机初始化成功" +
+                LogUtils.debug(RenderPipeline.class, "register 游戏渲染机初始化成功" +
                     " (gameState): " + gameStateDataContainer.getGameState());
                 return true;
             }
             else
             {
-                LogUtils.error(RenderPipeline.class, "update 游戏渲染机为null" +
+                LogUtils.error(RenderPipeline.class, "register 游戏渲染机为null" +
                     " (gameState): " + gameStateDataContainer.getGameState());
                 return false;
             }
         }
         catch (Exception e)
         {
-            LogUtils.error(RenderPipeline.class, "update", e);
+            LogUtils.error(RenderPipeline.class, "register", e);
             return false;
         }
     }
@@ -87,7 +87,7 @@ public final class RenderPipeline
      *
      * @param deltaTime 距上一帧的时间差
      */
-    public void updateFrame (float deltaTime)
+    public void update (float deltaTime)
     {
         try
         {
@@ -100,12 +100,12 @@ public final class RenderPipeline
             }
             else
             {
-                LogUtils.error(RenderPipeline.class, "updateFrame 游戏渲染机为null");
+                LogUtils.error(RenderPipeline.class, "update 游戏渲染机为null");
             }
         }
         catch (Exception e)
         {
-            LogUtils.error(RenderPipeline.class, "updateFrame", e);
+            LogUtils.error(RenderPipeline.class, "update", e);
             throw e;
         }
     }

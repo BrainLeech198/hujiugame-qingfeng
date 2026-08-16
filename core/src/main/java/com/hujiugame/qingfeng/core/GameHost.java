@@ -207,7 +207,7 @@ public final class GameHost
         try
         {
             // 1. 处理输入、更新逻辑
-            renderPipeline.updateFrame(deltaTime);
+            renderPipeline.update(deltaTime);
 
             // 2. 处理事件（状态切换），本帧立即生效
             while (this.eventQueue.hasEvent())
