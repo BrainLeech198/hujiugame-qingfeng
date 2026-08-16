@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.files.FileHandle;
 import com.hujiugame.qingfeng.data.JsonEntity;
+import com.hujiugame.qingfeng.type.DeviceLanguage;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.file.PathName;
 import com.hujiugame.qingfeng.game.GameInfoManager;
@@ -51,7 +52,38 @@ public final class UserConfigManager
     private float soundVolumeSound;
 
     /**
-     * 解析用户配置JSON文件，若文件不存在则从内部默认配置复制
+     * 初始化用户配置
+     *
+     * @param userConfigJson 默认用户配置的JSON实体
+     */
+    private void initUserConfig (JsonEntity userConfigJson)
+    {
+        // 复制默认配置到外部
+        String internalPath = FileUtils.pathJoin(PathName.ASSET, FileName.USER_CONFIG);
+        FileHandle internalPathHandle = Gdx.files.internal(internalPath);
+        FileUtils.copyFile(internalPathHandle, pathHandle);
+        LogUtils.info(UserConfigManager.class, "parseJson 用户配置文件不存在, 已复制默认配置 (path): " + pathHandle);
+
+        // 读取用户设置json
+        userConfigJson = new JsonEntity(pathHandle);
+        LogUtils.info(UserConfigManager.class, "parseJson 正在进行个性化服务配置...");
+
+        // ================ 以下是个性化服务配置 ================
+
+        // 首次运行：按设备语言改写默认语言，落盘后用户可手动改
+        // 与默认语言相同时不写盘，避免无谓文件写入
+        DeviceLanguage deviceLanguage = DeviceLanguage.detectDefault();
+        String defaultLanguage = userConfigJson.getString(ConfigKey.User.LANGUAGE);
+        if (!deviceLanguage.getPathName().equals(defaultLanguage))
+        {
+            userConfigJson.put(ConfigKey.User.LANGUAGE, deviceLanguage.getPathName());
+            FileUtils.createStringFile(userConfigJson.toString(), pathHandle, false);
+        }
+        LogUtils.info(UserConfigManager.class, "parseJson 首次运行自动识别设备语言 (language): " + deviceLanguage.getPathName());
+    }
+
+    /**
+     * 解析用户配置JSON文件，若文件不存在则从内部默认配置复制，并按设备语言改写默认语言
      *
      * @param pathHandle     配置文件的路径句柄
      * @return 解析成功返回 true，失败返回 false
@@ -68,17 +100,11 @@ public final class UserConfigManager
                 userConfigJson = new JsonEntity(pathHandle);
             }
 
-            // 如果文件读取失败
+            // 如果文件读取失败 即本次是首次运行
             if (userConfigJson.isEmpty())
             {
-                // 复制默认配置到外部
-                String internalPath = FileUtils.pathJoin(PathName.ASSET, FileName.USER_CONFIG);
-                FileHandle internalPathHandle = Gdx.files.internal(internalPath);
-                FileUtils.copyFile(internalPathHandle, pathHandle);
-
-                // 读取用户设置json
-                userConfigJson = new JsonEntity(pathHandle);
-                LogUtils.info(UserConfigManager.class, "parseJson 用户配置文件不存在, 已复制默认配置 (path): " + pathHandle);
+                // 初始化用户配置
+                initUserConfig(userConfigJson);
             }
 
             // 存储json
