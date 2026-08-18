@@ -93,47 +93,47 @@
 
 ### 编码规范
 
-- **Main 懒加载字段** — isSlashed/isLazyInitialized 去前缀为 slashed/lazyInitialized，补 is/set 访问（commit b8d3e75）
-- **TextInputUtils 输入状态** — isInput 字段去前缀为 inputDone，补 setInput（commit b8d3e75）
+- **Main 懒加载字段** — isSlashed/isLazyInitialized 去前缀为 slashed/lazyInitialized，补 is/set 访问（commit 0cd9adc）
+- **TextInputUtils 输入状态** — isInput 字段去前缀为 inputDone，补 setInput（commit 0cd9adc）
 
 **新增(动画)：控件位置接口 + 游戏侧动画管理器注入**
 
 ### 新增
 
-- **InteractableObject 位置接口** — 新增 getX/getY/setPosition，支撑 smooth_move 位移动画（commit 4be9982）
-- **游戏侧动画管理器** — GameResourceLoader 注入 EventQueue，创建游戏内 AnimationManager（commit 4be9982）
+- **InteractableObject 位置接口** — 新增 getX/getY/setPosition，支撑 smooth_move 位移动画（commit 9510cd5）
+- **游戏侧动画管理器** — GameResourceLoader 注入 EventQueue，创建游戏内 AnimationManager（commit 9510cd5）
 
 **重构(事件)：loadGame 空壳压栈事件携带来源状态**
 
 ### 重构
 
-- **GameSessionManager.loadGame** — 增加 nowGameState 参数，PushGameState 空壳事件携带 outState 供过渡链识别来源页（commit af377b2）
+- **GameSessionManager.loadGame** — 增加 nowGameState 参数，PushGameState 空壳事件携带 outState 供过渡链识别来源页（commit feb8561）
 
 **重构(keys)：LayoutManager 使用 AudioKey（audio 节独立）**
 
 ### 重构
 
-- **LayoutManager 关联调整** — backgroundMusic/music 字段改用独立 AudioKey，type/key import 适配（commit d2da352）
+- **LayoutManager 关联调整** — backgroundMusic/music 字段改用独立 AudioKey，type/key import 适配（commit 0996d43）
 
 **编码规范(ui)：UiManager 代码整理**
 
 ### 编码规范
 
-- **CustomFont 类结构与注释整理** — UiManager 内部类与注释格式统一（commit ccff48a）
+- **CustomFont 类结构与注释整理** — UiManager 内部类与注释格式统一（commit 03ba284）
 
 **修复(版本)：更新检测版本号显示修正**
 
 ### 修复
 
-- **版本号显示日志** — doVersionDifferent/checkWebVersion 版本号拼接顺序与 displayVersionString 修正（commit c30c500）
-- **type/key import 适配** — ConfigKey/VersionKey import 路径更新（commit c30c500）
+- **版本号显示日志** — doVersionDifferent/checkWebVersion 版本号拼接顺序与 displayVersionString 修正（commit b8cdca9）
+- **type/key import 适配** — ConfigKey/VersionKey import 路径更新（commit b8cdca9）
 
 **构建(版本)：发布 v1.0.0-beta-26w34a**
 
 ### 构建
 
-- **app_version 升级** — app_version 2→3，snapshot 26w33b→26w34a（commit 8d7722f）
-- **android versionCode 升级** — versionCode 2→3（commit 8d7722f）
+- **app_version 升级** — app_version 2→3，snapshot 26w33b→26w34a（commit 5dbedb9）
+- **android versionCode 升级** — versionCode 2→3（commit 5dbedb9）
 
 ## 2026-08-16 — 默认语言改英文 + 目录结构补全 + 12 个新语言翻译包 + 首次运行按设备语言改写默认语言 + 设备语言自动检测与 15 语言扩展 + 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新 + 全屏切换调用空值防御 + 官网卡片重排与折叠展开 + 官网导航新增遇到问题 + 官网语言扩展与识别修复
 
