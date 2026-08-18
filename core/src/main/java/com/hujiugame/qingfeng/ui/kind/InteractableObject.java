@@ -8,6 +8,24 @@ public interface InteractableObject
     String getTag ();
 
     /**
+     * 获取当前 X 坐标（相对于父容器）
+     */
+    float getX();
+
+    /**
+     * 获取当前 Y 坐标（相对于父容器）
+     */
+    float getY();
+
+    /**
+     * 设置位置（相对于父容器）
+     *
+     * @param x 新的 X 坐标
+     * @param y 新的 Y 坐标
+     */
+    void setPosition(float x, float y);
+
+    /**
      * 获取矩形上边界
      */
     float getRectTop ();

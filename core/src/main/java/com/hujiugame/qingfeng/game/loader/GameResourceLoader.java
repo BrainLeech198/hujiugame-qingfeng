@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.hujiugame.qingfeng.data.play.PlayLocalData;
 import com.hujiugame.qingfeng.animation.AnimationManager;
 import com.hujiugame.qingfeng.audio.AudioManager;
+import com.hujiugame.qingfeng.event.EventQueue;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.script.ScriptExecutor;
 import com.hujiugame.qingfeng.ui.UiManager;
@@ -23,6 +24,7 @@ public final class GameResourceLoader
     private final AudioManager launcherAudioManager;
     private final GraphicsManager launcherGraphicsManager;
     private final LayoutManager layoutManager;
+    private final EventQueue eventQueue;
     private final PlayLocalData playLocalData;
 
     /**
@@ -35,6 +37,7 @@ public final class GameResourceLoader
      * @param launcherAudioManager    启动器音频管理器
      * @param launcherGraphicsManager 启动器图形管理器
      * @param layoutManager           布局管理器
+     * @param eventQueue              事件队列（创建游戏动画管理器用）
      * @param playLocalData         游戏数据内容
      */
     public GameResourceLoader (UserConfigManager userConfigManager,
@@ -44,6 +47,7 @@ public final class GameResourceLoader
                                AudioManager launcherAudioManager,
                                GraphicsManager launcherGraphicsManager,
                                LayoutManager layoutManager,
+                               EventQueue eventQueue,
                                PlayLocalData playLocalData)
     {
         this.userConfigManager = userConfigManager;
@@ -53,6 +57,7 @@ public final class GameResourceLoader
         this.launcherAudioManager = launcherAudioManager;
         this.launcherGraphicsManager = launcherGraphicsManager;
         this.layoutManager = layoutManager;
+        this.eventQueue = eventQueue;
         this.playLocalData = playLocalData;
     }
 
@@ -66,7 +71,7 @@ public final class GameResourceLoader
     {
         try
         {
-            // 音频
+            // audio
             launcherAudioManager.stopAll();
             AudioManager gameAudioManager = new AudioManager(userConfigManager);
             if (!gameAudioManager.init())
@@ -81,7 +86,7 @@ public final class GameResourceLoader
             }
             layoutManager.setAudioManager(gameAudioManager);
 
-            // 绘图
+            // graphics
             GraphicsManager gameGraphicsManager = new GraphicsManager(spriteBatch, gameThemeManager);
             if (!gameGraphicsManager.init())
             {
@@ -95,7 +100,7 @@ public final class GameResourceLoader
             }
             layoutManager.setGraphicsManager(gameGraphicsManager);
 
-            // UI
+            // ui
             UiManager gameUiManager = new UiManager(stage, launcherAudioManager, launcherGraphicsManager, textManager);
             if (!gameUiManager.init(gameThemeManager))
             {
@@ -125,8 +130,8 @@ public final class GameResourceLoader
                 LogUtils.debug(GameResourceLoader.class, "loadResource script初始化成功");
             }
 
-            // 动画
-            AnimationManager gameAnimationManager = new AnimationManager();
+            // animation
+            AnimationManager gameAnimationManager = new AnimationManager(eventQueue);
             if (!gameAnimationManager.init())
             {
                 LogUtils.error(GameResourceLoader.class, "loadResource 动画初始化失败");
@@ -137,6 +142,7 @@ public final class GameResourceLoader
                 playLocalData.setAnimationManager(gameAnimationManager);
                 LogUtils.debug(GameResourceLoader.class, "loadResource 动画初始化成功");
             }
+            LogUtils.debug(GameResourceLoader.class, "loadResource 动画初始化成功");
 
             LogUtils.debug(GameResourceLoader.class, "loadResource 加载游戏资源成功");
             return true;
