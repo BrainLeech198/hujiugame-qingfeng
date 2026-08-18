@@ -25,7 +25,7 @@ Main.render(deltaTime)
   └─ GameHost.run(deltaTime)
        ├─ 1. renderPipeline.updateFrame(deltaTime)     ← 处理输入、更新逻辑
        ├─ 2. while eventQueue.hasEvent()               ← 遍历事件队列
-       │      eventDispatcher.handleEvent(eventObject)  ← 事件分发
+       │      eventDispatcher.handleEvent(event)  ← 事件分发
        └─ 3. renderPipeline.render(deltaTime)          ← 渲染当前画面
             ├─ currentRender.updateFrame(deltaTime)    ← 游戏逻辑更新
             ├─ UiManager 操作                           ← UI 更新
