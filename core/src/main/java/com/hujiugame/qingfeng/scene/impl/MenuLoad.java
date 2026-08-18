@@ -1,22 +1,24 @@
 package com.hujiugame.qingfeng.scene.impl;
 
+import com.hujiugame.qingfeng.animation.Animation;
+import com.hujiugame.qingfeng.animation.AnimationManager;
 import com.hujiugame.qingfeng.core.GameHost;
 import com.hujiugame.qingfeng.data.game.GameStateDataContainer;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
-import com.hujiugame.qingfeng.scene.GameRender;
+import com.hujiugame.qingfeng.scene.AbstractGameRender;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventQueue;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
-public final class MenuLoad implements GameRender
+public final class MenuLoad extends AbstractGameRender
 {
     private final AudioManager audioManager;
     private final GraphicsManager graphicsManager;
     private final UiManager uiManager;
     private final EventQueue eventQueue;
     private final GameHost gameHost;
-    private GameStateDataContainer gameStateDataContainer;
+    private final AnimationManager animationManager;
     // 用帧数不用时间：enterGame() 内有阻塞，deltaTime 会突变，帧数计数更可靠
     private final int showCountMax = 1;
     private final int showCountWatchDog = 2;
@@ -24,24 +26,25 @@ public final class MenuLoad implements GameRender
 
     public MenuLoad (AudioManager audioManager, GraphicsManager graphicsManager,
                      UiManager uiManager, EventQueue eventQueue,
-                     GameHost gameHost)
+                     GameHost gameHost,
+                     AnimationManager animationManager)
     {
         this.audioManager = audioManager;
         this.graphicsManager = graphicsManager;
         this.uiManager = uiManager;
         this.eventQueue = eventQueue;
         this.gameHost = gameHost;
+        this.animationManager = animationManager;
     }
 
     /**
      * 初始化加载闪屏布局
-     *
-     * @param gameStateDataContainer 游戏状态数据容器
      */
     @Override
-    public void init (GameStateDataContainer gameStateDataContainer)
+    protected void onInit (GameStateDataContainer gameStateDataContainer)
     {
-        this.gameStateDataContainer = gameStateDataContainer;
+        // 提取动画配置
+        animationManager.setAnimation(new Animation(gameStateDataContainer.getConfigJson()));
 
         uiManager.addLayout(gameStateDataContainer.getLayoutConfig());
     }
@@ -87,6 +90,61 @@ public final class MenuLoad implements GameRender
     /**
      * 重置加载计数器并释放布局资源
      */
+    @Override
+    public void transitionRender (float deltaTime)
+    {
+        if (animationManager.getTransitionManager().isReady())
+        {
+            // 淡出完成阶段 即淡入
+            if (animationManager.getTransitionManager().isFadedOut())
+            {
+                // 进行中
+                if (animationManager.getTransitionManager().isFadingIn())
+                {
+                    animationManager.getTransitionManager().fadingIn(
+                        gameStateDataContainer.getLayoutConfig(),
+                        audioManager, graphicsManager, uiManager,
+                        deltaTime
+                    );
+                }
+                // 初始化
+                else
+                {
+                    animationManager.getTransitionManager().initFadeIn(
+                        gameStateDataContainer.getLayoutConfig(),
+                        animationManager.getAnimation(),
+                        uiManager
+                    );
+                }
+            }
+            // 淡出阶段
+            else
+            {
+                // 进行中
+                if (animationManager.getTransitionManager().isFadingOut())
+                {
+                    animationManager.getTransitionManager().fadingOut(
+                        gameStateDataContainer.getLayoutConfig(),
+                        audioManager, graphicsManager, uiManager,
+                        deltaTime
+                    );
+                }
+                // 初始化
+                else
+                {
+                    animationManager.getTransitionManager().initFadeOut(
+                        gameStateDataContainer.getLayoutConfig(),
+                        animationManager.getAnimation()
+                    );
+                }
+            }
+        }
+        else
+        {
+            animationManager.getTransitionManager().stopTransition();
+        }
+    }
+
     @Override
     public void dispose ()
     {

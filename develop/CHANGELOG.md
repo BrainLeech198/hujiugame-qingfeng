@@ -50,6 +50,16 @@
 - **AnimationComponentType 枚举** — 组件自报类型（getType），Animation 组件容器改 Map 存储（commit `待补`）
 - **动画数据层完善** — Animation/组件/窗口/任务/动作全链 JsonEntity 构造补 null 防御、无效组件不入 Map、分层调试回溯日志（commit `待补`）
 
+**重构(渲染)：渲染机抽象基类 + 页面过渡动画接入 + FADING 渲染管线状态**
+
+### 重构
+
+- **AbstractGameRender 基类** — 统一持有 gameStateDataContainer + 提供 getter，消除 9 个渲染机重复字段/init/getter（commit `待补`）
+- **渲染机过渡接入** — 各渲染机注入 AnimationManager，onInit 上缴动画配置，transitionRender 改为驱动 TransitionManager 淡入淡出（commit `待补`）
+- **GameRender 接口新增 transitionRender** — 渲染机过渡动画渲染入口（commit `待补`）
+- **RenderPipeline FADING 状态** — GameRenderPipeLineState 枚举 + RenderPipeline 按状态分流渲染过渡动画（commit `待补`）
+- **渲染机动画初始化** — Init/MenuMain/MenuList/MenuLoad/ConfigBasic/ConfigDisplay 各页面 setAnimation 接入（commit `待补`）
+
 ## 2026-08-16 — 默认语言改英文 + 目录结构补全 + 12 个新语言翻译包 + 首次运行按设备语言改写默认语言 + 设备语言自动检测与 15 语言扩展 + 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新 + 全屏切换调用空值防御 + 官网卡片重排与折叠展开 + 官网导航新增遇到问题 + 官网语言扩展与识别修复
 
 **新增(网站)：官网主页卡片重排与长文字折叠展开（游戏介绍 / 更新日志）**

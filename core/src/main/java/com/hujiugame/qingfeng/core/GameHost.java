@@ -14,7 +14,7 @@ import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventDispatcher;
-import com.hujiugame.qingfeng.event.EventObject;
+import com.hujiugame.qingfeng.event.Event;
 import com.hujiugame.qingfeng.event.EventQueue;
 import com.hujiugame.qingfeng.manager.*;
 import com.hujiugame.qingfeng.game.GameInfoManager;
@@ -44,7 +44,6 @@ public final class GameHost
     private final GameResolver gameResolver;
     private final EventDispatcher eventDispatcher;
     private final GameLogicService gameLogicService;
-
     private final GameSessionManager sessionManager;
 
     public GameHost (UserConfigManager userConfigManager,
@@ -103,6 +102,7 @@ public final class GameHost
                 this.audioManager,
                 this.graphicsManager,
                 this.layoutManager,
+                this.eventQueue,
                 this.playLocalData),
             new GamePlayDataLoader(
                 this.layoutManager,
@@ -159,7 +159,7 @@ public final class GameHost
             }
 
             // 初始化游戏事件服务
-            if (!eventDispatcher.init(playLocalData, sceneStack))
+            if (!eventDispatcher.init(sceneStack))
             {
                 LogUtils.error(GameHost.class, "init 游戏事件服务初始化失败");
                 return false;
@@ -214,8 +214,8 @@ public final class GameHost
             {
                 LogUtils.debug(GameHost.class, "run 存在事件");
 
-                EventObject eventObject = this.eventQueue.getEvent();
-                eventDispatcher.handleEvent(eventObject);
+                Event event = this.eventQueue.getEvent();
+                eventDispatcher.handleEvent(event);
             }
 
             // 3. 渲染当前状态

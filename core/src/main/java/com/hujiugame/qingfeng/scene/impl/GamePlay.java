@@ -17,7 +17,7 @@ import com.hujiugame.qingfeng.type.Name;
 import com.hujiugame.qingfeng.type.play.Hoster;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
-import com.hujiugame.qingfeng.scene.GameRender;
+import com.hujiugame.qingfeng.scene.AbstractGameRender;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventQueue;
 import com.hujiugame.qingfeng.manager.LayoutManager;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public final class GamePlay implements GameRender
+public final class GamePlay extends AbstractGameRender
 {
     private final EventQueue eventQueue;
     private final LayoutManager layoutManager;
@@ -35,7 +35,6 @@ public final class GamePlay implements GameRender
     private GraphicsManager gameGraphicsManager;
     private UiManager gameUiManager;
     private ScriptExecutor gameScriptExecutor;
-    private GameStateDataContainer gameStateDataContainer;
 
     private Layout layout;
 
@@ -183,9 +182,8 @@ public final class GamePlay implements GameRender
      * @param gameStateDataContainer 游戏状态数据容器
      */
     @Override
-    public void init (GameStateDataContainer gameStateDataContainer)
+    protected void onInit (GameStateDataContainer gameStateDataContainer)
     {
-        this.gameStateDataContainer = gameStateDataContainer;
 
         gameAudioManager = gameHost.getPlayLocalData().getAudioManager();
         gameGraphicsManager = gameHost.getPlayLocalData().getGraphicsManager();
@@ -234,6 +232,12 @@ public final class GamePlay implements GameRender
     /**
      * 释放游戏播放布局资源
      */
+    @Override
+    public void transitionRender (float deltaTime)
+    {
+        // 过渡渲染：当前页面无过渡效果，空实现
+    }
+
     @Override
     public void dispose ()
     {

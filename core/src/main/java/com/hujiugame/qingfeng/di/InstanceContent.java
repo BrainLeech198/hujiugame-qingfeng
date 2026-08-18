@@ -90,12 +90,14 @@ public final class InstanceContent
                 instanceContent.userConfigManager,
                 instanceContent.languageManager, instanceContent.themeManager, instanceContent.audioManager,
                 instanceContent.graphicsManager, instanceContent.uiManager,
+                instanceContent.animationManager,
                 instanceContent.eventQueue));
 
         registry.register(GameState.MENU_MAIN,
             () -> new MenuMain(instanceContent.updateChecker, instanceContent.audioManager,
                 instanceContent.graphicsManager, instanceContent.themeManager,
                 instanceContent.uiManager,
+                instanceContent.animationManager,
                 instanceContent.eventQueue,
                 instanceContent.useViewport,
                 instanceContent.virtualInputHandler));
@@ -104,20 +106,24 @@ public final class InstanceContent
                 instanceContent.graphicsManager, instanceContent.uiManager,
                 instanceContent.eventQueue,
                 instanceContent.gameHost, instanceContent.rootPath,
-                instanceContent.virtualInputHandler));
+                instanceContent.virtualInputHandler,
+                instanceContent.animationManager));
         registry.register(GameState.MENU_LOAD,
             () -> new MenuLoad(instanceContent.audioManager, instanceContent.graphicsManager,
                 instanceContent.uiManager, instanceContent.eventQueue,
-                instanceContent.gameHost));
+                instanceContent.gameHost,
+                instanceContent.animationManager));
 
         registry.register(GameState.CONFIG_BASIC,
             () -> new ConfigBasic(instanceContent.eventQueue, instanceContent.audioManager,
                 instanceContent.graphicsManager, instanceContent.uiManager,
-                instanceContent.virtualInputHandler));
+                instanceContent.virtualInputHandler,
+                instanceContent.animationManager));
         registry.register(GameState.CONFIG_DISPLAY,
             () -> new ConfigDisplay(instanceContent.eventQueue, instanceContent.audioManager,
                 instanceContent.graphicsManager, instanceContent.uiManager,
-                instanceContent.virtualInputHandler));
+                instanceContent.virtualInputHandler,
+                instanceContent.animationManager));
 
         registry.register(GameState.GAME_MENU,
             () -> new GameMenu(instanceContent.eventQueue, instanceContent.gameHost,
@@ -188,7 +194,7 @@ public final class InstanceContent
 
             // 动画管理类
             start = System.nanoTime();
-            instanceContent.animationManager = new AnimationManager();
+            instanceContent.animationManager = new AnimationManager(instanceContent.eventQueue);
             LogUtils.debug(InstanceContent.class, "init - AnimationManager 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
 
             // 游戏管理类

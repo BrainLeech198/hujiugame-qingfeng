@@ -15,6 +15,13 @@ public interface GameRender
     void init (GameStateDataContainer gameStateDataContainer);
 
     /**
+     * 获取游戏状态数据容器。
+     *
+     * @return 游戏状态数据容器
+     */
+    GameStateDataContainer getGameStateDataContainer ();
+
+    /**
      * 更新渲染器的逻辑状态。
      *
      * @param deltaTime 距上一帧的时间差（秒）
@@ -27,6 +34,13 @@ public interface GameRender
      * @param deltaTime 距上一帧的时间差（秒）
      */
     void render (float deltaTime);
+
+    /**
+     * 过渡渲染，用于状态切换时的过渡效果。
+     *
+     * @param deltaTime 距上一帧的时间差（秒）
+     */
+    void transitionRender (float deltaTime);
 
     /**
      * 销毁渲染器，释放所有资源。

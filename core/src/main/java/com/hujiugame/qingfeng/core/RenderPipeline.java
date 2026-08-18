@@ -4,6 +4,7 @@ import com.hujiugame.qingfeng.data.game.GameStateDataContainer;
 import com.hujiugame.qingfeng.data.play.PlayLocalData;
 import com.hujiugame.qingfeng.scene.GameRender;
 import com.hujiugame.qingfeng.scene.GameRenderRegistry;
+import com.hujiugame.qingfeng.type.game.GameRenderPipeLineState;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
 import java.util.function.Consumer;
@@ -13,12 +14,34 @@ public final class RenderPipeline
     private final GameRenderRegistry registry;
     private final Consumer<Float> inputUpdater;
 
+    private GameRenderPipeLineState state;
     private GameRender gameRender;
 
     public RenderPipeline (GameRenderRegistry registry, Consumer<Float> inputUpdater)
     {
         this.registry = registry;
         this.inputUpdater = inputUpdater;
+        this.state = GameRenderPipeLineState.NORMAL;
+    }
+
+    /**
+     * 获取渲染器状态
+     *
+     * @return 渲染器状态
+     */
+    public GameRenderPipeLineState getState ()
+    {
+        return state;
+    }
+
+    /**
+     * 设置渲染器状态
+     *
+     * @param state 渲染器状态
+     */
+    public void setState (GameRenderPipeLineState state)
+    {
+        this.state = state;
     }
 
     /**
@@ -40,6 +63,8 @@ public final class RenderPipeline
             return false;
         }
     }
+
+    // ===================================================================================================================
 
     /**
      * 根据状态结构从注册表获取对应的渲染机并初始化
@@ -79,6 +104,8 @@ public final class RenderPipeline
         }
     }
 
+    // ===================================================================================================================
+
     /**
      * 调用当前渲染机的帧更新（包含输入处理）
      * <p>
@@ -94,9 +121,20 @@ public final class RenderPipeline
             // 调用当前渲染机的帧更新（包含输入处理）
             if (gameRender != null)
             {
-                // 调用当前渲染机的帧更新
-                gameRender.update(deltaTime);
-                if (inputUpdater != null) inputUpdater.accept(deltaTime); // 调用输入处理
+                switch (state)
+                {
+                    // 调用当前渲染机的帧更新
+                    case NORMAL:
+                        updateNormal(deltaTime);
+                        break;
+
+                    case FADING:
+                        updateFading(deltaTime);
+                        break;
+
+                    default:
+                        break;
+                }
             }
             else
             {
@@ -111,6 +149,29 @@ public final class RenderPipeline
     }
 
     /**
+     * 渲染机正常更新
+     *
+     * @param deltaTime 距上一帧的时间差
+     */
+    private void updateNormal (float deltaTime)
+    {
+        // 调用当前渲染机的帧更新
+        gameRender.update(deltaTime);
+        if (inputUpdater != null) inputUpdater.accept(deltaTime); // 调用输入处理
+    }
+
+    /**
+     * 渲染机 fading 更新
+     *
+     * @param deltaTime 距上一帧的时间差
+     */
+    private void updateFading (float deltaTime)
+    {
+    }
+
+    // ===================================================================================================================
+
+    /**
      * 渲染当前渲染机的内容
      * <p>
      * 性能：每帧提交绘制，耗时直接影响帧率。绘制所需的纹理、字体、批处理资源应提前加载，
@@ -122,10 +183,22 @@ public final class RenderPipeline
     {
         try
         {
-            // 调用当前渲染机的渲染
+            // 判断渲染机是否为空
             if (gameRender != null)
             {
-                gameRender.render(deltaTime);
+                // 根据渲染机状态调用不同的渲染方法
+                switch (state)
+                {
+                    case NORMAL:
+                        renderNormal(deltaTime);
+                        break;
+
+                    case FADING:
+                        renderFading(deltaTime);
+                        break;
+                    default:
+                        break;
+                }
             }
             else
             {
@@ -138,6 +211,30 @@ public final class RenderPipeline
             throw e;
         }
     }
+
+    /**
+     * 渲染机正常渲染
+     *
+     * @param deltaTime 距上一帧的时间差
+     */
+    private void renderNormal (float deltaTime)
+    {
+        // 调用当前渲染机的渲染
+        gameRender.render(deltaTime);
+    }
+
+    /**
+     * 渲染机 fading 渲染
+     *
+     * @param deltaTime 距上一帧的时间差
+     */
+    private void renderFading (float deltaTime)
+    {
+        // 调用过度动画
+        gameRender.transitionRender(deltaTime);
+    }
+
+    // ===================================================================================================================
 
     /**
      * 销毁当前渲染机（不报错的重置版本）
@@ -162,6 +259,8 @@ public final class RenderPipeline
             return true;
         }
     }
+
+    // ===================================================================================================================
 
     /**
      * 销毁当前渲染机并释放资源

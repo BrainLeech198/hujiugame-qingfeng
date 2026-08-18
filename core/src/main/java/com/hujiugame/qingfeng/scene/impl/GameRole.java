@@ -4,21 +4,22 @@ import com.hujiugame.qingfeng.core.GameHost;
 import com.hujiugame.qingfeng.data.game.GameStateDataContainer;
 import com.hujiugame.qingfeng.data.game.Layout;
 import com.hujiugame.qingfeng.data.story.Role;
-import com.hujiugame.qingfeng.type.key.UniversalUiKey;
+import com.hujiugame.qingfeng.type.game.GameState;
+import com.hujiugame.qingfeng.type.key.ui.UniversalUiKey;
 import com.hujiugame.qingfeng.type.play.Hoster;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.input.VirtualInputHandler;
-import com.hujiugame.qingfeng.scene.GameRender;
+import com.hujiugame.qingfeng.scene.AbstractGameRender;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventQueue;
-import com.hujiugame.qingfeng.event.imp.PopGameState;
+import com.hujiugame.qingfeng.event.imp.state.PopGameState;
 import com.hujiugame.qingfeng.manager.LayoutManager;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
 import java.util.List;
 
-public final class GameRole implements GameRender
+public final class GameRole extends AbstractGameRender
 {
     private final EventQueue eventQueue;
     private final LayoutManager layoutManager;
@@ -27,7 +28,6 @@ public final class GameRole implements GameRender
     private AudioManager gameAudioManager;
     private GraphicsManager gameGraphicsManager;
     private UiManager gameUiManager;
-    private GameStateDataContainer gameStateDataContainer;
 
     private Layout layout;
 
@@ -123,9 +123,8 @@ public final class GameRole implements GameRender
      * @param gameStateDataContainer 游戏状态数据容器
      */
     @Override
-    public void init (GameStateDataContainer gameStateDataContainer)
+    protected void onInit (GameStateDataContainer gameStateDataContainer)
     {
-        this.gameStateDataContainer = gameStateDataContainer;
 
         gameAudioManager = gameHost.getPlayLocalData().getAudioManager();
         gameGraphicsManager = gameHost.getPlayLocalData().getGraphicsManager();
@@ -151,7 +150,7 @@ public final class GameRole implements GameRender
         // 按下返回按钮
         if (gameUiManager.isButtonClicked(UniversalUiKey.BUTTON_BACK))
         {
-            eventQueue.addEvent(new PopGameState());
+            eventQueue.addEvent(new PopGameState(GameState.GAME_ROLE));
         }
 
         // 单人模式角色
@@ -194,6 +193,12 @@ public final class GameRole implements GameRender
     /**
      * 释放角色选择布局资源
      */
+    @Override
+    public void transitionRender (float deltaTime)
+    {
+        // 过渡渲染：当前页面无过渡效果，空实现
+    }
+
     @Override
     public void dispose ()
     {

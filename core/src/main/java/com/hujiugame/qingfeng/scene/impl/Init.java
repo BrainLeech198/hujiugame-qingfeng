@@ -3,9 +3,11 @@ package com.hujiugame.qingfeng.scene.impl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.hujiugame.qingfeng.animation.AnimationManager;
 import com.hujiugame.qingfeng.core.GameHost;
 import com.hujiugame.qingfeng.core.UpdateChecker;
-import com.hujiugame.qingfeng.event.imp.PushGameState;
+import com.hujiugame.qingfeng.event.imp.state.PushGameState;
+import com.hujiugame.qingfeng.event.imp.state.PushGameStateInitSpecially;
 import com.hujiugame.qingfeng.util.interact.NativeDialogUtils;
 import com.hujiugame.qingfeng.util.system.CrashUtils;
 import com.hujiugame.qingfeng.data.JsonEntity;
@@ -15,11 +17,11 @@ import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.file.PathName;
 import com.hujiugame.qingfeng.type.game.InitState;
 import com.hujiugame.qingfeng.type.game.GameState;
-import com.hujiugame.qingfeng.type.key.GameInfoKey;
-import com.hujiugame.qingfeng.type.key.ThemeKey;
+import com.hujiugame.qingfeng.type.key.config.GameInfoKey;
+import com.hujiugame.qingfeng.type.key.config.ThemeKey;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
-import com.hujiugame.qingfeng.scene.GameRender;
+import com.hujiugame.qingfeng.scene.AbstractGameRender;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventQueue;
 import com.hujiugame.qingfeng.manager.LanguageManager;
@@ -29,7 +31,7 @@ import com.hujiugame.qingfeng.util.StringPolisher;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
-public final class Init implements GameRender
+public final class Init extends AbstractGameRender
 {
     private final UpdateChecker updateChecker;
     private final GameHost gameHost;
@@ -39,6 +41,7 @@ public final class Init implements GameRender
     private final AudioManager audioManager;
     private final GraphicsManager graphicsManager;
     private final UiManager uiManager;
+    private final AnimationManager animationManager;
     private final EventQueue eventQueue;
 
     private static final float STEP_DELAY = 0.4f;
@@ -51,8 +54,9 @@ public final class Init implements GameRender
     private static final int REPAIR_IMAGE_Y = 48;
     private static final int REPAIR_IMAGE_SIZE = 96;
 
-    private int initState = 0;
+    private InitState initState = InitState.USER_CONFIG;
     private float initTimer = 0f;
+
 
     private String backgroundPictureTag;
     private String processPictureTag;
@@ -62,7 +66,7 @@ public final class Init implements GameRender
     private Color processColor = null;
 
     /** 正在执行资源修复，阻止状态机继续推进 */
-    private boolean isRepairing = false;
+    private boolean repairing = false;
 
     // ===================================================================================================================
 
@@ -70,6 +74,7 @@ public final class Init implements GameRender
                  UserConfigManager userConfigManager,
                  LanguageManager languageManager, ThemeManager themeManager, AudioManager audioManager,
                  GraphicsManager graphicsManager, UiManager uiManager,
+                 AnimationManager animationManager,
                  EventQueue eventQueue)
     {
         this.updateChecker = updateChecker;
@@ -80,6 +85,7 @@ public final class Init implements GameRender
         this.audioManager = audioManager;
         this.graphicsManager = graphicsManager;
         this.uiManager = uiManager;
+        this.animationManager = animationManager;
         this.eventQueue = eventQueue;
     }
 
@@ -91,7 +97,7 @@ public final class Init implements GameRender
     private void showProcess ()
     {
         // 计算进度
-        float processPercent = (float) (initState + 1 ) / (InitState.TOTAL + 1);
+        float processPercent = (float) (initState.getValue() + 1 ) / (InitState.TOTAL.getValue() + 1);
         int processPictureX = 0;
         int processPictureY = 0;
         int processPictureWidth = (int) (ScreenSize.WIDTH * processPercent);
@@ -148,13 +154,33 @@ public final class Init implements GameRender
     }
 
     /**
+     * 是否正在执行资源修复
+     *
+     * @return 是否正在执行资源修复
+     */
+    private boolean isRepairing ()
+    {
+        return repairing;
+    }
+
+    /**
+     * 设置资源修复状态
+     *
+     * @param repairing 是否正在执行资源修复
+     */
+    private void setRepairing (boolean repairing)
+    {
+        this.repairing = repairing;
+    }
+
+    /**
      * 修复游戏资源
      */
     private void repairGame ()
     {
         // 防重入：双击过快会触发两次并发修复，两个线程同时同步资源导致文件损坏
-        if (isRepairing) return;
-        isRepairing = true;
+        if (repairing) return;
+        setRepairing(true);
         updateChecker.repairGame(() ->
         {
             NativeDialogUtils.showInfo("修复完成", "游戏资源已修复完成，请重启游戏。", Gdx.app::exit);
@@ -184,7 +210,7 @@ public final class Init implements GameRender
             userConfigManager.uploadTo(gameHost.getGameInfoManager());
             languageManager.uploadTo(gameHost.getGameInfoManager());
             themeManager.uploadTo(gameHost.getGameInfoManager());
-            initState++;
+            initState = initState.next();
         }
     }
 
@@ -203,7 +229,7 @@ public final class Init implements GameRender
         {
             LogUtils.debug(Init.class, "initAudio audioManager.init() 音频初始化成功");
         }
-        initState++;
+        initState = initState.next();
     }
 
     /**
@@ -221,7 +247,7 @@ public final class Init implements GameRender
         {
             LogUtils.debug(Init.class, "initGraphics graphicsManager.init() 绘图初始化成功");
         }
-        initState++;
+        initState = initState.next();
     }
 
     /**
@@ -239,7 +265,25 @@ public final class Init implements GameRender
         {
             LogUtils.debug(Init.class, "initUi uiManager.init() ui初始化成功");
         }
-        initState++;
+        initState = initState.next();
+    }
+
+    /**
+     * 初始化动画
+     */
+    private void initAnimation ()
+    {
+        if (!animationManager.init())
+        {
+            LogUtils.error(Init.class, "initAnimation animationManager.init() 动画初始化失败");
+            CrashUtils.crash(new RuntimeException("initAnimation animationManager.init() 动画初始化失败"));
+            return;
+        }
+        else
+        {
+            LogUtils.debug(Init.class, "initAnimation animationManager.init() 动画初始化成功");
+        }
+        initState = initState.next();
     }
 
     /**
@@ -251,7 +295,7 @@ public final class Init implements GameRender
         checkUpdate();
 
         // 跳转菜单
-        eventQueue.addEvent(new PushGameState(GameState.MENU_MAIN));
+        eventQueue.addEvent(new PushGameStateInitSpecially(GameState.MENU_MAIN));
     }
 
     // ===================================================================================================================
@@ -272,8 +316,9 @@ public final class Init implements GameRender
      * @param gameStateDataContainer 游戏状态数据容器
      */
     @Override
-    public void init (GameStateDataContainer gameStateDataContainer)
+    protected void onInit (GameStateDataContainer gameStateDataContainer)
     {
+
         backgroundPictureTag = StringPolisher.polished("init");
         processPictureTag = StringPolisher.polished("process");
         repairImageTag = StringPolisher.polished("repair");
@@ -325,28 +370,32 @@ public final class Init implements GameRender
         }
 
         // 修复中跳过状态机，等待修复完成后弹窗退出
-        if (isRepairing) return;
+        if (repairing) return;
 
         // 初始化状态
         switch (initState)
         {
-            case InitState.USER_CONFIG:
+            case USER_CONFIG:
                 initUserConfig();
                 break;
 
-            case InitState.AUDIO:
+            case AUDIO:
                 initAudio();
                 break;
 
-            case InitState.GRAPHICS:
+            case GRAPHICS:
                 initGraphics();
                 break;
 
-            case InitState.UI:
+            case UI:
                 initUi();
                 break;
 
-            case InitState.TOTAL:
+            case ANIMATION:
+                initAnimation();
+                break;
+
+            case TOTAL:
                 initStop();
                 break;
         }
@@ -370,6 +419,14 @@ public final class Init implements GameRender
     /**
      * 释放启动画面资源
      */
+    @Override
+    public void transitionRender (float deltaTime)
+    {
+        // 直接切换，不走过度
+        // 不可能到达的语句
+        throw new RuntimeException("transitionRender Init不允许调用 过渡动画渲染");
+    }
+
     @Override
     public void dispose ()
     {

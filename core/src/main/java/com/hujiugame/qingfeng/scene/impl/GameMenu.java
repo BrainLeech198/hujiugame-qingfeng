@@ -3,17 +3,17 @@ package com.hujiugame.qingfeng.scene.impl;
 import com.hujiugame.qingfeng.core.GameHost;
 import com.hujiugame.qingfeng.data.game.GameStateDataContainer;
 import com.hujiugame.qingfeng.type.game.GameState;
-import com.hujiugame.qingfeng.type.key.RequirementKey;
+import com.hujiugame.qingfeng.type.key.config.RequirementKey;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.input.VirtualInputHandler;
-import com.hujiugame.qingfeng.scene.GameRender;
+import com.hujiugame.qingfeng.scene.AbstractGameRender;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventQueue;
-import com.hujiugame.qingfeng.event.imp.PushGameState;
-import com.hujiugame.qingfeng.event.imp.ResetGameState;
+import com.hujiugame.qingfeng.event.imp.state.PushGameState;
+import com.hujiugame.qingfeng.event.imp.state.ResetGameState;
 
-public final class GameMenu implements GameRender
+public final class GameMenu extends AbstractGameRender
 {
     private final EventQueue eventQueue;
     private final GameHost gameHost;
@@ -21,7 +21,6 @@ public final class GameMenu implements GameRender
     private AudioManager gameAudioManager;
     private GraphicsManager gameGraphicsManager;
     private UiManager gameUiManager;
-    private GameStateDataContainer gameStateDataContainer;
 
     // ===================================================================================================================
 
@@ -38,9 +37,8 @@ public final class GameMenu implements GameRender
      * @param gameStateDataContainer 游戏状态数据容器
      */
     @Override
-    public void init (GameStateDataContainer gameStateDataContainer)
+    protected void onInit (GameStateDataContainer gameStateDataContainer)
     {
-        this.gameStateDataContainer = gameStateDataContainer;
 
         gameAudioManager = gameHost.getPlayLocalData().getAudioManager();
         gameGraphicsManager = gameHost.getPlayLocalData().getGraphicsManager();
@@ -62,7 +60,7 @@ public final class GameMenu implements GameRender
         // 开始按钮
         if (gameUiManager.isButtonClicked(RequirementKey.Ui.GameMenu.BUTTON_START))
         {
-            eventQueue.addEvent(new PushGameState(GameState.GAME_ROLE));
+            eventQueue.addEvent(new PushGameState(GameState.GAME_MENU, GameState.GAME_ROLE));
         }
 
         // 按下返回按钮
@@ -79,7 +77,7 @@ public final class GameMenu implements GameRender
             () ->
             {
                 gameHost.getGameSessionManager().quitGame();
-                eventQueue.addEvent(new ResetGameState());
+                eventQueue.addEvent(new ResetGameState(GameState.GAME_MENU));
             });
     }
 
@@ -98,6 +96,12 @@ public final class GameMenu implements GameRender
     /**
      * 释放游戏内菜单布局资源
      */
+    @Override
+    public void transitionRender (float deltaTime)
+    {
+        // 过渡渲染：当前页面无过渡效果，空实现
+    }
+
     @Override
     public void dispose ()
     {

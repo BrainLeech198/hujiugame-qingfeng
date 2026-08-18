@@ -3,6 +3,9 @@ package com.hujiugame.qingfeng.scene.impl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector3;
+import com.hujiugame.qingfeng.animation.Animation;
+import com.hujiugame.qingfeng.animation.AnimationManager;
+import com.hujiugame.qingfeng.animation.task.action.AnimationAction;
 import com.hujiugame.qingfeng.core.UpdateChecker;
 import com.hujiugame.qingfeng.data.game.GameStateDataContainer;
 import com.hujiugame.qingfeng.input.VirtualInputHandler;
@@ -10,34 +13,38 @@ import com.hujiugame.qingfeng.manager.ThemeManager;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.file.PathName;
 import com.hujiugame.qingfeng.type.game.GameState;
-import com.hujiugame.qingfeng.type.key.RequirementKey;
+import com.hujiugame.qingfeng.type.key.config.RequirementKey;
 import com.hujiugame.qingfeng.type.ui.UseViewport;
 import com.hujiugame.qingfeng.type.url.WebSite;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
-import com.hujiugame.qingfeng.scene.GameRender;
+import com.hujiugame.qingfeng.scene.AbstractGameRender;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventQueue;
-import com.hujiugame.qingfeng.event.imp.PushGameState;
+import com.hujiugame.qingfeng.event.imp.state.PushGameState;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 
-public final class MenuMain implements GameRender
+public final class MenuMain extends AbstractGameRender
 {
     private final UpdateChecker updateChecker;
     private final AudioManager audioManager;
     private final GraphicsManager graphicsManager;
     private final ThemeManager themeManager;
     private final UiManager uiManager;
+    private final AnimationManager animationManager;
     private final EventQueue eventQueue;
     private final UseViewport useViewport;
     private final VirtualInputHandler virtualInputHandler;
-    private GameStateDataContainer gameStateDataContainer;
 
-    /** 版本号区域可点击宽高（虚拟坐标） */
+    /**
+     * 版本号区域可点击宽高（虚拟坐标）
+     */
     private static final int VERSION_LABEL_WIDTH = 180;
     private static final int VERSION_LABEL_HEIGHT = 40;
 
-    /** 版本号文字缩放与屏幕位置（虚拟坐标） */
+    /**
+     * 版本号文字缩放与屏幕位置（虚拟坐标）
+     */
     private static final float VERSION_TEXT_SCALE = 1.0f;
     private static final int VERSION_TEXT_X = 5;
     private static final int VERSION_TEXT_Y = 5;
@@ -45,6 +52,7 @@ public final class MenuMain implements GameRender
     public MenuMain (UpdateChecker updateChecker, AudioManager audioManager,
                      GraphicsManager graphicsManager, ThemeManager themeManager,
                      UiManager uiManager,
+                     AnimationManager animationManager,
                      EventQueue eventQueue,
                      UseViewport useViewport,
                      VirtualInputHandler virtualInputHandler)
@@ -54,6 +62,7 @@ public final class MenuMain implements GameRender
         this.graphicsManager = graphicsManager;
         this.themeManager = themeManager;
         this.uiManager = uiManager;
+        this.animationManager = animationManager;
         this.eventQueue = eventQueue;
         this.useViewport = useViewport;
         this.virtualInputHandler = virtualInputHandler;
@@ -61,13 +70,12 @@ public final class MenuMain implements GameRender
 
     /**
      * 初始化主菜单布局，缓存背景图和网站图标
-     *
-     * @param gameStateDataContainer 游戏状态数据容器
      */
     @Override
-    public void init (GameStateDataContainer gameStateDataContainer)
+    protected void onInit (GameStateDataContainer gameStateDataContainer)
     {
-        this.gameStateDataContainer = gameStateDataContainer;
+        // 提取动画配置
+        animationManager.setAnimation(new Animation(gameStateDataContainer.getConfigJson()));
 
         // 缓存当前背景图到app_init.png
         FileHandle backgroundPicturePath = themeManager.getPathHandle().child(PathName.ASSET_S_RESOURCE_IMAGE).child(gameStateDataContainer.getLayoutConfig().getBackgroundPicture());
@@ -107,7 +115,7 @@ public final class MenuMain implements GameRender
         // 按下开始按钮
         if (uiManager.isButtonClicked(RequirementKey.Ui.MenuMain.BUTTON_START))
         {
-            eventQueue.addEvent(new PushGameState(GameState.MENU_LIST));
+            eventQueue.addEvent(new PushGameState(GameState.MENU_MAIN, GameState.MENU_LIST));
         }
         // 按下创作按钮
         else if (uiManager.isButtonClicked(RequirementKey.Ui.MenuMain.BUTTON_CREATE))
@@ -117,14 +125,14 @@ public final class MenuMain implements GameRender
         // 按下配置按钮
         else if (uiManager.isButtonClicked(RequirementKey.Ui.MenuMain.BUTTON_CONFIG))
         {
-            eventQueue.addEvent(new PushGameState(GameState.CONFIG_BASIC));
+            eventQueue.addEvent(new PushGameState(GameState.MENU_MAIN, GameState.CONFIG_BASIC));
         }
         // 按下退出按钮
         else if (uiManager.isButtonClicked(RequirementKey.Ui.MenuMain.BUTTON_QUIT))
         {
             uiManager.getMessageBox().showAsk(RequirementKey.Language.MessageBox.QUIT_GAME,
                 "{language$" + RequirementKey.Language.REQUIREMENT_BLOCK + "#" + RequirementKey.Language.MESSAGE_BOX + "." + RequirementKey.Language.MessageBox.QUIT_GAME_TITLE + "}",
-                "{language$" + RequirementKey.Language.REQUIREMENT_BLOCK + "#" + RequirementKey.Language.MESSAGE_BOX + "." + RequirementKey.Language.MessageBox.QUIT_GAME_CONTENT+ "}");
+                "{language$" + RequirementKey.Language.REQUIREMENT_BLOCK + "#" + RequirementKey.Language.MESSAGE_BOX + "." + RequirementKey.Language.MessageBox.QUIT_GAME_CONTENT + "}");
         }
 
         // 更新检测
@@ -192,6 +200,57 @@ public final class MenuMain implements GameRender
     /**
      * 释放主菜单布局资源
      */
+    @Override
+    public void transitionRender (float deltaTime)
+    {
+        if (animationManager.getTransitionManager().isReady())
+        {
+            // 淡出完成阶段 即淡入
+            if (animationManager.getTransitionManager().isFadedOut())
+            {
+                // 初始化
+                if (!animationManager.getTransitionManager().isFadingIn())
+                {
+                    animationManager.getTransitionManager().initFadeIn(
+                        gameStateDataContainer.getLayoutConfig(),
+                        animationManager.getAnimation(),
+                        uiManager
+                    );
+                }
+
+                // 进行中
+                animationManager.getTransitionManager().fadingIn(
+                    gameStateDataContainer.getLayoutConfig(),
+                    audioManager, graphicsManager, uiManager,
+                    deltaTime
+                );
+            }
+            // 淡出阶段
+            else
+            {
+                // 初始化
+                if (!animationManager.getTransitionManager().isFadingOut())
+                {
+                    animationManager.getTransitionManager().initFadeOut(
+                        gameStateDataContainer.getLayoutConfig(),
+                        animationManager.getAnimation()
+                    );
+                }
+
+                // 进行中
+                animationManager.getTransitionManager().fadingOut(
+                    gameStateDataContainer.getLayoutConfig(),
+                    audioManager, graphicsManager, uiManager,
+                    deltaTime
+                );
+            }
+        }
+        else
+        {
+            animationManager.getTransitionManager().stopTransition();
+        }
+    }
+
     @Override
     public void dispose ()
     {

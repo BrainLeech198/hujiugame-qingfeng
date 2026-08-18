@@ -1,35 +1,40 @@
 package com.hujiugame.qingfeng.scene.impl;
 
+import com.hujiugame.qingfeng.animation.Animation;
+import com.hujiugame.qingfeng.animation.AnimationManager;
 import com.hujiugame.qingfeng.data.game.GameStateDataContainer;
-import com.hujiugame.qingfeng.type.key.UniversalUiKey;
+import com.hujiugame.qingfeng.type.game.GameState;
+import com.hujiugame.qingfeng.type.key.ui.UniversalUiKey;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.input.VirtualInputHandler;
-import com.hujiugame.qingfeng.scene.GameRender;
+import com.hujiugame.qingfeng.scene.AbstractGameRender;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventQueue;
-import com.hujiugame.qingfeng.event.imp.PopGameState;
+import com.hujiugame.qingfeng.event.imp.state.PopGameState;
 
-public final class ConfigBasic implements GameRender
+public final class ConfigBasic extends AbstractGameRender
 {
     private final EventQueue eventQueue;
     private final AudioManager audioManager;
     private final GraphicsManager graphicsManager;
     private final UiManager uiManager;
     private final VirtualInputHandler virtualInputHandler;
-    private GameStateDataContainer gameStateDataContainer;
+    private final AnimationManager animationManager;
 
     // ===================================================================================================================
 
     public ConfigBasic (EventQueue eventQueue, AudioManager audioManager,
                         GraphicsManager graphicsManager, UiManager uiManager,
-                        VirtualInputHandler virtualInputHandler)
+                        VirtualInputHandler virtualInputHandler,
+                        AnimationManager animationManager)
     {
         this.eventQueue = eventQueue;
         this.audioManager = audioManager;
         this.graphicsManager = graphicsManager;
         this.uiManager = uiManager;
         this.virtualInputHandler = virtualInputHandler;
+        this.animationManager = animationManager;
     }
 
     /**
@@ -38,9 +43,10 @@ public final class ConfigBasic implements GameRender
      * @param gameStateDataContainer 游戏状态数据容器
      */
     @Override
-    public void init (GameStateDataContainer gameStateDataContainer)
+    protected void onInit (GameStateDataContainer gameStateDataContainer)
     {
-        this.gameStateDataContainer = gameStateDataContainer;
+        // 提取动画配置
+        animationManager.setAnimation(new Animation(gameStateDataContainer.getConfigJson()));
 
         uiManager.addLayout(gameStateDataContainer.getLayoutConfig());
 
@@ -59,7 +65,7 @@ public final class ConfigBasic implements GameRender
         // 按下返回按钮
         if (uiManager.isButtonClicked(UniversalUiKey.BUTTON_BACK))
         {
-            eventQueue.addEvent(new PopGameState());
+            eventQueue.addEvent(new PopGameState(GameState.CONFIG_BASIC));
         }
     }
 
@@ -75,9 +81,61 @@ public final class ConfigBasic implements GameRender
         graphicsManager.putLayout(gameStateDataContainer.getLayoutConfig(), deltaTime);
     }
 
-    /**
-     * 释放配置界面布局资源
-     */
+    @Override
+    public void transitionRender (float deltaTime)
+    {
+        if (animationManager.getTransitionManager().isReady())
+        {
+            // 淡出完成阶段 即淡入
+            if (animationManager.getTransitionManager().isFadedOut())
+            {
+                // 进行中
+                if (animationManager.getTransitionManager().isFadingIn())
+                {
+                    animationManager.getTransitionManager().fadingIn(
+                        gameStateDataContainer.getLayoutConfig(),
+                        audioManager, graphicsManager, uiManager,
+                        deltaTime
+                    );
+                }
+                // 初始化
+                else
+                {
+                    animationManager.getTransitionManager().initFadeIn(
+                        gameStateDataContainer.getLayoutConfig(),
+                        animationManager.getAnimation(),
+                        uiManager
+                    );
+                }
+            }
+            // 淡出阶段
+            else
+            {
+                // 进行中
+                if (animationManager.getTransitionManager().isFadingOut())
+                {
+                    animationManager.getTransitionManager().fadingOut(
+                        gameStateDataContainer.getLayoutConfig(),
+                        audioManager, graphicsManager, uiManager,
+                        deltaTime
+                    );
+                }
+                // 初始化
+                else
+                {
+                    animationManager.getTransitionManager().initFadeOut(
+                        gameStateDataContainer.getLayoutConfig(),
+                        animationManager.getAnimation()
+                    );
+                }
+            }
+        }
+        else
+        {
+            animationManager.getTransitionManager().stopTransition();
+        }
+    }
+
     @Override
     public void dispose ()
     {

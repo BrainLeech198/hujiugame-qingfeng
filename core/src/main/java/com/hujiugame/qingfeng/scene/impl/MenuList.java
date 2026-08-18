@@ -3,21 +3,24 @@ package com.hujiugame.qingfeng.scene.impl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.hujiugame.qingfeng.audio.AudioManager;
+import com.hujiugame.qingfeng.animation.Animation;
+import com.hujiugame.qingfeng.animation.AnimationManager;
 import com.hujiugame.qingfeng.core.GameHost;
 import com.hujiugame.qingfeng.core.UpdateChecker;
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.data.game.GameStateDataContainer;
 import com.hujiugame.qingfeng.event.EventQueue;
-import com.hujiugame.qingfeng.event.imp.PopGameState;
+import com.hujiugame.qingfeng.event.imp.state.PopGameState;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.input.VirtualInputHandler;
-import com.hujiugame.qingfeng.scene.GameRender;
+import com.hujiugame.qingfeng.scene.AbstractGameRender;
 import com.hujiugame.qingfeng.type.AppVersionTable;
 import com.hujiugame.qingfeng.type.file.FileSuffix;
 import com.hujiugame.qingfeng.type.file.PathName;
-import com.hujiugame.qingfeng.type.key.DialogKey;
-import com.hujiugame.qingfeng.type.key.GameInfoKey;
-import com.hujiugame.qingfeng.type.key.RequirementKey;
+import com.hujiugame.qingfeng.type.game.GameState;
+import com.hujiugame.qingfeng.type.key.common.DialogKey;
+import com.hujiugame.qingfeng.type.key.config.GameInfoKey;
+import com.hujiugame.qingfeng.type.key.config.RequirementKey;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.ui.kind.image.ImageInfo;
 import com.hujiugame.qingfeng.util.interact.FileChooser;
@@ -29,7 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public final class MenuList implements GameRender
+public final class MenuList extends AbstractGameRender
 {
     private final UpdateChecker updateChecker;
     private final AudioManager audioManager;
@@ -39,7 +42,7 @@ public final class MenuList implements GameRender
     private final GameHost gameHost;
     private final String rootPath;
     private final VirtualInputHandler virtualInputHandler;
-    private GameStateDataContainer gameStateDataContainer;
+    private final AnimationManager animationManager;
 
     private String gameListAbsolutePath;
     private String gameListPath;
@@ -69,7 +72,8 @@ public final class MenuList implements GameRender
                      GraphicsManager graphicsManager, UiManager uiManager,
                      EventQueue eventQueue,
                      GameHost gameHost, String rootPath,
-                     VirtualInputHandler virtualInputHandler)
+                     VirtualInputHandler virtualInputHandler,
+                     AnimationManager animationManager)
     {
         this.updateChecker = updateChecker;
         this.audioManager = audioManager;
@@ -79,6 +83,7 @@ public final class MenuList implements GameRender
         this.gameHost = gameHost;
         this.rootPath = rootPath;
         this.virtualInputHandler = virtualInputHandler;
+        this.animationManager = animationManager;
     }
 
     // ===================================================================================================================
@@ -314,7 +319,7 @@ public final class MenuList implements GameRender
 
     private void loadGame ()
     {
-        if (gameHost.getGameSessionManager().loadGame(Gdx.files.external(selectedGamePath)))
+        if (gameHost.getGameSessionManager().loadGame(Gdx.files.external(selectedGamePath), GameState.MENU_LIST))
         {
             LogUtils.debug(MenuList.class, "loadGame 成功载入游戏 (path): " + selectedGamePath);
         }
@@ -376,13 +381,12 @@ public final class MenuList implements GameRender
 
     /**
      * 初始化游戏列表，扫描游戏目录并刷新页面
-     *
-     * @param gameStateDataContainer 游戏状态数据容器
      */
     @Override
-    public void init (GameStateDataContainer gameStateDataContainer)
+    protected void onInit (GameStateDataContainer gameStateDataContainer)
     {
-        this.gameStateDataContainer = gameStateDataContainer;
+        // 提取动画配置
+        animationManager.setAnimation(new Animation(gameStateDataContainer.getConfigJson()));
 
         // config
         if (gameStateDataContainer.getConfigJson().containsKey(RequirementKey.Config.MENU_LIST_PAGE_MAX_GAME))
@@ -444,7 +448,7 @@ public final class MenuList implements GameRender
         // 按下返回按钮
         if (uiManager.isButtonClicked(RequirementKey.Ui.MenuList.BUTTON_BACK))
         {
-            eventQueue.addEvent(new PopGameState());
+            eventQueue.addEvent(new PopGameState(GameState.MENU_LIST));
         }
 
         // 点击路径标签
@@ -502,6 +506,61 @@ public final class MenuList implements GameRender
     /**
      * 释放游戏列表资源，清空游戏路径列表
      */
+    @Override
+    public void transitionRender (float deltaTime)
+    {
+        if (animationManager.getTransitionManager().isReady())
+        {
+            // 淡出完成阶段 即淡入
+            if (animationManager.getTransitionManager().isFadedOut())
+            {
+                // 进行中
+                if (animationManager.getTransitionManager().isFadingIn())
+                {
+                    animationManager.getTransitionManager().fadingIn(
+                        gameStateDataContainer.getLayoutConfig(),
+                        audioManager, graphicsManager, uiManager,
+                        deltaTime
+                    );
+                }
+                // 初始化
+                else
+                {
+                    animationManager.getTransitionManager().initFadeIn(
+                        gameStateDataContainer.getLayoutConfig(),
+                        animationManager.getAnimation(),
+                        uiManager
+                    );
+                }
+            }
+            // 淡出阶段
+            else
+            {
+                // 进行中
+                if (animationManager.getTransitionManager().isFadingOut())
+                {
+                    animationManager.getTransitionManager().fadingOut(
+                        gameStateDataContainer.getLayoutConfig(),
+                        audioManager, graphicsManager, uiManager,
+                        deltaTime
+                    );
+                }
+                // 初始化
+                else
+                {
+                    animationManager.getTransitionManager().initFadeOut(
+                        gameStateDataContainer.getLayoutConfig(),
+                        animationManager.getAnimation()
+                    );
+                }
+            }
+        }
+        else
+        {
+            animationManager.getTransitionManager().stopTransition();
+        }
+    }
+
     @Override
     public void dispose ()
     {
