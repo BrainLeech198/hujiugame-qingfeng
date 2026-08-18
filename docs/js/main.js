@@ -42,11 +42,18 @@
         const body = fold.querySelector('.intro-body');
         if (!toggle || !body) return;
 
-        const paras = body.querySelectorAll('p');
-        if (paras.length <= 2) return;
-        // 第 3、4 段有实际内容时才折叠（单语言内容过短不显示按钮）
-        const overflow = paras.length > 2 &&
-            (paras[2].textContent.trim() !== '' || (paras[3] && paras[3].textContent.trim() !== ''));
+        // 折叠阈值：固定 110px 高度（与更新日志折叠一致）
+        const FOLD_HEIGHT = 110;
+
+        // 先移除折叠类、测量完整内容高度，超过阈值才折叠（内容过短不显示按钮）
+        fold.classList.remove('folded');
+        const fullHeight = body.scrollHeight;
+        const overflow = fullHeight > FOLD_HEIGHT;
+        if (!overflow) {
+            // 内容不足 110px，不折叠也不显示按钮
+            toggle.hidden = true;
+            return;
+        }
 
         const updateText = () => {
             const span = toggle.querySelector('[data-i18n]');
@@ -60,10 +67,9 @@
             toggle.setAttribute('aria-expanded', String(!fold.classList.contains('folded')));
             updateText();
         });
-        if (overflow) {
-            fold.classList.add('folded');
-            toggle.hidden = false;
-        }
+        // 内容超阈值默认折叠
+        fold.classList.add('folded');
+        toggle.hidden = false;
     }
 
     // ==================== Lightbox 图片放大 ====================

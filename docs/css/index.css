@@ -282,8 +282,29 @@ body {
 .intro-body {
     position: relative;
 }
-.intro-fold.folded .intro-body p:nth-child(n+3) {
-    display: none;
+.intro-fold.folded .intro-body {
+    max-height: 110px;
+    overflow-y: auto;
+}
+.intro-fold.folded .intro-body::-webkit-scrollbar {
+    width: 22px;
+}
+.intro-fold.folded .intro-body::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(126, 224, 208, 0.7), rgba(79, 195, 216, 0.6));
+    border-radius: 5px;
+    min-height: 40px;
+}
+.intro-fold.folded .intro-body::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(126, 224, 208, 0.85), rgba(79, 195, 216, 0.75));
+}
+.intro-fold.folded .intro-body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    margin: 4px 10px 4px 2px;
+}
+.intro-fold.folded .intro-body {
+    scrollbar-width: auto;
+    scrollbar-color: rgba(79, 195, 216, 0.6) rgba(0, 0, 0, 0.28);
 }
 .fold-toggle {
     display: inline-flex;
