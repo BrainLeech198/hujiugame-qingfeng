@@ -1,23 +1,30 @@
 package com.hujiugame.qingfeng.animation;
 
+import com.hujiugame.qingfeng.animation.component.AnimationComponent;
+import com.hujiugame.qingfeng.animation.manager.TransitionManager;
+import com.hujiugame.qingfeng.event.EventQueue;
+
 /**
- * 动画执行管理器（空壳）。
+ * 动画执行管理器
  * <p>
- * 承担页面切换时控件级动画（fade_in / fade_out）的执行与渲染机衔接：
- * 拦截切换请求并延迟真正切换（fade_out 播完再 clear + update）、每帧推进动画窗口、
- * 驱动 synchronization / schedule 任务组与 smooth_move 动作、动画期间屏蔽输入。
- * 数据模型见本包（Animation / FadeIn / FadeOut / FadeInObject / AnimationTask 等）。
+ *     动画执行管理器
  * <p>
  * 当前为空壳：生命周期接口仅占位，执行逻辑待设计实现后填充。
  */
 public final class AnimationManager
 {
-    // ==============================================================================
+    private Animation animation;
+    private TransitionManager transitionManager;
+
+    // ===================================================================================================================
+
+    public AnimationManager (EventQueue eventQueue)
+    {
+        transitionManager = new TransitionManager(eventQueue);
+    }
 
     /**
      * 初始化动画管理器
-     *
-     * @return 是否初始化成功
      */
     public boolean init ()
     {
@@ -25,15 +32,72 @@ public final class AnimationManager
     }
 
     /**
-     * 每帧推进动画（渲染机衔接点，由 RenderPipeline.updateFrame 或页面渲染机调用）
-     * <p>
-     * 性能：动画激活时每帧调用，遍历活动动画窗口推进任务；空闲时应零开销。
+     * 设置当前动画
      *
-     * @param deltaTime 距上一帧的时间差（秒）
+     * @param animation 动画
      */
-    public void update (float deltaTime)
+    public void setAnimation (Animation animation)
     {
-        // TODO 动画窗口每帧推进 + 切出完成触发真正切换
+        this.animation = animation;
+    }
+
+    /**
+     * 合并动画：把传入动画（目标页）的组件合并进当前动画
+     * <p>
+     * 过渡期间需要同时持有当前页 fade_out 与目标页 fade_in（获取方式一致：均从 {@link #getAnimation()} 读取），
+     * 切换完成后新渲染机解析出目标页动画时调用本方法合并，使一份动画同时包含两页的过渡组件。
+     *
+     * @param animation 目标页动画，可为空（空则忽略）
+     */
+    public void combineAnimation (Animation animation)
+    {
+        if (animation == null)
+        {
+            return;
+        }
+        if (this.animation == null)
+        {
+            this.animation = animation;
+            return;
+        }
+        // 通用遍历合并目标页的动画组件到当前动画：组件自报类型（getType），同名组件覆盖为传入的
+        for (AnimationComponent component : animation.getComponents().values())
+        {
+            if (component.isValid())
+            {
+                this.animation.addComponent(component);
+            }
+        }
+    }
+
+    /**
+     * 获取当前动画
+     *
+     * @return 动画
+     */
+    public Animation getAnimation ()
+    {
+        return animation;
+    }
+
+    /**
+     * 设置过渡管理器
+     *
+     * @param transitionManager 过渡管理器
+     */
+    public void setTransitionManager (TransitionManager transitionManager)
+    {
+        this.transitionManager = transitionManager;
+    }
+
+    /**
+     * 获取过渡管理器
+     *
+     * @return 过渡管理器
+     */
+    public TransitionManager getTransitionManager ()
+    {
+        return transitionManager;
     }
 
     /**
@@ -41,6 +105,7 @@ public final class AnimationManager
      */
     public void dispose ()
     {
-        // TODO 清空活动动画与待切换状态
+        animation = null;
+        transitionManager = null;
     }
 }

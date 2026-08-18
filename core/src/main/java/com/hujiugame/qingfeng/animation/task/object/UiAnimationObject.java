@@ -1,9 +1,10 @@
 package com.hujiugame.qingfeng.animation.task.object;
 
 import com.hujiugame.qingfeng.data.JsonEntity;
-import com.hujiugame.qingfeng.type.key.AnimationKey;
-import com.hujiugame.qingfeng.type.key.UiKey;
+import com.hujiugame.qingfeng.type.key.animation.AnimationKey;
+import com.hujiugame.qingfeng.type.key.ui.UiKey;
 import com.hujiugame.qingfeng.ui.info.UiObject;
+import com.hujiugame.qingfeng.ui.kind.InteractableObject;
 
 /**
  * ui 控件类动画目标，持有 {@link UiObject} 定位目标。
@@ -11,6 +12,10 @@ import com.hujiugame.qingfeng.ui.info.UiObject;
 public class UiAnimationObject extends AnimationObject
 {
     private final UiObject target;
+    private InteractableObject interactableObject = null;
+
+    private float startX, startY, targetX, targetY;
+    private boolean hasStartPosition = false;
 
     public UiAnimationObject (UiObject target)
     {
@@ -21,6 +26,33 @@ public class UiAnimationObject extends AnimationObject
             buildJson();
         }
     }
+
+    public void setInteractableObject (InteractableObject interactableObject)
+    {
+        this.interactableObject = interactableObject;
+    }
+
+    public InteractableObject getInteractableObject ()
+    {
+        return interactableObject;
+    }
+
+    public void setStartPosition(float x, float y) {
+        this.startX = x;
+        this.startY = y;
+        this.hasStartPosition = true;
+    }
+
+    public void setTargetPosition(float x, float y) {
+        this.targetX = x;
+        this.targetY = y;
+    }
+
+    public float getStartX() { return startX; }
+    public float getStartY() { return startY; }
+    public float getTargetX() { return targetX; }
+    public float getTargetY() { return targetY; }
+    public boolean hasStartPosition() { return hasStartPosition; }
 
     /**
      * 从 object 节点（class=ui）解析 UiObject 目标构造。

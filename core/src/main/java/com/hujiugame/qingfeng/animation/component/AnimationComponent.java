@@ -11,6 +11,13 @@ import com.hujiugame.qingfeng.data.JsonEntity;
 public interface AnimationComponent
 {
     /**
+     * 获取组件类型
+     *
+     * @return 组件类型（FADE_IN / FADE_OUT）
+     */
+    AnimationComponentType getType ();
+
+    /**
      * 组件是否有效
      */
     boolean isValid ();

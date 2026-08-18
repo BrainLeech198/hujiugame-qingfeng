@@ -1,8 +1,8 @@
 package com.hujiugame.qingfeng.animation.task.object;
 
 import com.hujiugame.qingfeng.data.JsonEntity;
-import com.hujiugame.qingfeng.type.key.AnimationKey;
-import com.hujiugame.qingfeng.type.key.UiKey;
+import com.hujiugame.qingfeng.type.key.animation.AnimationKey;
+import com.hujiugame.qingfeng.type.key.ui.UiKey;
 import com.hujiugame.qingfeng.ui.info.GraphicsObject;
 
 /**

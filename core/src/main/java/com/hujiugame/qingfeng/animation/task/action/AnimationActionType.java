@@ -1,6 +1,6 @@
 package com.hujiugame.qingfeng.animation.task.action;
 
-import com.hujiugame.qingfeng.type.key.AnimationKey;
+import com.hujiugame.qingfeng.type.key.animation.AnimationKey;
 
 /**
  * 动画动作类型枚举。

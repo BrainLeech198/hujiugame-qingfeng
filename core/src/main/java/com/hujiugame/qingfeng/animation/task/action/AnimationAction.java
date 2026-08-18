@@ -4,7 +4,7 @@ import com.hujiugame.qingfeng.animation.task.action.param.AnimationActionParam;
 import com.hujiugame.qingfeng.animation.task.action.param.NoneAnimationActionParam;
 import com.hujiugame.qingfeng.animation.task.action.param.SmoothMoveAnimationActionParam;
 import com.hujiugame.qingfeng.data.JsonEntity;
-import com.hujiugame.qingfeng.type.key.AnimationKey;
+import com.hujiugame.qingfeng.type.key.animation.AnimationKey;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,14 +12,15 @@ import java.util.Map;
 /**
  * 动画动作信封。
  * <p>
- * 对应 config 的 animation 节点下单个动作对象 {@code {type, delay, param}}。
- * 持有动作类型、相对延迟与动作参数，构造时按类型校验参数实现类匹配。
+ * 对应 config 的 animation 节点下单个动作对象 {@code {type, delay, duration, param}}。
+ * 持有动作类型、相对延迟、动作时长与动作参数，构造时按类型校验参数实现类匹配。
  */
 public class AnimationAction
 {
     private boolean valid;
     private final AnimationActionType actionType;
     private final float delay;
+    private final float duration;          // 新增：动作持续时长（秒）
     private final AnimationActionParam actionParam;
     private JsonEntity json;
 
@@ -36,10 +37,11 @@ public class AnimationAction
 
     // ============================================================================
 
-    public AnimationAction (AnimationActionType actionType, float delay, AnimationActionParam actionParam)
+    public AnimationAction(AnimationActionType actionType, float delay, float duration, AnimationActionParam actionParam)
     {
         this.actionType = actionType;
         this.delay = delay;
+        this.duration = duration;
         // 检查参数是否符合类型
         if (!ACTION_PARAM_MAP.get(actionType).isInstance(actionParam))
         {
@@ -56,58 +58,58 @@ public class AnimationAction
         buildJson();
     }
 
-    private void buildJson ()
+    private void buildJson()
     {
         json = new JsonEntity();
         json.put(AnimationKey.Task.Action.TYPE, actionType.getDisplayString());
         json.put(AnimationKey.Task.Action.DELAY, delay);
+        json.put(AnimationKey.Task.Action.DURATION, duration);   // 新增
         json.put(AnimationKey.Task.Action.PARAM, actionParam.getJson());
     }
 
-    /**
-     * 动作是否有效
-     */
-    public boolean isValid ()
+    // ========== getters ==========
+
+    public boolean isValid()
     {
         return valid;
     }
 
-    /**
-     * 获取动作类型
-     */
-    public AnimationActionType getActionType ()
+    public AnimationActionType getActionType()
     {
         return actionType;
     }
 
-    /**
-     * 获取相对前一个动作结束的延迟（秒）
-     */
-    public float getDelay ()
+    public float getDelay()
     {
         return delay;
     }
 
     /**
-     * 获取动作参数
+     * 获取动作持续时长（秒）
      */
-    public AnimationActionParam getActionParam ()
+    public float getDuration()
+    {
+        return duration;
+    }
+
+    public AnimationActionParam getActionParam()
     {
         return actionParam;
     }
 
-    public JsonEntity getJson ()
+    public JsonEntity getJson()
     {
         return json;
     }
 
     @Override
-    public String toString ()
+    public String toString()
     {
         return "AnimationAction{" +
             "valid=" + valid +
             ", actionType=" + actionType +
             ", delay=" + delay +
+            ", duration=" + duration +
             ", actionParam=" + actionParam +
             ", json=" + json +
             '}';

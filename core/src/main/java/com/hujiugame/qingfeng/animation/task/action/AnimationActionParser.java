@@ -3,7 +3,7 @@ package com.hujiugame.qingfeng.animation.task.action;
 import com.hujiugame.qingfeng.animation.task.action.param.NoneAnimationActionParam;
 import com.hujiugame.qingfeng.animation.task.action.param.SmoothMoveAnimationActionParam;
 import com.hujiugame.qingfeng.data.JsonEntity;
-import com.hujiugame.qingfeng.type.key.AnimationKey;
+import com.hujiugame.qingfeng.type.key.animation.AnimationKey;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
 import java.util.ArrayList;
@@ -12,38 +12,43 @@ import java.util.Map;
 
 public class AnimationActionParser
 {
-    public static AnimationAction parse (JsonEntity json)
+    public static AnimationAction parse(JsonEntity json)
     {
-        if (json.isMap())
+        if (json != null && json.isMap())
         {
             LogUtils.debug(AnimationActionParser.class, "parse 尝试解析动画动作 (json): " + json);
 
-            // type字段
+            // 检查必填字段
             if (!json.containsKey(AnimationKey.Task.Action.TYPE))
             {
                 LogUtils.error(AnimationActionParser.class, "parse 此json缺少" + AnimationKey.Task.Action.TYPE + "字段 (json): " + json);
                 return null;
             }
-            // delay字段
             if (!json.containsKey(AnimationKey.Task.Action.DELAY))
             {
                 LogUtils.error(AnimationActionParser.class, "parse 此json缺少" + AnimationKey.Task.Action.DELAY + "字段 (json): " + json);
                 return null;
             }
-            // param字段
+            // 新增：检查 duration 字段（必填）
+            if (!json.containsKey(AnimationKey.Task.Action.DURATION))
+            {
+                LogUtils.error(AnimationActionParser.class, "parse 此json缺少" + AnimationKey.Task.Action.DURATION + "字段 (json): " + json);
+                return null;
+            }
             if (!json.containsKey(AnimationKey.Task.Action.PARAM))
             {
                 LogUtils.error(AnimationActionParser.class, "parse 此json缺少" + AnimationKey.Task.Action.PARAM + "字段 (json): " + json);
                 return null;
             }
 
-            // 获取json数据
+            // 读取字段值
             String type = json.getString(AnimationKey.Task.Action.TYPE);
             float delay = json.getFloat(AnimationKey.Task.Action.DELAY);
+            float duration = json.getFloat(AnimationKey.Task.Action.DURATION);
             JsonEntity paramJson = json.getJsonEntityByKey(AnimationKey.Task.Action.PARAM);
 
-            // 尝试解析动画动作
-            AnimationAction action = dispatchAnimationActionJson(type, delay, paramJson);
+            // 尝试解析动画动作（传入 duration）
+            AnimationAction action = dispatchAnimationActionJson(type, delay, duration, paramJson);
             if (action == null)
             {
                 LogUtils.error(AnimationActionParser.class, "parse 解析动画动作失败 (json): " + json);
@@ -54,7 +59,10 @@ public class AnimationActionParser
                 if (action.isValid())
                 {
                     LogUtils.debug(AnimationActionParser.class, "parse 解析动画动作成功"
-                        + " (type): " + action.getActionType() + " (delay): " + action.getDelay() + " (param): " + action.getActionParam()
+                        + " (type): " + action.getActionType()
+                        + " (delay): " + action.getDelay()
+                        + " (duration): " + action.getDuration()
+                        + " (param): " + action.getActionParam()
                         + " (json): " + json);
                     return action;
                 }
@@ -72,9 +80,9 @@ public class AnimationActionParser
         }
     }
 
-    public static List<AnimationAction> parseList (JsonEntity json)
+    public static List<AnimationAction> parseList(JsonEntity json)
     {
-        if (json.isList())
+        if (json != null && json.isList())
         {
             LogUtils.debug(AnimationActionParser.class, "parseList 尝试解析动画动作列表 (json): " + json);
             List<AnimationAction> actionList = new ArrayList<>();
@@ -120,15 +128,24 @@ public class AnimationActionParser
         }
     }
 
-    private static AnimationAction dispatchAnimationActionJson (String type, float delay, JsonEntity paramJson)
+    /**
+     * 分发解析具体类型的动画动作
+     *
+     * @param type     动作类型字符串
+     * @param delay    延迟时间
+     * @param duration 动作持续时长（秒）
+     * @param paramJson 参数 JSON
+     * @return 解析后的 AnimationAction，失败返回 null
+     */
+    private static AnimationAction dispatchAnimationActionJson(String type, float delay, float duration, JsonEntity paramJson)
     {
         switch (type)
         {
             case AnimationKey.Task.Action.Type.NONE:
-                return new AnimationAction(AnimationActionType.NONE, delay, new NoneAnimationActionParam());
+                return new AnimationAction(AnimationActionType.NONE, delay, duration, new NoneAnimationActionParam());
 
             case AnimationKey.Task.Action.Type.SMOOTH_MOVE:
-                return new AnimationAction(AnimationActionType.SMOOTH_MOVE, delay, new SmoothMoveAnimationActionParam(paramJson));
+                return new AnimationAction(AnimationActionType.SMOOTH_MOVE, delay, duration, new SmoothMoveAnimationActionParam(paramJson));
 
             default:
                 LogUtils.error(AnimationActionParser.class, "dispatchAnimationActionJson 没有对应的动画动作类型 (type): " + type);

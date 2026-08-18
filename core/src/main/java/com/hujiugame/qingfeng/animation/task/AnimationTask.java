@@ -4,7 +4,7 @@ import com.hujiugame.qingfeng.animation.task.action.AnimationAction;
 import com.hujiugame.qingfeng.animation.task.action.AnimationActionParser;
 import com.hujiugame.qingfeng.animation.task.object.AnimationObject;
 import com.hujiugame.qingfeng.data.JsonEntity;
-import com.hujiugame.qingfeng.type.key.AnimationKey;
+import com.hujiugame.qingfeng.type.key.animation.AnimationKey;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
 /**
@@ -47,7 +47,7 @@ public final class AnimationTask
 
     public AnimationTask (JsonEntity json)
     {
-        if (json.isMap() && json.containsKey(AnimationKey.Task.OBJECT) && json.containsKey(AnimationKey.Task.ACTION))
+        if (json != null && json.isMap() && json.containsKey(AnimationKey.Task.OBJECT) && json.containsKey(AnimationKey.Task.ACTION))
         {
             // 解析动画目标（AnimationObject.fromJson 为 fail-fast，捕获异常后降级为无效任务）
             AnimationObject object = null;
@@ -79,6 +79,7 @@ public final class AnimationTask
             this.animationAction = action;
             this.json = json;
             valid = true;
+            LogUtils.debug(AnimationTask.class, "AnimationTask(JsonEntity) 解析动画任务成功 (object): " + object + " (action): " + action);
         }
         else
         {

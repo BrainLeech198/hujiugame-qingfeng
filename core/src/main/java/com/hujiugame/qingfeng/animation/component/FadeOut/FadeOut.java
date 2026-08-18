@@ -1,9 +1,10 @@
 package com.hujiugame.qingfeng.animation.component.FadeOut;
 
 import com.hujiugame.qingfeng.animation.component.AnimationComponent;
+import com.hujiugame.qingfeng.animation.component.AnimationComponentType;
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.type.game.GameState;
-import com.hujiugame.qingfeng.type.key.AnimationKey;
+import com.hujiugame.qingfeng.type.key.animation.AnimationKey;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
 import java.util.LinkedHashMap;
@@ -116,7 +117,8 @@ public final class FadeOut implements AnimationComponent
     {
         FadeOutObject defaultObject = null;
         Map<GameState, FadeOutObject> objectMap = new LinkedHashMap<>();
-        if (json.isMap())
+        LogUtils.debug(FadeOut.class, "FadeOut(JsonEntity) 尝试解析淡出组件 (json): " + json);
+        if (json != null && json.isMap())
         {
             this.json = json;
             for (String key : json.keySet())
@@ -124,6 +126,10 @@ public final class FadeOut implements AnimationComponent
                 if (AnimationKey.Component.FadeOut.DEFAULT.equals(key))
                 {
                     defaultObject = new FadeOutObject(json.getJsonEntityByKey(key));
+                    if (!defaultObject.isValid())
+                    {
+                        LogUtils.error(FadeOut.class, "FadeOut(JsonEntity) default 窗口解析无效 (json): " + json.getJsonEntityByKey(key));
+                    }
                 }
                 else if (AnimationKey.Component.FadeOut.FROM_PAGE.equals(key))
                 {
@@ -140,6 +146,14 @@ public final class FadeOut implements AnimationComponent
                                 {
                                     objectMap.put(state, object);
                                 }
+                                else
+                                {
+                                    LogUtils.error(FadeOut.class, "FadeOut(JsonEntity) from_page." + layoutDirName + " 窗口解析无效 (json): " + fromPageJson.getJsonEntityByKey(layoutDirName));
+                                }
+                            }
+                            else
+                            {
+                                LogUtils.error(FadeOut.class, "FadeOut(JsonEntity) from_page 含未知页面 " + layoutDirName + " (json): " + fromPageJson);
                             }
                         }
                     }
@@ -148,13 +162,25 @@ public final class FadeOut implements AnimationComponent
         }
         this.defaultObject = defaultObject;
         this.objectMap = objectMap;
-        if (json.isMap() && hasValidObject())
+        if (json != null && json.isMap() && hasValidObject())
         {
             valid = true;
+            LogUtils.debug(FadeOut.class, "FadeOut(JsonEntity) 解析淡出组件成功 (defaultObject): " + defaultObject + " (objectMap): " + objectMap);
             return;
         }
         LogUtils.error(FadeOut.class, "解析失败 需要包含有效的动画窗口 (json): " + json);
         valid = false;
+    }
+
+    /**
+     * 获取组件类型
+     *
+     * @return 淡出组件类型
+     */
+    @Override
+    public AnimationComponentType getType ()
+    {
+        return AnimationComponentType.FADE_OUT;
     }
 
     /**
