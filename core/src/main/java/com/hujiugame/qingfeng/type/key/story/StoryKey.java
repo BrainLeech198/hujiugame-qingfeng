@@ -1,4 +1,4 @@
-package com.hujiugame.qingfeng.type.key;
+package com.hujiugame.qingfeng.type.key.story;
 
 /**
  * 故事子系统 JSON 字段名常量

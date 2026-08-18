@@ -1,4 +1,8 @@
-package com.hujiugame.qingfeng.type.key;
+package com.hujiugame.qingfeng.type.key.config;
+
+import com.hujiugame.qingfeng.type.key.animation.AnimationKey;
+import com.hujiugame.qingfeng.type.key.ui.UiKey;
+import com.hujiugame.qingfeng.type.key.ui.UniversalUiKey;
 
 public final class RequirementKey
 {

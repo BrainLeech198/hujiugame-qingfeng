@@ -1,4 +1,4 @@
-package com.hujiugame.qingfeng.type.key;
+package com.hujiugame.qingfeng.type.key.common;
 
 public final class DialogKey
 {

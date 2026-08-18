@@ -1,4 +1,4 @@
-package com.hujiugame.qingfeng.type.key;
+package com.hujiugame.qingfeng.type.key.animation;
 
 /**
  * 动画配置 JSON 键。
@@ -141,11 +141,15 @@ public final class AnimationKey
                 throw new UnsupportedOperationException("Utility class cannot be instantiated");
             }
 
+
             /** 动作类型字段 */
             public static final String TYPE = "type";
 
             /** 相对前一个动作结束的延迟（秒） */
             public static final String DELAY = "delay";
+
+            /** 动作时长（秒） */
+            public static final String DURATION = "duration";
 
             /** 动作参数对象 */
             public static final String PARAM = "param";

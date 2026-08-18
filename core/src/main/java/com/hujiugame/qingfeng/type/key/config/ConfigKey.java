@@ -1,4 +1,4 @@
-package com.hujiugame.qingfeng.type.key;
+package com.hujiugame.qingfeng.type.key.config;
 
 /**
  * 配置文件 JSON 字段名常量

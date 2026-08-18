@@ -1,4 +1,4 @@
-package com.hujiugame.qingfeng.type.key;
+package com.hujiugame.qingfeng.type.key.config;
 
 /**
  * theme.json 主题配置文件顶层字段常量

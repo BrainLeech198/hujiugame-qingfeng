@@ -21,6 +21,14 @@
 > 10. 【必须】CHANGELOG 条目按日期归组：同一天的所有提交主题共同包含在同一个 `## <日期> — <概括标题>` 下，禁止拆成多个 `## ` 日期标题；每个提交块以 `**<主题>**（commit <7位短哈希>）` 标记，块内每条 `- ` 条目行尾标注引入它的提交短哈希 `（commit <7位短哈希>）`。新条目随内容改动提交后，其哈希在下一笔内容改动提交中一并补写（补写仅改 hash，不新增条目）
 > 11. 【必须】写版本发布说明（官网 `docs/data/versions.json` 的 `log`、`develop/PUBLISH.md` 面向玩家摘要）时，按「上一版本发布点 → 本版本发布点」之间的 commit 区间梳理玩家可见改动（修复的 Bug / 新增功能 / 优化），逐一写入，不要遗漏跨版本才生效的修复（打包之后完成的 bug 修复会随下一个版本发出，须算入下一版本的说明）；beta 测试版按此梳理书写即可，release 正式版属重要更新，需正式、系统地书写
 
+## 2026-08-18 — type/key 分类重构 + 事件系统枚举化 + 动画系统实现 + 渲染机过渡接入 + 页面动画配置 + 其他小重构
+
+**重构(keys)：type/key 常量类按领域分类到子包**
+
+### 重构
+
+- **type/key 分类整理** — 16 个 Key 常量类按领域拆到 `config/`（ConfigKey/RequirementKey/ThemeKey/LanguageKey/VersionKey/GameInfoKey）、`layout/`（LayoutKey/GraphicsKey/AudioKey）、`script/`（ScriptKey）、`story/`（StoryKey）、`ui/`（UiKey/UniversalUiKey）、`animation/`（AnimationKey）、`common/`（JsonKey/FileHandleKey/DialogKey），新增 `AudioKey`（audio 节独立），各使用点 import 路径同步更新（commit `待补`）
+
 ## 2026-08-16 — 默认语言改英文 + 目录结构补全 + 12 个新语言翻译包 + 首次运行按设备语言改写默认语言 + 设备语言自动检测与 15 语言扩展 + 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新 + 全屏切换调用空值防御 + 官网卡片重排与折叠展开 + 官网导航新增遇到问题 + 官网语言扩展与识别修复
 
 **新增(网站)：官网主页卡片重排与长文字折叠展开（游戏介绍 / 更新日志）**
@@ -1017,7 +1025,7 @@
 
 ### 编码规范
 
-- **`EventDispatcher` 移除未使用参数** — `handleEventOfEnterGame`/`handleEventOfPlayGame` 移除未使用的 `eventObject` 参数，各事件处理方法补充 Javadoc（commit 81a511c）
+- **`EventDispatcher` 移除未使用参数** — `handleEventOfEnterGame`/`handleEventOfPlayGame` 移除未使用的 `event` 参数，各事件处理方法补充 Javadoc（commit 81a511c）
 - **`RenderPipeline`/`FileSuffix` 注释整理** — `updateFrame`/`render` 补充调用注释；`FileSuffix` 错误 Javadoc 注释改为块注释（commit 81a511c）
 
 ---
@@ -2017,7 +2025,7 @@
 
 - **CLAUDE.md** — 主循环链路修正为 `GameHost.run → renderPipeline.updateFrame → eventQueue/dispatcher → renderPipeline.render`；命名示例 `GameController`→`GameHost`；日志格式更新为 `ClassName.class` 参数（commit 983d0f7）
 - **CONTRIBUTING.md** — 主循环链路同上修正；包结构表更新（`controller/`→`core/`、`GameStateService`→`SceneStack`、`EventManager→EventQueue→EventDispatcher`）；建议阅读顺序 `GameController.java`→`GameHost.java`；日志格式同步更新（commit 983d0f7）
-- **COMMIT_STYLE.md** — scope 表删除废弃 `controller` 项，更新 `core`/`event`/`ui`/`render` 描述；示例中过时类名全部替换（`GameController`→`GameHost`、`GameEventService`→`EventDispatcher`、`GameStateService`→`SceneStack`）（commit 983d0f7）
+- **COMMIT_STYLE.md** — scope 表删除废弃 `controller` 项，更新 `core`/`eventAction`/`ui`/`render` 描述；示例中过时类名全部替换（`GameController`→`GameHost`、`GameEventService`→`EventDispatcher`、`GameStateService`→`SceneStack`）（commit 983d0f7）
 - **CODING_STYLE.md** — 示例代码中的 `GameControllerImp`/`gameController`/`gameStateService` 全部替换为当前类名（commit 983d0f7）
 - **REVIEW.md** — 事件系统描述 `EventManager + GameEventService`→`EventQueue + EventDispatcher`；`GameController`→`GameHost`；脚本引擎状态更新为 ScriptExecutor + Page/GamePlay 集成已完成（commit 983d0f7）
 
@@ -2219,7 +2227,7 @@
 ### 重构
 
 - **包结构重组** — `controller/GameController`→`core/GameHost`、`GameStateService`→`core/SceneStack`、`GameRenderService`→`core/RenderPipeline`、`GameConfigLoader`→`core/GameResolver`、`UpdateController`→`core/UpdateChecker`（commit 983d0f7）
-- **事件系统迁移** — `controller/GameEventService`→`event/EventDispatcher`、`manager/EventManager`→`event/EventQueue`（commit 983d0f7）
+- **事件系统迁移** — `controller/GameEventService`→`eventAction/EventDispatcher`、`manager/EventManager`→`eventAction/EventQueue`（commit 983d0f7）
 - **引用全面更新** — 同步更新 15 个引用文件的 import、类型声明、getter 调用（commit 983d0f7）
 - **旧文件清理** — 删除 `controller/` 下 6 个文件和 `manager/EventManager.java`（commit 983d0f7）
 
@@ -2265,7 +2273,7 @@
 ### 命名优化与包结构调整
 
 - **`GameController`及相关类重构** — 重命名 `GameRenderer`→`GameRenderService`、`GameLogic`→`GameLogicService`、`GamePlayDataContent`→`PlayDataContent`；部分类移动至 `loader/`、`play/` 子包归类（13 文件，含 InstanceContent/多个 Render 实现适配）（commit 983d0f7）
-- **Event eventName 构造函数赋值** — 8 个 Event 类（EventEnterGame、EventLoadGameConfig、EventPlayGame、EventPopGameState、EventPushGameState、EventQuitGame、EventResetGameState、EventSetGameState）将 `eventName` 字段赋值统一移至构造函数中，消除外部手动 set（commit 983d0f7）
+- **Event eventActionName 构造函数赋值** — 8 个 Event 类（EventEnterGame、EventLoadGameConfig、EventPlayGame、EventPopGameState、EventPushGameState、EventQuitGame、EventResetGameState、EventSetGameState）将 `eventActionName` 字段赋值统一移至构造函数中，消除外部手动 set（commit 983d0f7）
 - **`RequirementUiKey`** — 新增 GameMenu 所需的 UI 标签 Key（commit 983d0f7）
 
 ### Bug 修复
@@ -2666,7 +2674,7 @@ Python 版已稳定，`.bat` 版因 Windows cmd.exe 在 UTF-8 BOM + 中文环境
 - 添加 `@Nullable`、`@Override` 等注解（commit 983d0f7）
 - 增加 `final` 修饰词，强化不可变性（commit 983d0f7）
 - 新增 `ColorConfig`、`PictureInfo`、`GifInfo`、`ButtonInfo`、`ImageInfo`、`LabelInfo` 数据类（commit 983d0f7）
-- 调整包结构：`event`、`game` 相关类移动到 `data` 包；`box` 相关类移动到 `engine` 包（commit 983d0f7）
+- 调整包结构：`eventAction`、`game` 相关类移动到 `data` 包；`box` 相关类移动到 `engine` 包（commit 983d0f7）
 - 优化 `GameInfoKey` 常量定义（54 处变更）（commit 983d0f7）
 
 ---

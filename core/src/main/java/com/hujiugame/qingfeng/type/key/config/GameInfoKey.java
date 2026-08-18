@@ -1,4 +1,4 @@
-package com.hujiugame.qingfeng.type.key;
+package com.hujiugame.qingfeng.type.key.config;
 
 import java.util.ArrayList;
 import java.util.Collections;

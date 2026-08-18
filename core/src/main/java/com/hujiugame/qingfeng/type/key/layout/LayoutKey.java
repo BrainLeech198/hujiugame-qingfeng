@@ -1,4 +1,4 @@
-package com.hujiugame.qingfeng.type.key;
+package com.hujiugame.qingfeng.type.key.layout;
 
 public final class LayoutKey
 {
@@ -27,23 +27,6 @@ public final class LayoutKey
 
     /** UI 组件容器 */
     public static final String UI = "ui";
-
-    // ====================================================================================================
-    // layout.json 的 audio 节内部字段
-
-    public static final class Audio
-    {
-        private Audio()
-        {
-            throw new UnsupportedOperationException("Utility class cannot be instantiated");
-        }
-
-        /** 背景音乐列表 */
-        public static final String BACKGROUND_MUSIC = "background_music";
-
-        /** 音乐映射（tag → 文件名） */
-        public static final String MUSIC = "music";
-    }
 
     // ====================================================================================================
     // layout.json 的 ui 节内部元素引用字段

@@ -1,4 +1,6 @@
-package com.hujiugame.qingfeng.type.key;
+package com.hujiugame.qingfeng.type.key.ui;
+
+import com.hujiugame.qingfeng.type.key.layout.LayoutKey;
 
 /**
  * UI 主题配置 JSON 字段常量。

@@ -1,4 +1,4 @@
-package com.hujiugame.qingfeng.type.key;
+package com.hujiugame.qingfeng.type.key.common;
 
 /**
  * 通用的 JSON key 常量，适用于跨多种配置上下文的字段名

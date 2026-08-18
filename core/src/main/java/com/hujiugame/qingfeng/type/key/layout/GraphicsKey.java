@@ -1,4 +1,4 @@
-package com.hujiugame.qingfeng.type.key;
+package com.hujiugame.qingfeng.type.key.layout;
 
 /**
  * graphics 分类下的子字段常量，对应 layout.json → graphics 内部的 backgroundPicture 字段与 picture / gif 子分类

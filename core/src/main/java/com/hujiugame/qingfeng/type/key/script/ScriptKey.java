@@ -1,4 +1,4 @@
-package com.hujiugame.qingfeng.type.key;
+package com.hujiugame.qingfeng.type.key.script;
 
 /**
  * 脚本引擎 JSON 字段名常量
