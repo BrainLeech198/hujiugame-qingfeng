@@ -29,11 +29,7 @@ public final class SceneStack
     private PlayLocalData playLocalData;
     private RenderPipeline renderPipeline;
 
-    // 游戏状态栈，初始化时推入默认状态 INIT，后续通过 push/pop/set/reset 管理
-    {
-        stateStack.push(GameState.INIT);
-    }
-    private boolean isInGame = false;
+    private boolean inGame = false;
 
     /**
      * 初始化状态服务，绑定各管理器
@@ -296,6 +292,26 @@ public final class SceneStack
 
 
     /**
+     * 是否处于游戏内
+     *
+     * @return 是否处于游戏内
+     */
+    public boolean isInGame ()
+    {
+        return inGame;
+    }
+
+    /**
+     * 设置游戏内状态
+     *
+     * @param inGame 是否处于游戏内
+     */
+    public void setInGame (boolean inGame)
+    {
+        this.inGame = inGame;
+    }
+
+    /**
      * 获取当前游戏状态
      *
      * @return 当前游戏状态
@@ -303,6 +319,23 @@ public final class SceneStack
     public GameState getGameState ()
     {
         return getCurrentState();
+    }
+
+    /**
+     * 获取次级游戏状态
+     *
+     * @return 次级游戏状态
+     */
+    public GameState getSecondGameState ()
+    {
+        if (stateStack.size() > 1)
+        {
+            return stateStack.get(stateStack.size() - 2);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     // ===================================================================================================================
@@ -374,8 +407,8 @@ public final class SceneStack
             if (layoutFilePathHandle != null)
             {
                 // 第一次进游戏需要强制重读
-                boolean isFirstInGame = isInGame && !this.isInGame;
-                this.isInGame = isInGame;
+                boolean isFirstInGame = isInGame && !isInGame();
+                setInGame(isInGame);
 
                 // 读取缓存机制
                 newLayout = layoutManager.loadLayout(layoutFilePathHandle, resourceRootPathHandle, isFirstInGame);

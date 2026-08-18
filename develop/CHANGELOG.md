@@ -81,6 +81,14 @@
 
 - **isMap 字段去前缀** — JsonEntity 内部 isMap 字段改 map，getter 仍 `isMap()`，构造器赋值与 42 处读点同步（commit `待补`）
 
+**重构(类型)：InitState 枚举化 + SceneStack 双 INIT 修复**
+
+### 重构
+
+- **InitState 枚举化** — 初始化阶段 int 常量改枚举（value/getValue/next），Init 状态机适配（commit `待补`）
+- **SceneStack 双 INIT** — 删除构造器栈底哨兵 INIT，保留 GameHost.init 显式 push，状态栈 `[INIT, INIT, MENU_MAIN]` 收敛为 `[INIT, MENU_MAIN]`（commit `待补`）
+- **GameState 补充** — state 相关补充字段（commit `待补`）
+
 ## 2026-08-16 — 默认语言改英文 + 目录结构补全 + 12 个新语言翻译包 + 首次运行按设备语言改写默认语言 + 设备语言自动检测与 15 语言扩展 + 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新 + 全屏切换调用空值防御 + 官网卡片重排与折叠展开 + 官网导航新增遇到问题 + 官网语言扩展与识别修复
 
 **新增(网站)：官网主页卡片重排与长文字折叠展开（游戏介绍 / 更新日志）**

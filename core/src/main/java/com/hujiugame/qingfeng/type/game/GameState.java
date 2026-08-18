@@ -11,6 +11,9 @@ package com.hujiugame.qingfeng.type.game;
  */
 public enum GameState
 {
+    /** 未知状态 */
+    UNKNOWN(null, false, false, "未知"),
+
     /** 启动初始化 */
     INIT(null, false, false, "初始化"),
 
