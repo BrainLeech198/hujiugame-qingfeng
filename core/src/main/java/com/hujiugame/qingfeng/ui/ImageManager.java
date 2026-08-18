@@ -18,7 +18,7 @@ import com.hujiugame.qingfeng.ui.kind.image.ImageKind;
 import com.hujiugame.qingfeng.ui.kind.image.ImageState;
 import com.hujiugame.qingfeng.type.file.PathName;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
-import com.hujiugame.qingfeng.type.key.UiKey;
+import com.hujiugame.qingfeng.type.key.ui.UiKey;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 

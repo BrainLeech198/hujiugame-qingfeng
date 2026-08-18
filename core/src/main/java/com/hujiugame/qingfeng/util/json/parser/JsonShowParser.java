@@ -1,7 +1,7 @@
 package com.hujiugame.qingfeng.util.json.parser;
 
 import com.hujiugame.qingfeng.data.JsonEntity;
-import com.hujiugame.qingfeng.type.key.LayoutKey;
+import com.hujiugame.qingfeng.type.key.layout.LayoutKey;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
 public final class JsonShowParser

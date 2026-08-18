@@ -1,7 +1,7 @@
 package com.hujiugame.qingfeng.util.json.parser;
 
 import com.hujiugame.qingfeng.data.JsonEntity;
-import com.hujiugame.qingfeng.type.key.JsonKey;
+import com.hujiugame.qingfeng.type.key.common.JsonKey;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
 public class JsonSizeParser

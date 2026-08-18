@@ -2,7 +2,7 @@ package com.hujiugame.qingfeng.input;
 
 import com.hujiugame.qingfeng.core.GameHost;
 import com.hujiugame.qingfeng.di.InstanceContent;
-import com.hujiugame.qingfeng.type.key.UniversalUiKey;
+import com.hujiugame.qingfeng.type.key.ui.UniversalUiKey;
 import com.hujiugame.qingfeng.ui.MessageBox;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.util.system.LogUtils;

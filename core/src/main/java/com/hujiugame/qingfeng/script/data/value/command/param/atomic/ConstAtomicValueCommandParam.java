@@ -3,7 +3,7 @@ package com.hujiugame.qingfeng.script.data.value.command.param.atomic;
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.script.data.TypeMapper;
 import com.hujiugame.qingfeng.script.data.value.command.param.ValueCommandParam;
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 
 public class ConstAtomicValueCommandParam implements ValueCommandParam
 {

@@ -4,7 +4,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.hujiugame.qingfeng.data.story.page.Page;
 import com.hujiugame.qingfeng.data.story.Role;
 import com.hujiugame.qingfeng.data.story.tree.TreeStructure;
-import com.hujiugame.qingfeng.type.key.GameInfoKey;
+import com.hujiugame.qingfeng.type.key.config.GameInfoKey;
 import com.hujiugame.qingfeng.type.play.Hoster;
 import com.hujiugame.qingfeng.game.GameInfoManager;
 import com.hujiugame.qingfeng.util.system.LogUtils;

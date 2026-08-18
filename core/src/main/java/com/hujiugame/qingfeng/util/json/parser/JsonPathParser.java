@@ -1,7 +1,7 @@
 package com.hujiugame.qingfeng.util.json.parser;
 
 import com.hujiugame.qingfeng.data.JsonEntity;
-import com.hujiugame.qingfeng.type.key.GraphicsKey;
+import com.hujiugame.qingfeng.type.key.layout.GraphicsKey;
 
 public class JsonPathParser
 {

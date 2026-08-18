@@ -1,6 +1,6 @@
 package com.hujiugame.qingfeng.type.ui;
 
-import com.hujiugame.qingfeng.type.key.UiKey;
+import com.hujiugame.qingfeng.type.key.ui.UiKey;
 
 /**
  * UI 组件类型枚举。

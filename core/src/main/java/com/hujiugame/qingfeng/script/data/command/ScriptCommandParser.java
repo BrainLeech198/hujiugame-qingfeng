@@ -14,7 +14,7 @@ import com.hujiugame.qingfeng.script.data.command.param.control.WaitControlScrip
 import com.hujiugame.qingfeng.script.data.command.param.control.WhileControlScriptCommandParam;
 import com.hujiugame.qingfeng.script.data.command.param.story.ForwardPageStoryScriptCommandParam;
 import com.hujiugame.qingfeng.script.data.command.param.story.GotoPageStoryScriptCommandParam;
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 import com.hujiugame.qingfeng.script.data.command.param.variable.AssignmentVariableScriptCommandParam;
 import com.hujiugame.qingfeng.script.data.command.param.variable.CreateVariableScriptCommandParam;
 import com.hujiugame.qingfeng.util.system.LogUtils;

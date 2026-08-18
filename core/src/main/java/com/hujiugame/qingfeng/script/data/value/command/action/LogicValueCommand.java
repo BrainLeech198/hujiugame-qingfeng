@@ -7,7 +7,7 @@ import com.hujiugame.qingfeng.script.data.value.command.param.ValueCommandParam;
 import com.hujiugame.qingfeng.script.data.value.command.param.logic.AndLogicValueCommandParam;
 import com.hujiugame.qingfeng.script.data.value.command.param.logic.NotLogicValueCommandParam;
 import com.hujiugame.qingfeng.script.data.value.command.param.logic.OrLogicValueCommandParam;
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 
 import java.util.HashMap;
 import java.util.Map;

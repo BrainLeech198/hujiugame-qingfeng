@@ -2,7 +2,7 @@ package com.hujiugame.qingfeng.script.data.value.command;
 
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.script.data.value.command.action.*;
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 import com.hujiugame.qingfeng.script.data.value.command.param.atomic.*;
 import com.hujiugame.qingfeng.script.data.value.command.param.compare.*;
 import com.hujiugame.qingfeng.script.data.value.command.param.logic.AndLogicValueCommandParam;

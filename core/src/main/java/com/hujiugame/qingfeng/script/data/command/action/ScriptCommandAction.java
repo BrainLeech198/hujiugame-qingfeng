@@ -1,7 +1,7 @@
 package com.hujiugame.qingfeng.script.data.command.action;
 
 import com.hujiugame.qingfeng.script.data.command.ScriptCommandType;
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 
 /**
  * 具体指令枚举。

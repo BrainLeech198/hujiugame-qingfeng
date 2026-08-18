@@ -5,7 +5,7 @@ import com.hujiugame.qingfeng.script.data.command.ScriptCommand;
 import com.hujiugame.qingfeng.script.data.command.ScriptCommandParser;
 import com.hujiugame.qingfeng.script.data.command.param.ScriptCommandParam;
 import com.hujiugame.qingfeng.script.data.value.LogicValue;
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 
 import java.util.Collections;
 import java.util.List;

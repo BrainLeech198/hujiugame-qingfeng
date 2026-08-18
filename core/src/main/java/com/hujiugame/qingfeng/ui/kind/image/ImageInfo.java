@@ -4,7 +4,7 @@ import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.util.json.parser.JsonPositionParser;
 import com.hujiugame.qingfeng.util.json.parser.JsonShowParser;
 import com.hujiugame.qingfeng.util.json.parser.JsonSizeParser;
-import com.hujiugame.qingfeng.type.key.UiKey;
+import com.hujiugame.qingfeng.type.key.ui.UiKey;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
 import java.util.Objects;

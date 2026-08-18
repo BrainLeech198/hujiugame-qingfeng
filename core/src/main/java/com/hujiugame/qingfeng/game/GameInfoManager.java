@@ -1,6 +1,6 @@
 package com.hujiugame.qingfeng.game;
 
-import com.hujiugame.qingfeng.type.key.GameInfoKey;
+import com.hujiugame.qingfeng.type.key.config.GameInfoKey;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
 import java.util.HashMap;

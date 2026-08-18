@@ -2,7 +2,7 @@ package com.hujiugame.qingfeng.util.json.parser;
 
 import com.badlogic.gdx.graphics.Color;
 import com.hujiugame.qingfeng.data.JsonEntity;
-import com.hujiugame.qingfeng.type.key.JsonKey;
+import com.hujiugame.qingfeng.type.key.common.JsonKey;
 import com.hujiugame.qingfeng.ui.kind.TextObject;
 import com.hujiugame.qingfeng.type.ui.FontFlag;
 import com.hujiugame.qingfeng.manager.TextManager;

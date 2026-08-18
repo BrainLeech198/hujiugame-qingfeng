@@ -4,7 +4,7 @@ import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.script.data.trigger.command.action.LabelClickTrigger;
 import com.hujiugame.qingfeng.script.data.trigger.command.action.TriggerAction;
 import com.hujiugame.qingfeng.script.data.trigger.command.param.label.LabelClickTriggerParam;
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
 public class TriggerCommandParser

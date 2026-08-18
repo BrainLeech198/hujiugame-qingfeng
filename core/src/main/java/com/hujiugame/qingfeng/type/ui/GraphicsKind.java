@@ -1,6 +1,6 @@
 package com.hujiugame.qingfeng.type.ui;
 
-import com.hujiugame.qingfeng.type.key.GraphicsKey;
+import com.hujiugame.qingfeng.type.key.layout.GraphicsKey;
 
 /**
  * graphics 元素类型枚举。

@@ -1,7 +1,7 @@
 package com.hujiugame.qingfeng.data.story.tree;
 
 import com.hujiugame.qingfeng.data.JsonEntity;
-import com.hujiugame.qingfeng.type.key.StoryKey;
+import com.hujiugame.qingfeng.type.key.story.StoryKey;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
 import java.util.Objects;

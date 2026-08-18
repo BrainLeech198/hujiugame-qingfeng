@@ -2,7 +2,7 @@ package com.hujiugame.qingfeng.script.data.command.param.story;
 
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.script.data.command.param.ScriptCommandParam;
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 
 public class GotoPageStoryScriptCommandParam implements ScriptCommandParam
 {

@@ -3,7 +3,7 @@ package com.hujiugame.qingfeng.script.data.value;
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.script.data.value.command.ValueCommand;
 import com.hujiugame.qingfeng.script.data.value.command.ValueCommandParser;
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
 import java.util.ArrayList;

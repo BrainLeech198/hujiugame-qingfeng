@@ -8,7 +8,7 @@ import com.hujiugame.qingfeng.data.story.page.Page;
 import com.hujiugame.qingfeng.data.story.Role;
 import com.hujiugame.qingfeng.data.story.tree.*;
 import com.hujiugame.qingfeng.type.file.PathName;
-import com.hujiugame.qingfeng.type.key.StoryKey;
+import com.hujiugame.qingfeng.type.key.story.StoryKey;
 import com.hujiugame.qingfeng.manager.LayoutManager;
 import com.hujiugame.qingfeng.manager.ThemeManager;
 import com.hujiugame.qingfeng.util.system.FileUtils;

@@ -16,7 +16,7 @@ import com.hujiugame.qingfeng.type.Numeric;
 import com.hujiugame.qingfeng.type.ScreenSize;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.file.PathName;
-import com.hujiugame.qingfeng.type.key.UiKey;
+import com.hujiugame.qingfeng.type.key.ui.UiKey;
 import com.hujiugame.qingfeng.type.ui.BoxType;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.ui.dialog.BoxAsk;

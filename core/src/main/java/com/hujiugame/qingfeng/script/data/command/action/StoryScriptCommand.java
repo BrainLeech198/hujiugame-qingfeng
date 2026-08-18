@@ -6,7 +6,7 @@ import com.hujiugame.qingfeng.script.data.command.ScriptCommandType;
 import com.hujiugame.qingfeng.script.data.command.param.ScriptCommandParam;
 import com.hujiugame.qingfeng.script.data.command.param.story.ForwardPageStoryScriptCommandParam;
 import com.hujiugame.qingfeng.script.data.command.param.story.GotoPageStoryScriptCommandParam;
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 
 import java.util.HashMap;
 import java.util.Map;

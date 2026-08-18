@@ -1,7 +1,7 @@
 package com.hujiugame.qingfeng.ui.info;
 
 import com.hujiugame.qingfeng.data.JsonEntity;
-import com.hujiugame.qingfeng.type.key.UiKey;
+import com.hujiugame.qingfeng.type.key.ui.UiKey;
 import com.hujiugame.qingfeng.type.ui.UiKind;
 
 /**

@@ -18,7 +18,7 @@ import com.hujiugame.qingfeng.ui.kind.button.ButtonInfo;
 import com.hujiugame.qingfeng.ui.kind.button.ButtonKind;
 import com.hujiugame.qingfeng.ui.kind.button.ButtonState;
 import com.hujiugame.qingfeng.type.Numeric;
-import com.hujiugame.qingfeng.type.key.UiKey;
+import com.hujiugame.qingfeng.type.key.ui.UiKey;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.type.file.PathName;

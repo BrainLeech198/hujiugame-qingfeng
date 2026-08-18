@@ -5,7 +5,7 @@ import com.hujiugame.qingfeng.script.data.value.command.ValueCommand;
 import com.hujiugame.qingfeng.script.data.value.command.ValueCommandType;
 import com.hujiugame.qingfeng.script.data.value.command.param.ValueCommandParam;
 import com.hujiugame.qingfeng.script.data.value.command.param.atomic.*;
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 
 import java.util.HashMap;
 import java.util.Map;

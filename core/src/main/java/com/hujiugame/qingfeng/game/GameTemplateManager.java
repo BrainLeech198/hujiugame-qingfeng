@@ -5,7 +5,7 @@ import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.data.game.Layout;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.file.PathName;
-import com.hujiugame.qingfeng.type.key.ConfigKey;
+import com.hujiugame.qingfeng.type.key.config.ConfigKey;
 import com.hujiugame.qingfeng.manager.LayoutManager;
 import com.hujiugame.qingfeng.manager.ThemeManager;
 import com.hujiugame.qingfeng.util.system.FileUtils;

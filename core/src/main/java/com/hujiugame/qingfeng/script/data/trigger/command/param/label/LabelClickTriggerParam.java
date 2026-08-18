@@ -2,7 +2,7 @@ package com.hujiugame.qingfeng.script.data.trigger.command.param.label;
 
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.script.data.trigger.command.param.TriggerParam;
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 
 public class LabelClickTriggerParam implements TriggerParam
 {

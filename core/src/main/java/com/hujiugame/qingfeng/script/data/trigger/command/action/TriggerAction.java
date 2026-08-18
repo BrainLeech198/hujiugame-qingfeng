@@ -1,7 +1,7 @@
 package com.hujiugame.qingfeng.script.data.trigger.command.action;
 
 import com.hujiugame.qingfeng.script.data.trigger.command.TriggerType;
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 
 public enum TriggerAction
 {

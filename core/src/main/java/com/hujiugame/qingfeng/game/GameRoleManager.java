@@ -3,7 +3,7 @@ package com.hujiugame.qingfeng.game;
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.data.story.Role;
 import com.hujiugame.qingfeng.type.file.FileName;
-import com.hujiugame.qingfeng.type.key.ConfigKey;
+import com.hujiugame.qingfeng.type.key.config.ConfigKey;
 import com.hujiugame.qingfeng.type.file.PathName;
 import com.hujiugame.qingfeng.manager.LayoutManager;
 import com.hujiugame.qingfeng.manager.ThemeManager;

@@ -6,7 +6,7 @@ import com.hujiugame.qingfeng.data.game.Layout;
 import com.hujiugame.qingfeng.data.story.tree.TreeStructureInfo;
 import com.hujiugame.qingfeng.data.story.tree.TreeStructureType;
 import com.hujiugame.qingfeng.type.file.FileName;
-import com.hujiugame.qingfeng.type.key.StoryKey;
+import com.hujiugame.qingfeng.type.key.story.StoryKey;
 import com.hujiugame.qingfeng.type.file.PathName;
 import com.hujiugame.qingfeng.manager.LayoutManager;
 import com.hujiugame.qingfeng.manager.ThemeManager;

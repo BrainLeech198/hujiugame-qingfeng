@@ -1,7 +1,7 @@
 package com.hujiugame.qingfeng.script.data;
 
 import com.hujiugame.qingfeng.data.JsonEntity;
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 
 public class ArgumentInfo
 {

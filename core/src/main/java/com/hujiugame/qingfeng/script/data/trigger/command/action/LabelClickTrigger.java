@@ -5,7 +5,7 @@ import com.hujiugame.qingfeng.script.data.trigger.command.TriggerCommand;
 import com.hujiugame.qingfeng.script.data.trigger.command.TriggerType;
 import com.hujiugame.qingfeng.script.data.trigger.command.param.TriggerParam;
 import com.hujiugame.qingfeng.script.data.trigger.command.param.label.LabelClickTriggerParam;
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 
 import java.util.HashMap;
 import java.util.Map;

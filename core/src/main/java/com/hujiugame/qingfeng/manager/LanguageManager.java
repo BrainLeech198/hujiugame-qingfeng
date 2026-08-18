@@ -7,9 +7,9 @@ import com.hujiugame.qingfeng.type.Name;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.file.PathName;
 import com.hujiugame.qingfeng.game.GameInfoManager;
-import com.hujiugame.qingfeng.type.key.FileHandleKey;
-import com.hujiugame.qingfeng.type.key.GameInfoKey;
-import com.hujiugame.qingfeng.type.key.LanguageKey;
+import com.hujiugame.qingfeng.type.key.common.FileHandleKey;
+import com.hujiugame.qingfeng.type.key.config.GameInfoKey;
+import com.hujiugame.qingfeng.type.key.config.LanguageKey;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 

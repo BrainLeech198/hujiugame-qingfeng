@@ -1,6 +1,6 @@
 package com.hujiugame.qingfeng.script.data.value.command;
 
-import com.hujiugame.qingfeng.type.key.ScriptKey;
+import com.hujiugame.qingfeng.type.key.script.ScriptKey;
 
 /**
  * 指令大类枚举。

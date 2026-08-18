@@ -5,7 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.type.LogLevel;
 import com.hujiugame.qingfeng.type.file.PathName;
-import com.hujiugame.qingfeng.type.key.ConfigKey;
+import com.hujiugame.qingfeng.type.key.config.ConfigKey;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
