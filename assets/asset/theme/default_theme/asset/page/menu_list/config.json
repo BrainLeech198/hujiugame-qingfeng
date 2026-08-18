@@ -3,5 +3,36 @@
   "priority_confirm_ui" : {
     "type" : "button",
     "tag" : "import"
+  },
+  "animation": {
+    "fade_in": {
+      "default": {
+        "duration": 0.12,
+        "task": {
+          "synchronizationGraphics": [],
+          "synchronizationUi": [],
+          "schedule": [
+            { "object": { "class": "ui", "type": "button", "tag": "back" }, "action": { "type": "smooth_move", "delay": 0.0, "duration": 0.06, "param": { "orientation": { "x": 1, "y": 0 }, "speed": 20000 } } },
+            { "object": { "class": "ui", "type": "button", "tag": "import" }, "action": { "type": "smooth_move", "delay": 0.0, "duration": 0.06, "param": { "orientation": { "x": 1, "y": 0 }, "speed": 20000 } } }
+          ]
+        }
+      }
+    },
+    "fade_out": {
+      "default": {
+        "duration": 0.3,
+        "task": {
+          "synchronizationGraphics": [],
+          "synchronizationUi": [],
+          "schedule": [
+            { "object": { "class": "ui", "type": "button", "tag": "back" }, "action": { "type": "smooth_move", "delay": 0.0, "duration": 0.06, "param": { "orientation": { "x": -1, "y": 0 }, "speed": 20000 } } },
+            { "object": { "class": "ui", "type": "button", "tag": "import" }, "action": { "type": "smooth_move", "delay": 0.0, "duration": 0.06, "param": { "orientation": { "x": -1, "y": 0 }, "speed": 20000 } } },
+            { "object": { "class": "ui", "type": "button", "tag": "profile" }, "action": { "type": "smooth_move", "delay": 0.0, "duration": 0.06, "param": { "orientation": { "x": -1, "y": 0 }, "speed": 20000 } } },
+            {"object": { "class": "ui", "type": "button", "tag": "share" }, "action": { "type": "smooth_move", "delay": 0.0, "duration": 0.06, "param": { "orientation": { "x": -1, "y": 0 }, "speed": 20000 } } },
+            {"object": { "class": "ui", "type": "button", "tag": "delete" }, "action": { "type": "smooth_move", "delay": 0.0, "duration": 0.06, "param": { "orientation": { "x": -1, "y": 0 }, "speed": 20000 } } }
+          ]
+        }
+      }
+    }
   }
 }

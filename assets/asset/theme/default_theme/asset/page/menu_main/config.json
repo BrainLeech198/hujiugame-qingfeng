@@ -6,18 +6,25 @@
   "animation" : {
     "fade_in" : {
       "default" : {
-        "duration" : 0.2,
+        "duration" : 0.125,
         "task" : {
-          "synchronization" : [
+          "synchronizationGraphics" : [
             {
               "object" : {
                 "class" : "graphics",
-                "type" : "background_picture"
+                "type" : "picture",
+                "tag" : "title"
               },
               "action" : {
-                "type" : "none",
+                "type" : "smooth_move",
                 "delay" : 0.0,
+                "duration" : 0.03,
                 "param" : {
+                  "orientation" : {
+                    "x" : 1,
+                    "y" : 0
+                  },
+                  "speed" : 40000
                 }
               }
             },
@@ -25,16 +32,23 @@
               "object" : {
                 "class" : "graphics",
                 "type" : "picture",
-                "tag" : "logo"
+                "tag" : "masker"
               },
               "action" : {
-                "type" : "none",
+                "type" : "smooth_move",
                 "delay" : 0.0,
+                "duration" : 0.03,
                 "param" : {
+                  "orientation" : {
+                    "x" : 1,
+                    "y" : 0
+                  },
+                  "speed" : 40000
                 }
               }
             }
           ],
+          "synchronizationUi" : [],
           "schedule" : [
             {
               "object" : {
@@ -45,14 +59,13 @@
               "action" : {
                 "type" : "smooth_move",
                 "delay" : 0.0,
+                "duration" : 0.03,
                 "param" : {
-                  "orientation" :
-                  {
-                    "x" : -1,
+                  "orientation" : {
+                    "x" : 1,
                     "y" : 0
                   },
-                  "speed" : 100,
-                  "duration" : 0.05
+                  "speed" : 40000
                 }
               }
             },
@@ -65,14 +78,13 @@
               "action" : {
                 "type" : "smooth_move",
                 "delay" : 0.0,
+                "duration" : 0.03,
                 "param" : {
-                  "orientation" :
-                  {
-                    "x" : -1,
+                  "orientation" : {
+                    "x" : 1,
                     "y" : 0
                   },
-                  "speed" : 100,
-                  "duration" : 0.05
+                  "speed" : 40000
                 }
               }
             },
@@ -85,14 +97,13 @@
               "action" : {
                 "type" : "smooth_move",
                 "delay" : 0.0,
+                "duration" : 0.04,
                 "param" : {
-                  "orientation" :
-                  {
-                    "x" : -1,
+                  "orientation" : {
+                    "x" : 1,
                     "y" : 0
                   },
-                  "speed" : 100,
-                  "duration" : 0.05
+                  "speed" : 32000
                 }
               }
             },
@@ -105,41 +116,41 @@
               "action" : {
                 "type" : "smooth_move",
                 "delay" : 0.0,
+                "duration" : 0.025,
                 "param" : {
-                  "orientation" :
-                  {
-                    "x" : -1,
+                  "orientation" : {
+                    "x" : 1,
                     "y" : 0
                   },
-                  "speed" : 100,
-                  "duration" : 0.05
+                  "speed" : 48000
                 }
               }
             }
           ]
         }
-      },
-      "from_page" :
-      {
-        "config_basic" : {
-          "duration" : 0.5
-        }
       }
     },
     "fade_out" : {
       "default" : {
-        "duration" : 0.2,
+        "duration" : 0.125,
         "task" : {
-          "synchronization" : [
+          "synchronizationGraphics" : [
             {
               "object" : {
                 "class" : "graphics",
-                "type" : "background_picture"
+                "type" : "picture",
+                "tag" : "title"
               },
               "action" : {
-                "type" : "none",
+                "type" : "smooth_move",
                 "delay" : 0.0,
+                "duration" : 0.03,
                 "param" : {
+                  "orientation" : {
+                    "x" : -1,
+                    "y" : 0
+                  },
+                  "speed" : 40000
                 }
               }
             },
@@ -147,16 +158,23 @@
               "object" : {
                 "class" : "graphics",
                 "type" : "picture",
-                "tag" : "logo"
+                "tag" : "masker"
               },
               "action" : {
-                "type" : "none",
+                "type" : "smooth_move",
                 "delay" : 0.0,
+                "duration" : 0.03,
                 "param" : {
+                  "orientation" : {
+                    "x" : -1,
+                    "y" : 0
+                  },
+                  "speed" : 40000
                 }
               }
             }
           ],
+          "synchronizationUi" : [],
           "schedule" : [
             {
               "object" : {
@@ -167,14 +185,13 @@
               "action" : {
                 "type" : "smooth_move",
                 "delay" : 0.0,
+                "duration" : 0.03,
                 "param" : {
-                  "orientation" :
-                  {
+                  "orientation" : {
                     "x" : -1,
                     "y" : 0
                   },
-                  "speed" : 100,
-                  "duration" : 0.1
+                  "speed" : 40000
                 }
               }
             },
@@ -187,14 +204,13 @@
               "action" : {
                 "type" : "smooth_move",
                 "delay" : 0.0,
+                "duration" : 0.03,
                 "param" : {
-                  "orientation" :
-                  {
+                  "orientation" : {
                     "x" : -1,
                     "y" : 0
                   },
-                  "speed" : 100,
-                  "duration" : 0.1
+                  "speed" : 40000
                 }
               }
             },
@@ -207,14 +223,13 @@
               "action" : {
                 "type" : "smooth_move",
                 "delay" : 0.0,
+                "duration" : 0.04,
                 "param" : {
-                  "orientation" :
-                  {
+                  "orientation" : {
                     "x" : -1,
                     "y" : 0
                   },
-                  "speed" : 100,
-                  "duration" : 0.1
+                  "speed" : 32000
                 }
               }
             },
@@ -227,14 +242,13 @@
               "action" : {
                 "type" : "smooth_move",
                 "delay" : 0.0,
+                "duration" : 0.025,
                 "param" : {
-                  "orientation" :
-                  {
+                  "orientation" : {
                     "x" : -1,
                     "y" : 0
                   },
-                  "speed" : 100,
-                  "duration" : 0.1
+                  "speed" : 48000
                 }
               }
             }

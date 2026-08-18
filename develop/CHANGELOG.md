@@ -60,6 +60,15 @@
 - **RenderPipeline FADING 状态** — GameRenderPipeLineState 枚举 + RenderPipeline 按状态分流渲染过渡动画（commit `待补`）
 - **渲染机动画初始化** — Init/MenuMain/MenuList/MenuLoad/ConfigBasic/ConfigDisplay 各页面 setAnimation 接入（commit `待补`）
 
+**新增(配置): 各页面淡入淡出动画配置**
+
+### 新增
+
+- **menu_main 动画** — 4 按钮 schedule 串行滑入/滑出 + logo(title)/masker 同步位移，fade_in 右侧滑入、fade_out 左侧滑出（commit `待补`）
+- **menu_list 动画** — 左栏 5 按钮右移入/左移出（commit `待补`）
+- **menu_load/config_basic/config_display 动画** — 各自控件 smooth_move 切入切出配置（commit `待补`）
+- **directory_structure 同步** — 新增页面 config 条目（commit `待补`）
+
 ## 2026-08-16 — 默认语言改英文 + 目录结构补全 + 12 个新语言翻译包 + 首次运行按设备语言改写默认语言 + 设备语言自动检测与 15 语言扩展 + 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新 + 全屏切换调用空值防御 + 官网卡片重排与折叠展开 + 官网导航新增遇到问题 + 官网语言扩展与识别修复
 
 **新增(网站)：官网主页卡片重排与长文字折叠展开（游戏介绍 / 更新日志）**
