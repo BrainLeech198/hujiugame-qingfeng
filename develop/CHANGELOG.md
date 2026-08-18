@@ -33,100 +33,107 @@
 
 ### 重构
 
-- **事件类型枚举化** — Event 接口与 EventAction 枚举取代原 Event 常量类，事件类 eventName 字段改 eventAction，EventDispatcher 改用枚举 switch（commit `待补`）
-- **EXECUTE 执行事件** — 新增 Push/Pop/Set/ResetGameStateExecute 四类（淡出完成后入队真正切换状态栈）（commit `待补`）
-- **GameStateEventAction 联动** — 状态操作事件子集枚举，EventAction ↔ GameStateEventAction 双向转换（commit `待补`）
-- **PushGameStateInitSpecially** — Init 专用压栈事件，修复 eventAction 误用普通 push 导致的 ClassCastException（commit `待补`）
-- **RecoverNormalRenderPipeLine** — 过渡结束恢复正常渲染事件（commit `待补`）
-- **事件类重构** — 各事件类字段命名统一为 eventAction、import 顺序修正（commit `待补`）
+- **事件类型枚举化** — Event 接口与 EventAction 枚举取代原 Event 常量类，事件类 eventName 字段改 eventAction，EventDispatcher 改用枚举 switch（commit 3a3259c）
+- **EXECUTE 执行事件** — 新增 Push/Pop/Set/ResetGameStateExecute 四类（淡出完成后入队真正切换状态栈）（commit 3a3259c）
+- **GameStateEventAction 联动** — 状态操作事件子集枚举，EventAction ↔ GameStateEventAction 双向转换（commit 3a3259c）
+- **PushGameStateInitSpecially** — Init 专用压栈事件，修复 eventAction 误用普通 push 导致的 ClassCastException（commit 3a3259c）
+- **RecoverNormalRenderPipeLine** — 过渡结束恢复正常渲染事件（commit 3a3259c）
+- **事件类重构** — 各事件类字段命名统一为 eventAction、import 顺序修正（commit 3a3259c）
 
 **新增(动画)：页面切换淡入淡出动画执行引擎 + 控件预偏移**
 
 ### 新增
 
-- **动画执行引擎** — TransitionManager 完整状态机（空壳事件→淡出→EXECUTE 切页→淡入→恢复），主循环逐帧驱动（commit `待补`）
-- **控件预偏移** — 淡入开始前将 smooth_move 对象强制置到动画起点（原始坐标 - 偏移量），淡入插值从外部滑入原位，消除"控件先显示在终点再位移"的跳变（commit `待补`）
-- **时间戳计时** — 淡入淡出改用时间戳计算已用时间，规避切页顿卡时 delta 突变导致动画跳帧/卡顿（commit `待补`）
-- **AnimationComponentType 枚举** — 组件自报类型（getType），Animation 组件容器改 Map 存储（commit `待补`）
-- **动画数据层完善** — Animation/组件/窗口/任务/动作全链 JsonEntity 构造补 null 防御、无效组件不入 Map、分层调试回溯日志（commit `待补`）
+- **动画执行引擎** — TransitionManager 完整状态机（空壳事件→淡出→EXECUTE 切页→淡入→恢复），主循环逐帧驱动（commit 36b4adc）
+- **控件预偏移** — 淡入开始前将 smooth_move 对象强制置到动画起点（原始坐标 - 偏移量），淡入插值从外部滑入原位，消除"控件先显示在终点再位移"的跳变（commit 36b4adc）
+- **时间戳计时** — 淡入淡出改用时间戳计算已用时间，规避切页顿卡时 delta 突变导致动画跳帧/卡顿（commit 36b4adc）
+- **AnimationComponentType 枚举** — 组件自报类型（getType），Animation 组件容器改 Map 存储（commit 36b4adc）
+- **动画数据层完善** — Animation/组件/窗口/任务/动作全链 JsonEntity 构造补 null 防御、无效组件不入 Map、分层调试回溯日志（commit 36b4adc）
 
 **重构(渲染)：渲染机抽象基类 + 页面过渡动画接入 + FADING 渲染管线状态**
 
 ### 重构
 
-- **AbstractGameRender 基类** — 统一持有 gameStateDataContainer + 提供 getter，消除 9 个渲染机重复字段/init/getter（commit `待补`）
-- **渲染机过渡接入** — 各渲染机注入 AnimationManager，onInit 上缴动画配置，transitionRender 改为驱动 TransitionManager 淡入淡出（commit `待补`）
-- **GameRender 接口新增 transitionRender** — 渲染机过渡动画渲染入口（commit `待补`）
-- **RenderPipeline FADING 状态** — GameRenderPipeLineState 枚举 + RenderPipeline 按状态分流渲染过渡动画（commit `待补`）
-- **渲染机动画初始化** — Init/MenuMain/MenuList/MenuLoad/ConfigBasic/ConfigDisplay 各页面 setAnimation 接入（commit `待补`）
+- **AbstractGameRender 基类** — 统一持有 gameStateDataContainer + 提供 getter，消除 9 个渲染机重复字段/init/getter（commit ce8757a）
+- **渲染机过渡接入** — 各渲染机注入 AnimationManager，onInit 上缴动画配置，transitionRender 改为驱动 TransitionManager 淡入淡出（commit ce8757a）
+- **GameRender 接口新增 transitionRender** — 渲染机过渡动画渲染入口（commit ce8757a）
+- **RenderPipeline FADING 状态** — GameRenderPipeLineState 枚举 + RenderPipeline 按状态分流渲染过渡动画（commit ce8757a）
+- **渲染机动画初始化** — Init/MenuMain/MenuList/MenuLoad/ConfigBasic/ConfigDisplay 各页面 setAnimation 接入（commit ce8757a）
 
 **新增(配置): 各页面淡入淡出动画配置**
 
 ### 新增
 
-- **menu_main 动画** — 4 按钮 schedule 串行滑入/滑出 + logo(title)/masker 同步位移，fade_in 右侧滑入、fade_out 左侧滑出（commit `待补`）
-- **menu_list 动画** — 左栏 5 按钮右移入/左移出（commit `待补`）
-- **menu_load/config_basic/config_display 动画** — 各自控件 smooth_move 切入切出配置（commit `待补`）
-- **directory_structure 同步** — 新增页面 config 条目（commit `待补`）
+- **menu_main 动画** — 4 按钮 schedule 串行滑入/滑出 + logo(title)/masker 同步位移，fade_in 右侧滑入、fade_out 左侧滑出（commit 1abebfa）
+- **menu_list 动画** — 左栏 5 按钮右移入/左移出（commit 1abebfa）
+- **menu_load/config_basic/config_display 动画** — 各自控件 smooth_move 切入切出配置（commit 1abebfa）
+- **directory_structure 同步** — 新增页面 config 条目（commit 1abebfa）
 
 **重构(keys)：type/key 分类后全量 import 路径适配**
 
 ### 重构
 
-- **业务文件 import 同步** — script/data、ui、game、input、manager、util 等 69 个业务类的 type.key.* import 路径更新到子包（commit `待补`）
+- **业务文件 import 同步** — script/data、ui、game、input、manager、util 等 69 个业务类的 type.key.* import 路径更新到子包（commit 096dc2c）
 
 **重构(数据)：JsonEntity 布尔字段命名修正**
 
 ### 重构
 
-- **isMap 字段去前缀** — JsonEntity 内部 isMap 字段改 map，getter 仍 `isMap()`，构造器赋值与 42 处读点同步（commit `待补`）
+- **isMap 字段去前缀** — JsonEntity 内部 isMap 字段改 map，getter 仍 `isMap()`，构造器赋值与 42 处读点同步（commit 55eff1f）
 
 **重构(类型)：InitState 枚举化 + SceneStack 双 INIT 修复**
 
 ### 重构
 
-- **InitState 枚举化** — 初始化阶段 int 常量改枚举（value/getValue/next），Init 状态机适配（commit `待补`）
-- **SceneStack 双 INIT** — 删除构造器栈底哨兵 INIT，保留 GameHost.init 显式 push，状态栈 `[INIT, INIT, MENU_MAIN]` 收敛为 `[INIT, MENU_MAIN]`（commit `待补`）
-- **GameState 补充** — state 相关补充字段（commit `待补`）
+- **InitState 枚举化** — 初始化阶段 int 常量改枚举（value/getValue/next），Init 状态机适配（commit fc4b279）
+- **SceneStack 双 INIT** — 删除构造器栈底哨兵 INIT，保留 GameHost.init 显式 push，状态栈 `[INIT, INIT, MENU_MAIN]` 收敛为 `[INIT, MENU_MAIN]`（commit fc4b279）
+- **GameState 补充** — state 相关补充字段（commit fc4b279）
 
 **编码规范(字段)：布尔字段命名规范化**
 
 ### 编码规范
 
-- **Main 懒加载字段** — isSlashed/isLazyInitialized 去前缀为 slashed/lazyInitialized，补 is/set 访问（commit `待补`）
-- **TextInputUtils 输入状态** — isInput 字段去前缀为 inputDone，补 setInput（commit `待补`）
+- **Main 懒加载字段** — isSlashed/isLazyInitialized 去前缀为 slashed/lazyInitialized，补 is/set 访问（commit b8d3e75）
+- **TextInputUtils 输入状态** — isInput 字段去前缀为 inputDone，补 setInput（commit b8d3e75）
 
 **新增(动画)：控件位置接口 + 游戏侧动画管理器注入**
 
 ### 新增
 
-- **InteractableObject 位置接口** — 新增 getX/getY/setPosition，支撑 smooth_move 位移动画（commit `待补`）
-- **游戏侧动画管理器** — GameResourceLoader 注入 EventQueue，创建游戏内 AnimationManager（commit `待补`）
+- **InteractableObject 位置接口** — 新增 getX/getY/setPosition，支撑 smooth_move 位移动画（commit 4be9982）
+- **游戏侧动画管理器** — GameResourceLoader 注入 EventQueue，创建游戏内 AnimationManager（commit 4be9982）
 
 **重构(事件)：loadGame 空壳压栈事件携带来源状态**
 
 ### 重构
 
-- **GameSessionManager.loadGame** — 增加 nowGameState 参数，PushGameState 空壳事件携带 outState 供过渡链识别来源页（commit `待补`）
+- **GameSessionManager.loadGame** — 增加 nowGameState 参数，PushGameState 空壳事件携带 outState 供过渡链识别来源页（commit af377b2）
 
 **重构(keys)：LayoutManager 使用 AudioKey（audio 节独立）**
 
 ### 重构
 
-- **LayoutManager 关联调整** — backgroundMusic/music 字段改用独立 AudioKey，type/key import 适配（commit `待补`）
+- **LayoutManager 关联调整** — backgroundMusic/music 字段改用独立 AudioKey，type/key import 适配（commit d2da352）
 
 **编码规范(ui)：UiManager 代码整理**
 
 ### 编码规范
 
-- **CustomFont 类结构与注释整理** — UiManager 内部类与注释格式统一（commit `待补`）
+- **CustomFont 类结构与注释整理** — UiManager 内部类与注释格式统一（commit ccff48a）
 
 **修复(版本)：更新检测版本号显示修正**
 
 ### 修复
 
-- **版本号显示日志** — doVersionDifferent/checkWebVersion 版本号拼接顺序与 displayVersionString 修正（commit `待补`）
-- **type/key import 适配** — ConfigKey/VersionKey import 路径更新（commit `待补`）
+- **版本号显示日志** — doVersionDifferent/checkWebVersion 版本号拼接顺序与 displayVersionString 修正（commit c30c500）
+- **type/key import 适配** — ConfigKey/VersionKey import 路径更新（commit c30c500）
+
+**构建(版本)：发布 v1.0.0-beta-26w34a**
+
+### 构建
+
+- **app_version 升级** — app_version 2→3，snapshot 26w33b→26w34a（commit `待补`）
+- **android versionCode 升级** — versionCode 2→3（commit `待补`）
 
 ## 2026-08-16 — 默认语言改英文 + 目录结构补全 + 12 个新语言翻译包 + 首次运行按设备语言改写默认语言 + 设备语言自动检测与 15 语言扩展 + 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新 + 全屏切换调用空值防御 + 官网卡片重排与折叠展开 + 官网导航新增遇到问题 + 官网语言扩展与识别修复
 
