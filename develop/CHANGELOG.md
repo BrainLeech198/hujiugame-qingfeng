@@ -27,7 +27,18 @@
 
 ### 重构
 
-- **type/key 分类整理** — 16 个 Key 常量类按领域拆到 `config/`（ConfigKey/RequirementKey/ThemeKey/LanguageKey/VersionKey/GameInfoKey）、`layout/`（LayoutKey/GraphicsKey/AudioKey）、`script/`（ScriptKey）、`story/`（StoryKey）、`ui/`（UiKey/UniversalUiKey）、`animation/`（AnimationKey）、`common/`（JsonKey/FileHandleKey/DialogKey），新增 `AudioKey`（audio 节独立），各使用点 import 路径同步更新（commit `待补`）
+- **type/key 分类整理** — 16 个 Key 常量类按领域拆到 `config/`（ConfigKey/RequirementKey/ThemeKey/LanguageKey/VersionKey/GameInfoKey）、`layout/`（LayoutKey/GraphicsKey/AudioKey）、`script/`（ScriptKey）、`story/`（StoryKey）、`ui/`（UiKey/UniversalUiKey）、`animation/`（AnimationKey）、`common/`（JsonKey/FileHandleKey/DialogKey），新增 `AudioKey`（audio 节独立），各使用点 import 路径同步更新（commit `a53ed85`）
+
+**重构(事件)：事件系统枚举化 + EXECUTE 执行事件 + 联动转换**
+
+### 重构
+
+- **事件类型枚举化** — Event 接口与 EventAction 枚举取代原 Event 常量类，事件类 eventName 字段改 eventAction，EventDispatcher 改用枚举 switch（commit `待补`）
+- **EXECUTE 执行事件** — 新增 Push/Pop/Set/ResetGameStateExecute 四类（淡出完成后入队真正切换状态栈）（commit `待补`）
+- **GameStateEventAction 联动** — 状态操作事件子集枚举，EventAction ↔ GameStateEventAction 双向转换（commit `待补`）
+- **PushGameStateInitSpecially** — Init 专用压栈事件，修复 eventAction 误用普通 push 导致的 ClassCastException（commit `待补`）
+- **RecoverNormalRenderPipeLine** — 过渡结束恢复正常渲染事件（commit `待补`）
+- **事件类重构** — 各事件类字段命名统一为 eventAction、import 顺序修正（commit `待补`）
 
 ## 2026-08-16 — 默认语言改英文 + 目录结构补全 + 12 个新语言翻译包 + 首次运行按设备语言改写默认语言 + 设备语言自动检测与 15 语言扩展 + 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新 + 全屏切换调用空值防御 + 官网卡片重排与折叠展开 + 官网导航新增遇到问题 + 官网语言扩展与识别修复
 

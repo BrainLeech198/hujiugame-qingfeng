@@ -1,15 +1,15 @@
-package com.hujiugame.qingfeng.event.imp;
+package com.hujiugame.qingfeng.event.imp.game;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.hujiugame.qingfeng.type.game.Event;
-import com.hujiugame.qingfeng.event.EventObject;
+import com.hujiugame.qingfeng.event.Event;
+import com.hujiugame.qingfeng.event.EventAction;
 
 /**
  * 进入游戏事件
  */
-public class EnterGame implements EventObject
+public class EnterGame implements Event
 {
-    private final String eventName;
+    private final EventAction eventAction = EventAction.ENTER_GAME;
     private final FileHandle gamePathHandle;
 
     private final String gameId;
@@ -28,7 +28,6 @@ public class EnterGame implements EventObject
      */
     public EnterGame (FileHandle gamePathHandle, String gameId, String gameName, String gameVersion, int gameLauncherVersion)
     {
-        eventName = Event.ENTER_GAME;
         this.gamePathHandle = gamePathHandle;
         this.gameId = gameId;
         this.gameName = gameName;
@@ -39,12 +38,12 @@ public class EnterGame implements EventObject
     /**
      * 获取事件名称
      *
-     * @return 事件名称字符串
+     * @return 事件类型
      */
     @Override
-    public String getEventName ()
+    public EventAction getEventAction ()
     {
-        return eventName;
+        return eventAction;
     }
 
     /**

@@ -1,12 +1,15 @@
 package com.hujiugame.qingfeng.event.imp;
 
-import com.hujiugame.qingfeng.event.EventObject;
-import com.hujiugame.qingfeng.type.game.Event;
+import com.hujiugame.qingfeng.event.Event;
+import com.hujiugame.qingfeng.event.EventAction;
 import com.hujiugame.qingfeng.ui.UiManager;
 
-public class RefreshUiManager implements EventObject
+/**
+ * 刷新 UI 管理器事件，用于替换全局 UiManager 并重进当前场景。
+ */
+public class RefreshUiManager implements Event
 {
-    private final String eventName;
+    private final EventAction eventAction = EventAction.REFRESH_UI_MANAGER;
     private final UiManager uiManager;
 
     /**
@@ -16,19 +19,18 @@ public class RefreshUiManager implements EventObject
      */
     public RefreshUiManager (UiManager uiManager)
     {
-        eventName = Event.REFRESH_UI_MANAGER;
         this.uiManager = uiManager;
     }
 
     /**
      * 获取事件名称
      *
-     * @return 事件名称字符串
+     * @return 事件类型
      */
     @Override
-    public String getEventName ()
+    public EventAction getEventAction ()
     {
-        return eventName;
+        return eventAction;
     }
 
     /**

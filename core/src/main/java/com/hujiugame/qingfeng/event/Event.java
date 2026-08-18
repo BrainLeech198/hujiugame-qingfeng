@@ -3,12 +3,12 @@ package com.hujiugame.qingfeng.event;
 /**
  * 事件对象接口，所有具体事件类型需实现此接口。
  */
-public interface EventObject
+public interface Event
 {
     /**
-     * 获取事件名称
+     * 获取事件类型
      *
-     * @return 事件名称字符串
+     * @return 事件类型枚举
      */
-    String getEventName ();
+    EventAction getEventAction ();
 }

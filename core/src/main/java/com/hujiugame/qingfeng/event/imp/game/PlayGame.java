@@ -1,16 +1,16 @@
-package com.hujiugame.qingfeng.event.imp;
+package com.hujiugame.qingfeng.event.imp.game;
 
 import com.hujiugame.qingfeng.data.story.Role;
-import com.hujiugame.qingfeng.type.game.Event;
+import com.hujiugame.qingfeng.event.Event;
+import com.hujiugame.qingfeng.event.EventAction;
 import com.hujiugame.qingfeng.type.play.Hoster;
-import com.hujiugame.qingfeng.event.EventObject;
 
 /**
- * 退出游戏事件
+ * 开始游戏事件
  */
-public class PlayGame implements EventObject
+public class PlayGame implements Event
 {
-    private final String eventName;
+    private final EventAction eventAction = EventAction.PLAY_GAME;
     private final Hoster hoster;
     private final Role role;
 
@@ -22,7 +22,6 @@ public class PlayGame implements EventObject
      */
     public PlayGame (Hoster hoster, Role role)
     {
-        eventName = Event.PLAY_GAME;
         this.hoster = hoster;
         this.role = role;
     }
@@ -30,12 +29,12 @@ public class PlayGame implements EventObject
     /**
      * 获取事件名称
      *
-     * @return 事件名称字符串
+     * @return 事件类型
      */
     @Override
-    public String getEventName ()
+    public EventAction getEventAction ()
     {
-        return eventName;
+        return eventAction;
     }
 
     /**
