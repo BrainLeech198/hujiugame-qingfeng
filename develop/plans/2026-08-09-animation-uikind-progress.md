@@ -1,9 +1,10 @@
 # 今日临时进度 — 页面切换控件级动画配置确认 + UiKind 重构
 
-> **状态:** 2026-08-09 工作进度记录（尚未提交）。
+> **状态:** 2026-08-09 工作进度记录（当时尚未提交）。
 >
-> ① menu_main/config.json 的控件级 `animation` 配置语义已确认（schedule 串行 + delay 相对上一个、smoothMove 从原本位置出发），`speed` 单位与 fade_in/fade_out 方向仍待定。
-> ② UiKind 枚举 + UiObject 数据类 + UiManager.findObject 重构已完成，`./gradlew :core:compileJava` 通过。
+> **2026-08-18 更新：** ① menu_main 及 menu_list/menu_load/config_basic/config_display 的控件级 `animation` 配置已实现（smooth_move + schedule 串行 + synchronization 同步 + 预偏移 + 时间戳计时），本进度文档的语义结论已落地并提交。② UiKind 重构（含 UiObject/findObject）已提交。
+>
+> 待解决问题见 [2026-08-07-page-transition-animation.md](2026-08-07-page-transition-animation.md)（淡出→淡入卡顿计入淡入计时）。
 >
 > 关联方案：[2026-08-07-page-transition-animation.md](2026-08-07-page-transition-animation.md)（页面级过渡动画，控件级配置是该方案的落地深化）。
 
