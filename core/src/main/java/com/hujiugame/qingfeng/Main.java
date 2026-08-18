@@ -64,8 +64,8 @@ public class Main extends ApplicationAdapter
     private GameHost gameHost;
 
     // 懒初始化
-    private volatile boolean isSlashed = false;
-    private volatile boolean isLazyInitialized = false;
+    private volatile boolean slashed = false;
+    private volatile boolean lazyInitialized = false;
 
     // 子线程引用
     private Thread inputAdapterThread;
@@ -253,9 +253,9 @@ public class Main extends ApplicationAdapter
             spriteBatch.setProjectionMatrix(stage.getViewport().getCamera().combined); // 绑定相机矩阵
 
             // 懒初始化
-            if (!isLazyInitialized)
+            if (!isLazyInitialized())
             {
-                if (!isSlashed) slash();
+                if (!isSlashed()) slash();
                 else lazyInit();
                 return;
             }
@@ -366,11 +366,51 @@ public class Main extends ApplicationAdapter
     // ===================================================================================================================
 
     /**
+     * 是否已闪屏
+     *
+     * @return 是否已闪屏
+     */
+    private boolean isSlashed ()
+    {
+        return slashed;
+    }
+
+    /**
+     * 设置闪屏完成状态
+     *
+     * @param slashed 是否已闪屏
+     */
+    private void setSlashed (boolean slashed)
+    {
+        this.slashed = slashed;
+    }
+
+    /**
+     * 是否已完成懒初始化
+     *
+     * @return 是否已完成懒初始化
+     */
+    private boolean isLazyInitialized ()
+    {
+        return lazyInitialized;
+    }
+
+    /**
+     * 设置懒初始化完成状态
+     *
+     * @param lazyInitialized 是否已完成懒初始化
+     */
+    private void setLazyInitialized (boolean lazyInitialized)
+    {
+        this.lazyInitialized = lazyInitialized;
+    }
+
+    /**
      * 闪屏处理，标记闪屏阶段完成
      */
     private void slash ()
     {
-        isSlashed = true;
+        setSlashed(true);
     }
 
     /**
@@ -447,7 +487,7 @@ public class Main extends ApplicationAdapter
             CrashUtils.safeCrash(e);
         }
 
-        isLazyInitialized = true;
+        setLazyInitialized(true);
         LogUtils.debug(Main.class, "lazyInit 懒加载初始化完成");
     }
 

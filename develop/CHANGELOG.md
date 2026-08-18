@@ -89,6 +89,13 @@
 - **SceneStack 双 INIT** — 删除构造器栈底哨兵 INIT，保留 GameHost.init 显式 push，状态栈 `[INIT, INIT, MENU_MAIN]` 收敛为 `[INIT, MENU_MAIN]`（commit `待补`）
 - **GameState 补充** — state 相关补充字段（commit `待补`）
 
+**编码规范(字段)：布尔字段命名规范化**
+
+### 编码规范
+
+- **Main 懒加载字段** — isSlashed/isLazyInitialized 去前缀为 slashed/lazyInitialized，补 is/set 访问（commit `待补`）
+- **TextInputUtils 输入状态** — isInput 字段去前缀为 inputDone，补 setInput（commit `待补`）
+
 ## 2026-08-16 — 默认语言改英文 + 目录结构补全 + 12 个新语言翻译包 + 首次运行按设备语言改写默认语言 + 设备语言自动检测与 15 语言扩展 + 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新 + 全屏切换调用空值防御 + 官网卡片重排与折叠展开 + 官网导航新增遇到问题 + 官网语言扩展与识别修复
 
 **新增(网站)：官网主页卡片重排与长文字折叠展开（游戏介绍 / 更新日志）**

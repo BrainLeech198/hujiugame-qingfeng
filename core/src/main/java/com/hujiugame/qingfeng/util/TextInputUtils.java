@@ -338,7 +338,7 @@ public final class TextInputUtils
      */
     public static class TextInputListener implements Input.TextInputListener
     {
-        private boolean isInput = false;
+        private boolean inputDone = false;
         private String input = "";
 
         /**
@@ -354,7 +354,7 @@ public final class TextInputUtils
          */
         public void reset ()
         {
-            isInput = false;
+            setInput(false);
             input = "";
         }
 
@@ -367,7 +367,7 @@ public final class TextInputUtils
         public void input (String text)
         {
             LogUtils.debug(TextInputUtils.class, "input 用户输入了 (text)：" + text);
-            isInput = true;
+            setInput(true);
             input = text;
         }
 
@@ -387,7 +387,17 @@ public final class TextInputUtils
          */
         public boolean isInput ()
         {
-            return isInput;
+            return inputDone;
+        }
+
+        /**
+         * 设置输入完成状态
+         *
+         * @param inputDone 是否已输入
+         */
+        public void setInput (boolean inputDone)
+        {
+            this.inputDone = inputDone;
         }
 
         /**
