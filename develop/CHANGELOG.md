@@ -103,6 +103,12 @@
 - **InteractableObject 位置接口** — 新增 getX/getY/setPosition，支撑 smooth_move 位移动画（commit `待补`）
 - **游戏侧动画管理器** — GameResourceLoader 注入 EventQueue，创建游戏内 AnimationManager（commit `待补`）
 
+**重构(事件)：loadGame 空壳压栈事件携带来源状态**
+
+### 重构
+
+- **GameSessionManager.loadGame** — 增加 nowGameState 参数，PushGameState 空壳事件携带 outState 供过渡链识别来源页（commit `待补`）
+
 ## 2026-08-16 — 默认语言改英文 + 目录结构补全 + 12 个新语言翻译包 + 首次运行按设备语言改写默认语言 + 设备语言自动检测与 15 语言扩展 + 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新 + 全屏切换调用空值防御 + 官网卡片重排与折叠展开 + 官网导航新增遇到问题 + 官网语言扩展与识别修复
 
 **新增(网站)：官网主页卡片重排与长文字折叠展开（游戏介绍 / 更新日志）**

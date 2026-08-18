@@ -14,10 +14,10 @@ import com.hujiugame.qingfeng.data.play.Player;
 import com.hujiugame.qingfeng.data.story.Role;
 import com.hujiugame.qingfeng.type.game.GameState;
 import com.hujiugame.qingfeng.type.play.Hoster;
-import com.hujiugame.qingfeng.event.imp.EnterGame;
-import com.hujiugame.qingfeng.event.imp.PlayGame;
-import com.hujiugame.qingfeng.event.imp.PushGameState;
-import com.hujiugame.qingfeng.event.imp.QuitGame;
+import com.hujiugame.qingfeng.event.imp.game.EnterGame;
+import com.hujiugame.qingfeng.event.imp.game.PlayGame;
+import com.hujiugame.qingfeng.event.imp.state.PushGameState;
+import com.hujiugame.qingfeng.event.imp.game.QuitGame;
 import com.hujiugame.qingfeng.event.EventQueue;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
@@ -67,9 +67,10 @@ public final class GameSessionManager
      * 加载游戏，检查目录结构并切换到加载界面
      *
      * @param gamePathDirectory 游戏目录文件句柄
+     * @param nowGameState 当前游戏状态
      * @return 加载是否成功
      */
-    public boolean loadGame (FileHandle gamePathDirectory)
+    public boolean loadGame (FileHandle gamePathDirectory, GameState nowGameState)
     {
         try
         {
@@ -90,7 +91,7 @@ public final class GameSessionManager
             playLocalData.setGamePathHandle(gamePathDirectory);
 
             // 进入加载页面
-            eventQueue.addEvent(new PushGameState(GameState.MENU_LOAD));
+            eventQueue.addEvent(new PushGameState(nowGameState, GameState.MENU_LOAD));
 
             LogUtils.debug(GameSessionManager.class, "loadGame 成功进入加载界面 (path): " + gamePathDirectory.path());
             return true;
