@@ -11,8 +11,8 @@ import com.hujiugame.qingfeng.type.Numeric;
 import com.hujiugame.qingfeng.type.VersionType;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.file.PathName;
-import com.hujiugame.qingfeng.type.key.ConfigKey;
-import com.hujiugame.qingfeng.type.key.VersionKey;
+import com.hujiugame.qingfeng.type.key.config.ConfigKey;
+import com.hujiugame.qingfeng.type.key.config.VersionKey;
 import com.hujiugame.qingfeng.type.url.WebSite;
 import com.hujiugame.qingfeng.util.system.CrashUtils;
 import com.hujiugame.qingfeng.util.system.FileUtils;
@@ -264,8 +264,8 @@ public final class UpdateChecker
                 {
                     needUpdate = true;
                     LogUtils.info(UpdateChecker.class, "doVersionDifferent 资源文件版本不一致，进行文件更新 "
-                        + "文件版本号: " + generateVersionString(internalAppVersionType, internalAppVersionString, internalAppVersionSnapshot) + " "
-                        + "运行版本号: " + generateVersionString(externalAppVersionType, externalAppVersionString, externalAppVersionSnapshot));
+                        + "运行版本号: " + generateVersionString(internalAppVersionType, internalAppVersionString, internalAppVersionSnapshot) + " "
+                        + "文件版本号: " + generateVersionString(externalAppVersionType, externalAppVersionString, externalAppVersionSnapshot));
                 }
             }
 
@@ -1036,7 +1036,7 @@ public final class UpdateChecker
                                 {
                                     LogUtils.info(UpdateChecker.class,
                                         "checkWebVersion 当前已是最新版本: "
-                                        + internalVersionString + " (code=" + internalAppVersion + ")");
+                                        + displayVersionString + " (code=" + internalAppVersion + ")");
                                     needVersionUpdate = false;
                                 }
                             }
@@ -1044,7 +1044,7 @@ public final class UpdateChecker
                             {
                                 LogUtils.info(UpdateChecker.class,
                                     "checkWebVersion 当前已是最新版本: "
-                                    + internalVersionString + " (code=" + internalAppVersion + ")");
+                                    + displayVersionString + " (code=" + internalAppVersion + ")");
                                 needVersionUpdate = false;
                             }
                         }
@@ -1056,7 +1056,7 @@ public final class UpdateChecker
                             {
                                 LogUtils.info(UpdateChecker.class,
                                     "checkWebVersion 需要更新 字串版本升级: "
-                                    + internalVersionString + " → " + webVersionStr);
+                                    + displayVersionString + " → " + webVersionStr);
                                 needVersionUpdate = true;
                             }
                             else if (cmp == 0
@@ -1071,14 +1071,14 @@ public final class UpdateChecker
                             else
                             {
                                 LogUtils.info(UpdateChecker.class,
-                                    "checkWebVersion 当前已是最新版本: " + internalVersionString);
+                                    "checkWebVersion 当前已是最新版本: " + displayVersionString);
                                 needVersionUpdate = false;
                             }
                         }
                         else
                         {
                             LogUtils.info(UpdateChecker.class,
-                                "checkWebVersion 当前已是最新版本: " + internalVersionString);
+                                "checkWebVersion 当前已是最新版本: " + displayVersionString);
                             needVersionUpdate = false;
                         }
                         finish(true);
