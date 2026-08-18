@@ -1,9 +1,55 @@
 {
-  "newest_version" : 2,
+  "newest_version" : 3,
   "newest_version_type" : 0,
   "newest_version_string" : "1.0.0",
-  "newest_version_snapshot" : "26w33b",
+  "newest_version_snapshot" : "26w34a",
   "versions" : {
+    "3" : {
+      "name" : "v1.0.0-beta-26w34a",
+      "date" : "2026-08-18",
+      "type" : 0,
+      "log" : "氢风 v1.0.0-beta-26w34a 公开测试版更新（相对 v1.0.0-beta-26w33b）：\n\n【新增功能】\n1. 页面切换过渡动画——主菜单、游戏列表、设置等页面切换时新增平滑滑入/滑出动画（功能按钮依次滑动入场、Logo 与遮罩联动位移），切换体验更流畅自然\n2. 过场动画控件预偏移——动画开始前将控件提前定位到动画起点，起始画面更连贯，避免控件先显示在最终位置再移动的突兀感\n\n【优化】\n3. 动画计时优化——切换到目标页面时淡入计时更准确，消除切换瞬间的顿卡对动画播放的影响\n\n【说明】\n4. 页面切换动画为测试性功能，若在后续使用中发现卡顿或不自然，欢迎反馈，我们会持续调优",
+      "download" : {
+        "windows" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · Windows 安装包（.exe）· 提取码 1698 · 双击安装，若弹安全提示点「更多信息 → 仍要运行」",
+              "url" : "https://brainleech198.lanzn.com/iVAnR42zaj7i"
+            }
+          ]
+        },
+        "android" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · Android 安装包（.apk）· 提取码 1698 · 安装时请允许「未知来源」",
+              "url" : "https://brainleech198.lanzn.com/iaSkU42zanqb"
+            }
+          ]
+        },
+        "linux" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · Linux 安装包（.deb · Debian/Ubuntu）· 提取码 1698 · 双击安装，或终端执行 sudo dpkg -i",
+              "url" : "https://brainleech198.lanzn.com/iWUER42zax6b"
+            }
+          ]
+        },
+        "mac" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · macOS Apple 芯片版（M 芯片，.zip）· 提取码 1698 · 解压后双击「安装氢风」，若提示无法打开请右键 → 打开",
+              "url" : "https://brainleech198.lanzn.com/iJieY42zarcb"
+            }
+          ],
+          "lanzouyun_intel" : [
+            {
+              "description" : "蓝奏云 · macOS Intel 版（.zip）· 提取码 1698 · 解压后双击「安装氢风」，若提示无法打开请右键 → 打开",
+              "url" : "https://brainleech198.lanzn.com/i983442zb0ib"
+            }
+          ]
+        }
+      }
+    },
     "2" : {
       "name" : "v1.0.0-beta-26w33b",
       "date" : "2026-08-14 23:51",
