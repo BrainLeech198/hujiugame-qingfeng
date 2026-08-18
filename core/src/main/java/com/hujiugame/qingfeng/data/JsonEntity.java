@@ -13,7 +13,7 @@ public class JsonEntity
     // 内部数据容器
     private Map<String, Object> mapData;
     private List<Object> listData;
-    private boolean isMap;   // true: Map, false: List
+    private boolean map;   // true: Map, false: List
 
     // 不可变的空对象常量（用于共享只读空容器，避免重复创建）
     private static final Map<String, Object> EMPTY_OBJECT_MAP = Collections.emptyMap ();
@@ -28,7 +28,7 @@ public class JsonEntity
      */
     public JsonEntity ()
     {
-        this.isMap = true;
+        this.map = true;
         this.mapData = EMPTY_OBJECT_MAP;
         this.listData = null;
     }
@@ -40,8 +40,8 @@ public class JsonEntity
     {
         if (jsonEntity != null)
         {
-            this.isMap = jsonEntity.isMap;
-            if (this.isMap)
+            this.map = jsonEntity.map;
+            if (this.map)
             {
                 this.mapData = (jsonEntity.mapData != null && !jsonEntity.mapData.isEmpty())
                     ? deepCopyMap(jsonEntity.mapData) : EMPTY_OBJECT_MAP;
@@ -56,7 +56,7 @@ public class JsonEntity
         }
         else
         {
-            this.isMap = true;
+            this.map = true;
             this.mapData = EMPTY_OBJECT_MAP;
             this.listData = null;
         }
@@ -69,14 +69,14 @@ public class JsonEntity
     {
         try
         {
-            this.isMap = true;
+            this.map = true;
             this.mapData = (mapData == null || mapData.isEmpty()) ? EMPTY_OBJECT_MAP : deepCopyMap(mapData);
             this.listData = null;
         }
         catch (Exception e)
         {
             LogUtils.error(JsonEntity.class, "JsonEntity(Map)", e);
-            this.isMap = true;
+            this.map = true;
             this.mapData = EMPTY_OBJECT_MAP;
             this.listData = null;
         }
@@ -89,14 +89,14 @@ public class JsonEntity
     {
         try
         {
-            this.isMap = false;
+            this.map = false;
             this.listData = (listData == null || listData.isEmpty()) ? EMPTY_OBJECT_LIST : deepCopyList(listData);
             this.mapData = null;
         }
         catch (Exception e)
         {
             LogUtils.error(JsonEntity.class, "JsonEntity(List)", e);
-            this.isMap = false;
+            this.map = false;
             this.listData = EMPTY_OBJECT_LIST;
             this.mapData = null;
         }
@@ -112,14 +112,14 @@ public class JsonEntity
             Object parsed = JsonUtils.jsonStringToObject(jsonString);
             if (parsed instanceof Map)
             {
-                this.isMap = true;
+                this.map = true;
                 Map<String, Object> src = (Map<String, Object>) parsed;
                 this.mapData = (src == null || src.isEmpty()) ? EMPTY_OBJECT_MAP : deepCopyMap(src);
                 this.listData = null;
             }
             else if (parsed instanceof List)
             {
-                this.isMap = false;
+                this.map = false;
                 List<Object> src = (List<Object>) parsed;
                 this.listData = (src == null || src.isEmpty()) ? EMPTY_OBJECT_LIST : deepCopyList(src);
                 this.mapData = null;
@@ -127,7 +127,7 @@ public class JsonEntity
             else
             {
                 // 非对象非数组，按空对象处理
-                this.isMap = true;
+                this.map = true;
                 this.mapData = EMPTY_OBJECT_MAP;
                 this.listData = null;
             }
@@ -135,7 +135,7 @@ public class JsonEntity
         catch (Exception e)
         {
             LogUtils.error(JsonEntity.class, "JsonEntity(String)", e);
-            this.isMap = true;
+            this.map = true;
             this.mapData = EMPTY_OBJECT_MAP;
             this.listData = null;
         }
@@ -213,7 +213,7 @@ public class JsonEntity
      */
     private void ensureMutable ()
     {
-        if (isMap)
+        if (map)
         {
             if (mapData == EMPTY_OBJECT_MAP)
             {
@@ -236,7 +236,7 @@ public class JsonEntity
      */
     public boolean isMap ()
     {
-        return isMap;
+        return map;
     }
 
     /**
@@ -244,7 +244,7 @@ public class JsonEntity
      */
     public boolean isList ()
     {
-        return !isMap;
+        return !map;
     }
 
     /**
@@ -252,7 +252,7 @@ public class JsonEntity
      */
     public int size ()
     {
-        return isMap ? mapData.size() : listData.size();
+        return map ? mapData.size() : listData.size();
     }
 
     /**
@@ -260,7 +260,7 @@ public class JsonEntity
      */
     public boolean isEmpty ()
     {
-        return isMap ? mapData.isEmpty() : listData.isEmpty();
+        return map ? mapData.isEmpty() : listData.isEmpty();
     }
 
     /**
@@ -268,7 +268,7 @@ public class JsonEntity
      */
     public String getJsonString ()
     {
-        if (isMap)
+        if (map)
         {
             return JsonUtils.objectToJsonString(mapData);
         }
@@ -290,19 +290,19 @@ public class JsonEntity
     // ================================== Map 相关方法 ==================================
 
     /**
-     * 返回内部 Map 的不可变视图（仅当 isMap 为 true 时有效，否则返回空 Map）
+     * 返回内部 Map 的不可变视图（仅当 map 为 true 时有效，否则返回空 Map）
      */
     public Map<String, Object> getObjectMap ()
     {
-        return isMap ? Collections.unmodifiableMap(mapData) : Collections.emptyMap();
+        return map ? Collections.unmodifiableMap(mapData) : Collections.emptyMap();
     }
 
     /**
-     * 转换为 Map<String, Integer>（仅当 isMap 为 true 时有效）
+     * 转换为 Map<String, Integer>（仅当 map 为 true 时有效）
      */
     public Map<String, Integer> getIntMap ()
     {
-        if (!isMap) return EMPTY_INT_MAP;
+        if (!map) return EMPTY_INT_MAP;
         try
         {
             Map<String, Integer> intMap = new HashMap<>();
@@ -339,11 +339,11 @@ public class JsonEntity
     }
 
     /**
-     * 转换为 Map<String, String>（仅当 isMap 为 true 时有效）
+     * 转换为 Map<String, String>（仅当 map 为 true 时有效）
      */
     public Map<String, String> getStringMap ()
     {
-        if (!isMap) return EMPTY_STRING_MAP;
+        if (!map) return EMPTY_STRING_MAP;
         try
         {
             Map<String, String> stringMap = new HashMap<>();
@@ -366,7 +366,7 @@ public class JsonEntity
      */
     public List<String> keySet ()
     {
-        if (isMap)
+        if (map)
         {
             return new ArrayList<>(mapData.keySet());
         }
@@ -378,7 +378,7 @@ public class JsonEntity
      */
     public boolean containsKey (String key)
     {
-        return isMap && mapData.containsKey(key);
+        return map && mapData.containsKey(key);
     }
 
     // ================================== List 相关方法 ==================================
@@ -388,7 +388,7 @@ public class JsonEntity
      */
     public List<Object> getObjectList ()
     {
-        if (!isMap)
+        if (!map)
         {
             return new ArrayList<>(listData);
         }
@@ -400,7 +400,7 @@ public class JsonEntity
      */
     public Object get (int index)
     {
-        if (!isMap && index >= 0 && index < listData.size())
+        if (!map && index >= 0 && index < listData.size())
         {
             return listData.get(index);
         }
@@ -412,7 +412,7 @@ public class JsonEntity
      */
     public JsonEntity getJsonEntityByIndex (int index)
     {
-        if (!isMap && index >= 0 && index < listData.size())
+        if (!map && index >= 0 && index < listData.size())
         {
             Object obj = listData.get(index);
             if (obj instanceof Map)
@@ -437,7 +437,7 @@ public class JsonEntity
      */
     public void add (Object value)
     {
-        if (!isMap)
+        if (!map)
         {
             ensureMutable();
             listData.add(deepCopyValue(value));
@@ -449,7 +449,7 @@ public class JsonEntity
      */
     public void addAll (Collection<?> values)
     {
-        if (!isMap && values != null)
+        if (!map && values != null)
         {
             ensureMutable();
             for (Object v : values)
@@ -464,7 +464,7 @@ public class JsonEntity
      */
     public void remove (int index)
     {
-        if (!isMap && index >= 0 && index < listData.size())
+        if (!map && index >= 0 && index < listData.size())
         {
             ensureMutable();
             listData.remove(index);
@@ -476,7 +476,7 @@ public class JsonEntity
      */
     public void clearList ()
     {
-        if (!isMap)
+        if (!map)
         {
             ensureMutable();
             listData.clear();
@@ -490,7 +490,7 @@ public class JsonEntity
      */
     public JsonEntity getJsonEntityByKey (String key)
     {
-        if (isMap)
+        if (map)
         {
             try
             {
@@ -519,7 +519,7 @@ public class JsonEntity
      */
     public Object getObject (String key)
     {
-        return isMap ? mapData.get(key) : null;
+        return map ? mapData.get(key) : null;
     }
 
     /**
@@ -527,7 +527,7 @@ public class JsonEntity
      */
     public int getInt (String key)
     {
-        if (!isMap) return 0;
+        if (!map) return 0;
         try
         {
             Object obj = mapData.get(key);
@@ -549,7 +549,7 @@ public class JsonEntity
      */
     public long getLong (String key)
     {
-        if (!isMap) return 0;
+        if (!map) return 0;
         try
         {
             Object obj = mapData.get(key);
@@ -571,7 +571,7 @@ public class JsonEntity
      */
     public float getFloat (String key)
     {
-        if (!isMap) return 0;
+        if (!map) return 0;
         try
         {
             Object obj = mapData.get(key);
@@ -593,7 +593,7 @@ public class JsonEntity
      */
     public double getDouble (String key)
     {
-        if (!isMap) return 0;
+        if (!map) return 0;
         try
         {
             Object obj = mapData.get(key);
@@ -615,7 +615,7 @@ public class JsonEntity
      */
     public String getString (String key)
     {
-        if (!isMap) return null;
+        if (!map) return null;
         try
         {
             Object obj = mapData.get(key);
@@ -633,7 +633,7 @@ public class JsonEntity
      */
     public boolean getBoolean (String key)
     {
-        if (!isMap) return false;
+        if (!map) return false;
         try
         {
             Object obj = mapData.get(key);
@@ -653,7 +653,7 @@ public class JsonEntity
      */
     public boolean put (String key, Object value)
     {
-        if (!isMap) return false;
+        if (!map) return false;
         try
         {
             ensureMutable();
@@ -672,7 +672,7 @@ public class JsonEntity
      */
     public boolean remove (String key)
     {
-        if (!isMap) return false;
+        if (!map) return false;
         try
         {
             ensureMutable();
@@ -693,7 +693,7 @@ public class JsonEntity
     {
         try
         {
-            if (isMap)
+            if (map)
             {
                 ensureMutable();
                 mapData.clear();
@@ -718,7 +718,7 @@ public class JsonEntity
     public boolean combine (JsonEntity jsonEntity)
     {
         if (jsonEntity == null) return true;
-        if (!isMap || !jsonEntity.isMap) return false; // 仅 Map 可合并
+        if (!map || !jsonEntity.map) return false; // 仅 Map 可合并
         try
         {
             ensureMutable();
@@ -742,7 +742,7 @@ public class JsonEntity
     public JsonEntity combined (JsonEntity jsonEntity)
     {
         if (jsonEntity == null) return new JsonEntity(this);
-        if (!isMap || !jsonEntity.isMap) return new JsonEntity(this);
+        if (!map || !jsonEntity.map) return new JsonEntity(this);
         try
         {
             Map<String, Object> merged = JsonUtils.combineMap(mapData, jsonEntity.mapData);
@@ -759,7 +759,7 @@ public class JsonEntity
 
     public List<JsonEntity> getJsonEntityList (String key)
     {
-        if (!isMap) return Collections.emptyList();
+        if (!map) return Collections.emptyList();
         try
         {
             Object obj = mapData.get(key);
@@ -799,7 +799,7 @@ public class JsonEntity
      */
     public List<Object> getObjectList (String key)
     {
-        if (!isMap) return null;
+        if (!map) return null;
         try
         {
             Object obj = mapData.get(key);
@@ -821,7 +821,7 @@ public class JsonEntity
      */
     public List<Integer> getIntList (String key)
     {
-        if (!isMap) return null;
+        if (!map) return null;
         try
         {
             Object obj = mapData.get(key);
@@ -867,7 +867,7 @@ public class JsonEntity
      */
     public List<Long> getLongList (String key)
     {
-        if (!isMap) return null;
+        if (!map) return null;
         try
         {
             Object obj = mapData.get(key);
@@ -913,7 +913,7 @@ public class JsonEntity
      */
     public List<Float> getFloatList (String key)
     {
-        if (!isMap) return null;
+        if (!map) return null;
         try
         {
             Object obj = mapData.get(key);
@@ -959,7 +959,7 @@ public class JsonEntity
      */
     public List<Double> getDoubleList (String key)
     {
-        if (!isMap) return null;
+        if (!map) return null;
         try
         {
             Object obj = mapData.get(key);
@@ -1005,7 +1005,7 @@ public class JsonEntity
      */
     public List<String> getStringList (String key)
     {
-        if (!isMap) return null;
+        if (!map) return null;
         try
         {
             Object obj = mapData.get(key);
@@ -1033,7 +1033,7 @@ public class JsonEntity
      */
     public List<Boolean> getBooleanList (String key)
     {
-        if (!isMap) return null;
+        if (!map) return null;
         try
         {
             Object obj = mapData.get(key);
