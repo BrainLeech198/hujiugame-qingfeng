@@ -9,9 +9,10 @@ import com.hujiugame.qingfeng.ui.kind.button.ButtonInfo;
 import com.hujiugame.qingfeng.ui.kind.image.ImageInfo;
 import com.hujiugame.qingfeng.ui.kind.label.LabelInfo;
 import com.hujiugame.qingfeng.type.file.PathName;
-import com.hujiugame.qingfeng.type.key.GraphicsKey;
-import com.hujiugame.qingfeng.type.key.LayoutKey;
-import com.hujiugame.qingfeng.type.key.UiKey;
+import com.hujiugame.qingfeng.type.key.layout.AudioKey;
+import com.hujiugame.qingfeng.type.key.layout.GraphicsKey;
+import com.hujiugame.qingfeng.type.key.layout.LayoutKey;
+import com.hujiugame.qingfeng.type.key.ui.UiKey;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.ui.UiManager;
@@ -150,7 +151,7 @@ public final class LayoutManager
             List<String> backgroundMusicNames = null;
 
             // 优先尝试解析为列表（JSON 数组）
-            List<String> nameList = audioJson.getStringList(LayoutKey.Audio.BACKGROUND_MUSIC);
+            List<String> nameList = audioJson.getStringList(AudioKey.BACKGROUND_MUSIC);
             if (nameList != null && !nameList.isEmpty())
             {
                 backgroundMusicNames = nameList;
@@ -158,7 +159,7 @@ public final class LayoutManager
             else
             {
                 // 回退到单个字符串（JSON 单值，向后兼容）
-                String singleName = audioJson.getString(LayoutKey.Audio.BACKGROUND_MUSIC);
+                String singleName = audioJson.getString(AudioKey.BACKGROUND_MUSIC);
                 if (singleName != null)
                 {
                     backgroundMusicNames = Collections.singletonList(singleName);
@@ -193,7 +194,7 @@ public final class LayoutManager
 
             // 解析音乐list
             // ===================================================================================================================
-            JsonEntity musicMap = audioJson.getJsonEntityByKey(LayoutKey.Audio.MUSIC);
+            JsonEntity musicMap = audioJson.getJsonEntityByKey(AudioKey.MUSIC);
             List<String> newMusicList = new ArrayList<>();
             if (!musicMap.isEmpty())
             {
