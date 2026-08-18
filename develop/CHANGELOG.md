@@ -139,10 +139,10 @@
 
 ### 文档
 
-- **DOC_STANDARD.md 新增** — 官网 versions.json 日期时间格式（yyyy-MM-dd HH:mm）、更新日志只写用户可感知价值、跨版本修复补全原则、与其他文档联动（commit 待补）
-- **DOCUMENTATION_INDEX 更新** — 新增 DOC_STANDARD 条目（commit 待补）
-- **官网 v26w34a log 修正** — date 补完整时间，log 移除"控件预偏移"（内部必须非卖点）、补安卓背景音乐双播修复（commit 待补）
-- **PUBLISH 同步** — 发布 commit 更新为官网最终提交（commit 待补）
+- **DOC_STANDARD.md 新增** — 官网 versions.json 日期时间格式（yyyy-MM-dd HH:mm）、更新日志只写用户可感知价值、跨版本修复补全原则、与其他文档联动（commit d485a18）
+- **DOCUMENTATION_INDEX 更新** — 新增 DOC_STANDARD 条目（commit d485a18）
+- **官网 v26w34a log 修正** — date 补完整时间，log 移除"控件预偏移"（内部必须非卖点）、补安卓背景音乐双播修复（commit d485a18）
+- **PUBLISH 同步** — 发布 commit 更新为官网最终提交（commit d485a18）
 
 ## 2026-08-16 — 默认语言改英文 + 目录结构补全 + 12 个新语言翻译包 + 首次运行按设备语言改写默认语言 + 设备语言自动检测与 15 语言扩展 + 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新 + 全屏切换调用空值防御 + 官网卡片重排与折叠展开 + 官网导航新增遇到问题 + 官网语言扩展与识别修复
 
