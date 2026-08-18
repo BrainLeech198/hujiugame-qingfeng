@@ -39,8 +39,8 @@ import com.hujiugame.qingfeng.ui.kind.label.LabelState;
 import com.hujiugame.qingfeng.type.Numeric;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.file.PathName;
-import com.hujiugame.qingfeng.type.key.JsonKey;
-import com.hujiugame.qingfeng.type.key.UiKey;
+import com.hujiugame.qingfeng.type.key.common.JsonKey;
+import com.hujiugame.qingfeng.type.key.ui.UiKey;
 import com.hujiugame.qingfeng.type.ui.FontFlag;
 import com.hujiugame.qingfeng.type.ui.UiKind;
 import com.hujiugame.qingfeng.audio.AudioManager;
@@ -1125,7 +1125,7 @@ public final class UiManager
      * 设置图片控件的 x 坐标
      *
      * @param imageTag 图片标签
-     * @param x       x 坐标值
+     * @param x        x 坐标值
      * @return 设置成功返回 true，失败返回 false
      */
     public boolean setImageX (String imageTag, float x)
@@ -1182,7 +1182,7 @@ public final class UiManager
      * 设置图片控件的 y 坐标
      *
      * @param imageTag 图片标签
-     * @param y       y 坐标值
+     * @param y        y 坐标值
      * @return 设置成功返回 true，失败返回 false
      */
     public boolean setImageY (String imageTag, float y)
@@ -1833,10 +1833,10 @@ public final class UiManager
 
             // 计算九宫格裁切位置（sourceBorder）与绘制大小（renderBorder）
             TextureRegion bgRegion = labelKind.getBackgroundRegion();
-            int sourceBorder = Math.max(1, (int)(Math.min(width, height) / 16));
+            int sourceBorder = Math.max(1, (int) (Math.min(width, height) / 16));
             int maxSource = Math.min(bgRegion.getRegionWidth(), bgRegion.getRegionHeight()) / 2 - 1;
             sourceBorder = Math.min(sourceBorder, Math.max(1, maxSource));
-            int renderBorder = Math.max(1, (int)(sourceBorder * labelKind.getBorderScale()));
+            int renderBorder = Math.max(1, (int) (sourceBorder * labelKind.getBorderScale()));
 
             // 创建标签背景（自适应 NinePatch）
             Image bgImage = buildLabelBackground(labelKind, sourceBorder, renderBorder);
@@ -2098,8 +2098,8 @@ public final class UiManager
      * 设置标签控件的位置
      *
      * @param labelTag 标签标识
-     * @param x       x 坐标
-     * @param y       y 坐标
+     * @param x        x 坐标
+     * @param y        y 坐标
      * @return 设置成功返回 true，失败返回 false
      */
     public boolean setLabelPosition (String labelTag, float x, float y)
@@ -2162,7 +2162,7 @@ public final class UiManager
      * 设置标签控件的 x 坐标
      *
      * @param labelTag 标签标识
-     * @param x       x 坐标值
+     * @param x        x 坐标值
      * @return 设置成功返回 true，失败返回 false
      */
     public boolean setLabelX (String labelTag, float x)
@@ -2219,7 +2219,7 @@ public final class UiManager
      * 设置标签控件的 y 坐标
      *
      * @param labelTag 标签标识
-     * @param y       y 坐标值
+     * @param y        y 坐标值
      * @return 设置成功返回 true，失败返回 false
      */
     public boolean setLabelY (String labelTag, float y)
@@ -2624,8 +2624,8 @@ public final class UiManager
     /**
      * 根据标签列表从映射表中选取标签信息并批量添加
      *
-     * @param labelTagList  标签标识列表
-     * @param labelInfoMap  标签标识到标签信息的映射
+     * @param labelTagList 标签标识列表
+     * @param labelInfoMap 标签标识到标签信息的映射
      * @return 全部添加成功返回 true，否则返回 false
      */
     public boolean addLabel (List<String> labelTagList, Map<String, LabelInfo> labelInfoMap)
@@ -3186,8 +3186,8 @@ public final class UiManager
      * 设置按钮控件的位置
      *
      * @param buttonTag 按钮标签
-     * @param x        x 坐标
-     * @param y        y 坐标
+     * @param x         x 坐标
+     * @param y         y 坐标
      * @return 设置成功返回 true，失败返回 false
      */
     public boolean setButtonPosition (String buttonTag, float x, float y)
@@ -3245,7 +3245,7 @@ public final class UiManager
      * 设置按钮控件的 x 坐标
      *
      * @param buttonTag 按钮标签
-     * @param x       x 坐标值
+     * @param x         x 坐标值
      * @return 设置成功返回 true，失败返回 false
      */
     public boolean setButtonX (String buttonTag, float x)
@@ -3302,7 +3302,7 @@ public final class UiManager
      * 设置按钮控件的 y 坐标
      *
      * @param buttonTag 按钮标签
-     * @param y       y 坐标值
+     * @param y         y 坐标值
      * @return 设置成功返回 true，失败返回 false
      */
     public boolean setButtonY (String buttonTag, float y)
@@ -3610,8 +3610,8 @@ public final class UiManager
     /**
      * 根据标签列表从映射表中选取按钮信息并批量添加
      *
-     * @param buttonTagList  按钮标签列表
-     * @param buttonInfoMap  按钮标签到按钮信息的映射
+     * @param buttonTagList 按钮标签列表
+     * @param buttonInfoMap 按钮标签到按钮信息的映射
      * @return 全部添加成功返回 true，否则返回 false
      */
     public boolean addButton (List<String> buttonTagList, Map<String, ButtonInfo> buttonInfoMap)
@@ -4799,113 +4799,113 @@ public final class UiManager
 // 内部类 CustomFont (修复内存泄漏)
 // ===================================================================================================================
 
-/**
- * 自定义字体类，支持按缩放系数缓存不同大小的 BitmapFont，修复内存泄漏
- */
-final class CustomFont
-{
-    private final float baseScale;
-    private final Map<Float, BitmapFont> fontMap;
-    private BitmapFont bitmapFont;       // 原始字体
-
     /**
-     * 构造一个自定义字体，按主题指定的尺寸列表预缓存字体
-     *
-     * @param bitmapFont  原始位图字体
-     * @param baseScale   基础缩放系数
-     * @param fontUseSize 预缓存尺寸列表（缩放系数），为 null 时使用 {@link Numeric#getFontNormalScaleList()}
+     * 自定义字体类，支持按缩放系数缓存不同大小的 BitmapFont，修复内存泄漏
      */
-    public CustomFont (BitmapFont bitmapFont, float baseScale, float[] fontUseSize)
+    final class CustomFont
     {
-        this.bitmapFont = bitmapFont;
-        this.bitmapFont.getData().setScale(baseScale);
-        this.baseScale = baseScale;
-        this.fontMap = new HashMap<>();
-        float[] sizes = fontUseSize != null ? fontUseSize : Numeric.getFontNormalScaleList();
-        for (float scale : sizes) getFont(scale);
-    }
+        private final float baseScale;
+        private final Map<Float, BitmapFont> fontMap;
+        private BitmapFont bitmapFont;       // 原始字体
 
-    /**
-     * 获取指定缩放大小的字体。如果字体大小为 1.0 则返回原始字体，否则从缓存取或创建
-     *
-     * @param fontSize 字体大小缩放系数
-     * @return 对应的 BitmapFont，失败返回 null
-     */
-    public BitmapFont getFont (float fontSize)
-    {
-        try
+        /**
+         * 构造一个自定义字体，按主题指定的尺寸列表预缓存字体
+         *
+         * @param bitmapFont  原始位图字体
+         * @param baseScale   基础缩放系数
+         * @param fontUseSize 预缓存尺寸列表（缩放系数），为 null 时使用 {@link Numeric#getFontNormalScaleList()}
+         */
+        public CustomFont (BitmapFont bitmapFont, float baseScale, float[] fontUseSize)
         {
-            if (fontSize == 1.0f)
-            {
-                return bitmapFont;
-            }
-            if (fontMap.containsKey(fontSize))
-            {
-                return fontMap.get(fontSize);
-            }
-            else
-            {
-                BitmapFont scaledFont = new BitmapFont(bitmapFont.getData().fontFile);
-                float finalScale = baseScale * fontSize;
-                scaledFont.getData().setScale(finalScale);
-                fontMap.put(fontSize, scaledFont);
-                return scaledFont;
-            }
+            this.bitmapFont = bitmapFont;
+            this.bitmapFont.getData().setScale(baseScale);
+            this.baseScale = baseScale;
+            this.fontMap = new HashMap<>();
+            float[] sizes = fontUseSize != null ? fontUseSize : Numeric.getFontNormalScaleList();
+            for (float scale : sizes) getFont(scale);
         }
-        catch (Exception e)
-        {
-            LogUtils.error(UiManager.class, "getFont", e);
-            return null;
-        }
-    }
 
-    /**
-     * 释放所有缓存的字体和原始字体
-     */
-    public void dispose ()
-    {
-        // 释放缩放缓存的字体
-        for (BitmapFont font : fontMap.values())
+        /**
+         * 获取指定缩放大小的字体。如果字体大小为 1.0 则返回原始字体，否则从缓存取或创建
+         *
+         * @param fontSize 字体大小缩放系数
+         * @return 对应的 BitmapFont，失败返回 null
+         */
+        public BitmapFont getFont (float fontSize)
         {
-            if (font != null) font.dispose();
+            try
+            {
+                if (fontSize == 1.0f)
+                {
+                    return bitmapFont;
+                }
+                if (fontMap.containsKey(fontSize))
+                {
+                    return fontMap.get(fontSize);
+                }
+                else
+                {
+                    BitmapFont scaledFont = new BitmapFont(bitmapFont.getData().fontFile);
+                    float finalScale = baseScale * fontSize;
+                    scaledFont.getData().setScale(finalScale);
+                    fontMap.put(fontSize, scaledFont);
+                    return scaledFont;
+                }
+            }
+            catch (Exception e)
+            {
+                LogUtils.error(UiManager.class, "getFont", e);
+                return null;
+            }
         }
-        fontMap.clear();
-        // 修复内存泄漏：释放原始字体
-        if (bitmapFont != null)
+
+        /**
+         * 释放所有缓存的字体和原始字体
+         */
+        public void dispose ()
         {
-            bitmapFont.dispose();
-            bitmapFont = null;
+            // 释放缩放缓存的字体
+            for (BitmapFont font : fontMap.values())
+            {
+                if (font != null) font.dispose();
+            }
+            fontMap.clear();
+            // 修复内存泄漏：释放原始字体
+            if (bitmapFont != null)
+            {
+                bitmapFont.dispose();
+                bitmapFont = null;
+            }
         }
     }
-}
 
 
 // ===================================================================================================================
 // 内部类 CustomImage (保持不变)
 // ===================================================================================================================
 
-/**
- * 自定义图片控件，包装 Image 并实现 InteractableObject 接口
- */
-static final class CustomImage extends Image implements InteractableObject
-{
-    private final String tag;
-    private final UiManager uiManager;
-
     /**
-     * 构造一个自定义图片控件
-     *
-     * @param image     原始 Image 对象
-     * @param tag       图片标签
-     * @param uiManager UiManager 实例
+     * 自定义图片控件，包装 Image 并实现 InteractableObject 接口
      */
-    public CustomImage (Image image, String tag, UiManager uiManager)
+    static final class CustomImage extends Image implements InteractableObject
     {
-        super(image.getDrawable());
-        this.tag = tag;
-        this.uiManager = uiManager;
-        setTouchable(Touchable.enabled);
-    }
+        private final String tag;
+        private final UiManager uiManager;
+
+        /**
+         * 构造一个自定义图片控件
+         *
+         * @param image     原始 Image 对象
+         * @param tag       图片标签
+         * @param uiManager UiManager 实例
+         */
+        public CustomImage (Image image, String tag, UiManager uiManager)
+        {
+            super(image.getDrawable());
+            this.tag = tag;
+            this.uiManager = uiManager;
+            setTouchable(Touchable.enabled);
+        }
 
 //    public Actor hit(float x, float y, boolean touchable) {
 //        // 如果点击在 CustomLabel 的范围内，返回 this，而不是子 Actor
@@ -4915,886 +4915,1010 @@ static final class CustomImage extends Image implements InteractableObject
 //        return null;
 //    }
 
-    // interactable interface
+        // interactable interface
 
-    /**
-     * 获取图片控件的标签
-     *
-     * @return 标签字符串
-     */
-    public String getTag ()
-    {
-        return tag;
+        /**
+         * 获取图片控件的标签
+         *
+         * @return 标签字符串
+         */
+        public String getTag ()
+        {
+            return tag;
+        }
+
+        @Override
+        public float getX ()
+        {
+            return super.getX();
+        }
+
+        @Override
+        public float getY ()
+        {
+            return super.getY();
+        }
+
+        @Override
+        public void setPosition (float x, float y)
+        {
+            super.setPosition(x, y);
+        }
+
+        /**
+         * 获取图片控件上边界 y 坐标
+         *
+         * @return y 坐标值
+         */
+        public float getRectTop ()
+        {
+            return getY();
+        }
+
+        /**
+         * 获取图片控件左边界 x 坐标
+         *
+         * @return x 坐标值
+         */
+        public float getRectLeft ()
+        {
+            return getX();
+        }
+
+        /**
+         * 获取图片控件下边界 y 坐标
+         *
+         * @return y 坐标值
+         */
+        public float getRectBottom ()
+        {
+            return getY() + getHeight();
+        }
+
+        /**
+         * 获取图片控件右边界 x 坐标
+         *
+         * @return x 坐标值
+         */
+        public float getRectRight ()
+        {
+            return getX() + getWidth();
+        }
+
+        /**
+         * 判断指定坐标是否在图片控件区域内
+         * <p>
+         * 性能：矩形命中检测，每次比较 4 次坐标读取（getRect*），单次开销小；
+         * 但被输入事件/命中测试调用，在每帧对多个候选触发时成本线性累积。
+         *
+         * @param x 检测点的 x 坐标
+         * @param y 检测点的 y 坐标
+         * @return 在区域内返回 true，否则返回 false
+         */
+        public boolean contains (float x, float y)
+        {
+            return getRectLeft() <= x && x <= getRectRight() && getRectTop() <= y && y <= getRectBottom();
+        }
+
+        /**
+         * 设置图片控件的点击状态
+         *
+         * @param clicked 是否被点击
+         * @return 设置成功返回 true，失败返回 false
+         */
+        public boolean setClicked (boolean clicked)
+        {
+            return uiManager.setImageClicked(tag, clicked);
+        }
+
+        /**
+         * 检查图片控件是否被点击
+         *
+         * @return 被点击返回 true，否则返回 false
+         */
+        public boolean isClicked ()
+        {
+            return uiManager.isImageClicked(tag);
+        }
+
+        /**
+         * 检查图片控件是否真正可见（考虑遮挡检测）
+         * <p>
+         * 性能：每帧被交互对象网格刷新对每个候选控件调用，内部 new Vector2 + localToStageCoordinates + stage.hit
+         * 触发全 Actor 命中测试，属单次开销较大的每帧操作；无虚拟输入需求时应避免对大量候选高频调用。
+         *
+         * @return 可见且未被遮挡返回 true，否则返回 false
+         */
+        public boolean isShown ()
+        {
+            // 基础可见性检查
+            if (!isVisible()) return false;
+
+            Stage stage = getStage();
+            if (stage == null) return false;
+
+            // 获取控件中心点的舞台坐标（避免边缘情况，使用中心点更稳定）
+            float cx = getWidth() / 2f;
+            float cy = getHeight() / 2f;
+            Vector2 localCenter = new Vector2(cx, cy);
+            Vector2 stageCenter = localToStageCoordinates(localCenter);
+
+            // hit 检测，touchable 为 true 表示只考虑可触摸的 Actor
+            Actor hitActor = stage.hit(stageCenter.x, stageCenter.y, true);
+
+            // 如果命中自己，说明没有任何上层可触摸 Actor 遮挡
+            return hitActor == this;
+        }
+
+        /**
+         * 显示图片控件
+         *
+         * @return 显示成功返回 true，失败返回 false
+         */
+        public boolean show ()
+        {
+            return uiManager.showImage(tag);
+        }
+
+        /**
+         * 隐藏图片控件
+         *
+         * @return 隐藏成功返回 true，失败返回 false
+         */
+        public boolean hide ()
+        {
+            return uiManager.hideImage(tag);
+        }
+
+        public String toString ()
+        {
+            return "CustomImage : " + " " + tag;
+        }
     }
-
-    /**
-     * 获取图片控件上边界 y 坐标
-     *
-     * @return y 坐标值
-     */
-    public float getRectTop ()
-    {
-        return getY();
-    }
-
-    /**
-     * 获取图片控件左边界 x 坐标
-     *
-     * @return x 坐标值
-     */
-    public float getRectLeft ()
-    {
-        return getX();
-    }
-
-    /**
-     * 获取图片控件下边界 y 坐标
-     *
-     * @return y 坐标值
-     */
-    public float getRectBottom ()
-    {
-        return getY() + getHeight();
-    }
-
-    /**
-     * 获取图片控件右边界 x 坐标
-     *
-     * @return x 坐标值
-     */
-    public float getRectRight ()
-    {
-        return getX() + getWidth();
-    }
-
-    /**
-     * 判断指定坐标是否在图片控件区域内
-     * <p>
-     * 性能：矩形命中检测，每次比较 4 次坐标读取（getRect*），单次开销小；
-     * 但被输入事件/命中测试调用，在每帧对多个候选触发时成本线性累积。
-     *
-     * @param x 检测点的 x 坐标
-     * @param y 检测点的 y 坐标
-     * @return 在区域内返回 true，否则返回 false
-     */
-    public boolean contains (float x, float y)
-    {
-        return getRectLeft() <= x && x <= getRectRight() && getRectTop() <= y && y <= getRectBottom();
-    }
-
-    /**
-     * 设置图片控件的点击状态
-     *
-     * @param clicked 是否被点击
-     * @return 设置成功返回 true，失败返回 false
-     */
-    public boolean setClicked (boolean clicked)
-    {
-        return uiManager.setImageClicked(tag, clicked);
-    }
-
-    /**
-     * 检查图片控件是否被点击
-     *
-     * @return 被点击返回 true，否则返回 false
-     */
-    public boolean isClicked ()
-    {
-        return uiManager.isImageClicked(tag);
-    }
-
-    /**
-     * 检查图片控件是否真正可见（考虑遮挡检测）
-     * <p>
-     * 性能：每帧被交互对象网格刷新对每个候选控件调用，内部 new Vector2 + localToStageCoordinates + stage.hit
-     * 触发全 Actor 命中测试，属单次开销较大的每帧操作；无虚拟输入需求时应避免对大量候选高频调用。
-     *
-     * @return 可见且未被遮挡返回 true，否则返回 false
-     */
-    public boolean isShown ()
-    {
-        // 基础可见性检查
-        if (!isVisible()) return false;
-
-        Stage stage = getStage();
-        if (stage == null) return false;
-
-        // 获取控件中心点的舞台坐标（避免边缘情况，使用中心点更稳定）
-        float cx = getWidth() / 2f;
-        float cy = getHeight() / 2f;
-        Vector2 localCenter = new Vector2(cx, cy);
-        Vector2 stageCenter = localToStageCoordinates(localCenter);
-
-        // hit 检测，touchable 为 true 表示只考虑可触摸的 Actor
-        Actor hitActor = stage.hit(stageCenter.x, stageCenter.y, true);
-
-        // 如果命中自己，说明没有任何上层可触摸 Actor 遮挡
-        return hitActor == this;
-    }
-
-    /**
-     * 显示图片控件
-     *
-     * @return 显示成功返回 true，失败返回 false
-     */
-    public boolean show ()
-    {
-        return uiManager.showImage(tag);
-    }
-
-    /**
-     * 隐藏图片控件
-     *
-     * @return 隐藏成功返回 true，失败返回 false
-     */
-    public boolean hide ()
-    {
-        return uiManager.hideImage(tag);
-    }
-
-    public String toString ()
-    {
-        return "CustomImage : " + " " + tag;
-    }
-}
 
 // ===================================================================================================================
 // 内部类 CustomLabel (保持不变)
 // ===================================================================================================================
 
-/**
- * 自定义标签控件，支持打字机效果和点击事件
- */
-static final class CustomLabel extends Group implements InteractableObject
-{
-    private final Label label;
-    private final String tag;
-    private final UiManager uiManager;
-    private Runnable clickRunnable;
-    private boolean isPressed = false;
-    private TextObject textObject;
-    private boolean isTyping;
-    private boolean isCompleteTyping;
-    private float typingSpeed;
-    private float typingProgress;
-    private double typingLastUpdateTime;
-
     /**
-     * 构造一个自定义标签控件
-     *
-     * @param textObject 文本对象
-     * @param image      背景图片
-     * @param label      标签组件
-     * @param tag        标签标识
-     * @param uiManager  UiManager 实例
+     * 自定义标签控件，支持打字机效果和点击事件
      */
-    public CustomLabel (TextObject textObject, Image image, Label label, String tag, UiManager uiManager)
+    static final class CustomLabel extends Group implements InteractableObject
     {
-        this.textObject = textObject;
-        this.label = label;
-        this.tag = tag;
-        this.uiManager = uiManager;
-        setTouchable(Touchable.enabled);
-        initTouchListener();
-        addActor(image);
-        addActor(label);
-    }
+        private final Label label;
+        private final String tag;
+        private final UiManager uiManager;
+        private Runnable clickRunnable;
+        private boolean pressed = false;
+        private TextObject textObject;
+        private boolean typing;
+        private boolean completeTyping;
+        private float typingSpeed;
+        private float typingProgress;
+        private double typingLastUpdateTime;
 
-    /**
-     * 获取文本对象
-     *
-     * @return TextObject 实例
-     */
-    public TextObject getTextObject ()
-    {
-        return textObject;
-    }
-
-    /**
-     * 设置文本对象
-     *
-     * @param textObject 文本对象
-     */
-    public void setTextObject (TextObject textObject)
-    {
-        this.textObject = textObject;
-    }
-
-    /**
-     * 获取内部的 Label 控件
-     *
-     * @return Label 实例
-     */
-    public Label getLabel ()
-    {
-        return label;
-    }
-
-    /**
-     * 启用打字机逐字显示效果
-     *
-     * @param speed 打字速度（字符/秒）
-     */
-    public void enableTyping (float speed)
-    {
-        isTyping = true;
-        isCompleteTyping = false;
-        typingSpeed = speed;
-        typingProgress = 0;
-        typingLastUpdateTime = System.currentTimeMillis() / 1000.0;
-    }
-
-    /**
-     * 完成打字机效果（直接显示全部文本）
-     */
-    public void completeTyping ()
-    {
-        isTyping = false;
-        isCompleteTyping = true;
-    }
-
-    /**
-     * 检测点击是否命中标签控件（覆盖整个 Group 区域）
-     */
-    public Actor hit (float x, float y, boolean touchable)
-    {
-        if (touchable && getTouchable() == Touchable.enabled && isVisible() && x >= 0 && x <= getWidth() && y >= 0 && y <= getHeight())
+        /**
+         * 构造一个自定义标签控件
+         *
+         * @param textObject 文本对象
+         * @param image      背景图片
+         * @param label      标签组件
+         * @param tag        标签标识
+         * @param uiManager  UiManager 实例
+         */
+        public CustomLabel (TextObject textObject, Image image, Label label, String tag, UiManager uiManager)
         {
-            return this;
+            this.textObject = textObject;
+            this.label = label;
+            this.tag = tag;
+            this.uiManager = uiManager;
+            setTouchable(Touchable.enabled);
+            initTouchListener();
+            addActor(image);
+            addActor(label);
         }
-        return null;
-    }
 
-    /**
-     * 初始化触摸事件监听器，处理按下和抬起事件
-     */
-    private void initTouchListener ()
-    {
-        addListener(new ClickListener()
+        /**
+         * 获取文本对象
+         *
+         * @return TextObject 实例
+         */
+        public TextObject getTextObject ()
         {
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button)
-            {
-                isPressed = true;
-                return true;
-            }
+            return textObject;
+        }
 
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button)
+        /**
+         * 设置文本对象
+         *
+         * @param textObject 文本对象
+         */
+        public void setTextObject (TextObject textObject)
+        {
+            this.textObject = textObject;
+        }
+
+        /**
+         * 获取内部的 Label 控件
+         *
+         * @return Label 实例
+         */
+        public Label getLabel ()
+        {
+            return label;
+        }
+
+        /**
+         * 启用打字机逐字显示效果
+         *
+         * @param speed 打字速度（字符/秒）
+         */
+        public void enableTyping (float speed)
+        {
+            setTyping(true);
+            setCompleteTyping(false);
+            typingSpeed = speed;
+            typingProgress = 0;
+            typingLastUpdateTime = System.currentTimeMillis() / 1000.0;
+        }
+
+        /**
+         * 完成打字机效果（直接显示全部文本）
+         */
+        public void completeTyping ()
+        {
+            setTyping(false);
+            setCompleteTyping(true);
+        }
+
+        /**
+         * 检测点击是否命中标签控件（覆盖整个 Group 区域）
+         */
+        public Actor hit (float x, float y, boolean touchable)
+        {
+            if (touchable && getTouchable() == Touchable.enabled && isVisible() && x >= 0 && x <= getWidth() && y >= 0 && y <= getHeight())
             {
-                if (isPressed && x >= 0 && x <= getWidth() && y >= 0 && y <= getHeight())
+                return this;
+            }
+            return null;
+        }
+
+        /**
+         * 初始化触摸事件监听器，处理按下和抬起事件
+         */
+        private void initTouchListener ()
+        {
+            addListener(new ClickListener()
+            {
+                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button)
                 {
-                    if (clickRunnable != null)
+                    setPressed(true);
+                    return true;
+                }
+
+                public void touchUp (InputEvent event, float x, float y, int pointer, int button)
+                {
+                    if (pressed && x >= 0 && x <= getWidth() && y >= 0 && y <= getHeight())
                     {
-                        clickRunnable.run();
+                        if (clickRunnable != null)
+                        {
+                            clickRunnable.run();
+                        }
                     }
+                    setPressed(false);
                 }
-                isPressed = false;
-            }
 
-            public void exit (InputEvent event, float x, float y, int pointer, Actor toActor)
-            {
-                isPressed = false;
-            }
-        });
-    }
-
-    /**
-     * 绘制标签控件
-     */
-    public void draw (Batch batch, float parentAlpha)
-    {
-        super.draw(batch, parentAlpha);
-    }
-
-    /**
-     * 更新标签文本内容，如果正在打字机模式则逐字显示
-     */
-    public void updateText ()
-    {
-        if (label != null)
-        {
-            // 获取当前文本
-            String text = textObject.getDisplayText();
-
-            // 逐字显示文本
-            if (isTyping)
-            {
-                float deltaTime = (float) (System.currentTimeMillis() / 1000.0 - typingLastUpdateTime);
-                typingLastUpdateTime = System.currentTimeMillis() / 1000.0;
-                typingProgress += deltaTime * typingSpeed;
-
-                if (typingProgress >= text.length())
+                public void exit (InputEvent event, float x, float y, int pointer, Actor toActor)
                 {
-                    typingProgress = text.length();
-                    completeTyping();
+                    setPressed(false);
                 }
+            });
+        }
 
-                text = text.substring(0, (int) typingProgress);
-                label.setText(text);
-            }
-            else
+        /**
+         * 绘制标签控件
+         */
+        public void draw (Batch batch, float parentAlpha)
+        {
+            super.draw(batch, parentAlpha);
+        }
+
+        /**
+         * 更新标签文本内容，如果正在打字机模式则逐字显示
+         */
+        public void updateText ()
+        {
+            if (label != null)
             {
-                label.setText(text);
+                // 获取当前文本
+                String text = textObject.getDisplayText();
+
+                // 逐字显示文本
+                if (typing)
+                {
+                    float deltaTime = (float) (System.currentTimeMillis() / 1000.0 - typingLastUpdateTime);
+                    typingLastUpdateTime = System.currentTimeMillis() / 1000.0;
+                    typingProgress += deltaTime * typingSpeed;
+
+                    if (typingProgress >= text.length())
+                    {
+                        typingProgress = text.length();
+                        completeTyping();
+                    }
+
+                    text = text.substring(0, (int) typingProgress);
+                    label.setText(text);
+                }
+                else
+                {
+                    label.setText(text);
+                }
             }
         }
+
+        /**
+         * 每帧更新逻辑，用于驱动打字机效果
+         *
+         * @param delta 距离上一帧的时间间隔
+         */
+        public void act (float delta)
+        {
+            super.act(delta);
+            updateText();
+        }
+
+        /**
+         * 设置点击监听器
+         *
+         * @param clickListener 点击回调
+         */
+        public void setClickListener (Runnable clickListener)
+        {
+            this.clickRunnable = clickListener;
+        }
+
+        /**
+         * 设置点击运行器（同 setClickListener）
+         *
+         * @param clickRunnable 点击回调
+         */
+        public void setClickRunnable (Runnable clickRunnable)
+        {
+            this.clickRunnable = clickRunnable;
+        }
+
+        /**
+         * 检查标签是否被按下
+         *
+         * @return 按下返回 true，否则返回 false
+         */
+        public boolean isPressed ()
+        {
+            return pressed;
+        }
+
+        /**
+         * 设置标签按下状态
+         *
+         * @param pressed 是否按下
+         */
+        public void setPressed (boolean pressed)
+        {
+            this.pressed = pressed;
+        }
+
+        /**
+         * 是否正在打字机显示中
+         *
+         * @return 是否正在打字机显示中
+         */
+        public boolean isTyping ()
+        {
+            return typing;
+        }
+
+        /**
+         * 设置打字机显示状态
+         *
+         * @param typing 是否正在打字机显示中
+         */
+        public void setTyping (boolean typing)
+        {
+            this.typing = typing;
+        }
+
+        /**
+         * 是否已完成打字机显示
+         *
+         * @return 是否已完成打字机显示
+         */
+        public boolean isCompleteTyping ()
+        {
+            return completeTyping;
+        }
+
+        /**
+         * 设置打字机完成状态
+         *
+         * @param completeTyping 是否已完成打字机显示
+         */
+        public void setCompleteTyping (boolean completeTyping)
+        {
+            this.completeTyping = completeTyping;
+        }
+
+        /**
+         * 设置标签是否可触摸
+         *
+         * @param enabled 启用触摸返回 true，禁用返回 false
+         */
+        public void setEnabled (boolean enabled)
+        {
+            setTouchable(enabled ? Touchable.enabled : Touchable.disabled);
+        }
+
+        // interactable interface
+
+        /**
+         * 获取标签标识
+         *
+         * @return 标签字符串
+         */
+        public String getTag ()
+        {
+            return tag;
+        }
+
+        @Override
+        public float getX ()
+        {
+            return super.getX();
+        }
+
+        @Override
+        public float getY ()
+        {
+            return super.getY();
+        }
+
+        @Override
+        public void setPosition (float x, float y)
+        {
+            super.setPosition(x, y);
+        }
+
+        /**
+         * 获取标签控件上边界 y 坐标
+         *
+         * @return y 坐标值
+         */
+        public float getRectTop ()
+        {
+            return getY();
+        }
+
+        /**
+         * 获取标签控件左边界 x 坐标
+         *
+         * @return x 坐标值
+         */
+        public float getRectLeft ()
+        {
+            return getX();
+        }
+
+        /**
+         * 获取标签控件下边界 y 坐标
+         *
+         * @return y 坐标值
+         */
+        public float getRectBottom ()
+        {
+            return getY() + getHeight();
+        }
+
+        /**
+         * 获取标签控件右边界 x 坐标
+         *
+         * @return x 坐标值
+         */
+        public float getRectRight ()
+        {
+            return getX() + getWidth();
+        }
+
+        /**
+         * 判断指定坐标是否在标签控件区域内
+         * <p>
+         * 性能：矩形命中检测，每次比较 4 次坐标读取（getRect*），单次开销小；
+         * 但被输入事件/命中测试调用，在每帧对多个候选触发时成本线性累积。
+         *
+         * @param x 检测点的 x 坐标
+         * @param y 检测点的 y 坐标
+         * @return 在区域内返回 true，否则返回 false
+         */
+        public boolean contains (float x, float y)
+        {
+            return getRectLeft() <= x && x <= getRectRight() && getRectTop() <= y && y <= getRectBottom();
+        }
+
+        /**
+         * 设置标签的点击状态
+         *
+         * @param clicked 是否被点击
+         * @return 设置成功返回 true，失败返回 false
+         */
+        public boolean setClicked (boolean clicked)
+        {
+            return uiManager.setLabelClicked(tag, clicked);
+        }
+
+        /**
+         * 检查标签是否被点击
+         *
+         * @return 被点击返回 true，否则返回 false
+         */
+        public boolean isClicked ()
+        {
+            return uiManager.isLabelClicked(tag);
+        }
+
+        /**
+         * 检查标签是否真正可见（考虑遮挡检测）
+         * <p>
+         * 性能：每帧被交互对象网格刷新对每个候选控件调用，内部 new Vector2 + localToStageCoordinates + stage.hit
+         * 触发全 Actor 命中测试，属单次开销较大的每帧操作；无虚拟输入需求时应避免对大量候选高频调用。
+         *
+         * @return 可见且未被遮挡返回 true，否则返回 false
+         */
+        public boolean isShown ()
+        {
+            // 基础可见性检查
+            if (!isVisible()) return false;
+
+            Stage stage = getStage();
+            if (stage == null) return false;
+
+            // 获取控件中心点的舞台坐标（避免边缘情况，使用中心点更稳定）
+            float cx = getWidth() / 2f;
+            float cy = getHeight() / 2f;
+            Vector2 localCenter = new Vector2(cx, cy);
+            Vector2 stageCenter = localToStageCoordinates(localCenter);
+
+            // hit 检测，touchable 为 true 表示只考虑可触摸的 Actor
+            Actor hitActor = stage.hit(stageCenter.x, stageCenter.y, true);
+
+            // 如果命中自己，说明没有任何上层可触摸 Actor 遮挡
+            return hitActor == this;
+        }
+
+        /**
+         * 显示标签控件
+         *
+         * @return 显示成功返回 true，失败返回 false
+         */
+        public boolean show ()
+        {
+            return uiManager.showLabel(tag);
+        }
+
+        /**
+         * 隐藏标签控件
+         *
+         * @return 隐藏成功返回 true，失败返回 false
+         */
+        public boolean hide ()
+        {
+            return uiManager.hideLabel(tag);
+        }
+
+        public String toString ()
+        {
+            return "CustomLabel : " + " " + tag + " " + label.getText();
+        }
     }
-
-    /**
-     * 每帧更新逻辑，用于驱动打字机效果
-     *
-     * @param delta 距离上一帧的时间间隔
-     */
-    public void act (float delta)
-    {
-        super.act(delta);
-        updateText();
-    }
-
-    /**
-     * 设置点击监听器
-     *
-     * @param clickListener 点击回调
-     */
-    public void setClickListener (Runnable clickListener)
-    {
-        this.clickRunnable = clickListener;
-    }
-
-    /**
-     * 设置点击运行器（同 setClickListener）
-     *
-     * @param clickRunnable 点击回调
-     */
-    public void setClickRunnable (Runnable clickRunnable)
-    {
-        this.clickRunnable = clickRunnable;
-    }
-
-    /**
-     * 检查标签是否被按下
-     *
-     * @return 按下返回 true，否则返回 false
-     */
-    public boolean isPressed ()
-    {
-        return isPressed;
-    }
-
-    /**
-     * 设置标签是否可触摸
-     *
-     * @param enabled 启用触摸返回 true，禁用返回 false
-     */
-    public void setEnabled (boolean enabled)
-    {
-        setTouchable(enabled ? Touchable.enabled : Touchable.disabled);
-    }
-
-    // interactable interface
-
-    /**
-     * 获取标签标识
-     *
-     * @return 标签字符串
-     */
-    public String getTag ()
-    {
-        return tag;
-    }
-
-    /**
-     * 获取标签控件上边界 y 坐标
-     *
-     * @return y 坐标值
-     */
-    public float getRectTop ()
-    {
-        return getY();
-    }
-
-    /**
-     * 获取标签控件左边界 x 坐标
-     *
-     * @return x 坐标值
-     */
-    public float getRectLeft ()
-    {
-        return getX();
-    }
-
-    /**
-     * 获取标签控件下边界 y 坐标
-     *
-     * @return y 坐标值
-     */
-    public float getRectBottom ()
-    {
-        return getY() + getHeight();
-    }
-
-    /**
-     * 获取标签控件右边界 x 坐标
-     *
-     * @return x 坐标值
-     */
-    public float getRectRight ()
-    {
-        return getX() + getWidth();
-    }
-
-    /**
-     * 判断指定坐标是否在标签控件区域内
-     * <p>
-     * 性能：矩形命中检测，每次比较 4 次坐标读取（getRect*），单次开销小；
-     * 但被输入事件/命中测试调用，在每帧对多个候选触发时成本线性累积。
-     *
-     * @param x 检测点的 x 坐标
-     * @param y 检测点的 y 坐标
-     * @return 在区域内返回 true，否则返回 false
-     */
-    public boolean contains (float x, float y)
-    {
-        return getRectLeft() <= x && x <= getRectRight() && getRectTop() <= y && y <= getRectBottom();
-    }
-
-    /**
-     * 设置标签的点击状态
-     *
-     * @param clicked 是否被点击
-     * @return 设置成功返回 true，失败返回 false
-     */
-    public boolean setClicked (boolean clicked)
-    {
-        return uiManager.setLabelClicked(tag, clicked);
-    }
-
-    /**
-     * 检查标签是否被点击
-     *
-     * @return 被点击返回 true，否则返回 false
-     */
-    public boolean isClicked ()
-    {
-        return uiManager.isLabelClicked(tag);
-    }
-
-    /**
-     * 检查标签是否真正可见（考虑遮挡检测）
-     * <p>
-     * 性能：每帧被交互对象网格刷新对每个候选控件调用，内部 new Vector2 + localToStageCoordinates + stage.hit
-     * 触发全 Actor 命中测试，属单次开销较大的每帧操作；无虚拟输入需求时应避免对大量候选高频调用。
-     *
-     * @return 可见且未被遮挡返回 true，否则返回 false
-     */
-    public boolean isShown ()
-    {
-        // 基础可见性检查
-        if (!isVisible()) return false;
-
-        Stage stage = getStage();
-        if (stage == null) return false;
-
-        // 获取控件中心点的舞台坐标（避免边缘情况，使用中心点更稳定）
-        float cx = getWidth() / 2f;
-        float cy = getHeight() / 2f;
-        Vector2 localCenter = new Vector2(cx, cy);
-        Vector2 stageCenter = localToStageCoordinates(localCenter);
-
-        // hit 检测，touchable 为 true 表示只考虑可触摸的 Actor
-        Actor hitActor = stage.hit(stageCenter.x, stageCenter.y, true);
-
-        // 如果命中自己，说明没有任何上层可触摸 Actor 遮挡
-        return hitActor == this;
-    }
-
-    /**
-     * 显示标签控件
-     *
-     * @return 显示成功返回 true，失败返回 false
-     */
-    public boolean show ()
-    {
-        return uiManager.showLabel(tag);
-    }
-
-    /**
-     * 隐藏标签控件
-     *
-     * @return 隐藏成功返回 true，失败返回 false
-     */
-    public boolean hide ()
-    {
-        return uiManager.hideLabel(tag);
-    }
-
-    public String toString ()
-    {
-        return "CustomLabel : " + " " + tag + " " + label.getText();
-    }
-}
 
 // ===================================================================================================================
 // 内部类 CustomTextButton (保持不变)
 // ===================================================================================================================
 
-/**
- * 自定义文本按钮控件，直接使用 Actor 绘制，不依赖 Scene2d 的 TextButton
- */
-static final class CustomTextButton extends Actor implements InteractableObject
-{
-    private final TextButton.TextButtonStyle style;
-    private final BitmapFont font;
-    private final String tag;
-    private final UiManager uiManager;
-    private Runnable clickRunnable;
-    private boolean isPressed = false;
-    private boolean isDisabled = false;
-    private TextObject textObject;
-    private String text;
-
     /**
-     * 构造一个自定义文本按钮
-     *
-     * @param textObject 文本对象
-     * @param style      按钮样式
-     * @param tag        按钮标签
-     * @param uiManager  UiManager 实例
+     * 自定义文本按钮控件，直接使用 Actor 绘制，不依赖 Scene2d 的 TextButton
      */
-    public CustomTextButton (TextObject textObject, TextButton.TextButtonStyle style, String tag, UiManager uiManager)
+    static final class CustomTextButton extends Actor implements InteractableObject
     {
-        this.style = style;
-        this.font = style.font;
-        this.textObject = textObject;
-        this.tag = tag;
-        this.uiManager = uiManager;
-        initTouchListener();
-    }
+        private final TextButton.TextButtonStyle style;
+        private final BitmapFont font;
+        private final String tag;
+        private final UiManager uiManager;
+        private Runnable clickRunnable;
+        private boolean pressed = false;
+        private boolean isDisabled = false;
+        private TextObject textObject;
+        private String text;
 
-    /**
-     * 获取文本对象
-     *
-     * @return TextObject 实例
-     */
-    public TextObject getTextObject ()
-    {
-        return textObject;
-    }
-
-    /**
-     * 设置文本对象
-     *
-     * @param textObject 文本对象
-     */
-    public void setTextObject (TextObject textObject)
-    {
-        this.textObject = textObject;
-    }
-
-    /**
-     * 获取按钮样式
-     *
-     * @return 按钮样式对象
-     */
-    public TextButton.TextButtonStyle getButtonStyle ()
-    {
-        return style;
-    }
-
-    /**
-     * 初始化触摸事件监听器，处理按下、抬起和退出事件
-     */
-    private void initTouchListener ()
-    {
-        setTouchable(Touchable.enabled);
-        addListener(new ClickListener()
+        /**
+         * 构造一个自定义文本按钮
+         *
+         * @param textObject 文本对象
+         * @param style      按钮样式
+         * @param tag        按钮标签
+         * @param uiManager  UiManager 实例
+         */
+        public CustomTextButton (TextObject textObject, TextButton.TextButtonStyle style, String tag, UiManager uiManager)
         {
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button)
-            {
-                if (!isDisabled)
-                {
-                    isPressed = true;
-                    return true;
-                }
-                return false;
-            }
+            this.style = style;
+            this.font = style.font;
+            this.textObject = textObject;
+            this.tag = tag;
+            this.uiManager = uiManager;
+            initTouchListener();
+        }
 
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button)
+        /**
+         * 获取文本对象
+         *
+         * @return TextObject 实例
+         */
+        public TextObject getTextObject ()
+        {
+            return textObject;
+        }
+
+        /**
+         * 设置文本对象
+         *
+         * @param textObject 文本对象
+         */
+        public void setTextObject (TextObject textObject)
+        {
+            this.textObject = textObject;
+        }
+
+        /**
+         * 获取按钮样式
+         *
+         * @return 按钮样式对象
+         */
+        public TextButton.TextButtonStyle getButtonStyle ()
+        {
+            return style;
+        }
+
+        /**
+         * 初始化触摸事件监听器，处理按下、抬起和退出事件
+         */
+        private void initTouchListener ()
+        {
+            setTouchable(Touchable.enabled);
+            addListener(new ClickListener()
             {
-                if (!isDisabled && isPressed)
+                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button)
                 {
-                    isPressed = false;
-                    if (clickRunnable != null)
+                    if (!isDisabled)
                     {
-                        clickRunnable.run();
+                        setPressed(true);
+                        return true;
+                    }
+                    return false;
+                }
+
+                public void touchUp (InputEvent event, float x, float y, int pointer, int button)
+                {
+                    if (!isDisabled && pressed)
+                    {
+                        setPressed(false);
+                        if (clickRunnable != null)
+                        {
+                            clickRunnable.run();
+                        }
                     }
                 }
-            }
 
-            public void exit (InputEvent event, float x, float y, int pointer, Actor toActor)
+                public void exit (InputEvent event, float x, float y, int pointer, Actor toActor)
+                {
+                    setPressed(false);
+                }
+            });
+        }
+
+        /**
+         * 绘制按钮，包括背景和文字
+         */
+        public void draw (Batch batch, float parentAlpha)
+        {
+            super.draw(batch, parentAlpha);
+            if (font == null || style == null) return;
+
+            Drawable currentBg = getCurrentBackground();
+            if (currentBg != null)
             {
-                isPressed = false;
+                currentBg.draw(batch, getX(), getY(), getWidth(), getHeight());
             }
-        });
-    }
 
-    /**
-     * 绘制按钮，包括背景和文字
-     */
-    public void draw (Batch batch, float parentAlpha)
-    {
-        super.draw(batch, parentAlpha);
-        if (font == null || style == null) return;
-
-        Drawable currentBg = getCurrentBackground();
-        if (currentBg != null)
-        {
-            currentBg.draw(batch, getX(), getY(), getWidth(), getHeight());
+            Color currentFontColor = getCurrentFontColor();
+            font.setColor(currentFontColor);
+            font.draw(
+                batch,
+                text,
+                getX(),
+                getY() + getHeight() / 2 + font.getCapHeight() / 2,
+                getWidth(),
+                Align.center,
+                false
+            );
         }
 
-        Color currentFontColor = getCurrentFontColor();
-        font.setColor(currentFontColor);
-        font.draw(
-            batch,
-            text,
-            getX(),
-            getY() + getHeight() / 2 + font.getCapHeight() / 2,
-            getWidth(),
-            Align.center,
-            false
-        );
-    }
-
-    /**
-     * 更新按钮显示的文本内容
-     */
-    public void updateText ()
-    {
-        text = textObject.getDisplayText();
-    }
-
-    /**
-     * 每帧更新逻辑
-     *
-     * @param delta 距离上一帧的时间间隔
-     */
-    public void act (float delta)
-    {
-        super.act(delta);
-        updateText();
-    }
-
-    /**
-     * 根据按钮状态（禁用/按下/正常）获取当前背景 Drawable
-     *
-     * @return 对应的背景 Drawable
-     */
-    private Drawable getCurrentBackground ()
-    {
-        if (isDisabled)
+        /**
+         * 更新按钮显示的文本内容
+         */
+        public void updateText ()
         {
-            return style.disabled != null ? style.disabled : style.up;
+            text = textObject.getDisplayText();
         }
-        else if (isPressed)
+
+        /**
+         * 每帧更新逻辑
+         *
+         * @param delta 距离上一帧的时间间隔
+         */
+        public void act (float delta)
         {
-            return style.down != null ? style.down : style.up;
+            super.act(delta);
+            updateText();
         }
-        else
+
+        /**
+         * 根据按钮状态（禁用/按下/正常）获取当前背景 Drawable
+         *
+         * @return 对应的背景 Drawable
+         */
+        private Drawable getCurrentBackground ()
         {
-            return style.up;
+            if (isDisabled)
+            {
+                return style.disabled != null ? style.disabled : style.up;
+            }
+            else if (pressed)
+            {
+                return style.down != null ? style.down : style.up;
+            }
+            else
+            {
+                return style.up;
+            }
         }
-    }
 
-    /**
-     * 根据按钮状态（禁用/按下/正常）获取当前字体颜色
-     *
-     * @return 对应的字体颜色
-     */
-    private Color getCurrentFontColor ()
-    {
-        if (isDisabled)
+        /**
+         * 根据按钮状态（禁用/按下/正常）获取当前字体颜色
+         *
+         * @return 对应的字体颜色
+         */
+        private Color getCurrentFontColor ()
         {
-            return style.disabledFontColor != null ? style.disabledFontColor : style.fontColor;
+            if (isDisabled)
+            {
+                return style.disabledFontColor != null ? style.disabledFontColor : style.fontColor;
+            }
+            else if (pressed)
+            {
+                return style.downFontColor != null ? style.downFontColor : style.fontColor;
+            }
+            else
+            {
+                return style.fontColor;
+            }
         }
-        else if (isPressed)
+
+        /**
+         * 检查按钮是否被按下
+         *
+         * @return 按下返回 true，否则返回 false
+         */
+        public boolean isPressed ()
         {
-            return style.downFontColor != null ? style.downFontColor : style.fontColor;
+            return pressed;
         }
-        else
+
+        /**
+         * 设置按钮按下状态
+         *
+         * @param pressed 是否按下
+         */
+        public void setPressed (boolean pressed)
         {
-            return style.fontColor;
+            this.pressed = pressed;
+        }
+
+        /**
+         * 检查按钮是否被禁用
+         *
+         * @return 禁用返回 true，否则返回 false
+         */
+        public boolean isDisabled ()
+        {
+            return isDisabled;
+        }
+
+        /**
+         * 设置按钮的禁用状态
+         *
+         * @param disabled 禁用为 true，启用为 false
+         */
+        public void setDisabled (boolean disabled)
+        {
+            this.isDisabled = disabled;
+            setTouchable(disabled ? Touchable.disabled : Touchable.enabled);
+        }
+
+        /**
+         * 设置点击运行器
+         *
+         * @param clickRunnable 点击回调
+         */
+        public void setClickRunnable (Runnable clickRunnable)
+        {
+            this.clickRunnable = clickRunnable;
+        }
+
+        // interactable interface
+
+        /**
+         * 获取按钮标签
+         *
+         * @return 标签字符串
+         */
+        public String getTag ()
+        {
+            return tag;
+        }
+
+        @Override
+        public float getX ()
+        {
+            return super.getX();
+        }
+
+        @Override
+        public float getY ()
+        {
+            return super.getY();
+        }
+
+        @Override
+        public void setPosition (float x, float y)
+        {
+            super.setPosition(x, y);
+        }
+
+        /**
+         * 获取按钮控件上边界 y 坐标
+         *
+         * @return y 坐标值
+         */
+        public float getRectTop ()
+        {
+            return getY();
+        }
+
+        /**
+         * 获取按钮控件左边界 x 坐标
+         *
+         * @return x 坐标值
+         */
+        public float getRectLeft ()
+        {
+            return getX();
+        }
+
+        /**
+         * 获取按钮控件下边界 y 坐标
+         *
+         * @return y 坐标值
+         */
+        public float getRectBottom ()
+        {
+            return getY() + getHeight();
+        }
+
+        /**
+         * 获取按钮控件右边界 x 坐标
+         *
+         * @return x 坐标值
+         */
+        public float getRectRight ()
+        {
+            return getX() + getWidth();
+        }
+
+        /**
+         * 判断指定坐标是否在按钮控件区域内
+         * <p>
+         * 性能：矩形命中检测，每次比较 4 次坐标读取（getRect*），单次开销小；
+         * 但被输入事件/命中测试调用，在每帧对多个候选触发时成本线性累积。
+         *
+         * @param x 检测点的 x 坐标
+         * @param y 检测点的 y 坐标
+         * @return 在区域内返回 true，否则返回 false
+         */
+        public boolean contains (float x, float y)
+        {
+            return getRectLeft() <= x && x <= getRectRight() && getRectTop() <= y && y <= getRectBottom();
+        }
+
+        /**
+         * 设置按钮的点击状态
+         *
+         * @param clicked 是否被点击
+         * @return 设置成功返回 true，失败返回 false
+         */
+        public boolean setClicked (boolean clicked)
+        {
+            return uiManager.setButtonClicked(tag, clicked);
+        }
+
+        /**
+         * 检查按钮是否被点击
+         *
+         * @return 被点击返回 true，否则返回 false
+         */
+        public boolean isClicked ()
+        {
+            return uiManager.isButtonClicked(tag);
+        }
+
+        /**
+         * 检查按钮是否真正可见（考虑遮挡检测）
+         * <p>
+         * 性能：每帧被交互对象网格刷新对每个候选控件调用，内部 new Vector2 + localToStageCoordinates + stage.hit
+         * 触发全 Actor 命中测试，属单次开销较大的每帧操作；无虚拟输入需求时应避免对大量候选高频调用。
+         *
+         * @return 可见且未被遮挡返回 true，否则返回 false
+         */
+        public boolean isShown ()
+        {
+            // 基础可见性检查
+            if (!isVisible()) return false;
+
+            Stage stage = getStage();
+            if (stage == null) return false;
+
+            // 获取控件中心点的舞台坐标（避免边缘情况，使用中心点更稳定）
+            float cx = getWidth() / 2f;
+            float cy = getHeight() / 2f;
+            Vector2 localCenter = new Vector2(cx, cy);
+            Vector2 stageCenter = localToStageCoordinates(localCenter);
+
+            // hit 检测，touchable 为 true 表示只考虑可触摸的 Actor
+            Actor hitActor = stage.hit(stageCenter.x, stageCenter.y, true);
+
+            // 如果命中自己，说明没有任何上层可触摸 Actor 遮挡
+            return hitActor == this;
+        }
+
+        /**
+         * 显示按钮控件
+         *
+         * @return 显示成功返回 true，失败返回 false
+         */
+        public boolean show ()
+        {
+            return uiManager.showButton(tag);
+        }
+
+        /**
+         * 隐藏按钮控件
+         *
+         * @return 隐藏成功返回 true，失败返回 false
+         */
+        public boolean hide ()
+        {
+            return uiManager.hideButton(tag);
+        }
+
+        public String toString ()
+        {
+            return "CustomTextButton : " + " " + tag + " " + text;
         }
     }
-
-    /**
-     * 检查按钮是否被禁用
-     *
-     * @return 禁用返回 true，否则返回 false
-     */
-    public boolean isDisabled ()
-    {
-        return isDisabled;
-    }
-
-    /**
-     * 设置按钮的禁用状态
-     *
-     * @param disabled 禁用为 true，启用为 false
-     */
-    public void setDisabled (boolean disabled)
-    {
-        this.isDisabled = disabled;
-        setTouchable(disabled ? Touchable.disabled : Touchable.enabled);
-    }
-
-    /**
-     * 设置点击运行器
-     *
-     * @param clickRunnable 点击回调
-     */
-    public void setClickRunnable (Runnable clickRunnable)
-    {
-        this.clickRunnable = clickRunnable;
-    }
-
-    // interactable interface
-
-    /**
-     * 获取按钮标签
-     *
-     * @return 标签字符串
-     */
-    public String getTag ()
-    {
-        return tag;
-    }
-
-    /**
-     * 获取按钮控件上边界 y 坐标
-     *
-     * @return y 坐标值
-     */
-    public float getRectTop ()
-    {
-        return getY();
-    }
-
-    /**
-     * 获取按钮控件左边界 x 坐标
-     *
-     * @return x 坐标值
-     */
-    public float getRectLeft ()
-    {
-        return getX();
-    }
-
-    /**
-     * 获取按钮控件下边界 y 坐标
-     *
-     * @return y 坐标值
-     */
-    public float getRectBottom ()
-    {
-        return getY() + getHeight();
-    }
-
-    /**
-     * 获取按钮控件右边界 x 坐标
-     *
-     * @return x 坐标值
-     */
-    public float getRectRight ()
-    {
-        return getX() + getWidth();
-    }
-
-    /**
-     * 判断指定坐标是否在按钮控件区域内
-     * <p>
-     * 性能：矩形命中检测，每次比较 4 次坐标读取（getRect*），单次开销小；
-     * 但被输入事件/命中测试调用，在每帧对多个候选触发时成本线性累积。
-     *
-     * @param x 检测点的 x 坐标
-     * @param y 检测点的 y 坐标
-     * @return 在区域内返回 true，否则返回 false
-     */
-    public boolean contains (float x, float y)
-    {
-        return getRectLeft() <= x && x <= getRectRight() && getRectTop() <= y && y <= getRectBottom();
-    }
-
-    /**
-     * 设置按钮的点击状态
-     *
-     * @param clicked 是否被点击
-     * @return 设置成功返回 true，失败返回 false
-     */
-    public boolean setClicked (boolean clicked)
-    {
-        return uiManager.setButtonClicked(tag, clicked);
-    }
-
-    /**
-     * 检查按钮是否被点击
-     *
-     * @return 被点击返回 true，否则返回 false
-     */
-    public boolean isClicked ()
-    {
-        return uiManager.isButtonClicked(tag);
-    }
-
-    /**
-     * 检查按钮是否真正可见（考虑遮挡检测）
-     * <p>
-     * 性能：每帧被交互对象网格刷新对每个候选控件调用，内部 new Vector2 + localToStageCoordinates + stage.hit
-     * 触发全 Actor 命中测试，属单次开销较大的每帧操作；无虚拟输入需求时应避免对大量候选高频调用。
-     *
-     * @return 可见且未被遮挡返回 true，否则返回 false
-     */
-    public boolean isShown ()
-    {
-        // 基础可见性检查
-        if (!isVisible()) return false;
-
-        Stage stage = getStage();
-        if (stage == null) return false;
-
-        // 获取控件中心点的舞台坐标（避免边缘情况，使用中心点更稳定）
-        float cx = getWidth() / 2f;
-        float cy = getHeight() / 2f;
-        Vector2 localCenter = new Vector2(cx, cy);
-        Vector2 stageCenter = localToStageCoordinates(localCenter);
-
-        // hit 检测，touchable 为 true 表示只考虑可触摸的 Actor
-        Actor hitActor = stage.hit(stageCenter.x, stageCenter.y, true);
-
-        // 如果命中自己，说明没有任何上层可触摸 Actor 遮挡
-        return hitActor == this;
-    }
-
-    /**
-     * 显示按钮控件
-     *
-     * @return 显示成功返回 true，失败返回 false
-     */
-    public boolean show ()
-    {
-        return uiManager.showButton(tag);
-    }
-
-    /**
-     * 隐藏按钮控件
-     *
-     * @return 隐藏成功返回 true，失败返回 false
-     */
-    public boolean hide ()
-    {
-        return uiManager.hideButton(tag);
-    }
-
-    public String toString ()
-    {
-        return "CustomTextButton : " + " " + tag + " " + text;
-    }
-}
 }
