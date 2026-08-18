@@ -132,8 +132,8 @@
 
 ### 构建
 
-- **app_version 升级** — app_version 2→3，snapshot 26w33b→26w34a（commit `待补`）
-- **android versionCode 升级** — versionCode 2→3（commit `待补`）
+- **app_version 升级** — app_version 2→3，snapshot 26w33b→26w34a（commit 8d7722f）
+- **android versionCode 升级** — versionCode 2→3（commit 8d7722f）
 
 ## 2026-08-16 — 默认语言改英文 + 目录结构补全 + 12 个新语言翻译包 + 首次运行按设备语言改写默认语言 + 设备语言自动检测与 15 语言扩展 + 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新 + 全屏切换调用空值防御 + 官网卡片重排与折叠展开 + 官网导航新增遇到问题 + 官网语言扩展与识别修复
 
