@@ -1,9 +1,55 @@
 {
-  "newest_version" : 3,
+  "newest_version" : 4,
   "newest_version_type" : 0,
   "newest_version_string" : "1.0.0",
-  "newest_version_snapshot" : "26w34a",
+  "newest_version_snapshot" : "26w34b",
   "versions" : {
+    "4" : {
+      "name" : "v1.0.0-beta-26w34b",
+      "date" : "2026-08-19 11:35",
+      "type" : 0,
+      "log" : "氢风 v1.0.0-beta-26w34b 公开测试版更新（相对 v1.0.0-beta-26w34a）：\n\n【移除功能】\n1. 移除页面切换过渡动画——上一版（26w34a）新增的页面切换淡入淡出动画存在多处兼容性问题，会导致游戏启动崩溃等严重 Bug，本次紧急回退该动画系统，页面切换恢复为即时切换，整体稳定性大幅提升\n\n说明：26w34a 中的其他修复（如安卓背景音乐双播修复）仍然保留，不受本次回退影响。",
+      "download" : {
+        "windows" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · Windows 安装包（.exe）· 提取码 1698 · 双击安装，若弹安全提示点「更多信息 → 仍要运行」",
+              "url" : "https://brainleech198.lanzn.com/iWey943c7d8d"
+            }
+          ]
+        },
+        "android" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · Android 安装包（.apk）· 提取码 1698 · 安装时请允许「未知来源」",
+              "url" : "https://brainleech198.lanzn.com/i7WBR43c7q1e"
+            }
+          ]
+        },
+        "linux" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · Linux 安装包（.deb · Debian/Ubuntu）· 提取码 1698 · 双击安装，或终端执行 sudo dpkg -i",
+              "url" : "https://brainleech198.lanzn.com/iSnqd43c7lbe"
+            }
+          ]
+        },
+        "mac" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · macOS Apple 芯片版（M 芯片，.zip）· 提取码 1698 · 解压后双击「安装氢风」，若提示无法打开请右键 → 打开",
+              "url" : "https://brainleech198.lanzn.com/i137U43c74yf"
+            }
+          ],
+          "lanzouyun_intel" : [
+            {
+              "description" : "蓝奏云 · macOS Intel 版（.zip）· 提取码 1698 · 解压后双击「安装氢风」，若提示无法打开请右键 → 打开",
+              "url" : "https://brainleech198.lanzn.com/iLy9Y43c6syd"
+            }
+          ]
+        }
+      }
+    },
     "3" : {
       "name" : "v1.0.0-beta-26w34a",
       "date" : "2026-08-18 09:43",

@@ -509,24 +509,9 @@ def input_version_interactive() -> tuple[str, str, int, str]:
         snapshot = ""
 
     if not app_int_env:
-        while True:
-            try:
-                default_int = last_version_int if last_version_int else 1
-                prompt = "请输入版本整型编码"
-                if last_version_int:
-                    prompt += f" (回车使用上次: {last_version_int})"
-                prompt += ": "
-                raw = input(prompt).strip()
-            except (EOFError, OSError):
-                raw = ""
-            if not raw:
-                app_version_int = default_int
-                break
-            try:
-                app_version_int = int(raw)
-                break
-            except ValueError:
-                print("版本整型编码必须为整数")
+        # 版本码自动递增：上次值 + 1（首次从 1 开始）
+        app_version_int = last_version_int + 1 if last_version_int else 1
+        print(f"[信息] 版本码自动递增: {last_version_int} → {app_version_int}")
     else:
         app_version_int = int(app_int_env)
 

@@ -21,6 +21,24 @@
 > 10. 【必须】CHANGELOG 条目按日期归组：同一天的所有提交主题共同包含在同一个 `## <日期> — <概括标题>` 下，禁止拆成多个 `## ` 日期标题；每个提交块以 `**<主题>**（commit <7位短哈希>）` 标记，块内每条 `- ` 条目行尾标注引入它的提交短哈希 `（commit <7位短哈希>）`。新条目随内容改动提交后，其哈希在下一笔内容改动提交中一并补写（补写仅改 hash，不新增条目）
 > 11. 【必须】写版本发布说明（官网 `docs/data/versions.json` 的 `log`、`develop/PUBLISH.md` 面向玩家摘要）时，按「上一版本发布点 → 本版本发布点」之间的 commit 区间梳理玩家可见改动（修复的 Bug / 新增功能 / 优化），逐一写入，不要遗漏跨版本才生效的修复（打包之后完成的 bug 修复会随下一个版本发出，须算入下一版本的说明）；beta 测试版按此梳理书写即可，release 正式版属重要更新，需正式、系统地书写
 
+## 2026-08-19 — 发布 v1.0.0-beta-26w34b + 打包器版本码自动递增
+
+**构建(版本)：发布 v1.0.0-beta-26w34b**
+
+### 构建
+
+- **app_version 升级** — app_version 3→4，snapshot 26w34a→26w34b（commit <hash>）
+- **android versionCode 升级** — versionCode 3→4（commit <hash>）
+- **打包器版本码自动递增** — build_common.py input_version_interactive 版本码不再手动询问，改为 last+1 自动递增（commit <hash>）
+
+**网站(版本)：官网新增 v1.0.0-beta-26w34b 下载入口**
+
+### 网站
+
+- **versions.json 新增 v26w34b 条目** — newest_version 升至 4，Windows/Android/Linux/mac Apple 芯片/mac Intel 五处蓝奏云下载链接更新；更新说明明确回退动画系统范围，保留安卓双播修复（commit <hash>）
+
+---
+
 ## 2026-08-18 — type/key 分类重构 + 事件系统枚举化 + 动画系统实现 + 渲染机过渡接入 + 页面动画配置 + 其他小重构
 
 **重构(keys)：type/key 常量类按领域分类到子包**
