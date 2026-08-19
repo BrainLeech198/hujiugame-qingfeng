@@ -27,15 +27,15 @@
 
 ### 构建
 
-- **app_version 升级** — app_version 3→4，snapshot 26w34a→26w34b（commit <hash>）
-- **android versionCode 升级** — versionCode 3→4（commit <hash>）
-- **打包器版本码自动递增** — build_common.py input_version_interactive 版本码不再手动询问，改为 last+1 自动递增（commit <hash>）
+- **app_version 升级** — app_version 3→4，snapshot 26w34a→26w34b（commit 37573a4）
+- **android versionCode 升级** — versionCode 3→4（commit 37573a4）
+- **打包器版本码自动递增** — build_common.py input_version_interactive 版本码不再手动询问，改为 last+1 自动递增（commit 37573a4）
 
 **网站(版本)：官网新增 v1.0.0-beta-26w34b 下载入口**
 
 ### 网站
 
-- **versions.json 新增 v26w34b 条目** — newest_version 升至 4，Windows/Android/Linux/mac Apple 芯片/mac Intel 五处蓝奏云下载链接更新；更新说明明确回退动画系统范围，保留安卓双播修复（commit <hash>）
+- **versions.json 新增 v26w34b 条目** — newest_version 升至 4，Windows/Android/Linux/mac Apple 芯片/mac Intel 五处蓝奏云下载链接更新；更新说明明确回退动画系统范围，保留安卓双播修复（commit 37573a4）
 
 ---
 
