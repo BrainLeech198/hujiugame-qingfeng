@@ -27,7 +27,7 @@
 
 ### 文档
 
-- **引擎分离设计文档** — 8 节完整设计：包结构与模块边界、Application 生命周期驱动、EventBus 统一（合并 EventQueue+EventDispatcher）、SceneManager+TransitionManager 协调、AssetManager 资产管理、UiManager 拆分、依赖管理与初始化顺序、InstanceContent 瘦身路径；含 5 阶段渐进迁移策略和 3D 扩展路径（commit <hash>）
+- **引擎分离设计文档** — 8 节完整设计：包结构与模块边界、Application 生命周期驱动、EventBus 统一（合并 EventQueue+EventDispatcher）、SceneManager+TransitionManager 协调、AssetManager 资产管理、UiManager 拆分、依赖管理与初始化顺序、InstanceContent 瘦身路径；含 5 阶段渐进迁移策略和 3D 扩展路径（commit 9d3a44a）
 
 ---
 
