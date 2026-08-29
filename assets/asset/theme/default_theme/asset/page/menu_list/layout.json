@@ -417,7 +417,7 @@
         "text_key" : "{language$requirement.json#menu.list.button.delete}",
         "font_size" : 1.2
       },
-      "select.last_page" : {
+      "select.previous_page" : {
         "kind" : "default",
         "position" : {
           "x" : 1480,
@@ -427,7 +427,7 @@
           "width" : 400,
           "height" : 110
         },
-        "text_key" : "{language$requirement.json#menu.list.button.last_page}",
+        "text_key" : "{language$requirement.json#menu.list.button.previous_page}",
         "font_size" : 1.2
       },
       "select.next_page" : {

@@ -5,124 +5,115 @@
   },
   "animation" : {
     "fade_in" : {
+      "from_page": {
+      },
       "default" : {
-        "duration" : 0.125,
+        "duration" : 0.2,
         "task" : {
-          "synchronizationGraphics" : [
+          "graphics" : [
             {
               "object" : {
-                "class" : "graphics",
-                "type" : "picture",
-                "tag" : "title"
+                "type" : "backgroundPicture"
               },
-              "action" : {
-                "type" : "smooth_move",
-                "delay" : 0.0,
-                "duration" : 0.03,
+              "command" : {
+                "start_time" : 0.0,
+                "end_time" : 0.2,
+                "duration" : 0.2,
+                "type" : "normal",
+                "action" : "none",
                 "param" : {
-                  "orientation" : {
-                    "x" : 1,
-                    "y" : 0
-                  },
-                  "speed" : 40000
                 }
               }
             },
             {
               "object" : {
-                "class" : "graphics",
+                "type" : "picture",
+                "tag" : "title"
+              },
+              "command" : {
+                "start_time" : 0.0,
+                "end_time" : 0.2,
+                "duration" : 0.2,
+                "type" : "normal",
+                "action" : "none",
+                "param" : {
+                }
+              }
+            },
+            {
+              "object" : {
                 "type" : "picture",
                 "tag" : "masker"
               },
-              "action" : {
-                "type" : "smooth_move",
-                "delay" : 0.0,
-                "duration" : 0.03,
+              "command" : {
+                "start_time" : 0.0,
+                "end_time" : 0.2,
+                "duration" : 0.2,
+                "type" : "normal",
+                "action" : "none",
                 "param" : {
-                  "orientation" : {
-                    "x" : 1,
-                    "y" : 0
-                  },
-                  "speed" : 40000
                 }
               }
             }
           ],
-          "synchronizationUi" : [],
-          "schedule" : [
+          "ui" : [
             {
               "object" : {
-                "class" : "ui",
                 "type" : "button",
                 "tag" : "start"
               },
-              "action" : {
-                "type" : "smooth_move",
-                "delay" : 0.0,
-                "duration" : 0.03,
+              "command" : {
+                "start_time" : 0.0,
+                "end_time" : 0.2,
+                "duration" : 0.2,
+                "type" : "normal",
+                "action" : "none",
                 "param" : {
-                  "orientation" : {
-                    "x" : 1,
-                    "y" : 0
-                  },
-                  "speed" : 40000
                 }
               }
             },
             {
               "object" : {
-                "class" : "ui",
                 "type" : "button",
                 "tag" : "create"
               },
-              "action" : {
-                "type" : "smooth_move",
-                "delay" : 0.0,
-                "duration" : 0.03,
+              "command" : {
+                "start_time" : 0.0,
+                "end_time" : 0.2,
+                "duration" : 0.2,
+                "type" : "normal",
+                "action" : "none",
                 "param" : {
-                  "orientation" : {
-                    "x" : 1,
-                    "y" : 0
-                  },
-                  "speed" : 40000
                 }
               }
             },
             {
               "object" : {
-                "class" : "ui",
                 "type" : "button",
                 "tag" : "config"
               },
-              "action" : {
-                "type" : "smooth_move",
-                "delay" : 0.0,
-                "duration" : 0.04,
+              "command" : {
+                "start_time" : 0.0,
+                "end_time" : 0.2,
+                "duration" : 0.2,
+                "type" : "normal",
+                "action" : "none",
                 "param" : {
-                  "orientation" : {
-                    "x" : 1,
-                    "y" : 0
-                  },
-                  "speed" : 32000
                 }
               }
             },
             {
               "object" : {
-                "class" : "ui",
                 "type" : "button",
                 "tag" : "quit"
               },
-              "action" : {
-                "type" : "smooth_move",
-                "delay" : 0.0,
-                "duration" : 0.025,
+              "command" : {
+                "start_time" : 0.0,
+                "end_time" : 0.2,
+                "duration" : 0.2,
+                "type" : "normal",
+                "action" : "none",
                 "param" : {
-                  "orientation" : {
-                    "x" : 1,
-                    "y" : 0
-                  },
-                  "speed" : 48000
                 }
               }
             }
@@ -131,128 +122,12 @@
       }
     },
     "fade_out" : {
+      "from_page": {
+      },
       "default" : {
-        "duration" : 0.125,
+        "duration" : 0.2,
         "task" : {
-          "synchronizationGraphics" : [
-            {
-              "object" : {
-                "class" : "graphics",
-                "type" : "picture",
-                "tag" : "title"
-              },
-              "action" : {
-                "type" : "smooth_move",
-                "delay" : 0.0,
-                "duration" : 0.03,
-                "param" : {
-                  "orientation" : {
-                    "x" : -1,
-                    "y" : 0
-                  },
-                  "speed" : 40000
-                }
-              }
-            },
-            {
-              "object" : {
-                "class" : "graphics",
-                "type" : "picture",
-                "tag" : "masker"
-              },
-              "action" : {
-                "type" : "smooth_move",
-                "delay" : 0.0,
-                "duration" : 0.03,
-                "param" : {
-                  "orientation" : {
-                    "x" : -1,
-                    "y" : 0
-                  },
-                  "speed" : 40000
-                }
-              }
-            }
-          ],
-          "synchronizationUi" : [],
-          "schedule" : [
-            {
-              "object" : {
-                "class" : "ui",
-                "type" : "button",
-                "tag" : "start"
-              },
-              "action" : {
-                "type" : "smooth_move",
-                "delay" : 0.0,
-                "duration" : 0.03,
-                "param" : {
-                  "orientation" : {
-                    "x" : -1,
-                    "y" : 0
-                  },
-                  "speed" : 40000
-                }
-              }
-            },
-            {
-              "object" : {
-                "class" : "ui",
-                "type" : "button",
-                "tag" : "create"
-              },
-              "action" : {
-                "type" : "smooth_move",
-                "delay" : 0.0,
-                "duration" : 0.03,
-                "param" : {
-                  "orientation" : {
-                    "x" : -1,
-                    "y" : 0
-                  },
-                  "speed" : 40000
-                }
-              }
-            },
-            {
-              "object" : {
-                "class" : "ui",
-                "type" : "button",
-                "tag" : "config"
-              },
-              "action" : {
-                "type" : "smooth_move",
-                "delay" : 0.0,
-                "duration" : 0.04,
-                "param" : {
-                  "orientation" : {
-                    "x" : -1,
-                    "y" : 0
-                  },
-                  "speed" : 32000
-                }
-              }
-            },
-            {
-              "object" : {
-                "class" : "ui",
-                "type" : "button",
-                "tag" : "quit"
-              },
-              "action" : {
-                "type" : "smooth_move",
-                "delay" : 0.0,
-                "duration" : 0.025,
-                "param" : {
-                  "orientation" : {
-                    "x" : -1,
-                    "y" : 0
-                  },
-                  "speed" : 48000
-                }
-              }
-            }
-          ]
+
         }
       }
     }
