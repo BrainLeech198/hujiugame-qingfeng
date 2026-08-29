@@ -27,8 +27,8 @@
 
 ### 修复
 
-- **GameInfoMap is null** — TextManager 删除后 `languageManager.setGameInfoManager()` 调用丢失，导致 `{game$key}` 文本模式全部返回 "GameInfoMap is null"；在 InstanceContent.init() 中 GameHost 创建后注入 GameInfoManager 到启动器 LanguageManager（commit <hash>）
-- **游戏内文本显示原始 textKey** — JsonTextParser 静态 LanguageManager 启动时固定为启动器实例，游戏会话创建自己的 LanguageManager 后未切换；新增 JsonTextParser.setLanguageManager/getLanguageManager，GameSessionManager.enterGame() 中切换到游戏 LanguageManager 并注入 GameInfoManager，quitGame() 恢复启动器实例，enterGame() 错误路径均加回滚（commit <hash>）
+- **GameInfoMap is null** — TextManager 删除后 `languageManager.setGameInfoManager()` 调用丢失，导致 `{game$key}` 文本模式全部返回 "GameInfoMap is null"；在 InstanceContent.init() 中 GameHost 创建后注入 GameInfoManager 到启动器 LanguageManager（commit 44f85d0）
+- **游戏内文本显示原始 textKey** — JsonTextParser 静态 LanguageManager 启动时固定为启动器实例，游戏会话创建自己的 LanguageManager 后未切换；新增 JsonTextParser.setLanguageManager/getLanguageManager，GameSessionManager.enterGame() 中切换到游戏 LanguageManager 并注入 GameInfoManager，quitGame() 恢复启动器实例，enterGame() 错误路径均加回滚（commit 44f85d0）
 
 ---
 
