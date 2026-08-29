@@ -23,6 +23,14 @@
 
 ## 2026-08-29 — 清理已实现的设计方案 + 动画空壳化 + Manager 体系收敛
 
+**文档(plans)：引擎分离架构设计方案（方案 C: Pragmatic Layered）**
+
+### 文档
+
+- **引擎分离设计文档** — 8 节完整设计：包结构与模块边界、Application 生命周期驱动、EventBus 统一（合并 EventQueue+EventDispatcher）、SceneManager+TransitionManager 协调、AssetManager 资产管理、UiManager 拆分、依赖管理与初始化顺序、InstanceContent 瘦身路径；含 5 阶段渐进迁移策略和 3D 扩展路径（commit <hash>）
+
+---
+
 **修复(文本)：GameInfoMap 未注入 + 游戏会话 LanguageManager 未切换**
 
 ### 修复
