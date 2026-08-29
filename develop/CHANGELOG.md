@@ -23,6 +23,15 @@
 
 ## 2026-08-29 — 清理已实现的设计方案 + 动画空壳化 + Manager 体系收敛
 
+**修复(文本)：GameInfoMap 未注入 + 游戏会话 LanguageManager 未切换**
+
+### 修复
+
+- **GameInfoMap is null** — TextManager 删除后 `languageManager.setGameInfoManager()` 调用丢失，导致 `{game$key}` 文本模式全部返回 "GameInfoMap is null"；在 InstanceContent.init() 中 GameHost 创建后注入 GameInfoManager 到启动器 LanguageManager（commit <hash>）
+- **游戏内文本显示原始 textKey** — JsonTextParser 静态 LanguageManager 启动时固定为启动器实例，游戏会话创建自己的 LanguageManager 后未切换；新增 JsonTextParser.setLanguageManager/getLanguageManager，GameSessionManager.enterGame() 中切换到游戏 LanguageManager 并注入 GameInfoManager，quitGame() 恢复启动器实例，enterGame() 错误路径均加回滚（commit <hash>）
+
+---
+
 **重构(动画)：TransitionManager 空壳化 + Action→Command 重命名**
 
 ### 重构

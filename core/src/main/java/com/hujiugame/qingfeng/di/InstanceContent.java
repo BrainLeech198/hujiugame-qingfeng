@@ -245,6 +245,9 @@ public final class InstanceContent
             );
             LogUtils.debug(InstanceContent.class, "init - GameHost 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
 
+            // 注入 GameInfoManager 到启动器 LanguageManager（供 {game$key} 文本模式解析）
+            instanceContent.languageManager.setGameInfoManager(instanceContent.gameHost.getGameInfoManager());
+
             // 后续注入一般很快，不单独计时：统一走封装 setter，对象替换时连带配置一并完成
             instanceContent.setLayoutService(instanceContent.layoutManager);
             instanceContent.setUiManager(instanceContent.uiManager);

@@ -38,6 +38,26 @@ public final class JsonTextParser
     }
 
     /**
+     * 替换当前语言管理器（进入/退出游戏会话时切换）
+     *
+     * @param languageManager 新的语言管理器实例
+     */
+    public static void setLanguageManager (LanguageManager languageManager)
+    {
+        JsonTextParser.languageManager = languageManager;
+    }
+
+    /**
+     * 获取当前语言管理器（退出游戏会话时恢复用）
+     *
+     * @return 当前语言管理器实例
+     */
+    public static LanguageManager getLanguageManager ()
+    {
+        return languageManager;
+    }
+
+    /**
      * 解析 JSON 中的文本字段，优先使用 textKey（需解析），其次使用 text（纯文本）
      *
      * @param json 包含文本字段的 JSON 数据

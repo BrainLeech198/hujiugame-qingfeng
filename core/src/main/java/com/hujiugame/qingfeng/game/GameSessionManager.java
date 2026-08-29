@@ -19,6 +19,8 @@ import com.hujiugame.qingfeng.event.imp.game.PlayGame;
 import com.hujiugame.qingfeng.event.imp.state.PushGameState;
 import com.hujiugame.qingfeng.event.imp.game.QuitGame;
 import com.hujiugame.qingfeng.event.EventQueue;
+import com.hujiugame.qingfeng.manager.LanguageManager;
+import com.hujiugame.qingfeng.util.json.parser.JsonTextParser;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
 public final class GameSessionManager
@@ -31,6 +33,9 @@ public final class GameSessionManager
     private final GameInfoManager gameInfoManager;
     private final PlayLocalData playLocalData;
     private final SceneStack sceneStack;
+
+    /** 进入游戏会话前保存的启动器 LanguageManager，退出时恢复 */
+    private LanguageManager launcherLanguageManager;
 
     /**
      * 构造游戏会话管理器
@@ -138,11 +143,18 @@ public final class GameSessionManager
                 return;
             }
 
+            // 切换 JsonTextParser 到游戏的语言管理器，并注入 GameInfoManager
+            launcherLanguageManager = JsonTextParser.getLanguageManager();
+            LanguageManager gameLanguageManager = playLocalData.getLanguageManager();
+            gameLanguageManager.setGameInfoManager(gameInfoManager);
+            JsonTextParser.setLanguageManager(gameLanguageManager);
+
             // 加载游戏资源
             if (!resourceLoader.loadResource(playLocalData.getThemeManager()))
             {
                 LogUtils.error(GameSessionManager.class, "enterGame 加载游戏资源失败");
-                // loadResource 失败时回滚已切换的用户配置（语言、主题）
+                // loadResource 失败时回滚语言管理器切换和已切换的用户配置（语言、主题）
+                rollbackLanguageManager();
                 configService.disposeGameConfig(playLocalData);
                 return;
             }
@@ -154,6 +166,7 @@ public final class GameSessionManager
                 // loadData 失败时按 LIFO 回滚已加载的资源和用户配置
                 dataLoader.disposeData();
                 resourceLoader.disposeResource();
+                rollbackLanguageManager();
                 configService.disposeGameConfig(playLocalData);
                 return;
             }
@@ -169,6 +182,7 @@ public final class GameSessionManager
             // enterGame 异常时按 LIFO 回滚所有已加载阶段（dispose 方法幂等，安全重复调用）
             dataLoader.disposeData();
             resourceLoader.disposeResource();
+            rollbackLanguageManager();
             configService.disposeGameConfig(playLocalData);
         }
     }
@@ -180,6 +194,13 @@ public final class GameSessionManager
     {
         try
         {
+            // 恢复启动器语言管理器
+            if (launcherLanguageManager != null)
+            {
+                JsonTextParser.setLanguageManager(launcherLanguageManager);
+                launcherLanguageManager = null;
+            }
+
             // 重置游戏状态
             eventQueue.addEvent(new QuitGame());
 
@@ -383,6 +404,18 @@ public final class GameSessionManager
         {
             LogUtils.error(GameSessionManager.class, "storyGotoPage", e);
             return false;
+        }
+    }
+
+    /**
+     * 回滚语言管理器切换：恢复启动器的 LanguageManager 到 JsonTextParser
+     */
+    private void rollbackLanguageManager ()
+    {
+        if (launcherLanguageManager != null)
+        {
+            JsonTextParser.setLanguageManager(launcherLanguageManager);
+            launcherLanguageManager = null;
         }
     }
 }
