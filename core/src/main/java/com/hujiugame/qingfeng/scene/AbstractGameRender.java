@@ -7,7 +7,7 @@ import com.hujiugame.qingfeng.data.game.GameStateDataContainer;
  * <p>
  * 统一持有游戏状态数据容器（init 注入）并提供 {@link #getGameStateDataContainer()}，
  * 消除各渲染机重复的字段声明、init 保存与 getter 实现。
- * init 为 final：先保存数据容器，再调用子类 {@link #onInit(GameStateDataContainer)} 钩子完成页面初始化。
+ * init 为 final：先保存数据容器，再调用子类 {@link #init(GameStateDataContainer)} 钩子完成页面初始化。
  */
 public abstract class AbstractGameRender implements GameRender
 {
@@ -20,10 +20,10 @@ public abstract class AbstractGameRender implements GameRender
      * @param gameStateDataContainer 游戏状态数据容器
      */
     @Override
-    public final void init (GameStateDataContainer gameStateDataContainer)
+    public final void init_ (GameStateDataContainer gameStateDataContainer)
     {
         this.gameStateDataContainer = gameStateDataContainer;
-        onInit(gameStateDataContainer);
+        init(gameStateDataContainer);
     }
 
     /**
@@ -42,5 +42,5 @@ public abstract class AbstractGameRender implements GameRender
      *
      * @param gameStateDataContainer 游戏状态数据容器
      */
-    protected abstract void onInit (GameStateDataContainer gameStateDataContainer);
+    protected abstract void init (GameStateDataContainer gameStateDataContainer);
 }

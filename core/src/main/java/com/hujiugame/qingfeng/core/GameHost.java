@@ -6,11 +6,11 @@ import com.hujiugame.qingfeng.game.GameLogicService;
 import com.hujiugame.qingfeng.game.GameSessionManager;
 import com.hujiugame.qingfeng.game.loader.GamePlayDataLoader;
 import com.hujiugame.qingfeng.game.loader.GameResourceLoader;
-import com.hujiugame.qingfeng.game.loader.GameUserConfigLoader;
 import com.hujiugame.qingfeng.data.play.PlayLocalData;
 import com.hujiugame.qingfeng.data.play.PlayRuntimeData;
 import com.hujiugame.qingfeng.type.game.GameState;
 import com.hujiugame.qingfeng.audio.AudioManager;
+import com.hujiugame.qingfeng.engine.EngineContext;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventDispatcher;
@@ -31,8 +31,8 @@ public final class GameHost
     private final GraphicsManager graphicsManager;
     private final UiManager uiManager;
 
-    private final LayoutManager layoutManager;
-    private final TextManager textManager;
+    private final LayoutService layoutManager;
+    private final EngineContext launcherEngineContext;
     private final SpriteBatch spriteBatch;
     private final Stage stage;
 
@@ -41,7 +41,7 @@ public final class GameHost
     private final PlayRuntimeData playRuntimeData;
     private final RenderPipeline renderPipeline;
     private final SceneStack sceneStack;
-    private final GameResolver gameResolver;
+    private final ConfigService configService;
     private final EventDispatcher eventDispatcher;
     private final GameLogicService gameLogicService;
     private final GameSessionManager sessionManager;
@@ -53,13 +53,12 @@ public final class GameHost
                      AudioManager audioManager,
                      GraphicsManager graphicsManager,
                      UiManager uiManager,
-                     LayoutManager layoutManager,
-                     TextManager textManager,
+                     LayoutService layoutManager,
                      SpriteBatch spriteBatch,
                      Stage stage,
                      RenderPipeline renderPipeline,
                      SceneStack sceneStack,
-                     GameResolver gameResolver,
+                     ConfigService configService,
                      EventDispatcher eventDispatcher,
                      GameLogicService gameLogicService)
     {
@@ -73,7 +72,7 @@ public final class GameHost
         this.uiManager = uiManager;
 
         this.layoutManager = layoutManager;
-        this.textManager = textManager;
+        this.launcherEngineContext = new EngineContext(audioManager, graphicsManager, null);
         this.spriteBatch = spriteBatch;
         this.stage = stage;
 
@@ -85,22 +84,16 @@ public final class GameHost
         // 游戏服务
         this.renderPipeline = renderPipeline;
         this.sceneStack = sceneStack;
-        this.gameResolver = gameResolver;
+        this.configService = configService;
         this.eventDispatcher = eventDispatcher;
         this.gameLogicService = gameLogicService;
         this.sessionManager = new GameSessionManager(
-            new GameUserConfigLoader(
-                this.textManager,
-                this.languageManager,
-                this.gameInfoManager,
-                this.playLocalData),
+            this.configService,
             new GameResourceLoader(
                 this.userConfigManager,
                 this.spriteBatch,
                 this.stage,
-                this.textManager,
-                this.audioManager,
-                this.graphicsManager,
+                this.launcherEngineContext,
                 this.layoutManager,
                 this.eventQueue,
                 this.playLocalData),
@@ -147,15 +140,15 @@ public final class GameHost
                 LogUtils.debug(GameHost.class, "init 游戏状态服务初始化成功");
             }
 
-            // 初始化游戏配置加载服务
-            if (!gameResolver.init(userConfigManager, themeManager, languageManager))
+            // 初始化配置服务
+            if (!configService.init(userConfigManager, themeManager, languageManager))
             {
-                LogUtils.error(GameHost.class, "init 游戏配置加载服务初始化失败");
+                LogUtils.error(GameHost.class, "init 配置服务初始化失败");
                 return false;
             }
             else
             {
-                LogUtils.debug(GameHost.class, "init 游戏配置加载服务初始化成功");
+                LogUtils.debug(GameHost.class, "init 配置服务初始化成功");
             }
 
             // 初始化游戏事件服务
@@ -257,9 +250,9 @@ public final class GameHost
         return sceneStack;
     }
 
-    public GameResolver getGameResolver ()
+    public ConfigService getConfigService ()
     {
-        return gameResolver;
+        return configService;
     }
 
     public EventDispatcher getEventDispatcher ()
@@ -312,15 +305,15 @@ public final class GameHost
                 LogUtils.debug(GameHost.class, "dispose 游戏状态服务销毁成功");
             }
 
-            // 销毁游戏配置加载服务
-            if (!gameResolver.dispose())
+            // 销毁配置服务
+            if (!configService.dispose())
             {
-                LogUtils.error(GameHost.class, "dispose 游戏配置加载服务销毁失败");
+                LogUtils.error(GameHost.class, "dispose 配置服务销毁失败");
                 return false;
             }
             else
             {
-                LogUtils.debug(GameHost.class, "dispose 游戏配置加载服务销毁成功");
+                LogUtils.debug(GameHost.class, "dispose 配置服务销毁成功");
             }
 
             // 销毁游戏事件服务

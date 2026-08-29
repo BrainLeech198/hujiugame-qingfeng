@@ -15,7 +15,7 @@ import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.manager.LanguageManager;
-import com.hujiugame.qingfeng.manager.LayoutManager;
+import com.hujiugame.qingfeng.manager.LayoutService;
 import com.hujiugame.qingfeng.manager.ThemeManager;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
@@ -25,7 +25,7 @@ public final class SceneStack
 {
     private final Stack<GameState> stateStack = new Stack<>();
     private ThemeManager themeManager;
-    private LayoutManager layoutManager;
+    private LayoutService layoutManager;
     private PlayLocalData playLocalData;
     private RenderPipeline renderPipeline;
 
@@ -50,7 +50,7 @@ public final class SceneStack
                          AudioManager audioManager,
                          GraphicsManager graphicsManager,
                          UiManager uiManager,
-                         LayoutManager layoutManager,
+                         LayoutService layoutManager,
                          PlayLocalData playLocalData,
                          RenderPipeline renderPipeline,
                          GameLogicService gameLogicService)

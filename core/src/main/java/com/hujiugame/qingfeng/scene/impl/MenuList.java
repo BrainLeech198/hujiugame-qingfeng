@@ -212,24 +212,24 @@ public final class MenuList extends AbstractGameRender
         {
             uiManager.hideLabel(RequirementKey.Ui.MenuList.LABEL_PAGE);
             uiManager.hideButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_NEXT_PAGE);
-            uiManager.hideButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_LAST_PAGE);
+            uiManager.hideButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_PREVIOUS_PAGE);
         }
         else
         {
             uiManager.showLabel(RequirementKey.Ui.MenuList.LABEL_PAGE);
             uiManager.showButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_NEXT_PAGE);
-            uiManager.showButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_LAST_PAGE);
+            uiManager.showButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_PREVIOUS_PAGE);
         }
 
         // 判断翻页情况
         // 第一页
         if (nowPage == 1)
         {
-            uiManager.disableButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_LAST_PAGE);
+            uiManager.disableButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_PREVIOUS_PAGE);
         }
         else
         {
-            uiManager.enableButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_LAST_PAGE);
+            uiManager.enableButton(RequirementKey.Ui.MenuList.BUTTON_SELECT_PREVIOUS_PAGE);
         }
 
         // 最后一页
@@ -293,14 +293,14 @@ public final class MenuList extends AbstractGameRender
 
     // ===================================================================================================================
 
-    private void lastPage ()
+    private void previousPage ()
     {
         if (nowPage > 1)
         {
             nowPage--;
             resetSelected();
 
-            LogUtils.debug(MenuList.class, "lastPage 翻上页: " + nowPage);
+            LogUtils.debug(MenuList.class, "previousPage 翻上页: " + nowPage);
         }
     }
 
@@ -383,7 +383,7 @@ public final class MenuList extends AbstractGameRender
      * 初始化游戏列表，扫描游戏目录并刷新页面
      */
     @Override
-    protected void onInit (GameStateDataContainer gameStateDataContainer)
+    protected void init (GameStateDataContainer gameStateDataContainer)
     {
         // 提取动画配置
         animationManager.setAnimation(new Animation(gameStateDataContainer.getConfigJson()));
@@ -472,9 +472,9 @@ public final class MenuList extends AbstractGameRender
         }
 
         // 按下上一页按钮
-        else if (uiManager.isButtonClicked(RequirementKey.Ui.MenuList.BUTTON_SELECT_LAST_PAGE))
+        else if (uiManager.isButtonClicked(RequirementKey.Ui.MenuList.BUTTON_SELECT_PREVIOUS_PAGE))
         {
-            lastPage();
+            previousPage();
         }
         // 按下下一页按钮
         else if (uiManager.isButtonClicked(RequirementKey.Ui.MenuList.BUTTON_SELECT_NEXT_PAGE))
@@ -509,56 +509,8 @@ public final class MenuList extends AbstractGameRender
     @Override
     public void transitionRender (float deltaTime)
     {
-        if (animationManager.getTransitionManager().isReady())
-        {
-            // 淡出完成阶段 即淡入
-            if (animationManager.getTransitionManager().isFadedOut())
-            {
-                // 进行中
-                if (animationManager.getTransitionManager().isFadingIn())
-                {
-                    animationManager.getTransitionManager().fadingIn(
-                        gameStateDataContainer.getLayoutConfig(),
-                        audioManager, graphicsManager, uiManager,
-                        deltaTime
-                    );
-                }
-                // 初始化
-                else
-                {
-                    animationManager.getTransitionManager().initFadeIn(
-                        gameStateDataContainer.getLayoutConfig(),
-                        animationManager.getAnimation(),
-                        uiManager
-                    );
-                }
-            }
-            // 淡出阶段
-            else
-            {
-                // 进行中
-                if (animationManager.getTransitionManager().isFadingOut())
-                {
-                    animationManager.getTransitionManager().fadingOut(
-                        gameStateDataContainer.getLayoutConfig(),
-                        audioManager, graphicsManager, uiManager,
-                        deltaTime
-                    );
-                }
-                // 初始化
-                else
-                {
-                    animationManager.getTransitionManager().initFadeOut(
-                        gameStateDataContainer.getLayoutConfig(),
-                        animationManager.getAnimation()
-                    );
-                }
-            }
-        }
-        else
-        {
-            animationManager.getTransitionManager().stopTransition();
-        }
+        // 过渡动画引擎待重新设计，当前 TM 空壳不产生过渡渲染
+        render(deltaTime);
     }
 
     @Override

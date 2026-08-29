@@ -70,10 +70,6 @@ public final class EventDispatcher
                     handleEventOfPushGameState(event);
                     break;
 
-                case PUSH_GAME_STATE_INIT_SPECIALLY:
-                    handleEventOfPushGameStateInitSpecially(event);
-                    break;
-
                 case POP_GAME_STATE:
                     handleEventOfPopGameState(event);
                     break;
@@ -185,7 +181,7 @@ public final class EventDispatcher
         LogUtils.debug(EventDispatcher.class, "handleEventOfPushGameState 设置待处理任务成功");
 
         // 启动特殊渲染管线状态
-        Objects.requireNonNull(InstanceContent.getInstance()).getRenderPipeline().setState(GameRenderPipeLineState.FADING);
+        Objects.requireNonNull(InstanceContent.getInstance()).getRenderPipeline().setState(GameRenderPipeLineState.TRANSITION);
         LogUtils.debug(EventDispatcher.class, "handleEventOfPushGameState 启动特殊渲染管线状态成功");
 
         // 启动过度状态
@@ -193,42 +189,6 @@ public final class EventDispatcher
         LogUtils.debug(EventDispatcher.class, "handleEventOfPushGameState 启动过度状态成功");
 
         LogUtils.debug(EventDispatcher.class, "handleEventOfPushGameState 预处理游戏状态成功");
-    }
-
-    /**
-     * 处理游戏状态压栈Init特殊处理事件（空壳事件）
-     * <p>
-     * 仅记录意图并启动淡出（TransitionManager 接入后填充），不直接切换状态栈；
-     * 淡出完成后由动画过渡链入队 {@link PushGameStateExecute} 执行事件，由执行事件真正压栈。
-     *
-     * @param event 事件对象
-     */
-    private void handleEventOfPushGameStateInitSpecially (Event event)
-    {
-        LogUtils.debug(EventDispatcher.class, "handleEventOfPushGameStateInitSpecially 尝试预处理推入游戏状态 " +
-            "(PushGameState):{ (outState, inState): " + ((PushGameStateInitSpecially) event).getOutState() + ", " + ((PushGameStateInitSpecially) event).getInState() + " }");
-
-        // 创建 PushGameState 事件
-        Event pushGameState = new PushGameState(((PushGameStateInitSpecially) event).getOutState(), ((PushGameStateInitSpecially) event).getInState());
-        LogUtils.debug(EventDispatcher.class, "handleEventOfPushGameStateInitSpecially 创建 PushGameState 事件成功");
-
-        // 设置到正在使用的动画管理器（游戏内用游戏版，启动器用启动器版）
-        getCurrentAnimationManager().getTransitionManager().setPendingTask(pushGameState);
-        LogUtils.debug(EventDispatcher.class, "handleEventOfPushGameStateInitSpecially 设置待处理任务成功");
-
-        // 启动特殊渲染管线状态
-        Objects.requireNonNull(InstanceContent.getInstance()).getRenderPipeline().setState(GameRenderPipeLineState.FADING);
-        LogUtils.debug(EventDispatcher.class, "handleEventOfPushGameStateInitSpecially 启动特殊渲染管线状态成功");
-
-        // 启动过度状态
-        getCurrentAnimationManager().getTransitionManager().startTransition();
-        LogUtils.debug(EventDispatcher.class, "handleEventOfPushGameStateInitSpecially 启动过度状态成功");
-
-        // 立即完成淡入
-        getCurrentAnimationManager().getTransitionManager().finishFadingOut();
-        LogUtils.debug(EventDispatcher.class, "handleEventOfPushGameStateInitSpecially 立即完成淡出成功");
-
-        LogUtils.debug(EventDispatcher.class, "handleEventOfPushGameStateInitSpecially 预处理游戏状态成功");
     }
 
     /**
@@ -252,7 +212,7 @@ public final class EventDispatcher
         LogUtils.debug(EventDispatcher.class, "handleEventOfPopGameState 设置待处理任务成功");
 
         // 启动特殊渲染管线状态
-        Objects.requireNonNull(InstanceContent.getInstance()).getRenderPipeline().setState(GameRenderPipeLineState.FADING);
+        Objects.requireNonNull(InstanceContent.getInstance()).getRenderPipeline().setState(GameRenderPipeLineState.TRANSITION);
         LogUtils.debug(EventDispatcher.class, "handleEventOfPopGameState 启动特殊渲染管线状态成功");
 
         // 启动过度状态
@@ -280,7 +240,7 @@ public final class EventDispatcher
         LogUtils.debug(EventDispatcher.class, "handleEventOfSetGameState 设置待处理任务成功");
 
         // 启动特殊渲染管线状态
-        Objects.requireNonNull(InstanceContent.getInstance()).getRenderPipeline().setState(GameRenderPipeLineState.FADING);
+        Objects.requireNonNull(InstanceContent.getInstance()).getRenderPipeline().setState(GameRenderPipeLineState.TRANSITION);
         LogUtils.debug(EventDispatcher.class, "handleEventOfSetGameState 启动特殊渲染管线状态成功");
 
         // 启动过度状态
@@ -305,7 +265,7 @@ public final class EventDispatcher
         LogUtils.debug(EventDispatcher.class, "handleEventOfResetGameState 设置待处理任务成功");
 
         // 启动特殊渲染管线状态
-        Objects.requireNonNull(InstanceContent.getInstance()).getRenderPipeline().setState(GameRenderPipeLineState.FADING);
+        Objects.requireNonNull(InstanceContent.getInstance()).getRenderPipeline().setState(GameRenderPipeLineState.TRANSITION);
         LogUtils.debug(EventDispatcher.class, "handleEventOfResetGameState 启动特殊渲染管线状态成功");
 
         // 启动过度状态
@@ -396,10 +356,10 @@ public final class EventDispatcher
     private void handleEventOfEnterGame ()
     {
         // 进入游戏统一从游戏菜单页开始，其余状态由玩家在游戏内逐步进入
-        PushGameState pushGameStateEvent = new PushGameState(null, GameState.GAME_MENU);
+        PushGameStateExecute pushGameStateEvent = new PushGameStateExecute(GameState.GAME_MENU);
         LogUtils.debug(EventDispatcher.class, "handleEventOfEnterGame 尝试执行进入游戏状态 " +
-            "(PushGameState):{ (State): " + pushGameStateEvent.getOutState() + ", " + pushGameStateEvent.getInState() + " }");
-        handleEventOfPushGameState(pushGameStateEvent);
+            "(PushGameStateExecute):{ (State): " + pushGameStateEvent.getState() + " }");
+        handleEventOfPushGameStateExecute(pushGameStateEvent);
         LogUtils.debug(EventDispatcher.class, "handleEventOfEnterGame 执行进入游戏状态成功");
     }
 
@@ -409,9 +369,8 @@ public final class EventDispatcher
     private void handleEventOfQuitGame ()
     {
         // 退出游戏直接重置回主菜单，清空游戏内的状态栈（统一复用重置逻辑）
-        ResetGameState resetGameStateEvent = new ResetGameState(null);
         LogUtils.debug(EventDispatcher.class, "handleEventOfQuitGame 尝试执行退出游戏状态 (ResetGameState)");
-        handleEventOfResetGameState(resetGameStateEvent);
+        handleEventOfResetGameStateExecute();
         LogUtils.debug(EventDispatcher.class, "handleEventOfQuitGame 执行退出游戏状态成功");
     }
 
@@ -422,10 +381,10 @@ public final class EventDispatcher
     public void handleEventOfPlayGame ()
     {
         // 开始游戏压入游戏播放页，从玩家选择的角色故事进入实际游玩
-        PushGameState pushGameStateEvent = new PushGameState(null, GameState.GAME_PLAY);
+        PushGameStateExecute pushGameStateEvent = new PushGameStateExecute(GameState.GAME_PLAY);
         LogUtils.debug(EventDispatcher.class, "handleEventOfPlayGame 尝试执行游戏开始状态 " +
-            "(PushGameState):{ (State): " + pushGameStateEvent.getOutState() + ", " + pushGameStateEvent.getInState() + " }");
-        handleEventOfPushGameState(pushGameStateEvent);
+            "(PushGameStateExecute):{ (State): " + pushGameStateEvent.getState() + " }");
+        handleEventOfPushGameStateExecute(pushGameStateEvent);
         LogUtils.debug(EventDispatcher.class, "handleEventOfPlayGame 执行游戏开始状态成功");
     }
 

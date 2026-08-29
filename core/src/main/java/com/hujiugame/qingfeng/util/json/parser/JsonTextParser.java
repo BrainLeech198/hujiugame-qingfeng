@@ -5,7 +5,7 @@ import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.type.key.common.JsonKey;
 import com.hujiugame.qingfeng.ui.kind.TextObject;
 import com.hujiugame.qingfeng.type.ui.FontFlag;
-import com.hujiugame.qingfeng.manager.TextManager;
+import com.hujiugame.qingfeng.manager.LanguageManager;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
 public final class JsonTextParser
@@ -15,19 +15,19 @@ public final class JsonTextParser
     {
         throw new UnsupportedOperationException("Utility class cannot be instantiated");
     }
-    private static TextManager textManager = null;
+    private static LanguageManager languageManager = null;
 
     /**
-     * 初始化文本管理器
+     * 初始化语言管理器
      *
-     * @param textManager 文本管理器实例
+     * @param languageManager 语言管理器实例
      * @return 初始化成功返回 true
      */
-    public static boolean init (TextManager textManager)
+    public static boolean init (LanguageManager languageManager)
     {
         try
         {
-            JsonTextParser.textManager = textManager;
+            JsonTextParser.languageManager = languageManager;
             return true;
         }
         catch (Exception e)
@@ -50,7 +50,7 @@ public final class JsonTextParser
             if (json.containsKey(JsonKey.Text.TEXT_KEY))
             {
                 LogUtils.debug(JsonTextParser.class, "parseText 获取文本成功(包含解析)");
-                return new TextObject(textManager, json.getString(JsonKey.Text.TEXT_KEY));
+                return new TextObject(languageManager, json.getString(JsonKey.Text.TEXT_KEY));
             }
             else if (json.containsKey(JsonKey.Text.TEXT))
             {

@@ -49,7 +49,7 @@ public final class ConfigDisplay extends AbstractGameRender
     }
 
     @Override
-    protected void onInit (GameStateDataContainer gameStateDataContainer)
+    protected void init (GameStateDataContainer gameStateDataContainer)
     {
         this.gameStateDataContainer = gameStateDataContainer;
 
@@ -92,56 +92,8 @@ public final class ConfigDisplay extends AbstractGameRender
     @Override
     public void transitionRender (float deltaTime)
     {
-        if (animationManager.getTransitionManager().isReady())
-        {
-            // 淡出完成阶段 即淡入
-            if (animationManager.getTransitionManager().isFadedOut())
-            {
-                // 进行中
-                if (animationManager.getTransitionManager().isFadingIn())
-                {
-                    animationManager.getTransitionManager().fadingIn(
-                        gameStateDataContainer.getLayoutConfig(),
-                        audioManager, graphicsManager, uiManager,
-                        deltaTime
-                    );
-                }
-                // 初始化
-                else
-                {
-                    animationManager.getTransitionManager().initFadeIn(
-                        gameStateDataContainer.getLayoutConfig(),
-                        animationManager.getAnimation(),
-                        uiManager
-                    );
-                }
-            }
-            // 淡出阶段
-            else
-            {
-                // 进行中
-                if (animationManager.getTransitionManager().isFadingOut())
-                {
-                    animationManager.getTransitionManager().fadingOut(
-                        gameStateDataContainer.getLayoutConfig(),
-                        audioManager, graphicsManager, uiManager,
-                        deltaTime
-                    );
-                }
-                // 初始化
-                else
-                {
-                    animationManager.getTransitionManager().initFadeOut(
-                        gameStateDataContainer.getLayoutConfig(),
-                        animationManager.getAnimation()
-                    );
-                }
-            }
-        }
-        else
-        {
-            animationManager.getTransitionManager().stopTransition();
-        }
+        // 过渡动画引擎待重新设计，当前 TM 空壳不产生过渡渲染
+        render(deltaTime);
     }
 
     @Override

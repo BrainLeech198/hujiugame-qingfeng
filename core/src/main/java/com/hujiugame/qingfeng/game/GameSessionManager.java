@@ -7,7 +7,7 @@ import com.hujiugame.qingfeng.data.story.tree.TreeStructure;
 import com.hujiugame.qingfeng.data.story.tree.TreeStructureInfo;
 import com.hujiugame.qingfeng.game.loader.GamePlayDataLoader;
 import com.hujiugame.qingfeng.game.loader.GameResourceLoader;
-import com.hujiugame.qingfeng.game.loader.GameUserConfigLoader;
+import com.hujiugame.qingfeng.manager.ConfigService;
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.data.play.PlayLocalData;
 import com.hujiugame.qingfeng.data.play.Player;
@@ -23,7 +23,7 @@ import com.hujiugame.qingfeng.util.system.LogUtils;
 
 public final class GameSessionManager
 {
-    private final GameUserConfigLoader userConfigLoader;
+    private final ConfigService configService;
     private final GameResourceLoader resourceLoader;
     private final GamePlayDataLoader dataLoader;
     private final EventQueue eventQueue;
@@ -35,7 +35,7 @@ public final class GameSessionManager
     /**
      * 构造游戏会话管理器
      *
-     * @param userConfigLoader 用户配置加载器
+     * @param configService    配置服务
      * @param resourceLoader   资源加载器
      * @param dataLoader       数据加载器
      * @param eventQueue     事件队列
@@ -44,7 +44,7 @@ public final class GameSessionManager
      * @param playLocalData  游戏数据内容
      * @param sceneStack 场景栈
      */
-    public GameSessionManager (GameUserConfigLoader userConfigLoader,
+    public GameSessionManager (ConfigService configService,
                                GameResourceLoader resourceLoader,
                                GamePlayDataLoader dataLoader,
                                EventQueue eventQueue,
@@ -53,7 +53,7 @@ public final class GameSessionManager
                                PlayLocalData playLocalData,
                                SceneStack sceneStack)
     {
-        this.userConfigLoader = userConfigLoader;
+        this.configService = configService;
         this.resourceLoader = resourceLoader;
         this.dataLoader = dataLoader;
         this.eventQueue = eventQueue;
@@ -132,7 +132,7 @@ public final class GameSessionManager
             LogUtils.info(GameSessionManager.class, "enterGame 存储游戏信息 (path): " + gamePathHandle);
 
             // 加载用户游戏偏好设置
-            if (!userConfigLoader.loadUserConfig(gamePathHandle, gameId))
+            if (!configService.loadGameConfig(gamePathHandle, gameId, playLocalData))
             {
                 LogUtils.error(GameSessionManager.class, "enterGame 加载用户游戏偏好设置失败");
                 return;
@@ -143,7 +143,7 @@ public final class GameSessionManager
             {
                 LogUtils.error(GameSessionManager.class, "enterGame 加载游戏资源失败");
                 // loadResource 失败时回滚已切换的用户配置（语言、主题）
-                userConfigLoader.disposeUserConfig();
+                configService.disposeGameConfig(playLocalData);
                 return;
             }
 
@@ -154,7 +154,7 @@ public final class GameSessionManager
                 // loadData 失败时按 LIFO 回滚已加载的资源和用户配置
                 dataLoader.disposeData();
                 resourceLoader.disposeResource();
-                userConfigLoader.disposeUserConfig();
+                configService.disposeGameConfig(playLocalData);
                 return;
             }
 
@@ -169,7 +169,7 @@ public final class GameSessionManager
             // enterGame 异常时按 LIFO 回滚所有已加载阶段（dispose 方法幂等，安全重复调用）
             dataLoader.disposeData();
             resourceLoader.disposeResource();
-            userConfigLoader.disposeUserConfig();
+            configService.disposeGameConfig(playLocalData);
         }
     }
 
@@ -198,7 +198,7 @@ public final class GameSessionManager
             }
 
             // 释放用户游戏偏好设置
-            if (!userConfigLoader.disposeUserConfig())
+            if (!configService.disposeGameConfig(playLocalData))
             {
                 LogUtils.error(GameSessionManager.class, "quitGame 释放用户游戏偏好设置失败");
                 return;

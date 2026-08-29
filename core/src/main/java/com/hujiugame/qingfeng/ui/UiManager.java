@@ -45,7 +45,7 @@ import com.hujiugame.qingfeng.type.ui.FontFlag;
 import com.hujiugame.qingfeng.type.ui.UiKind;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
-import com.hujiugame.qingfeng.manager.TextManager;
+import com.hujiugame.qingfeng.manager.LanguageManager;
 import com.hujiugame.qingfeng.manager.ThemeManager;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 import com.hujiugame.qingfeng.util.system.LogUtils;
@@ -154,9 +154,9 @@ public final class UiManager
      * @param stage           舞台对象，用于管理 UI 控件
      * @param audioManager    音频管理器，用于加载和播放音效
      * @param graphicsManager 图形管理器，用于纹理加载等图形操作
-     * @param textManager     文本管理器，用于弹窗文本解析
+     * @param languageManager 语言管理器，用于弹窗文本解析
      */
-    public UiManager (Stage stage, AudioManager audioManager, GraphicsManager graphicsManager, TextManager textManager)
+    public UiManager (Stage stage, AudioManager audioManager, GraphicsManager graphicsManager, LanguageManager languageManager)
     {
         this.stage = stage;
         this.audioManager = audioManager;
@@ -183,7 +183,7 @@ public final class UiManager
         this.buttonClickCallbackMap = buttonManager.getButtonClickCallbackMap();
 
         // 弹窗
-        this.messageBox = new MessageBox(stage, textManager);
+        this.messageBox = new MessageBox(stage, languageManager);
     }
 
     /**

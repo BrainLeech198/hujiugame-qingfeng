@@ -1,47 +1,47 @@
 {
-  "message_box" : {
-    "open_official_website.title" : "打开游戏官网？",
-    "open_official_website.content" : "是否打开浏览器前往官网？",
-    "quit_game.title" : "退出游戏？",
-    "quit_game.content" : "确定要退出游戏吗？",
-    "update_detected.title" : "检测到新版本！",
-    "update_detected.content" : "是否打开浏览器前往官网下载最新版本？",
-    "update_detected_beta.title" : "发现测试版更新！",
-    "update_detected_beta.content" : "当前更新为测试版，功能可能不稳定或存在未知问题。是否打开浏览器前往官网下载？",
-    "update_request_failed.title" : "版本检测失败！",
-    "update_request_failed.content" : "请检查软件网络连接权限，是否打开浏览器前往官网并查看版本更新？",
-    "game_version_different.title" : "版本不一致！",
-    "game_version_different.content.1" : "当前游戏《",
-    "game_version_different.content.2" : "》最佳启动器版本为:",
-    "game_version_different.content.3" : "而当前版本为:",
-    "game_version_different.content.4" : "强行运行可能导致崩溃",
-    "game_launcher_version_unknown.title" : "无法识别游戏版本要求！",
-    "game_launcher_version_unknown.content.1" : "当前游戏《",
-    "game_launcher_version_unknown.content.2" : "》未声明可识别的启动器版本要求，建议不要强制运行"
+  "message_box": {
+    "open_official_website.title": "打开游戏官网？",
+    "open_official_website.content": "是否打开浏览器前往官网？",
+    "quit_game.title": "退出游戏？",
+    "quit_game.content": "确定要退出游戏吗？",
+    "update_detected.title": "检测到新版本！",
+    "update_detected.content": "是否打开浏览器前往官网下载最新版本？",
+    "update_detected_beta.title": "发现测试版更新！",
+    "update_detected_beta.content": "当前更新为测试版，功能可能不稳定或存在未知问题。是否打开浏览器前往官网下载？",
+    "update_request_failed.title": "版本检测失败！",
+    "update_request_failed.content": "请检查软件网络连接权限，是否打开浏览器前往官网并查看版本更新？",
+    "game_version_different.title": "版本不一致！",
+    "game_version_different.content.1": "当前游戏《",
+    "game_version_different.content.2": "》最佳启动器版本为:",
+    "game_version_different.content.3": "而当前版本为:",
+    "game_version_different.content.4": "强行运行可能导致崩溃",
+    "game_launcher_version_unknown.title": "无法识别游戏版本要求！",
+    "game_launcher_version_unknown.content.1": "当前游戏《",
+    "game_launcher_version_unknown.content.2": "》未声明可识别的启动器版本要求，建议不要强制运行"
   },
-  "menu.main" : {
-    "button.start" : "开始",
-    "button.create" : "创作",
-    "button.config" : "设置",
-    "button.quit" : "退出"
+  "menu.main": {
+    "button.start": "开始",
+    "button.create": "创作",
+    "button.config": "设置",
+    "button.quit": "退出"
   },
-  "menu.list" : {
-    "button.back" : "返回",
-    "button.import" : "导入",
-    "button.profile" : "档案",
-    "button.share" : "分享",
-    "button.delete" : "删除",
-    "button.last_page" : "上一页",
-    "button.next_page" : "下一页",
-    "label.absolute_path" : "目录路径",
-    "label.selected_path" : "选择的游戏目录",
-    "label.page" : "/"
+  "menu.list": {
+    "button.back": "返回",
+    "button.import": "导入",
+    "button.profile": "档案",
+    "button.share": "分享",
+    "button.delete": "删除",
+    "button.next_page": "下一页",
+    "label.absolute_path": "目录路径",
+    "label.selected_path": "选择的游戏目录",
+    "label.page": "/",
+    "button.previous_page": "上一页"
   },
-  "menu.load" : {
-    "label.loading" : "加载中..."
+  "menu.load": {
+    "label.loading": "加载中..."
   },
-  "config.basic" : {
-    "back" : "返回",
-    "language" : "使用的语言"
+  "config.basic": {
+    "back": "返回",
+    "language": "使用的语言"
   }
 }

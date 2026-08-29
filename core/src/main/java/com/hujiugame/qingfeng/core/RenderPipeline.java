@@ -85,7 +85,7 @@ public final class RenderPipeline
             // 初始化游戏渲染机
             if (this.gameRender != null)
             {
-                this.gameRender.init(gameStateDataContainer);
+                this.gameRender.init_(gameStateDataContainer);
                 LogUtils.debug(RenderPipeline.class, "register 游戏渲染机初始化成功" +
                     " (gameState): " + gameStateDataContainer.getGameState());
                 return true;
@@ -128,7 +128,7 @@ public final class RenderPipeline
                         updateNormal(deltaTime);
                         break;
 
-                    case FADING:
+                    case TRANSITION:
                         updateFading(deltaTime);
                         break;
 
@@ -193,7 +193,7 @@ public final class RenderPipeline
                         renderNormal(deltaTime);
                         break;
 
-                    case FADING:
+                    case TRANSITION:
                         renderFading(deltaTime);
                         break;
                     default:

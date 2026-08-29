@@ -1,47 +1,47 @@
 {
-  "message_box" : {
-    "open_official_website.title" : "¿Abrir el sitio web oficial del juego?",
-    "open_official_website.content" : "¿Quieres abrir el navegador e ir al sitio web oficial?",
-    "quit_game.title" : "Salir del juego",
-    "quit_game.content" : "¿Seguro que quieres salir del juego?",
-    "update_detected.title" : "¡Nueva versión detectada!",
-    "update_detected.content" : "¿Quieres abrir tu navegador para descargar la última versión desde nuestro sitio web oficial?",
-    "update_detected_beta.title" : "¡Actualización beta detectada!",
-    "update_detected_beta.content" : "Esta es una actualización beta. Puede ser inestable o contener problemas desconocidos. ¿Quieres abrir tu navegador para descargarla desde nuestro sitio web oficial?",
-    "update_request_failed.title" : "¡Error al comprobar la actualización!",
-    "update_request_failed.content" : "Comprueba los permisos de red y la conexión a Internet. ¿Quieres abrir el navegador para visitar el sitio oficial y obtener la última versión?",
-    "game_version_different.title" : "¡Versión incompatible!",
-    "game_version_different.content.1" : "El juego actual \"",
-    "game_version_different.content.2" : "\" requiere la versión de lanzador:",
-    "game_version_different.content.3" : ", mientras que la versión actual es:",
-    "game_version_different.content.4" : ". Forzarlo a ejecutarse puede provocar fallos",
-    "game_launcher_version_unknown.title" : "¡Requisito de versión desconocido!",
-    "game_launcher_version_unknown.content.1" : "El juego actual \"",
-    "game_launcher_version_unknown.content.2" : "\" no declara un requisito de versión de lanzador reconocible. Se recomienda no forzarlo a ejecutarse."
+  "message_box": {
+    "open_official_website.title": "¿Abrir el sitio web oficial del juego?",
+    "open_official_website.content": "¿Quieres abrir el navegador e ir al sitio web oficial?",
+    "quit_game.title": "Salir del juego",
+    "quit_game.content": "¿Seguro que quieres salir del juego?",
+    "update_detected.title": "¡Nueva versión detectada!",
+    "update_detected.content": "¿Quieres abrir tu navegador para descargar la última versión desde nuestro sitio web oficial?",
+    "update_detected_beta.title": "¡Actualización beta detectada!",
+    "update_detected_beta.content": "Esta es una actualización beta. Puede ser inestable o contener problemas desconocidos. ¿Quieres abrir tu navegador para descargarla desde nuestro sitio web oficial?",
+    "update_request_failed.title": "¡Error al comprobar la actualización!",
+    "update_request_failed.content": "Comprueba los permisos de red y la conexión a Internet. ¿Quieres abrir el navegador para visitar el sitio oficial y obtener la última versión?",
+    "game_version_different.title": "¡Versión incompatible!",
+    "game_version_different.content.1": "El juego actual \"",
+    "game_version_different.content.2": "\" requiere la versión de lanzador:",
+    "game_version_different.content.3": ", mientras que la versión actual es:",
+    "game_version_different.content.4": ". Forzarlo a ejecutarse puede provocar fallos",
+    "game_launcher_version_unknown.title": "¡Requisito de versión desconocido!",
+    "game_launcher_version_unknown.content.1": "El juego actual \"",
+    "game_launcher_version_unknown.content.2": "\" no declara un requisito de versión de lanzador reconocible. Se recomienda no forzarlo a ejecutarse."
   },
-  "menu.main" : {
-    "button.start" : "Iniciar",
-    "button.create" : "Crear",
-    "button.config" : "Configuración",
-    "button.quit" : "Salir"
+  "menu.main": {
+    "button.start": "Iniciar",
+    "button.create": "Crear",
+    "button.config": "Configuración",
+    "button.quit": "Salir"
   },
-  "menu.list" : {
-    "button.back" : "Atrás",
-    "button.import" : "Importar",
-    "button.profile" : "Perfil",
-    "button.share" : "Compartir",
-    "button.delete" : "Eliminar",
-    "button.last_page" : "Página anterior",
-    "button.next_page" : "Página siguiente",
-    "label.absolute_path" : "Ruta de la carpeta",
-    "label.selected_path" : "Carpeta seleccionada",
-    "label.page" : "de"
+  "menu.list": {
+    "button.back": "Atrás",
+    "button.import": "Importar",
+    "button.profile": "Perfil",
+    "button.share": "Compartir",
+    "button.delete": "Eliminar",
+    "button.next_page": "Siguiente",
+    "label.absolute_path": "Ruta de la carpeta",
+    "label.selected_path": "Carpeta seleccionada",
+    "label.page": "de",
+    "button.previous_page": "Anterior"
   },
-  "menu.load" : {
-    "label.loading" : "Cargando..."
+  "menu.load": {
+    "label.loading": "Cargando..."
   },
-  "config.basic" : {
-    "back" : "Atrás",
-    "language" : "Idioma"
+  "config.basic": {
+    "back": "Atrás",
+    "language": "Idioma"
   }
 }

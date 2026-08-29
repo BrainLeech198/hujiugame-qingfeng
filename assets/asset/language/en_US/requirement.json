@@ -1,47 +1,47 @@
 {
-  "message_box" : {
-    "open_official_website.title" : "Open Game Official Website?",
-    "open_official_website.content" : "Do you want to open the browser and go to the official website?",
-    "quit_game.title" : "Quit Game",
-    "quit_game.content" : "Are you sure you want to quit the game?",
-    "update_detected.title" : "New Version Detected",
-    "update_detected.content" : "Would you like to open your browser to download the latest version from our official website?",
-    "update_detected_beta.title" : "Beta Update Detected",
-    "update_detected_beta.content" : "This is a beta update. It may be unstable or contain unknown issues. Would you like to open your browser to download it from our official website?",
-    "update_request_failed.title" : "Update Check Failed",
-    "update_request_failed.content" : "Check network permissions and internet connection.Want open browser to visit official site for latest version?",
-    "game_version_different.title" : "Version Mismatch!",
-    "game_version_different.content.1" : "The current game \"",
-    "game_version_different.content.2" : "\" best launcher version is:",
-    "game_version_different.content.3" : ", while the current version is:",
-    "game_version_different.content.4" : ". Forcing it to run may cause crashes",
-    "game_launcher_version_unknown.title" : "Unknown Game Version Requirement!",
-    "game_launcher_version_unknown.content.1" : "The current game \"",
-    "game_launcher_version_unknown.content.2" : "\" does not declare a recognizable launcher version requirement. It is recommended not to force it to run."
+  "message_box": {
+    "open_official_website.title": "Open Game Official Website?",
+    "open_official_website.content": "Do you want to open the browser and go to the official website?",
+    "quit_game.title": "Quit Game",
+    "quit_game.content": "Are you sure you want to quit the game?",
+    "update_detected.title": "New Version Detected",
+    "update_detected.content": "Would you like to open your browser to download the latest version from our official website?",
+    "update_detected_beta.title": "Beta Update Detected",
+    "update_detected_beta.content": "This is a beta update. It may be unstable or contain unknown issues. Would you like to open your browser to download it from our official website?",
+    "update_request_failed.title": "Update Check Failed",
+    "update_request_failed.content": "Check network permissions and internet connection.Want open browser to visit official site for latest version?",
+    "game_version_different.title": "Version Mismatch!",
+    "game_version_different.content.1": "The current game \"",
+    "game_version_different.content.2": "\" best launcher version is:",
+    "game_version_different.content.3": ", while the current version is:",
+    "game_version_different.content.4": ". Forcing it to run may cause crashes",
+    "game_launcher_version_unknown.title": "Unknown Game Version Requirement!",
+    "game_launcher_version_unknown.content.1": "The current game \"",
+    "game_launcher_version_unknown.content.2": "\" does not declare a recognizable launcher version requirement. It is recommended not to force it to run."
   },
-  "menu.main" : {
-    "button.start" : "Start",
-    "button.create" : "Create",
-    "button.config" : "Settings",
-    "button.quit" : "Quit"
+  "menu.main": {
+    "button.start": "Start",
+    "button.create": "Create",
+    "button.config": "Settings",
+    "button.quit": "Quit"
   },
-  "menu.list" : {
-    "button.back" : "Back",
-    "button.import" : "Import",
-    "button.profile" : "Profile",
-    "button.share" : "Share",
-    "button.delete" : "Delete",
-    "button.last_page" : "Previous Page",
-    "button.next_page" : "Next Page",
-    "label.absolute_path" : "Folder Path",
-    "label.selected_path" : "Selected Folder",
-    "label.page" : "of"
+  "menu.list": {
+    "button.back": "Back",
+    "button.import": "Import",
+    "button.profile": "Profile",
+    "button.share": "Share",
+    "button.delete": "Delete",
+    "button.next_page": "Next",
+    "label.absolute_path": "Folder Path",
+    "label.selected_path": "Selected Folder",
+    "label.page": "of",
+    "button.previous_page": "Previous"
   },
-  "menu.load" : {
-    "label.loading" : "Loading..."
+  "menu.load": {
+    "label.loading": "Loading..."
   },
-  "config.basic" : {
-    "back" : "Back",
-    "language" : "Language"
+  "config.basic": {
+    "back": "Back",
+    "language": "Language"
   }
 }

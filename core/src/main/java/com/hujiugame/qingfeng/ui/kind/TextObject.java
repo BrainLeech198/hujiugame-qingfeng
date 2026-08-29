@@ -1,11 +1,11 @@
 package com.hujiugame.qingfeng.ui.kind;
 
-import com.hujiugame.qingfeng.manager.TextManager;
+import com.hujiugame.qingfeng.manager.LanguageManager;
 
 public class TextObject
 {
-    private TextManager textManager;
-    private long textManagerStateCode = -1;
+    private LanguageManager languageManager;
+    private long languageManagerStateCode = -1;
 
     private String rawText = null;
     private String baseText = null;
@@ -16,22 +16,22 @@ public class TextObject
     /**
      * 创建文本对象
      *
-     * @param textManager 文本管理器（可为 null，表示纯文本）
-     * @param rawText     原始文本内容
+     * @param languageManager 语言管理器（可为 null，表示纯文本）
+     * @param rawText         原始文本内容
      */
-    public TextObject (TextManager textManager, String rawText)
+    public TextObject (LanguageManager languageManager, String rawText)
     {
-        this.textManager = textManager;
+        this.languageManager = languageManager;
         this.rawText = rawText;
     }
 
     /**
-     * 更换文本管理器并重置状态码
+     * 更换语言管理器并重置状态码
      */
-    private void changeTextManager (TextManager textManager)
+    private void changeLanguageManager (LanguageManager languageManager)
     {
-        this.textManager = textManager;
-        this.textManagerStateCode = -1;
+        this.languageManager = languageManager;
+        this.languageManagerStateCode = -1;
     }
 
     // ===================================================================================================================
@@ -41,8 +41,8 @@ public class TextObject
      */
     private void parseRawText ()
     {
-        this.baseText = textManager.parseText(getRawText());
-        this.textManagerStateCode = textManager.getStateCode();
+        this.baseText = languageManager.resolveText(getRawText());
+        this.languageManagerStateCode = languageManager.getStateCode();
     }
 
     /**
@@ -158,13 +158,13 @@ public class TextObject
     {
 
         // 纯文本
-        if (textManager == null)
+        if (languageManager == null)
         {
             return getRawText();
         }
 
         // 懒解析
-        if (textManagerStateCode != textManager.getStateCode())
+        if (languageManagerStateCode != languageManager.getStateCode())
         {
             parseRawText();
             combineText();
@@ -188,8 +188,8 @@ public class TextObject
     public String toString ()
     {
         return "TextObject{" +
-                "textManager=" + textManager +
-                ", textManagerStateCode=" + textManagerStateCode +
+                "languageManager=" + languageManager +
+                ", languageManagerStateCode=" + languageManagerStateCode +
                 ", rawText='" + rawText + '\'' +
                 ", baseText='" + baseText + '\'' +
                 ", displayText='" + displayText + '\'' +

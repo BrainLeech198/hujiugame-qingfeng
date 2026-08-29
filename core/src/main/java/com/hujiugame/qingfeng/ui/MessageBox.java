@@ -21,7 +21,7 @@ import com.hujiugame.qingfeng.type.ui.BoxType;
 import com.hujiugame.qingfeng.audio.AudioManager;
 import com.hujiugame.qingfeng.ui.dialog.BoxAsk;
 import com.hujiugame.qingfeng.ui.dialog.BoxInfo;
-import com.hujiugame.qingfeng.manager.TextManager;
+import com.hujiugame.qingfeng.manager.LanguageManager;
 import com.hujiugame.qingfeng.manager.ThemeManager;
 import com.hujiugame.qingfeng.util.StringPolisher;
 import com.hujiugame.qingfeng.util.system.LogUtils;
@@ -63,7 +63,7 @@ public final class MessageBox
     private AudioManager audioManager;
     private UiManager uiManager;
     private ThemeManager themeManager;
-    private TextManager textManager;
+    private LanguageManager languageManager;
     private LabelInfo titleLabelInfo;
     private LabelInfo contentLabelInfo;
     private ButtonInfo buttonInfo;
@@ -75,13 +75,13 @@ public final class MessageBox
     /**
      * 构造消息弹窗管理器。
      *
-     * @param stage       UI 舞台对象
-     * @param textManager 文本管理器，用于文本对象创建
+     * @param stage           UI 舞台对象
+     * @param languageManager 语言管理器，用于文本对象创建
      */
-    public MessageBox (Stage stage, TextManager textManager)
+    public MessageBox (Stage stage, LanguageManager languageManager)
     {
         this.stage = stage;
-        this.textManager = textManager;
+        this.languageManager = languageManager;
     }
 
     /**
@@ -620,7 +620,7 @@ public final class MessageBox
                     boxPositionY + (boxHeight - boxTitleHeight),
                     boxWidth,
                     boxTitleHeight,
-                    new TextObject(textManager, title),
+                    new TextObject(languageManager, title),
                     themeManager.getFont(),
                     titleLabelInfo.getFontSize(),
                     titleLabelInfo.getFontColor(),
@@ -636,7 +636,7 @@ public final class MessageBox
                     boxPositionY,
                     boxWidth,
                     boxHeight - boxTitleHeight - boxTitleContentGap,
-                    new TextObject(textManager, message),
+                    new TextObject(languageManager, message),
                     themeManager.getFont(),
                     contentLabelInfo.getFontSize(),
                     contentLabelInfo.getFontColor(),
@@ -839,7 +839,7 @@ public final class MessageBox
                     boxPositionY + (boxHeight - boxTitleHeight),
                     boxWidth,
                     boxTitleHeight,
-                    new TextObject(textManager, title),
+                    new TextObject(languageManager, title),
                     themeManager.getFont(),
                     titleLabelInfo.getFontSize(),
                     titleLabelInfo.getFontColor(),
@@ -855,7 +855,7 @@ public final class MessageBox
                     boxPositionY,
                     boxWidth,
                     boxHeight - boxTitleHeight - boxTitleContentGap,
-                    new TextObject(textManager, message),
+                    new TextObject(languageManager, message),
                     themeManager.getFont(),
                     contentLabelInfo.getFontSize(),
                     contentLabelInfo.getFontColor(),

@@ -12,7 +12,7 @@ public interface GameRender
      *
      * @param gameStateDataContainer 游戏状态数据容器
      */
-    void init (GameStateDataContainer gameStateDataContainer);
+    void init_ (GameStateDataContainer gameStateDataContainer);
 
     /**
      * 获取游戏状态数据容器。

@@ -5,12 +5,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.hujiugame.qingfeng.data.play.PlayLocalData;
 import com.hujiugame.qingfeng.animation.AnimationManager;
 import com.hujiugame.qingfeng.audio.AudioManager;
+import com.hujiugame.qingfeng.engine.EngineContext;
 import com.hujiugame.qingfeng.event.EventQueue;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.script.ScriptExecutor;
 import com.hujiugame.qingfeng.ui.UiManager;
-import com.hujiugame.qingfeng.manager.LayoutManager;
-import com.hujiugame.qingfeng.manager.TextManager;
+import com.hujiugame.qingfeng.manager.LayoutService;
+import com.hujiugame.qingfeng.manager.LanguageManager;
 import com.hujiugame.qingfeng.manager.ThemeManager;
 import com.hujiugame.qingfeng.manager.UserConfigManager;
 import com.hujiugame.qingfeng.util.system.LogUtils;
@@ -20,10 +21,8 @@ public final class GameResourceLoader
     private final UserConfigManager userConfigManager;
     private final SpriteBatch spriteBatch;
     private final Stage stage;
-    private final TextManager textManager;
-    private final AudioManager launcherAudioManager;
-    private final GraphicsManager launcherGraphicsManager;
-    private final LayoutManager layoutManager;
+    private final EngineContext launcherEngineContext;
+    private final LayoutService layoutManager;
     private final EventQueue eventQueue;
     private final PlayLocalData playLocalData;
 
@@ -33,9 +32,7 @@ public final class GameResourceLoader
      * @param userConfigManager       用户配置管理器
      * @param spriteBatch             精灵批处理
      * @param stage                   舞台对象
-     * @param textManager             文本管理器
-     * @param launcherAudioManager    启动器音频管理器
-     * @param launcherGraphicsManager 启动器图形管理器
+     * @param launcherEngineContext   启动器引擎上下文
      * @param layoutManager           布局管理器
      * @param eventQueue              事件队列（创建游戏动画管理器用）
      * @param playLocalData         游戏数据内容
@@ -43,19 +40,15 @@ public final class GameResourceLoader
     public GameResourceLoader (UserConfigManager userConfigManager,
                                SpriteBatch spriteBatch,
                                Stage stage,
-                               TextManager textManager,
-                               AudioManager launcherAudioManager,
-                               GraphicsManager launcherGraphicsManager,
-                               LayoutManager layoutManager,
+                               EngineContext launcherEngineContext,
+                               LayoutService layoutManager,
                                EventQueue eventQueue,
                                PlayLocalData playLocalData)
     {
         this.userConfigManager = userConfigManager;
         this.spriteBatch = spriteBatch;
         this.stage = stage;
-        this.textManager = textManager;
-        this.launcherAudioManager = launcherAudioManager;
-        this.launcherGraphicsManager = launcherGraphicsManager;
+        this.launcherEngineContext = launcherEngineContext;
         this.layoutManager = layoutManager;
         this.eventQueue = eventQueue;
         this.playLocalData = playLocalData;
@@ -72,7 +65,7 @@ public final class GameResourceLoader
         try
         {
             // audio
-            launcherAudioManager.stopAll();
+            launcherEngineContext.getAudioManager().stopAll();
             AudioManager gameAudioManager = new AudioManager(userConfigManager);
             if (!gameAudioManager.init())
             {
@@ -81,7 +74,6 @@ public final class GameResourceLoader
             }
             else
             {
-                playLocalData.setAudioManager(gameAudioManager);
                 LogUtils.debug(GameResourceLoader.class, "loadResource 音频初始化成功");
             }
             layoutManager.setAudioManager(gameAudioManager);
@@ -95,13 +87,13 @@ public final class GameResourceLoader
             }
             else
             {
-                playLocalData.setGraphicsManager(gameGraphicsManager);
                 LogUtils.debug(GameResourceLoader.class, "loadResource 绘图初始化成功");
             }
             layoutManager.setGraphicsManager(gameGraphicsManager);
 
-            // ui
-            UiManager gameUiManager = new UiManager(stage, launcherAudioManager, launcherGraphicsManager, textManager);
+            // ui（游戏 UiManager 使用启动器的 Audio/Graphics，因为 UI 元素在启动器 stage 上创建）
+            LanguageManager gameLanguageManager = playLocalData.getLanguageManager();
+            UiManager gameUiManager = new UiManager(stage, launcherEngineContext.getAudioManager(), launcherEngineContext.getGraphicsManager(), gameLanguageManager);
             if (!gameUiManager.init(gameThemeManager))
             {
                 LogUtils.error(GameResourceLoader.class, "loadResource ui初始化失败");
@@ -139,10 +131,12 @@ public final class GameResourceLoader
             }
             else
             {
-                playLocalData.setAnimationManager(gameAnimationManager);
                 LogUtils.debug(GameResourceLoader.class, "loadResource 动画初始化成功");
             }
-            LogUtils.debug(GameResourceLoader.class, "loadResource 动画初始化成功");
+
+            // 创建游戏引擎上下文并存入 PlayLocalData
+            EngineContext gameEngineContext = new EngineContext(gameAudioManager, gameGraphicsManager, gameAnimationManager);
+            playLocalData.setEngineContext(gameEngineContext);
 
             LogUtils.debug(GameResourceLoader.class, "loadResource 加载游戏资源成功");
             return true;
@@ -162,14 +156,6 @@ public final class GameResourceLoader
     {
         try
         {
-            // 销毁动画
-            AnimationManager gameAnimationManager = playLocalData.getAnimationManager();
-            if (gameAnimationManager != null)
-            {
-                gameAnimationManager.dispose();
-                LogUtils.debug(GameResourceLoader.class, "disposeResource animation销毁成功");
-            }
-
             // 销毁脚本执行器
             ScriptExecutor scriptExecutor = playLocalData.getScriptExecutor();
             if (scriptExecutor != null)
@@ -200,37 +186,21 @@ public final class GameResourceLoader
                 }
             }
 
-            // 销毁图形
-            GraphicsManager gameGraphicsManager = playLocalData.getGraphicsManager();
-            if (gameGraphicsManager != null)
+            // 销毁引擎上下文（动画、图形、音频）
+            EngineContext gameEngineContext = playLocalData.getEngineContext();
+            if (gameEngineContext != null)
             {
-                if (!gameGraphicsManager.dispose())
+                if (!gameEngineContext.dispose())
                 {
-                    LogUtils.error(GameResourceLoader.class, "disposeResource graphics销毁失败");
+                    LogUtils.error(GameResourceLoader.class, "disposeResource 引擎上下文销毁失败");
                     return false;
                 }
-                else
-                {
-                    LogUtils.debug(GameResourceLoader.class, "disposeResource graphics销毁成功");
-                }
+                LogUtils.debug(GameResourceLoader.class, "disposeResource 引擎上下文销毁成功");
             }
-            layoutManager.setGraphicsManager(launcherGraphicsManager);
 
-            // 销毁音频
-            AudioManager gameAudioManager = playLocalData.getAudioManager();
-            if (gameAudioManager != null)
-            {
-                if (!gameAudioManager.dispose())
-                {
-                    LogUtils.error(GameResourceLoader.class, "disposeResource audio销毁失败");
-                    return false;
-                }
-                else
-                {
-                    LogUtils.debug(GameResourceLoader.class, "disposeResource audio销毁成功");
-                }
-            }
-            layoutManager.setAudioManager(launcherAudioManager);
+            // 恢复启动器引擎上下文到 LayoutService
+            layoutManager.setAudioManager(launcherEngineContext.getAudioManager());
+            layoutManager.setGraphicsManager(launcherEngineContext.getGraphicsManager());
 
             LogUtils.debug(GameResourceLoader.class, "disposeResource 销毁游戏资源成功");
             return true;

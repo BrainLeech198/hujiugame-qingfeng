@@ -8,7 +8,7 @@ import com.hujiugame.qingfeng.data.story.tree.TreeStructureType;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.key.story.StoryKey;
 import com.hujiugame.qingfeng.type.file.PathName;
-import com.hujiugame.qingfeng.manager.LayoutManager;
+import com.hujiugame.qingfeng.manager.LayoutService;
 import com.hujiugame.qingfeng.manager.ThemeManager;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 import com.hujiugame.qingfeng.util.system.LogUtils;
@@ -40,7 +40,7 @@ public class Role
      * @param themeManager        主题管理器
      * @param layoutManager       布局管理器
      */
-    public Role (FileHandle roleDirectoryHandle, ThemeManager themeManager, LayoutManager layoutManager)
+    public Role (FileHandle roleDirectoryHandle, ThemeManager themeManager, LayoutService layoutManager)
     {
         try
         {
@@ -165,7 +165,7 @@ public class Role
      * @param layoutManager       布局管理器
      * @return 加载成功返回 true
      */
-    private boolean loadShowLayout (FileHandle roleDirectoryHandle, ThemeManager themeManager, LayoutManager layoutManager)
+    private boolean loadShowLayout (FileHandle roleDirectoryHandle, ThemeManager themeManager, LayoutService layoutManager)
     {
         try
         {

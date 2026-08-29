@@ -1,47 +1,47 @@
 {
-  "message_box" : {
-    "open_official_website.title" : "Открыть официальный сайт игры?",
-    "open_official_website.content" : "Хотите открыть браузер и перейти на официальный сайт?",
-    "quit_game.title" : "Выйти из игры",
-    "quit_game.content" : "Вы уверены, что хотите выйти из игры?",
-    "update_detected.title" : "Обнаружена новая версия!",
-    "update_detected.content" : "Хотите открыть браузер, чтобы скачать последнюю версию с нашего официального сайта?",
-    "update_detected_beta.title" : "Обнаружено бета-обновление!",
-    "update_detected_beta.content" : "Это бета-обновление. Оно может быть нестабильным или содержать неизвестные проблемы. Хотите открыть браузер, чтобы скачать его с нашего официального сайта?",
-    "update_request_failed.title" : "Не удалось проверить обновление!",
-    "update_request_failed.content" : "Проверьте сетевые разрешения и подключение к Интернету. Хотите открыть браузер, чтобы посетить официальный сайт и получить последнюю версию?",
-    "game_version_different.title" : "Несовпадение версии!",
-    "game_version_different.content.1" : "Текущая игра \"",
-    "game_version_different.content.2" : "\" требует версию лаунчера:",
-    "game_version_different.content.3" : ", а текущая версия:",
-    "game_version_different.content.4" : ". Принудительный запуск может вызвать сбои",
-    "game_launcher_version_unknown.title" : "Неизвестное требование версии игры!",
-    "game_launcher_version_unknown.content.1" : "Текущая игра \"",
-    "game_launcher_version_unknown.content.2" : "\" не объявляет узнаваемое требование версии лаунчера. Рекомендуется не запускать её принудительно."
+  "message_box": {
+    "open_official_website.title": "Открыть официальный сайт игры?",
+    "open_official_website.content": "Хотите открыть браузер и перейти на официальный сайт?",
+    "quit_game.title": "Выйти из игры",
+    "quit_game.content": "Вы уверены, что хотите выйти из игры?",
+    "update_detected.title": "Обнаружена новая версия!",
+    "update_detected.content": "Хотите открыть браузер, чтобы скачать последнюю версию с нашего официального сайта?",
+    "update_detected_beta.title": "Обнаружено бета-обновление!",
+    "update_detected_beta.content": "Это бета-обновление. Оно может быть нестабильным или содержать неизвестные проблемы. Хотите открыть браузер, чтобы скачать его с нашего официального сайта?",
+    "update_request_failed.title": "Не удалось проверить обновление!",
+    "update_request_failed.content": "Проверьте сетевые разрешения и подключение к Интернету. Хотите открыть браузер, чтобы посетить официальный сайт и получить последнюю версию?",
+    "game_version_different.title": "Несовпадение версии!",
+    "game_version_different.content.1": "Текущая игра \"",
+    "game_version_different.content.2": "\" требует версию лаунчера:",
+    "game_version_different.content.3": ", а текущая версия:",
+    "game_version_different.content.4": ". Принудительный запуск может вызвать сбои",
+    "game_launcher_version_unknown.title": "Неизвестное требование версии игры!",
+    "game_launcher_version_unknown.content.1": "Текущая игра \"",
+    "game_launcher_version_unknown.content.2": "\" не объявляет узнаваемое требование версии лаунчера. Рекомендуется не запускать её принудительно."
   },
-  "menu.main" : {
-    "button.start" : "Запуск",
-    "button.create" : "Создать",
-    "button.config" : "Настройки",
-    "button.quit" : "Выход"
+  "menu.main": {
+    "button.start": "Запуск",
+    "button.create": "Создать",
+    "button.config": "Настройки",
+    "button.quit": "Выход"
   },
-  "menu.list" : {
-    "button.back" : "Назад",
-    "button.import" : "Импорт",
-    "button.profile" : "Профиль",
-    "button.share" : "Поделиться",
-    "button.delete" : "Удалить",
-    "button.last_page" : "Предыдущая страница",
-    "button.next_page" : "Следующая страница",
-    "label.absolute_path" : "Путь к папке",
-    "label.selected_path" : "Выбранная папка",
-    "label.page" : "из"
+  "menu.list": {
+    "button.back": "Назад",
+    "button.import": "Импорт",
+    "button.profile": "Профиль",
+    "button.share": "Поделиться",
+    "button.delete": "Удалить",
+    "button.next_page": "Следующая",
+    "label.absolute_path": "Путь к папке",
+    "label.selected_path": "Выбранная папка",
+    "label.page": "из",
+    "button.previous_page": "Предыдущая"
   },
-  "menu.load" : {
-    "label.loading" : "Загрузка..."
+  "menu.load": {
+    "label.loading": "Загрузка..."
   },
-  "config.basic" : {
-    "back" : "Назад",
-    "language" : "Язык"
+  "config.basic": {
+    "back": "Назад",
+    "language": "Язык"
   }
 }

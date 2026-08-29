@@ -20,7 +20,7 @@ import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.scene.AbstractGameRender;
 import com.hujiugame.qingfeng.ui.UiManager;
 import com.hujiugame.qingfeng.event.EventQueue;
-import com.hujiugame.qingfeng.manager.LayoutManager;
+import com.hujiugame.qingfeng.manager.LayoutService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +29,7 @@ import java.util.List;
 public final class GamePlay extends AbstractGameRender
 {
     private final EventQueue eventQueue;
-    private final LayoutManager layoutManager;
+    private final LayoutService layoutManager;
     private final GameHost gameHost;
     private AudioManager gameAudioManager;
     private GraphicsManager gameGraphicsManager;
@@ -40,7 +40,7 @@ public final class GamePlay extends AbstractGameRender
 
     // ===================================================================================================================
 
-    public GamePlay (EventQueue eventQueue, LayoutManager layoutManager,
+    public GamePlay (EventQueue eventQueue, LayoutService layoutManager,
                      GameHost gameHost)
     {
         this.eventQueue = eventQueue;
@@ -182,7 +182,7 @@ public final class GamePlay extends AbstractGameRender
      * @param gameStateDataContainer 游戏状态数据容器
      */
     @Override
-    protected void onInit (GameStateDataContainer gameStateDataContainer)
+    protected void init (GameStateDataContainer gameStateDataContainer)
     {
 
         gameAudioManager = gameHost.getPlayLocalData().getAudioManager();

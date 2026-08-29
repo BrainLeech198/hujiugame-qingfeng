@@ -5,7 +5,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector3;
 import com.hujiugame.qingfeng.animation.Animation;
 import com.hujiugame.qingfeng.animation.AnimationManager;
-import com.hujiugame.qingfeng.animation.task.action.AnimationAction;
 import com.hujiugame.qingfeng.core.UpdateChecker;
 import com.hujiugame.qingfeng.data.game.GameStateDataContainer;
 import com.hujiugame.qingfeng.input.VirtualInputHandler;
@@ -72,7 +71,7 @@ public final class MenuMain extends AbstractGameRender
      * 初始化主菜单布局，缓存背景图和网站图标
      */
     @Override
-    protected void onInit (GameStateDataContainer gameStateDataContainer)
+    protected void init (GameStateDataContainer gameStateDataContainer)
     {
         // 提取动画配置
         animationManager.setAnimation(new Animation(gameStateDataContainer.getConfigJson()));
@@ -203,52 +202,8 @@ public final class MenuMain extends AbstractGameRender
     @Override
     public void transitionRender (float deltaTime)
     {
-        if (animationManager.getTransitionManager().isReady())
-        {
-            // 淡出完成阶段 即淡入
-            if (animationManager.getTransitionManager().isFadedOut())
-            {
-                // 初始化
-                if (!animationManager.getTransitionManager().isFadingIn())
-                {
-                    animationManager.getTransitionManager().initFadeIn(
-                        gameStateDataContainer.getLayoutConfig(),
-                        animationManager.getAnimation(),
-                        uiManager
-                    );
-                }
-
-                // 进行中
-                animationManager.getTransitionManager().fadingIn(
-                    gameStateDataContainer.getLayoutConfig(),
-                    audioManager, graphicsManager, uiManager,
-                    deltaTime
-                );
-            }
-            // 淡出阶段
-            else
-            {
-                // 初始化
-                if (!animationManager.getTransitionManager().isFadingOut())
-                {
-                    animationManager.getTransitionManager().initFadeOut(
-                        gameStateDataContainer.getLayoutConfig(),
-                        animationManager.getAnimation()
-                    );
-                }
-
-                // 进行中
-                animationManager.getTransitionManager().fadingOut(
-                    gameStateDataContainer.getLayoutConfig(),
-                    audioManager, graphicsManager, uiManager,
-                    deltaTime
-                );
-            }
-        }
-        else
-        {
-            animationManager.getTransitionManager().stopTransition();
-        }
+        // 过渡动画引擎待重新设计，当前 TM 空壳不产生过渡渲染
+        render(deltaTime);
     }
 
     @Override

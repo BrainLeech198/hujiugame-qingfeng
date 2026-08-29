@@ -3,6 +3,7 @@ package com.hujiugame.qingfeng.data.play;
 import com.badlogic.gdx.files.FileHandle;
 import com.hujiugame.qingfeng.animation.AnimationManager;
 import com.hujiugame.qingfeng.audio.AudioManager;
+import com.hujiugame.qingfeng.engine.EngineContext;
 import com.hujiugame.qingfeng.game.*;
 import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.script.ScriptExecutor;
@@ -24,11 +25,9 @@ public final class PlayLocalData
     private LanguageManager languageManager;
 
     // 游戏运行引擎管理
-    private AudioManager audioManager;
-    private GraphicsManager graphicsManager;
+    private EngineContext engineContext;
     private UiManager uiManager;
     private ScriptExecutor scriptExecutor;
-    private AnimationManager animationManager;
 
     // 游戏信息管理器
     private GameTemplateManager gameTemplateManager;
@@ -138,35 +137,43 @@ public final class PlayLocalData
     // ===================================================================================================================
 
     /**
-     * 获取音频管理器
+     * 获取引擎上下文
+     */
+    public EngineContext getEngineContext ()
+    {
+        return engineContext;
+    }
+
+    /**
+     * 设置引擎上下文
+     */
+    public void setEngineContext (EngineContext engineContext)
+    {
+        this.engineContext = engineContext;
+    }
+
+    /**
+     * 获取音频管理器（委托给 EngineContext）
      */
     public AudioManager getAudioManager ()
     {
-        return audioManager;
+        return engineContext != null ? engineContext.getAudioManager() : null;
     }
 
     /**
-     * 设置音频管理器
-     */
-    public void setAudioManager (AudioManager audioManager)
-    {
-        this.audioManager = audioManager;
-    }
-
-    /**
-     * 获取图形管理器
+     * 获取图形管理器（委托给 EngineContext）
      */
     public GraphicsManager getGraphicsManager ()
     {
-        return graphicsManager;
+        return engineContext != null ? engineContext.getGraphicsManager() : null;
     }
 
     /**
-     * 设置图形管理器
+     * 获取动画管理器（委托给 EngineContext）
      */
-    public void setGraphicsManager (GraphicsManager graphicsManager)
+    public AnimationManager getAnimationManager ()
     {
-        this.graphicsManager = graphicsManager;
+        return engineContext != null ? engineContext.getAnimationManager() : null;
     }
 
     /**
@@ -207,22 +214,6 @@ public final class PlayLocalData
     public void setScriptExecutor (ScriptExecutor scriptExecutor)
     {
         this.scriptExecutor = scriptExecutor;
-    }
-
-    /**
-     * 获取动画管理器
-     */
-    public AnimationManager getAnimationManager ()
-    {
-        return animationManager;
-    }
-
-    /**
-     * 设置动画管理器
-     */
-    public void setAnimationManager (AnimationManager animationManager)
-    {
-        this.animationManager = animationManager;
     }
 
     // ===================================================================================================================
@@ -318,11 +309,11 @@ public final class PlayLocalData
     {
         try
         {
-            // 销毁游戏资源（音频、图形、UI）
-            if (audioManager != null && !audioManager.dispose()) return false;
-            if (graphicsManager != null && !graphicsManager.dispose()) return false;
+            // 销毁引擎上下文（音频、图形、动画）
+            if (engineContext != null && !engineContext.dispose()) return false;
+
+            // 销毁UI
             if (uiManager != null && !uiManager.dispose()) return false;
-            if (animationManager != null) animationManager.dispose();
 
             LogUtils.info(PlayLocalData.class, "dispose 销毁资源成功");
             return true;

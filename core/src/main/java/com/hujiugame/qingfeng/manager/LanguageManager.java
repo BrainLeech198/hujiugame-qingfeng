@@ -13,15 +13,52 @@ import com.hujiugame.qingfeng.type.key.config.LanguageKey;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class LanguageManager
 {
+    /**
+     * 文本解析的数据源类型
+     */
+    public enum Field
+    {
+        LANGUAGE("language"),
+        GAME("game");
+
+        private final String value;
+
+        Field (String value)
+        {
+            this.value = value;
+        }
+
+        public String getValue ()
+        {
+            return value;
+        }
+
+        public static Field fromValue (String value)
+        {
+            for (Field field : values())
+            {
+                if (field.value.equals(value))
+                {
+                    return field;
+                }
+            }
+            return null;
+        }
+    }
+
     // json文件
     private JsonEntity json = new JsonEntity();
 
@@ -42,6 +79,16 @@ public final class LanguageManager
 
     // 可用语言块列表
     private Set<String> availableBlocks = Collections.emptySet();
+
+    // 文本解析：游戏信息管理器（可选，游戏内使用）
+    private GameInfoManager gameInfoManager = null;
+    private long gameInfoStateCode = 0;
+
+    // 文本解析：变量标记配置
+    private static final String START_KEY = "{";
+    private static final String END_KEY = "}";
+    private static final char FIELD_SEPARATOR = '$';
+    private static final char BLOCK_SEPARATOR = '#';
 
     // 解析结果 - 使用 LRU 缓存
     private static final int MAX_BLOCK_COUNT = 3;
@@ -500,13 +547,207 @@ public final class LanguageManager
     }
 
     /**
-     * 获取当前状态码，用于检测语言管理器状态变化
+     * 获取当前状态码，同时轮询游戏信息管理器的状态变化
      *
      * @return 当前状态码
      */
     public long getStateCode ()
     {
+        // 轮询游戏信息
+        if (gameInfoManager != null && gameInfoManager.getStateCode() != gameInfoStateCode)
+        {
+            gameInfoStateCode = gameInfoManager.getStateCode();
+            update();
+        }
+
         return stateCode;
+    }
+
+    // ===================================================================================================================
+    // 文本解析（从 TextManager 合并）
+
+    /**
+     * 设置游戏信息管理器（可选，游戏内使用时注入）
+     *
+     * @param gameInfoManager 游戏信息管理器实例
+     */
+    public void setGameInfoManager (GameInfoManager gameInfoManager)
+    {
+        this.gameInfoManager = gameInfoManager;
+        update();
+    }
+
+    /**
+     * 解析语言文本：从语言管理器中获取指定块和键对应的文本
+     */
+    private String parseLanguageText (String block, String key)
+    {
+        try
+        {
+            return getText(block, key);
+        }
+        catch (Exception e)
+        {
+            LogUtils.error(LanguageManager.class, "parseLanguageText", e);
+            return "Parse language key error (block): " + block + " (key): " + key;
+        }
+    }
+
+    /**
+     * 解析游戏信息文本：从游戏信息管理器中获取指定键对应的信息
+     */
+    private String parseGameInfoText (String key)
+    {
+        try
+        {
+            if (gameInfoManager != null)
+            {
+                Object info = gameInfoManager.getInfo(key);
+                return info == null ? "null" : info.toString();
+            }
+            else
+            {
+                return "GameInfoMap is null";
+            }
+        }
+        catch (Exception e)
+        {
+            LogUtils.error(LanguageManager.class, "parseGameInfoText", e);
+            return " Parse gameInfo key error (key): " + key;
+        }
+    }
+
+    /**
+     * 解析花括号内的变量文本：按域分隔符和块分隔符拆解并获取实际值
+     *
+     * @param braceText 花括号内的变量文本，格式为 "域$块#键" 或 "域$键"
+     * @return 解析后的实际文本，解析失败返回原文本
+     */
+    private String parseBraceText (String braceText)
+    {
+        try
+        {
+            // 分割域
+            String[] splitField = braceText.split(Pattern.quote(String.valueOf(FIELD_SEPARATOR)));
+
+            // 域和主键
+            String field;
+            String mainKey;
+            if (splitField.length == 2)
+            {
+                field = splitField[0];
+                mainKey = splitField[1];
+            }
+            else
+            {
+                LogUtils.error(LanguageManager.class, "parseBraceText 出现错误，不正确的分隔符数量 (braceText): " + braceText);
+                return braceText;
+            }
+
+            // 分割块
+            String[] splitBlock = mainKey.split(Pattern.quote(String.valueOf(BLOCK_SEPARATOR)));
+
+            // 块和键
+            String block = null;
+            String key;
+            if (splitBlock.length == 1)
+            {
+                key = splitBlock[0];
+            }
+            else if (splitBlock.length == 2)
+            {
+                block = splitBlock[0];
+                key = splitBlock[1];
+            }
+            else
+            {
+                LogUtils.error(LanguageManager.class, "parseBraceText 错误，不正确的分隔符数量 (braceText): " + braceText);
+                return braceText;
+            }
+
+            // 获取实际值
+            Field f = Field.fromValue(field);
+            if (f == null)
+            {
+                return "Field is not exist (field): " + field;
+            }
+
+            switch (f)
+            {
+                case LANGUAGE:
+                    return parseLanguageText(block, key);
+
+                case GAME:
+                    return parseGameInfoText(key);
+
+                default:
+                    return "Field is not exist (field): " + field;
+            }
+        }
+        catch (Exception e)
+        {
+            LogUtils.error(LanguageManager.class, "parseBraceText", e);
+            return braceText;
+        }
+    }
+
+    /**
+     * 解析文本中的变量标记（如 {language$block#key}），替换为实际内容
+     * <p>
+     * 性能：每次调用做正则匹配 + 可能的语言块加载，不应在每帧热路径中调用；
+     * TextObject 内部通过状态码轮询实现懒解析，避免重复调用。
+     *
+     * @param text 包含变量标记的原始文本
+     * @return 解析后的文本，所有变量标记已被替换为实际内容
+     */
+    public String resolveText (String text)
+    {
+        try
+        {
+            String quotedStart = Pattern.quote(START_KEY);
+            String quotedEnd = Pattern.quote(END_KEY);
+
+            String regex = quotedStart + "(.*?)" + quotedEnd + "|(?:(?!" + quotedStart + "|" + quotedEnd + ").)+";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(text);
+
+            List<String> textList = new ArrayList<>();
+            List<Boolean> isBraceList = new ArrayList<>();
+
+            while (matcher.find())
+            {
+                if (matcher.group(1) != null)
+                {
+                    textList.add(matcher.group(1));
+                    isBraceList.add(true);
+                }
+                else
+                {
+                    textList.add(matcher.group());
+                    isBraceList.add(false);
+                }
+            }
+
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < textList.size(); i++)
+            {
+                if (isBraceList.get(i))
+                {
+                    result.append(parseBraceText(textList.get(i)));
+                }
+                else
+                {
+                    result.append(textList.get(i));
+                }
+            }
+
+            return result.toString();
+        }
+        catch (Exception e)
+        {
+            LogUtils.error(LanguageManager.class, "resolveText", e);
+            return text;
+        }
     }
 
     // ===================================================================================================================

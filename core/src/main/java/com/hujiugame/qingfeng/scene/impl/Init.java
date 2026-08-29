@@ -3,45 +3,35 @@ package com.hujiugame.qingfeng.scene.impl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.hujiugame.qingfeng.animation.AnimationManager;
-import com.hujiugame.qingfeng.core.GameHost;
+import com.hujiugame.qingfeng.core.InitService;
 import com.hujiugame.qingfeng.core.UpdateChecker;
-import com.hujiugame.qingfeng.event.imp.state.PushGameState;
-import com.hujiugame.qingfeng.event.imp.state.PushGameStateInitSpecially;
-import com.hujiugame.qingfeng.util.interact.NativeDialogUtils;
-import com.hujiugame.qingfeng.util.system.CrashUtils;
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.data.game.GameStateDataContainer;
+import com.hujiugame.qingfeng.event.EventQueue;
+import com.hujiugame.qingfeng.graphic.GraphicsManager;
+import com.hujiugame.qingfeng.scene.AbstractGameRender;
 import com.hujiugame.qingfeng.type.ScreenSize;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.file.PathName;
 import com.hujiugame.qingfeng.type.game.InitState;
-import com.hujiugame.qingfeng.type.game.GameState;
-import com.hujiugame.qingfeng.type.key.config.GameInfoKey;
 import com.hujiugame.qingfeng.type.key.config.ThemeKey;
-import com.hujiugame.qingfeng.audio.AudioManager;
-import com.hujiugame.qingfeng.graphic.GraphicsManager;
-import com.hujiugame.qingfeng.scene.AbstractGameRender;
 import com.hujiugame.qingfeng.ui.UiManager;
-import com.hujiugame.qingfeng.event.EventQueue;
-import com.hujiugame.qingfeng.manager.LanguageManager;
-import com.hujiugame.qingfeng.manager.ThemeManager;
-import com.hujiugame.qingfeng.manager.UserConfigManager;
 import com.hujiugame.qingfeng.util.StringPolisher;
+import com.hujiugame.qingfeng.util.interact.NativeDialogUtils;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
+/**
+ * 启动画面渲染机。
+ * <p>
+ * 负责视觉反馈（背景图、进度条、维修图标），初始化逻辑委托给 {@link InitService}。
+ */
 public final class Init extends AbstractGameRender
 {
+    private final InitService initService;
     private final UpdateChecker updateChecker;
-    private final GameHost gameHost;
-    private final UserConfigManager userConfigManager;
-    private final LanguageManager languageManager;
-    private final ThemeManager themeManager;
-    private final AudioManager audioManager;
     private final GraphicsManager graphicsManager;
     private final UiManager uiManager;
-    private final AnimationManager animationManager;
     private final EventQueue eventQueue;
 
     private static final float STEP_DELAY = 0.4f;
@@ -54,9 +44,7 @@ public final class Init extends AbstractGameRender
     private static final int REPAIR_IMAGE_Y = 48;
     private static final int REPAIR_IMAGE_SIZE = 96;
 
-    private InitState initState = InitState.USER_CONFIG;
     private float initTimer = 0f;
-
 
     private String backgroundPictureTag;
     private String processPictureTag;
@@ -70,34 +58,29 @@ public final class Init extends AbstractGameRender
 
     // ===================================================================================================================
 
-    public Init (UpdateChecker updateChecker, GameHost gameHost,
-                 UserConfigManager userConfigManager,
-                 LanguageManager languageManager, ThemeManager themeManager, AudioManager audioManager,
+    public Init (InitService initService, UpdateChecker updateChecker,
                  GraphicsManager graphicsManager, UiManager uiManager,
-                 AnimationManager animationManager,
                  EventQueue eventQueue)
     {
+        this.initService = initService;
         this.updateChecker = updateChecker;
-        this.gameHost = gameHost;
-        this.userConfigManager = userConfigManager;
-        this.languageManager = languageManager;
-        this.themeManager = themeManager;
-        this.audioManager = audioManager;
         this.graphicsManager = graphicsManager;
         this.uiManager = uiManager;
-        this.animationManager = animationManager;
         this.eventQueue = eventQueue;
     }
 
     // ===================================================================================================================
 
     /**
-     * 显示进度条
+     * 显示进度条。
+     * <p>
+     * 性能：每帧调用 1 次，仅做简单算术和一次 putPicture 绘制，耗时可忽略。
      */
     private void showProcess ()
     {
-        // 计算进度
-        float processPercent = (float) (initState.getValue() + 1 ) / (InitState.TOTAL.getValue() + 1);
+        // 从 InitService 读取当前进度
+        InitState currentState = initService.getInitState();
+        float processPercent = (float) (currentState.getValue() + 1) / (InitState.TOTAL.getValue() + 1);
         int processPictureX = 0;
         int processPictureY = 0;
         int processPictureWidth = (int) (ScreenSize.WIDTH * processPercent);
@@ -154,158 +137,17 @@ public final class Init extends AbstractGameRender
     }
 
     /**
-     * 是否正在执行资源修复
-     *
-     * @return 是否正在执行资源修复
-     */
-    private boolean isRepairing ()
-    {
-        return repairing;
-    }
-
-    /**
-     * 设置资源修复状态
-     *
-     * @param repairing 是否正在执行资源修复
-     */
-    private void setRepairing (boolean repairing)
-    {
-        this.repairing = repairing;
-    }
-
-    /**
      * 修复游戏资源
      */
     private void repairGame ()
     {
         // 防重入：双击过快会触发两次并发修复，两个线程同时同步资源导致文件损坏
         if (repairing) return;
-        setRepairing(true);
+        repairing = true;
         updateChecker.repairGame(() ->
         {
             NativeDialogUtils.showInfo("修复完成", "游戏资源已修复完成，请重启游戏。", Gdx.app::exit);
         });
-    }
-
-    // ===================================================================================================================
-
-    /**
-     * 初始化用户配置
-     */
-    private void initUserConfig ()
-    {
-        // 等待文件差异化更新
-        if (updateChecker.doFileUpdateFinish())
-        {
-            // 记录版本，以及读取用户&游戏配置
-            gameHost.getGameInfoManager().putInfo(GameInfoKey.Launcher.VERSION, updateChecker.getInternalVersionString());
-            if (!gameHost.getGameResolver().load())
-            {
-                LogUtils.error(Init.class, "initUserConfig 读取游戏配置失败");
-                CrashUtils.crash(new RuntimeException("initUserConfig gameResolver.load() 读取游戏配置失败"));
-                return;
-            }
-            LogUtils.debug(Init.class, "initUserConfig 读取游戏配置成功");
-            // 上传用户&游戏配置 到游戏信息管理器
-            userConfigManager.uploadTo(gameHost.getGameInfoManager());
-            languageManager.uploadTo(gameHost.getGameInfoManager());
-            themeManager.uploadTo(gameHost.getGameInfoManager());
-            initState = initState.next();
-        }
-    }
-
-    /**
-     * 初始化音频
-     */
-    private void initAudio ()
-    {
-        if (!audioManager.init())
-        {
-            LogUtils.error(Init.class, "initAudio audioManager.init() 音频初始化失败");
-            CrashUtils.crash(new RuntimeException("initAudio audioManager.init() 音频初始化失败"));
-            return;
-        }
-        else
-        {
-            LogUtils.debug(Init.class, "initAudio audioManager.init() 音频初始化成功");
-        }
-        initState = initState.next();
-    }
-
-    /**
-     * 初始化图形
-     */
-    private void initGraphics ()
-    {
-        if (!graphicsManager.init())
-        {
-            LogUtils.error(Init.class, "initGraphics graphicsManager.init() 绘图初始化失败");
-            CrashUtils.crash(new RuntimeException("initGraphics graphicsManager.init() 绘图初始化失败"));
-            return;
-        }
-        else
-        {
-            LogUtils.debug(Init.class, "initGraphics graphicsManager.init() 绘图初始化成功");
-        }
-        initState = initState.next();
-    }
-
-    /**
-     * 初始化 UI
-     */
-    private void initUi ()
-    {
-        if (!uiManager.init(themeManager))
-        {
-            LogUtils.error(Init.class, "initUi uiManager.init() ui初始化失败");
-            CrashUtils.crash(new RuntimeException("initUi uiManager.init() ui初始化失败"));
-            return;
-        }
-        else
-        {
-            LogUtils.debug(Init.class, "initUi uiManager.init() ui初始化成功");
-        }
-        initState = initState.next();
-    }
-
-    /**
-     * 初始化动画
-     */
-    private void initAnimation ()
-    {
-        if (!animationManager.init())
-        {
-            LogUtils.error(Init.class, "initAnimation animationManager.init() 动画初始化失败");
-            CrashUtils.crash(new RuntimeException("initAnimation animationManager.init() 动画初始化失败"));
-            return;
-        }
-        else
-        {
-            LogUtils.debug(Init.class, "initAnimation animationManager.init() 动画初始化成功");
-        }
-        initState = initState.next();
-    }
-
-    /**
-     * 初始化完成，跳转菜单
-     */
-    private void initStop()
-    {
-        // 链接到网页判断需不需要更新
-        checkUpdate();
-
-        // 跳转菜单
-        eventQueue.addEvent(new PushGameStateInitSpecially(GameState.MENU_MAIN));
-    }
-
-    // ===================================================================================================================
-
-    /**
-     * 检查更新
-     */
-    private void checkUpdate()
-    {
-        updateChecker.checkWebVersion();
     }
 
     // ===================================================================================================================
@@ -316,9 +158,8 @@ public final class Init extends AbstractGameRender
      * @param gameStateDataContainer 游戏状态数据容器
      */
     @Override
-    protected void onInit (GameStateDataContainer gameStateDataContainer)
+    protected void init (GameStateDataContainer gameStateDataContainer)
     {
-
         backgroundPictureTag = StringPolisher.polished("init");
         processPictureTag = StringPolisher.polished("process");
         repairImageTag = StringPolisher.polished("repair");
@@ -351,7 +192,9 @@ public final class Init extends AbstractGameRender
     }
 
     /**
-     * 逐帧执行初始化步骤（用户配置→音频→图形→UI→弹窗→完成）
+     * 逐帧执行初始化步骤（委托给 InitService）。
+     * <p>
+     * 性能：每帧调用 1 次，initTimer 判断 + InitService.stepInit() + 维修按钮检测，耗时可忽略。
      *
      * @param deltaTime 距上一帧的时间差
      */
@@ -372,33 +215,8 @@ public final class Init extends AbstractGameRender
         // 修复中跳过状态机，等待修复完成后弹窗退出
         if (repairing) return;
 
-        // 初始化状态
-        switch (initState)
-        {
-            case USER_CONFIG:
-                initUserConfig();
-                break;
-
-            case AUDIO:
-                initAudio();
-                break;
-
-            case GRAPHICS:
-                initGraphics();
-                break;
-
-            case UI:
-                initUi();
-                break;
-
-            case ANIMATION:
-                initAnimation();
-                break;
-
-            case TOTAL:
-                initStop();
-                break;
-        }
+        // 委托 InitService 执行一步初始化
+        initService.stepInit();
     }
 
     /**

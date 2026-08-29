@@ -114,7 +114,7 @@ public final class GameInfoKey
         public static final String HOSTER = "play.hoster";
         public static final String IPP = "play.ipp";
 
-        public static final String LAST_PAGE_ID = "play.last_page.id";
+        public static final String PREVIOUS_PAGE_ID = "play.previous_page.id";
         public static final String NOW_PAGE_ID = "play.now_page.id";
         public static final String NEXT_PAGE_ID = "play.next_page.id";
 
@@ -174,7 +174,7 @@ public final class GameInfoKey
         keys.add(Play.TreeStructure.TYPE);
         keys.add(Play.TreeStructure.ID);
 
-        keys.add(Play.LAST_PAGE_ID);
+        keys.add(Play.PREVIOUS_PAGE_ID);
         keys.add(Play.NOW_PAGE_ID);
         keys.add(Play.NEXT_PAGE_ID);
 

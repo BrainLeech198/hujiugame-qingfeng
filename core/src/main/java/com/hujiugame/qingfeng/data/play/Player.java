@@ -24,7 +24,7 @@ public final class Player
     private String ipp;
 
     private TreeStructure treeStructure;
-    private Page lastPage;
+    private Page previousPage;
     private Page nowPage;
     private Page nextPage;
 
@@ -208,24 +208,24 @@ public final class Player
     /**
      * 获取上一页
      */
-    public Page getLastPage ()
+    public Page getPreviousPage ()
     {
-        return lastPage;
+        return previousPage;
     }
 
     /**
      * 设置上一页并同步 ID 到游戏信息管理器
      * @return 设置成功返回 true
      */
-    private boolean setLastPage (Page lastPage)
+    private boolean setPreviousPage (Page previousPage)
     {
-        if (lastPage == null)
+        if (previousPage == null)
         {
-            LogUtils.error(Player.class, "setLastPage lastPage为null");
+            LogUtils.error(Player.class, "setPreviousPage previousPage为null");
             return false;
         }
-        this.lastPage = lastPage;
-        gameInfoManager.putInfo(GameInfoKey.Play.LAST_PAGE_ID, lastPage.getId());
+        this.previousPage = previousPage;
+        gameInfoManager.putInfo(GameInfoKey.Play.PREVIOUS_PAGE_ID, previousPage.getId());
         return true;
     }
 
@@ -254,7 +254,7 @@ public final class Player
         {
             if (this.nowPage != null)
             {
-                setLastPage(this.nowPage);
+                setPreviousPage(this.nowPage);
             }
             this.nowPage = nowPage;
             gameInfoManager.putInfo(GameInfoKey.Play.NOW_PAGE_ID, nowPage.getId());

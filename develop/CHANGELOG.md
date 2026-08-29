@@ -41,8 +41,33 @@
 
 ### 资产
 
-- **menu_main 动画重写** — fade_in 任务格式从 `synchronizationGraphics`/`schedule` + `smooth_move` 改为 `graphics` + `normal`/`none`，适配新的 AnimationCommand 体系（commit <hash>）
-- **config_basic/config_display/menu_list 精简** — 移除旧格式 fade_in/fade_out 空配置块（commit <hash>）
+- **menu_main 动画重写** — fade_in 任务格式从 `synchronizationGraphics`/`schedule` + `smooth_move` 改为 `graphics` + `normal`/`none`，适配新的 AnimationCommand 体系（commit 26146aa）
+- **config_basic/config_display/menu_list 精简** — 移除旧格式 fade_in/fade_out 空配置块（commit 26146aa）
+
+---
+
+**重构(架构)：Manager 体系收敛 — 24 个 Manager/Service 类分层整理**
+
+### 重构
+
+- **TextManager 合并到 LanguageManager** — TextManager 作为不必要的间接层被移除，文本解析（`{language$block#key}` / `{game$key}`）由 LanguageManager 直接承担；GameHost 构造参数 16→15；UiManager 创建改用 languageManager（commit <hash>）
+- **ConfigService 提取** — GameResolver + GameUserConfigLoader 合并为统一的 ConfigService，负责启动器配置初始化链（UserConfig → Theme → Language）和游戏配置加载/销毁；GameHost/InstanceContent/GameSessionManager 同步适配（commit <hash>）
+- **EngineContext 引入** — AudioManager + GraphicsManager + AnimationManager 打包为 EngineContext，PlayLocalData 持有单个 EngineContext 替代三个独立字段，支持整体传递和统一生命周期管理；GameResourceLoader 构造参数 9→5（commit <hash>）
+- **LayoutManager → LayoutService 重命名** — 127 处引用跨 13 文件批量替换，语义从"管理器"转为"服务"（commit <hash>）
+- **InitService 职责分离** — 从 Init 渲染机提取分帧初始化逻辑到独立的 InitService，Init 只保留视觉反馈；构造参数 10→5；InitService 在 lambda 内创建，每个 Init 实例拥有独立实例（commit <hash>）
+
+### 移除
+
+- **删除冗余类** — TextManager.java、GameResolver.java、GameUserConfigLoader.java、LayoutManager.java（commit <hash>）
+
+### 新增
+
+- **新增服务类** — ConfigService.java、EngineContext.java、LayoutService.java、InitService.java（commit <hash>）
+
+### 资产
+
+- **语言 JSON 格式规范化** — 16 个 language requirement.json 统一冒号前去空格（commit <hash>）
+- **.gitignore** — 新增 `/develop/tool/` 排除本地开发工具目录（commit <hash>）
 
 ---
 

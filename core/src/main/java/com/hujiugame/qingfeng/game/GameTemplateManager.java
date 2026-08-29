@@ -6,7 +6,7 @@ import com.hujiugame.qingfeng.data.game.Layout;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.file.PathName;
 import com.hujiugame.qingfeng.type.key.config.ConfigKey;
-import com.hujiugame.qingfeng.manager.LayoutManager;
+import com.hujiugame.qingfeng.manager.LayoutService;
 import com.hujiugame.qingfeng.manager.ThemeManager;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 import com.hujiugame.qingfeng.util.system.LogUtils;
@@ -20,7 +20,7 @@ import java.util.Set;
 public final class GameTemplateManager
 {
     private ThemeManager themeManager;
-    private LayoutManager layoutManager;
+    private LayoutService layoutManager;
 
     private FileHandle templateDirectoryPathHandle;
 
@@ -56,7 +56,7 @@ public final class GameTemplateManager
      * @param templateFile  模板文件
      * @param layoutManager 布局管理器
      */
-    private void loadSingleTemplate (FileHandle templateFile, LayoutManager layoutManager)
+    private void loadSingleTemplate (FileHandle templateFile, LayoutService layoutManager)
     {
         Layout templateLayout = layoutManager.loadLayout(templateFile, themeManager.getPathHandle(), true);
 
@@ -78,7 +78,7 @@ public final class GameTemplateManager
      * @param layoutManager           布局管理器
      * @return 加载是否成功
      */
-    private boolean loadTemplateData (FileHandle gameDirectoryPathHandle, LayoutManager layoutManager)
+    private boolean loadTemplateData (FileHandle gameDirectoryPathHandle, LayoutService layoutManager)
     {
         try
         {
@@ -136,7 +136,7 @@ public final class GameTemplateManager
     /**
      * 初始化模板管理器，加载模板数据
      */
-    public boolean init (FileHandle gameDirectoryPathHandle, ThemeManager themeManager, LayoutManager layoutManager)
+    public boolean init (FileHandle gameDirectoryPathHandle, ThemeManager themeManager, LayoutService layoutManager)
     {
         try
         {

@@ -3,7 +3,7 @@ package com.hujiugame.qingfeng.data.story.page;
 import com.badlogic.gdx.files.FileHandle;
 import com.hujiugame.qingfeng.data.JsonEntity;
 import com.hujiugame.qingfeng.data.game.Layout;
-import com.hujiugame.qingfeng.manager.LayoutManager;
+import com.hujiugame.qingfeng.manager.LayoutService;
 import com.hujiugame.qingfeng.manager.ThemeManager;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.util.system.FileUtils;
@@ -26,7 +26,7 @@ public class Page
      * @param layoutManager  布局管理器
      * @param themeManager   主题管理器
      */
-    public Page(String id, FileHandle pagePathHandle, LayoutManager layoutManager, ThemeManager themeManager)
+    public Page(String id, FileHandle pagePathHandle, LayoutService layoutManager, ThemeManager themeManager)
     {
         try
         {
@@ -62,7 +62,7 @@ public class Page
      * @param themeManager   主题管理器
      * @return 加载成功返回 true
      */
-    private boolean loadLayout (FileHandle pagePathHandle, LayoutManager layoutManager, ThemeManager themeManager)
+    private boolean loadLayout (FileHandle pagePathHandle, LayoutService layoutManager, ThemeManager themeManager)
     {
         try
         {

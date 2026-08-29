@@ -21,7 +21,7 @@ import com.hujiugame.qingfeng.util.system.LogUtils;
 
 import java.util.*;
 
-public final class LayoutManager
+public final class LayoutService
 {
     private AudioManager audioManager;
     private GraphicsManager graphicsManager;
@@ -32,7 +32,7 @@ public final class LayoutManager
     /**
      * 构造方法，创建空的布局管理器
      */
-    public LayoutManager ()
+    public LayoutService ()
     {
     }
 
@@ -82,7 +82,7 @@ public final class LayoutManager
         }
         catch (Exception e)
         {
-            LogUtils.error(LayoutManager.class, "readLayoutJson", e);
+            LogUtils.error(LayoutService.class, "readLayoutJson", e);
             return new JsonEntity();
         }
     }
@@ -102,29 +102,29 @@ public final class LayoutManager
             if (layoutJson.containsKey(LayoutKey.NAME))
             {
                 layout.setName(layoutJson.getString(LayoutKey.NAME));
-                LogUtils.debug(LayoutManager.class, "loadLayoutBasicInfo 页面结构名称 (name): " + layout.getName());
+                LogUtils.debug(LayoutService.class, "loadLayoutBasicInfo 页面结构名称 (name): " + layout.getName());
             }
             else
             {
                 layout.setName(file.nameWithoutExtension());
-                LogUtils.debug(LayoutManager.class, "loadLayoutBasicInfo 获取页面结构名称失败，使用文件名作为页面结构名称 (name): " + layout.getName());
+                LogUtils.debug(LayoutService.class, "loadLayoutBasicInfo 获取页面结构名称失败，使用文件名作为页面结构名称 (name): " + layout.getName());
             }
 
             if (layoutJson.containsKey(LayoutKey.TEMPLATE))
             {
                 layout.setTemplate(layoutJson.getString(LayoutKey.TEMPLATE));
-                LogUtils.debug(LayoutManager.class, "loadLayoutBasicInfo 模板 (template): " + layout.getTemplate());
+                LogUtils.debug(LayoutService.class, "loadLayoutBasicInfo 模板 (template): " + layout.getTemplate());
             }
             else
             {
-                LogUtils.debug(LayoutManager.class, "loadLayoutBasicInfo 模板不存在，已忽略");
+                LogUtils.debug(LayoutService.class, "loadLayoutBasicInfo 模板不存在，已忽略");
             }
 
             return true;
         }
         catch (Exception e)
         {
-            LogUtils.error(LayoutManager.class, "loadBasicInfo", e);
+            LogUtils.error(LayoutService.class, "loadBasicInfo", e);
             return false;
         }
     }
@@ -177,12 +177,12 @@ public final class LayoutManager
                     FileHandle bgmFileHandle = resourceRootDirectory.child(PathName.ASSET_S_RESOURCE_AUDIO).child(bgmName);
                     if (audioManager.loadBackgroundMusic(bgmName, bgmFileHandle))
                     {
-                        LogUtils.debug(LayoutManager.class, "loadLayoutMusic 背景音乐加载成功 (tag): " + bgmName
+                        LogUtils.debug(LayoutService.class, "loadLayoutMusic 背景音乐加载成功 (tag): " + bgmName
                             + " (file): " + FileUtils.pathJoin(resourceRootDirectory.path(), PathName.ASSET_S_RESOURCE_AUDIO, bgmName));
                     }
                     else
                     {
-                        LogUtils.debug(LayoutManager.class, "loadLayoutMusic 背景音乐加载失败 (tag): " + bgmName
+                        LogUtils.debug(LayoutService.class, "loadLayoutMusic 背景音乐加载失败 (tag): " + bgmName
                             + " (file): " + FileUtils.pathJoin(resourceRootDirectory.path(), PathName.ASSET_S_RESOURCE_AUDIO, bgmName));
                     }
                 }
@@ -190,7 +190,7 @@ public final class LayoutManager
 
             // 存入 Layout
             layout.setBackgroundMusicList(backgroundMusicNames != null ? backgroundMusicNames : new ArrayList<String>());
-            LogUtils.debug(LayoutManager.class, "loadLayoutMusic 背景音乐列表: " + backgroundMusicNames);
+            LogUtils.debug(LayoutService.class, "loadLayoutMusic 背景音乐列表: " + backgroundMusicNames);
 
             // 解析音乐list
             // ===================================================================================================================
@@ -209,23 +209,23 @@ public final class LayoutManager
                     if (audioManager.loadMusic(musicTag, musicFileHandle))
                     {
                         newMusicList.add(musicTag);
-                        LogUtils.debug(LayoutManager.class, "loadLayoutMusic 音乐加载成功 (tag): " + musicTag + " (file): " + musicPath);
+                        LogUtils.debug(LayoutService.class, "loadLayoutMusic 音乐加载成功 (tag): " + musicTag + " (file): " + musicPath);
                     }
                     else
                     {
-                        LogUtils.error(LayoutManager.class, "loadLayoutMusic 音乐加载失败 (tag): " + musicTag + " (file): " + musicPath);
+                        LogUtils.error(LayoutService.class, "loadLayoutMusic 音乐加载失败 (tag): " + musicTag + " (file): " + musicPath);
                     }
                 }
             }
 
             layout.setMusicList(newMusicList);
-            LogUtils.debug(LayoutManager.class, "loadLayoutMusic 音乐表: " + musicMap);
+            LogUtils.debug(LayoutService.class, "loadLayoutMusic 音乐表: " + musicMap);
 
             return true;
         }
         catch (Exception e)
         {
-            LogUtils.error(LayoutManager.class, "loadLayoutMusic", e);
+            LogUtils.error(LayoutService.class, "loadLayoutMusic", e);
             return false;
         }
     }
@@ -272,7 +272,7 @@ public final class LayoutManager
 
             // 上载
             layout.setBackgroundPicture(backgroundPictureName);
-            LogUtils.debug(LayoutManager.class, "loadLayoutGraphics 背景图片 (file): " + backgroundPicturePath);
+            LogUtils.debug(LayoutService.class, "loadLayoutGraphics 背景图片 (file): " + backgroundPicturePath);
 
             // 解析 graphics 子分类
             // ===================================================================================================================
@@ -285,7 +285,7 @@ public final class LayoutManager
         }
         catch (Exception e)
         {
-            LogUtils.error(LayoutManager.class, "loadLayoutGraphics", e);
+            LogUtils.error(LayoutService.class, "loadLayoutGraphics", e);
             return false;
         }
     }
@@ -328,12 +328,12 @@ public final class LayoutManager
             // 上载
             layout.setPictureMap(newPictureMap);
 
-            LogUtils.debug(LayoutManager.class, "loadLayoutGraphicsPicture 图片 (list): " + newPictureMap);
+            LogUtils.debug(LayoutService.class, "loadLayoutGraphicsPicture 图片 (list): " + newPictureMap);
             return true;
         }
         catch (Exception e)
         {
-            LogUtils.error(LayoutManager.class, "loadLayoutGraphicsPicture", e);
+            LogUtils.error(LayoutService.class, "loadLayoutGraphicsPicture", e);
             return false;
         }
     }
@@ -379,7 +379,7 @@ public final class LayoutManager
                         }
                         else
                         {
-                            LogUtils.error(LayoutManager.class, "loadLayoutGraphicsGif 动图 (tag): " + gifTag + " 丢失第 " + i + " 张图片");
+                            LogUtils.error(LayoutService.class, "loadLayoutGraphicsGif 动图 (tag): " + gifTag + " 丢失第 " + i + " 张图片");
                             return false;
                         }
                     }
@@ -397,12 +397,12 @@ public final class LayoutManager
             // 上载
             layout.setGifMap(newGifMap);
 
-            LogUtils.debug(LayoutManager.class, "loadLayoutGraphicsGif Gif (list): " + newGifMap);
+            LogUtils.debug(LayoutService.class, "loadLayoutGraphicsGif Gif (list): " + newGifMap);
             return true;
         }
         catch (Exception e)
         {
-            LogUtils.error(LayoutManager.class, "loadLayoutGraphicsGif", e);
+            LogUtils.error(LayoutService.class, "loadLayoutGraphicsGif", e);
             return false;
         }
     }
@@ -438,12 +438,12 @@ public final class LayoutManager
             // 上载
             layout.setImageMap(imageMap);
 
-            LogUtils.debug(LayoutManager.class, "loadLayoutUiImage 图像 (list): " + imageMap);
+            LogUtils.debug(LayoutService.class, "loadLayoutUiImage 图像 (list): " + imageMap);
             return true;
         }
         catch (Exception e)
         {
-            LogUtils.error(LayoutManager.class, "loadLayoutImage", e);
+            LogUtils.error(LayoutService.class, "loadLayoutImage", e);
             return false;
         }
     }
@@ -479,12 +479,12 @@ public final class LayoutManager
             // 上载
             layout.setLabelMap(labelMap);
 
-            LogUtils.debug(LayoutManager.class, "loadLayoutUiLabel 标签 (list): " + labelMap);
+            LogUtils.debug(LayoutService.class, "loadLayoutUiLabel 标签 (list): " + labelMap);
             return true;
         }
         catch (Exception e)
         {
-            LogUtils.error(LayoutManager.class, "loadLayoutUiLabel", e);
+            LogUtils.error(LayoutService.class, "loadLayoutUiLabel", e);
             return false;
         }
     }
@@ -518,7 +518,7 @@ public final class LayoutManager
                 buttonMap.put(buttonTag, buttonInfo);
 
                 // debug
-                LogUtils.debug(LayoutManager.class, "loadLayoutUiButton 按钮 (tag):" + buttonTag + " (json): " + buttonJson);
+                LogUtils.debug(LayoutService.class, "loadLayoutUiButton 按钮 (tag):" + buttonTag + " (json): " + buttonJson);
             }
 
             // 上载
@@ -528,7 +528,7 @@ public final class LayoutManager
         }
         catch (Exception e)
         {
-            LogUtils.error(LayoutManager.class, "loadLayoutUiButton", e);
+            LogUtils.error(LayoutService.class, "loadLayoutUiButton", e);
             return false;
         }
     }
@@ -566,7 +566,7 @@ public final class LayoutManager
         }
         catch (Exception e)
         {
-            LogUtils.error(LayoutManager.class, "loadLayoutUi", e);
+            LogUtils.error(LayoutService.class, "loadLayoutUi", e);
             return false;
         }
     }
@@ -592,7 +592,7 @@ public final class LayoutManager
             if (cached != null && !reload)
             {
                 // 缓存命中，重载图片和音乐资源（可能已被 quitGame 的 dispose 清空）
-                LogUtils.debug(LayoutManager.class, "loadLayout 读取缓存 (key): " + layoutKey);
+                LogUtils.debug(LayoutService.class, "loadLayout 读取缓存 (key): " + layoutKey);
                 JsonEntity layoutJson = readLayoutJson(fileHandle);
                 loadLayoutMusic(cached, layoutJson, resourceRootDirectoryHandle);
                 loadLayoutGraphics(cached, layoutJson, resourceRootDirectoryHandle);
@@ -601,7 +601,7 @@ public final class LayoutManager
 
             // 安全读取结构json
             JsonEntity layoutJson = readLayoutJson(fileHandle);
-            LogUtils.debug(LayoutManager.class, "loadLayout 读取结构 (json): " + layoutJson);
+            LogUtils.debug(LayoutService.class, "loadLayout 读取结构 (json): " + layoutJson);
 
             // 创建结构
             Layout layout = new Layout();
@@ -616,25 +616,25 @@ public final class LayoutManager
             // 读取基本信息
             if (!loadLayoutBasicInfo(layout, layoutJson, fileHandle))
             {
-                LogUtils.error(LayoutManager.class, "loadLayout 读取基本信息出现问题");
+                LogUtils.error(LayoutService.class, "loadLayout 读取基本信息出现问题");
             }
 
             // 先配置音乐
             if (!loadLayoutMusic(layout, layoutJson, resourceRootDirectoryHandle))
             {
-                LogUtils.error(LayoutManager.class, "loadLayout 配置音乐出现问题");
+                LogUtils.error(LayoutService.class, "loadLayout 配置音乐出现问题");
             }
 
             // 配置draw图片
             if (!loadLayoutGraphics(layout, layoutJson, resourceRootDirectoryHandle))
             {
-                LogUtils.error(LayoutManager.class, "loadLayout 配置图片出现问题");
+                LogUtils.error(LayoutService.class, "loadLayout 配置图片出现问题");
             }
 
             // 配置ui
             if (!loadLayoutUi(layout, layoutJson))
             {
-                LogUtils.error(LayoutManager.class, "loadLayout 配置UI出现问题");
+                LogUtils.error(LayoutService.class, "loadLayout 配置UI出现问题");
             }
 
             // 上载缓存
@@ -643,7 +643,7 @@ public final class LayoutManager
         }
         catch (Exception e)
         {
-            LogUtils.error(LayoutManager.class, "loadLayout", e);
+            LogUtils.error(LayoutService.class, "loadLayout", e);
             return null;
         }
     }
@@ -660,16 +660,16 @@ public final class LayoutManager
         {
             if (mainLayout == null)
             {
-                LogUtils.error(LayoutManager.class, "mergeLayout 主页面结构为null");
+                LogUtils.error(LayoutService.class, "mergeLayout 主页面结构为null");
                 return;
             }
             else if (mergeLayout == null)
             {
-                LogUtils.debug(LayoutManager.class, "mergeLayout 合并页面结构为空，省去合并");
+                LogUtils.debug(LayoutService.class, "mergeLayout 合并页面结构为空，省去合并");
                 return;
             }
 
-            LogUtils.debug(LayoutManager.class, "mergeLayout 配置 (main): " + mainLayout.getJson() + " (merge): " + mergeLayout.getJson());
+            LogUtils.debug(LayoutService.class, "mergeLayout 配置 (main): " + mainLayout.getJson() + " (merge): " + mergeLayout.getJson());
 
             // 保存主布局原始 JSON（字段级融合需要）
             JsonEntity mainOriginalJson = mainLayout.getJson();
@@ -677,7 +677,7 @@ public final class LayoutManager
             if (mainOriginalJson != null && !mainOriginalJson.isEmpty())
             {
                 JsonEntity graphicsJson = mainOriginalJson.getJsonEntityByKey(LayoutKey.GRAPHICS);
-                LogUtils.debug(LayoutManager.class, "mergeLayout 主布局原始JSON (" + LayoutKey.UI + "/" + UiKey.Image.KEY + "): " + hasUiSection(mainOriginalJson, UiKey.Image.KEY) +
+                LogUtils.debug(LayoutService.class, "mergeLayout 主布局原始JSON (" + LayoutKey.UI + "/" + UiKey.Image.KEY + "): " + hasUiSection(mainOriginalJson, UiKey.Image.KEY) +
                     " (" + LayoutKey.UI + "/" + UiKey.Label.KEY + "): " + hasUiSection(mainOriginalJson, UiKey.Label.KEY) +
                     " (" + LayoutKey.UI + "/" + UiKey.Button.KEY + "): " + hasUiSection(mainOriginalJson, UiKey.Button.KEY) +
                     " (" + LayoutKey.GRAPHICS + "/" + GraphicsKey.PICTURE + "): " + graphicsJson.containsKey(GraphicsKey.PICTURE) +
@@ -685,28 +685,28 @@ public final class LayoutManager
             }
             else
             {
-                LogUtils.debug(LayoutManager.class, "mergeLayout 主布局原始JSON 为空或null，字段级融合将降级为保留主布局原对象");
+                LogUtils.debug(LayoutService.class, "mergeLayout 主布局原始JSON 为空或null，字段级融合将降级为保留主布局原对象");
             }
 
             JsonEntity layoutJson = mainLayout.getJson().combined(mergeLayout.getJson());
             mainLayout.setJson(layoutJson);
-            LogUtils.debug(LayoutManager.class, "mergeLayout 配置 (result): " + mainLayout);
+            LogUtils.debug(LayoutService.class, "mergeLayout 配置 (result): " + mainLayout);
 
-            LogUtils.debug(LayoutManager.class, "mergeLayout 背景图片 (main): " + mainLayout.getBackgroundPicture() + " (merge): " + mergeLayout.getBackgroundPicture());
+            LogUtils.debug(LayoutService.class, "mergeLayout 背景图片 (main): " + mainLayout.getBackgroundPicture() + " (merge): " + mergeLayout.getBackgroundPicture());
             mainLayout.setBackgroundPicture(mergeLayout.getBackgroundPicture() != null ? mergeLayout.getBackgroundPicture() : mainLayout.getBackgroundPicture());
-            LogUtils.debug(LayoutManager.class, "mergeLayout 背景图片 (result): " + mainLayout.getBackgroundPicture());
+            LogUtils.debug(LayoutService.class, "mergeLayout 背景图片 (result): " + mainLayout.getBackgroundPicture());
 
-            LogUtils.debug(LayoutManager.class, "mergeLayout 背景音乐列表 (main): " + mainLayout.getBackgroundMusicList() + " (merge): " + mergeLayout.getBackgroundMusicList());
+            LogUtils.debug(LayoutService.class, "mergeLayout 背景音乐列表 (main): " + mainLayout.getBackgroundMusicList() + " (merge): " + mergeLayout.getBackgroundMusicList());
             List<String> mergedBgmList = new ArrayList<>(mainLayout.getBackgroundMusicList());
             mergedBgmList.addAll(mergeLayout.getBackgroundMusicList());
             mainLayout.setBackgroundMusicList(mergedBgmList);
-            LogUtils.debug(LayoutManager.class, "mergeLayout 背景音乐列表 (result): " + mergedBgmList);
+            LogUtils.debug(LayoutService.class, "mergeLayout 背景音乐列表 (result): " + mergedBgmList);
 
-            LogUtils.debug(LayoutManager.class, "mergeLayout 音乐列表 (main): " + mainLayout.getMusicList() + " (merge): " + mergeLayout.getMusicList());
+            LogUtils.debug(LayoutService.class, "mergeLayout 音乐列表 (main): " + mainLayout.getMusicList() + " (merge): " + mergeLayout.getMusicList());
             List<String> musicList = new ArrayList<>(mainLayout.getMusicList());
             musicList.addAll(mergeLayout.getMusicList());
             mainLayout.setMusicList(musicList);
-            LogUtils.debug(LayoutManager.class, "mergeLayout 音乐列表 (result): " + musicList);
+            LogUtils.debug(LayoutService.class, "mergeLayout 音乐列表 (result): " + musicList);
 
             // 字段级融合：相同 tag 时 merge 覆盖 main 字段，main 填补缺失字段
             mergePictureMap(mainLayout, mergeLayout, mainOriginalJson);
@@ -717,7 +717,7 @@ public final class LayoutManager
         }
         catch (Exception e)
         {
-            LogUtils.error(LayoutManager.class, "mergeLayout", e);
+            LogUtils.error(LayoutService.class, "mergeLayout", e);
         }
     }
 
@@ -732,12 +732,12 @@ public final class LayoutManager
     {
         try
         {
-            LogUtils.debug(LayoutManager.class, "mergedLayout (main): " + (mainLayout != null ? mainLayout.getName() : "null") + " (merge): " + (mergeLayout != null ? mergeLayout.getName() : "null"));
+            LogUtils.debug(LayoutService.class, "mergedLayout (main): " + (mainLayout != null ? mainLayout.getName() : "null") + " (merge): " + (mergeLayout != null ? mergeLayout.getName() : "null"));
 
             Layout resultLayout = new Layout(mainLayout);
             mergeLayout(resultLayout, mergeLayout);
 
-            LogUtils.debug(LayoutManager.class, "mergedLayout 完成 (result): " + resultLayout.getName() +
+            LogUtils.debug(LayoutService.class, "mergedLayout 完成 (result): " + resultLayout.getName() +
                 " label:" + resultLayout.getLabelMap().size() +
                 " button:" + resultLayout.getButtonMap().size() +
                 " image:" + resultLayout.getImageMap().size() +
@@ -748,7 +748,7 @@ public final class LayoutManager
         }
         catch (Exception e)
         {
-            LogUtils.error(LayoutManager.class, "mergeLayout", e);
+            LogUtils.error(LayoutService.class, "mergeLayout", e);
             return null;
         }
     }
@@ -781,25 +781,25 @@ public final class LayoutManager
     {
         if (layoutJson == null || layoutJson.isEmpty())
         {
-            LogUtils.debug(LayoutManager.class, "extractUiSectionTagJson layoutJson 为空 (section): " + section + " (tag): " + tag);
+            LogUtils.debug(LayoutService.class, "extractUiSectionTagJson layoutJson 为空 (section): " + section + " (tag): " + tag);
             return new JsonEntity();
         }
         JsonEntity uiJson = layoutJson.getJsonEntityByKey(LayoutKey.UI);
         if (uiJson.isEmpty())
         {
-            LogUtils.debug(LayoutManager.class, "extractUiSectionTagJson ui 不存在 (section): " + section + " (tag): " + tag);
+            LogUtils.debug(LayoutService.class, "extractUiSectionTagJson ui 不存在 (section): " + section + " (tag): " + tag);
             return new JsonEntity();
         }
         JsonEntity sectionJson = uiJson.getJsonEntityByKey(section);
         if (sectionJson.isEmpty())
         {
-            LogUtils.debug(LayoutManager.class, "extractUiSectionTagJson ui/" + section + " 不存在 (tag): " + tag);
+            LogUtils.debug(LayoutService.class, "extractUiSectionTagJson ui/" + section + " 不存在 (tag): " + tag);
             return new JsonEntity();
         }
         JsonEntity tagJson = sectionJson.getJsonEntityByKey(tag);
         if (tagJson.isEmpty())
         {
-            LogUtils.debug(LayoutManager.class, "extractUiSectionTagJson ui/" + section + "/" + tag + " 不存在");
+            LogUtils.debug(LayoutService.class, "extractUiSectionTagJson ui/" + section + "/" + tag + " 不存在");
         }
         return tagJson;
     }
@@ -816,19 +816,19 @@ public final class LayoutManager
     {
         if (layoutJson == null || layoutJson.isEmpty())
         {
-            LogUtils.debug(LayoutManager.class, "extractSectionTagJson layoutJson 为空 (section): " + section + " (tag): " + tag);
+            LogUtils.debug(LayoutService.class, "extractSectionTagJson layoutJson 为空 (section): " + section + " (tag): " + tag);
             return new JsonEntity();
         }
         JsonEntity sectionJson = layoutJson.getJsonEntityByKey(section);
         if (sectionJson.isEmpty())
         {
-            LogUtils.debug(LayoutManager.class, "extractSectionTagJson " + section + " 不存在 (tag): " + tag);
+            LogUtils.debug(LayoutService.class, "extractSectionTagJson " + section + " 不存在 (tag): " + tag);
             return new JsonEntity();
         }
         JsonEntity tagJson = sectionJson.getJsonEntityByKey(tag);
         if (tagJson.isEmpty())
         {
-            LogUtils.debug(LayoutManager.class, "extractSectionTagJson " + section + "/" + tag + " 不存在");
+            LogUtils.debug(LayoutService.class, "extractSectionTagJson " + section + "/" + tag + " 不存在");
         }
         return tagJson;
     }
@@ -838,7 +838,7 @@ public final class LayoutManager
      */
     private void mergePictureMap (Layout main, Layout merge, JsonEntity mainOriginalJson)
     {
-        LogUtils.debug(LayoutManager.class, "mergePictureMap (main): " + main.getPictureMap().size() + " 个 (merge): " + merge.getPictureMap().size() + " 个");
+        LogUtils.debug(LayoutService.class, "mergePictureMap (main): " + main.getPictureMap().size() + " 个 (merge): " + merge.getPictureMap().size() + " 个");
 
         Map<String, PictureInfo> result = new HashMap<>(main.getPictureMap());
         for (Map.Entry<String, PictureInfo> entry : merge.getPictureMap().entrySet())
@@ -851,21 +851,21 @@ public final class LayoutManager
                 if (!mainTagJson.isEmpty() && !mergeTagJson.isEmpty())
                 {
                     result.put(tag, new PictureInfo(tag, mergeTagJson.combined(mainTagJson)));
-                    LogUtils.debug(LayoutManager.class, "mergePictureMap 融合 (tag): " + tag + " (main): " + mainTagJson + " (merge): " + mergeTagJson);
+                    LogUtils.debug(LayoutService.class, "mergePictureMap 融合 (tag): " + tag + " (main): " + mainTagJson + " (merge): " + mergeTagJson);
                 }
                 else
                 {
-                    LogUtils.debug(LayoutManager.class, "mergePictureMap 保留 (tag): " + tag + " (原因): JSON提取失败");
+                    LogUtils.debug(LayoutService.class, "mergePictureMap 保留 (tag): " + tag + " (原因): JSON提取失败");
                 }
             }
             else
             {
                 result.put(tag, new PictureInfo(entry.getValue()));
-                LogUtils.debug(LayoutManager.class, "mergePictureMap 新增 (tag): " + tag);
+                LogUtils.debug(LayoutService.class, "mergePictureMap 新增 (tag): " + tag);
             }
         }
         main.setPictureMap(result);
-        LogUtils.debug(LayoutManager.class, "mergePictureMap 结果: " + result.size() + " 个");
+        LogUtils.debug(LayoutService.class, "mergePictureMap 结果: " + result.size() + " 个");
     }
 
     /**
@@ -873,7 +873,7 @@ public final class LayoutManager
      */
     private void mergeGifMap (Layout main, Layout merge, JsonEntity mainOriginalJson)
     {
-        LogUtils.debug(LayoutManager.class, "mergeGifMap (main): " + main.getGifMap().size() + " 个 (merge): " + merge.getGifMap().size() + " 个");
+        LogUtils.debug(LayoutService.class, "mergeGifMap (main): " + main.getGifMap().size() + " 个 (merge): " + merge.getGifMap().size() + " 个");
 
         Map<String, GifInfo> result = new HashMap<>(main.getGifMap());
         for (Map.Entry<String, GifInfo> entry : merge.getGifMap().entrySet())
@@ -886,21 +886,21 @@ public final class LayoutManager
                 if (!mainTagJson.isEmpty() && !mergeTagJson.isEmpty())
                 {
                     result.put(tag, new GifInfo(tag, mergeTagJson.combined(mainTagJson)));
-                    LogUtils.debug(LayoutManager.class, "mergeGifMap 融合 (tag): " + tag + " (main): " + mainTagJson + " (merge): " + mergeTagJson);
+                    LogUtils.debug(LayoutService.class, "mergeGifMap 融合 (tag): " + tag + " (main): " + mainTagJson + " (merge): " + mergeTagJson);
                 }
                 else
                 {
-                    LogUtils.debug(LayoutManager.class, "mergeGifMap 保留 (tag): " + tag + " (原因): JSON提取失败");
+                    LogUtils.debug(LayoutService.class, "mergeGifMap 保留 (tag): " + tag + " (原因): JSON提取失败");
                 }
             }
             else
             {
                 result.put(tag, new GifInfo(entry.getValue()));
-                LogUtils.debug(LayoutManager.class, "mergeGifMap 新增 (tag): " + tag);
+                LogUtils.debug(LayoutService.class, "mergeGifMap 新增 (tag): " + tag);
             }
         }
         main.setGifMap(result);
-        LogUtils.debug(LayoutManager.class, "mergeGifMap 结果: " + result.size() + " 个");
+        LogUtils.debug(LayoutService.class, "mergeGifMap 结果: " + result.size() + " 个");
     }
 
     /**
@@ -908,7 +908,7 @@ public final class LayoutManager
      */
     private void mergeImageMap (Layout main, Layout merge, JsonEntity mainOriginalJson)
     {
-        LogUtils.debug(LayoutManager.class, "mergeImageMap (main): " + main.getImageMap().size() + " 个 (merge): " + merge.getImageMap().size() + " 个");
+        LogUtils.debug(LayoutService.class, "mergeImageMap (main): " + main.getImageMap().size() + " 个 (merge): " + merge.getImageMap().size() + " 个");
 
         Map<String, ImageInfo> result = new HashMap<>(main.getImageMap());
         for (Map.Entry<String, ImageInfo> entry : merge.getImageMap().entrySet())
@@ -921,21 +921,21 @@ public final class LayoutManager
                 if (!mainTagJson.isEmpty() && !mergeTagJson.isEmpty())
                 {
                     result.put(tag, new ImageInfo(tag, mergeTagJson.combined(mainTagJson)));
-                    LogUtils.debug(LayoutManager.class, "mergeImageMap 融合 (tag): " + tag + " (main): " + mainTagJson + " (merge): " + mergeTagJson);
+                    LogUtils.debug(LayoutService.class, "mergeImageMap 融合 (tag): " + tag + " (main): " + mainTagJson + " (merge): " + mergeTagJson);
                 }
                 else
                 {
-                    LogUtils.debug(LayoutManager.class, "mergeImageMap 保留 (tag): " + tag + " (原因): JSON提取失败");
+                    LogUtils.debug(LayoutService.class, "mergeImageMap 保留 (tag): " + tag + " (原因): JSON提取失败");
                 }
             }
             else
             {
                 result.put(tag, new ImageInfo(entry.getValue()));
-                LogUtils.debug(LayoutManager.class, "mergeImageMap 新增 (tag): " + tag);
+                LogUtils.debug(LayoutService.class, "mergeImageMap 新增 (tag): " + tag);
             }
         }
         main.setImageMap(result);
-        LogUtils.debug(LayoutManager.class, "mergeImageMap 结果: " + result.size() + " 个");
+        LogUtils.debug(LayoutService.class, "mergeImageMap 结果: " + result.size() + " 个");
     }
 
     /**
@@ -943,7 +943,7 @@ public final class LayoutManager
      */
     private void mergeLabelMap (Layout main, Layout merge, JsonEntity mainOriginalJson)
     {
-        LogUtils.debug(LayoutManager.class, "mergeLabelMap (main): " + main.getLabelMap().size() + " 个 (merge): " + merge.getLabelMap().size() + " 个");
+        LogUtils.debug(LayoutService.class, "mergeLabelMap (main): " + main.getLabelMap().size() + " 个 (merge): " + merge.getLabelMap().size() + " 个");
 
         Map<String, LabelInfo> result = new HashMap<>(main.getLabelMap());
         for (Map.Entry<String, LabelInfo> entry : merge.getLabelMap().entrySet())
@@ -956,21 +956,21 @@ public final class LayoutManager
                 if (!mainTagJson.isEmpty() && !mergeTagJson.isEmpty())
                 {
                     result.put(tag, new LabelInfo(tag, mergeTagJson.combined(mainTagJson)));
-                    LogUtils.debug(LayoutManager.class, "mergeLabelMap 融合 (tag): " + tag + " (main): " + mainTagJson + " (merge): " + mergeTagJson);
+                    LogUtils.debug(LayoutService.class, "mergeLabelMap 融合 (tag): " + tag + " (main): " + mainTagJson + " (merge): " + mergeTagJson);
                 }
                 else
                 {
-                    LogUtils.debug(LayoutManager.class, "mergeLabelMap 保留 (tag): " + tag + " (原因): JSON提取失败");
+                    LogUtils.debug(LayoutService.class, "mergeLabelMap 保留 (tag): " + tag + " (原因): JSON提取失败");
                 }
             }
             else
             {
                 result.put(tag, new LabelInfo(entry.getValue()));
-                LogUtils.debug(LayoutManager.class, "mergeLabelMap 新增 (tag): " + tag);
+                LogUtils.debug(LayoutService.class, "mergeLabelMap 新增 (tag): " + tag);
             }
         }
         main.setLabelMap(result);
-        LogUtils.debug(LayoutManager.class, "mergeLabelMap 结果: " + result.size() + " 个");
+        LogUtils.debug(LayoutService.class, "mergeLabelMap 结果: " + result.size() + " 个");
     }
 
     /**
@@ -978,7 +978,7 @@ public final class LayoutManager
      */
     private void mergeButtonMap (Layout main, Layout merge, JsonEntity mainOriginalJson)
     {
-        LogUtils.debug(LayoutManager.class, "mergeButtonMap (main): " + main.getButtonMap().size() + " 个 (merge): " + merge.getButtonMap().size() + " 个");
+        LogUtils.debug(LayoutService.class, "mergeButtonMap (main): " + main.getButtonMap().size() + " 个 (merge): " + merge.getButtonMap().size() + " 个");
 
         Map<String, ButtonInfo> result = new HashMap<>(main.getButtonMap());
         for (Map.Entry<String, ButtonInfo> entry : merge.getButtonMap().entrySet())
@@ -991,21 +991,21 @@ public final class LayoutManager
                 if (!mainTagJson.isEmpty() && !mergeTagJson.isEmpty())
                 {
                     result.put(tag, new ButtonInfo(tag, mergeTagJson.combined(mainTagJson)));
-                    LogUtils.debug(LayoutManager.class, "mergeButtonMap 融合 (tag): " + tag + " (main): " + mainTagJson + " (merge): " + mergeTagJson);
+                    LogUtils.debug(LayoutService.class, "mergeButtonMap 融合 (tag): " + tag + " (main): " + mainTagJson + " (merge): " + mergeTagJson);
                 }
                 else
                 {
-                    LogUtils.debug(LayoutManager.class, "mergeButtonMap 保留 (tag): " + tag + " (原因): JSON提取失败");
+                    LogUtils.debug(LayoutService.class, "mergeButtonMap 保留 (tag): " + tag + " (原因): JSON提取失败");
                 }
             }
             else
             {
                 result.put(tag, new ButtonInfo(entry.getValue()));
-                LogUtils.debug(LayoutManager.class, "mergeButtonMap 新增 (tag): " + tag);
+                LogUtils.debug(LayoutService.class, "mergeButtonMap 新增 (tag): " + tag);
             }
         }
         main.setButtonMap(result);
-        LogUtils.debug(LayoutManager.class, "mergeButtonMap 结果: " + result.size() + " 个");
+        LogUtils.debug(LayoutService.class, "mergeButtonMap 结果: " + result.size() + " 个");
     }
 
 }

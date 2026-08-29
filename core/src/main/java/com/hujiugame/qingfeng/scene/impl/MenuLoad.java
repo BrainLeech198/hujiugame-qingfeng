@@ -41,7 +41,7 @@ public final class MenuLoad extends AbstractGameRender
      * 初始化加载闪屏布局
      */
     @Override
-    protected void onInit (GameStateDataContainer gameStateDataContainer)
+    protected void init (GameStateDataContainer gameStateDataContainer)
     {
         // 提取动画配置
         animationManager.setAnimation(new Animation(gameStateDataContainer.getConfigJson()));
@@ -93,56 +93,8 @@ public final class MenuLoad extends AbstractGameRender
     @Override
     public void transitionRender (float deltaTime)
     {
-        if (animationManager.getTransitionManager().isReady())
-        {
-            // 淡出完成阶段 即淡入
-            if (animationManager.getTransitionManager().isFadedOut())
-            {
-                // 进行中
-                if (animationManager.getTransitionManager().isFadingIn())
-                {
-                    animationManager.getTransitionManager().fadingIn(
-                        gameStateDataContainer.getLayoutConfig(),
-                        audioManager, graphicsManager, uiManager,
-                        deltaTime
-                    );
-                }
-                // 初始化
-                else
-                {
-                    animationManager.getTransitionManager().initFadeIn(
-                        gameStateDataContainer.getLayoutConfig(),
-                        animationManager.getAnimation(),
-                        uiManager
-                    );
-                }
-            }
-            // 淡出阶段
-            else
-            {
-                // 进行中
-                if (animationManager.getTransitionManager().isFadingOut())
-                {
-                    animationManager.getTransitionManager().fadingOut(
-                        gameStateDataContainer.getLayoutConfig(),
-                        audioManager, graphicsManager, uiManager,
-                        deltaTime
-                    );
-                }
-                // 初始化
-                else
-                {
-                    animationManager.getTransitionManager().initFadeOut(
-                        gameStateDataContainer.getLayoutConfig(),
-                        animationManager.getAnimation()
-                    );
-                }
-            }
-        }
-        else
-        {
-            animationManager.getTransitionManager().stopTransition();
-        }
+        // 过渡动画引擎待重新设计，当前 TM 空壳不产生过渡渲染
+        render(deltaTime);
     }
 
     @Override

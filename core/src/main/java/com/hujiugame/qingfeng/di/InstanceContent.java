@@ -3,7 +3,7 @@ package com.hujiugame.qingfeng.di;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.hujiugame.qingfeng.core.GameHost;
-import com.hujiugame.qingfeng.core.GameResolver;
+import com.hujiugame.qingfeng.core.InitService;
 import com.hujiugame.qingfeng.core.RenderPipeline;
 import com.hujiugame.qingfeng.core.SceneStack;
 import com.hujiugame.qingfeng.core.UpdateChecker;
@@ -50,12 +50,11 @@ public final class InstanceContent
     private UiManager uiManager;
     private AnimationManager animationManager;
 
-    private TextManager textManager;
-    private LayoutManager layoutManager;
+    private LayoutService layoutManager;
 
     private RenderPipeline renderPipeline;
     private SceneStack sceneStack;
-    private GameResolver gameResolver;
+    private ConfigService configService;
     private EventDispatcher eventDispatcher;
     private GameLogicService gameLogicService;
 
@@ -86,12 +85,20 @@ public final class InstanceContent
     {
         GameRenderRegistry registry = new GameRenderRegistry();
         registry.register(GameState.INIT,
-            () -> new Init(instanceContent.updateChecker, instanceContent.gameHost,
-                instanceContent.userConfigManager,
-                instanceContent.languageManager, instanceContent.themeManager, instanceContent.audioManager,
-                instanceContent.graphicsManager, instanceContent.uiManager,
-                instanceContent.animationManager,
-                instanceContent.eventQueue));
+            () -> {
+                // InitService 在 lambda 内创建，每个 Init 实例拥有独立的 InitService
+                InitService initService = new InitService(
+                    instanceContent.updateChecker, instanceContent.gameHost,
+                    instanceContent.userConfigManager,
+                    instanceContent.languageManager, instanceContent.themeManager,
+                    instanceContent.audioManager,
+                    instanceContent.graphicsManager, instanceContent.uiManager,
+                    instanceContent.animationManager,
+                    instanceContent.eventQueue);
+                return new Init(initService, instanceContent.updateChecker,
+                    instanceContent.graphicsManager, instanceContent.uiManager,
+                    instanceContent.eventQueue);
+            });
 
         registry.register(GameState.MENU_MAIN,
             () -> new MenuMain(instanceContent.updateChecker, instanceContent.audioManager,
@@ -167,11 +174,8 @@ public final class InstanceContent
             instanceContent.themeManager = new ThemeManager();
             LogUtils.debug(InstanceContent.class, "init - ThemeManager 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
             start = System.nanoTime();
-            instanceContent.textManager = new TextManager();
-            LogUtils.debug(InstanceContent.class, "init - TextManager 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
-            start = System.nanoTime();
-            instanceContent.layoutManager = new LayoutManager();
-            LogUtils.debug(InstanceContent.class, "init - LayoutManager 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
+            instanceContent.layoutManager = new LayoutService();
+            LogUtils.debug(InstanceContent.class, "init - LayoutService 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
             start = System.nanoTime();
             instanceContent.languageManager = new LanguageManager();
             LogUtils.debug(InstanceContent.class, "init - LanguageManager 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
@@ -189,7 +193,7 @@ public final class InstanceContent
 
             // UI管理类
             start = System.nanoTime();
-            instanceContent.uiManager = new UiManager(instanceContent.stage, instanceContent.audioManager, instanceContent.graphicsManager, instanceContent.textManager);
+            instanceContent.uiManager = new UiManager(instanceContent.stage, instanceContent.audioManager, instanceContent.graphicsManager, instanceContent.languageManager);
             LogUtils.debug(InstanceContent.class, "init - UiManager 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
 
             // 动画管理类
@@ -208,8 +212,8 @@ public final class InstanceContent
             instanceContent.sceneStack = new SceneStack();
             LogUtils.debug(InstanceContent.class, "init - SceneStack 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
             start = System.nanoTime();
-            instanceContent.gameResolver = new GameResolver();
-            LogUtils.debug(InstanceContent.class, "init - GameResolver 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
+            instanceContent.configService = new ConfigService();
+            LogUtils.debug(InstanceContent.class, "init - ConfigService 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
             start = System.nanoTime();
             instanceContent.eventDispatcher = new EventDispatcher();
             LogUtils.debug(InstanceContent.class, "init - EventDispatcher 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
@@ -231,20 +235,18 @@ public final class InstanceContent
                 instanceContent.graphicsManager,
                 instanceContent.uiManager,
                 instanceContent.layoutManager,
-                instanceContent.textManager,
                 instanceContent.spriteBatch,
                 instanceContent.stage,
                 instanceContent.renderPipeline,
                 instanceContent.sceneStack,
-                instanceContent.gameResolver,
+                instanceContent.configService,
                 instanceContent.eventDispatcher,
                 instanceContent.gameLogicService
             );
             LogUtils.debug(InstanceContent.class, "init - GameHost 耗时: " + (System.nanoTime() - start) / 1000000 + "ms");
 
             // 后续注入一般很快，不单独计时：统一走封装 setter，对象替换时连带配置一并完成
-            instanceContent.setTextManager(instanceContent.textManager);
-            instanceContent.setLayoutManager(instanceContent.layoutManager);
+            instanceContent.setLayoutService(instanceContent.layoutManager);
             instanceContent.setUiManager(instanceContent.uiManager);
 
             return true;
@@ -408,29 +410,6 @@ public final class InstanceContent
     }
 
     /**
-     * 获取文本管理器
-     * @return 文本管理器
-     */
-    public TextManager getTextManager ()
-    {
-        return textManager;
-    }
-
-    /**
-     * 设置文本管理器，并连带注入其依赖的语言管理器与游戏信息管理器
-     * <p>
-     * 对应依赖未初始化（null）时跳过，由各自的 setter 反向补绑（见 setGameHost）。
-     *
-     * @param textManager 文本管理器
-     */
-    public void setTextManager (TextManager textManager)
-    {
-        this.textManager = textManager;
-        if (languageManager != null) textManager.setLanguageManager(languageManager);
-        if (gameHost != null) textManager.setGameInfoManager(gameHost.getGameInfoManager());
-    }
-
-    /**
      * 获取 UI 管理器
      * @return UI 管理器
      */
@@ -452,7 +431,7 @@ public final class InstanceContent
      * 设置 UI 管理器，并连带切换其依赖者的引用（切换主题整体替换 UiManager 实例时使用）
      * <p>
      * 连带项：图形管理器字体来源、布局管理器引用、虚拟输入引用；对应对象未初始化（null）时跳过，
-     * 由它们各自的 setter 反向补绑（见 setVirtualInputHandler/setLayoutManager）。
+     * 由它们各自的 setter 反向补绑（见 setVirtualInputHandler/setLayoutService）。
      *
      * @param uiManager UI 管理器
      */
@@ -477,7 +456,7 @@ public final class InstanceContent
      * 获取布局管理器
      * @return 布局管理器
      */
-    public LayoutManager getLayoutManager ()
+    public LayoutService getLayoutService ()
     {
         return layoutManager;
     }
@@ -489,7 +468,7 @@ public final class InstanceContent
      *
      * @param layoutManager 布局管理器
      */
-    public void setLayoutManager (LayoutManager layoutManager)
+    public void setLayoutService (LayoutService layoutManager)
     {
         this.layoutManager = layoutManager;
         if (audioManager != null) layoutManager.setAudioManager(audioManager);
@@ -516,12 +495,12 @@ public final class InstanceContent
     }
 
     /**
-     * 获取游戏解析器
-     * @return 游戏解析器
+     * 获取配置服务
+     * @return 配置服务
      */
-    public GameResolver getGameResolver ()
+    public ConfigService getConfigService ()
     {
-        return gameResolver;
+        return configService;
     }
 
     /**

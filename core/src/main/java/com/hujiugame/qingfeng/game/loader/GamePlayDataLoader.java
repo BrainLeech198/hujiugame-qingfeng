@@ -3,12 +3,12 @@ package com.hujiugame.qingfeng.game.loader;
 import com.badlogic.gdx.files.FileHandle;
 import com.hujiugame.qingfeng.data.play.PlayLocalData;
 import com.hujiugame.qingfeng.game.*;
-import com.hujiugame.qingfeng.manager.LayoutManager;
+import com.hujiugame.qingfeng.manager.LayoutService;
 import com.hujiugame.qingfeng.util.system.LogUtils;
 
 public final class GamePlayDataLoader
 {
-    private final LayoutManager layoutManager;
+    private final LayoutService layoutManager;
     private final PlayLocalData playLocalData;
 
     /**
@@ -17,7 +17,7 @@ public final class GamePlayDataLoader
      * @param layoutManager   布局管理器
      * @param playLocalData 游戏数据内容
      */
-    public GamePlayDataLoader (LayoutManager layoutManager, PlayLocalData playLocalData)
+    public GamePlayDataLoader (LayoutService layoutManager, PlayLocalData playLocalData)
     {
         this.layoutManager = layoutManager;
         this.playLocalData = playLocalData;

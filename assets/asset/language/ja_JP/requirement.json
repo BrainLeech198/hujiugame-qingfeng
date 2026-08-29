@@ -1,47 +1,47 @@
 {
-  "message_box" : {
-    "open_official_website.title" : "ゲーム公式サイトを開きますか？",
-    "open_official_website.content" : "ブラウザを開いて公式サイトに移動しますか？",
-    "quit_game.title" : "ゲームを終了",
-    "quit_game.content" : "本当にゲームを終了しますか？",
-    "update_detected.title" : "新しいバージョンを検出しました！",
-    "update_detected.content" : "ブラウザを開いて公式サイトから最新バージョンをダウンロードしますか？",
-    "update_detected_beta.title" : "ベータアップデートを検出しました！",
-    "update_detected_beta.content" : "これはベータアップデートです。不安定だったり、未知の問題が含まれている可能性があります。ブラウザを開いて公式サイトからダウンロードしますか？",
-    "update_request_failed.title" : "アップデートの確認に失敗しました！",
-    "update_request_failed.content" : "ネットワーク権限とインターネット接続を確認してください。ブラウザを開いて公式サイトにアクセスし、最新バージョンを確認しますか？",
-    "game_version_different.title" : "バージョンの不一致！",
-    "game_version_different.content.1" : "現在のゲーム「",
-    "game_version_different.content.2" : "」が必要とするランチャーバージョン:",
-    "game_version_different.content.3" : "一方、現在のバージョンは:",
-    "game_version_different.content.4" : "強制的に実行するとクラッシュする可能性があります",
-    "game_launcher_version_unknown.title" : "ゲームのバージョン要件を認識できません！",
-    "game_launcher_version_unknown.content.1" : "現在のゲーム「",
-    "game_launcher_version_unknown.content.2" : "」は認識可能なランチャーバージョン要件を宣言していません。強制実行しないことをお勧めします。"
+  "message_box": {
+    "open_official_website.title": "ゲーム公式サイトを開きますか？",
+    "open_official_website.content": "ブラウザを開いて公式サイトに移動しますか？",
+    "quit_game.title": "ゲームを終了",
+    "quit_game.content": "本当にゲームを終了しますか？",
+    "update_detected.title": "新しいバージョンを検出しました！",
+    "update_detected.content": "ブラウザを開いて公式サイトから最新バージョンをダウンロードしますか？",
+    "update_detected_beta.title": "ベータアップデートを検出しました！",
+    "update_detected_beta.content": "これはベータアップデートです。不安定だったり、未知の問題が含まれている可能性があります。ブラウザを開いて公式サイトからダウンロードしますか？",
+    "update_request_failed.title": "アップデートの確認に失敗しました！",
+    "update_request_failed.content": "ネットワーク権限とインターネット接続を確認してください。ブラウザを開いて公式サイトにアクセスし、最新バージョンを確認しますか？",
+    "game_version_different.title": "バージョンの不一致！",
+    "game_version_different.content.1": "現在のゲーム「",
+    "game_version_different.content.2": "」が必要とするランチャーバージョン:",
+    "game_version_different.content.3": "一方、現在のバージョンは:",
+    "game_version_different.content.4": "強制的に実行するとクラッシュする可能性があります",
+    "game_launcher_version_unknown.title": "ゲームのバージョン要件を認識できません！",
+    "game_launcher_version_unknown.content.1": "現在のゲーム「",
+    "game_launcher_version_unknown.content.2": "」は認識可能なランチャーバージョン要件を宣言していません。強制実行しないことをお勧めします。"
   },
-  "menu.main" : {
-    "button.start" : "開始",
-    "button.create" : "作成",
-    "button.config" : "設定",
-    "button.quit" : "終了"
+  "menu.main": {
+    "button.start": "開始",
+    "button.create": "作成",
+    "button.config": "設定",
+    "button.quit": "終了"
   },
-  "menu.list" : {
-    "button.back" : "戻る",
-    "button.import" : "インポート",
-    "button.profile" : "プロフィール",
-    "button.share" : "共有",
-    "button.delete" : "削除",
-    "button.last_page" : "前のページ",
-    "button.next_page" : "次のページ",
-    "label.absolute_path" : "フォルダのパス",
-    "label.selected_path" : "選択したフォルダ",
-    "label.page" : "/"
+  "menu.list": {
+    "button.back": "戻る",
+    "button.import": "インポート",
+    "button.profile": "プロフィール",
+    "button.share": "共有",
+    "button.delete": "削除",
+    "button.next_page": "次へ",
+    "label.absolute_path": "フォルダのパス",
+    "label.selected_path": "選択したフォルダ",
+    "label.page": "/",
+    "button.previous_page": "前へ"
   },
-  "menu.load" : {
-    "label.loading" : "読み込み中..."
+  "menu.load": {
+    "label.loading": "読み込み中..."
   },
-  "config.basic" : {
-    "back" : "戻る",
-    "language" : "使用言語"
+  "config.basic": {
+    "back": "戻る",
+    "language": "使用言語"
   }
 }

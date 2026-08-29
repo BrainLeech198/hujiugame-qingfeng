@@ -5,7 +5,7 @@ import com.hujiugame.qingfeng.data.story.Role;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.key.config.ConfigKey;
 import com.hujiugame.qingfeng.type.file.PathName;
-import com.hujiugame.qingfeng.manager.LayoutManager;
+import com.hujiugame.qingfeng.manager.LayoutService;
 import com.hujiugame.qingfeng.manager.ThemeManager;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 import com.hujiugame.qingfeng.util.system.LogUtils;
@@ -23,7 +23,7 @@ public final class GameRoleManager
     private final List<String> roleIdList = new LinkedList<>();
     private final Map<String, Role> roleMap = new HashMap<>();
     private ThemeManager themeManager;
-    private LayoutManager layoutManager;
+    private LayoutService layoutManager;
 
     /**
      * 解析角色列表配置文件，获取所有角色文件夹路径
@@ -92,7 +92,7 @@ public final class GameRoleManager
      * @param layoutManager           布局管理器
      * @return 加载是否成功
      */
-    private boolean loadRoleData (FileHandle gameDirectoryPathHandle, ThemeManager themeManager, LayoutManager layoutManager)
+    private boolean loadRoleData (FileHandle gameDirectoryPathHandle, ThemeManager themeManager, LayoutService layoutManager)
     {
         try
         {
@@ -141,7 +141,7 @@ public final class GameRoleManager
      * @param layoutManager 布局管理器
      * @return 初始化是否成功
      */
-    public boolean init (FileHandle gameDirectoryPathHandle, ThemeManager themeManager, LayoutManager layoutManager)
+    public boolean init (FileHandle gameDirectoryPathHandle, ThemeManager themeManager, LayoutService layoutManager)
     {
         try
         {

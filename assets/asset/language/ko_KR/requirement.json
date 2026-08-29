@@ -1,47 +1,47 @@
 {
-  "message_box" : {
-    "open_official_website.title" : "게임 공식 웹사이트를 여시겠습니까?",
-    "open_official_website.content" : "브라우저를 열고 공식 웹사이트로 이동하시겠습니까?",
-    "quit_game.title" : "게임 종료",
-    "quit_game.content" : "정말 게임을 종료하시겠습니까?",
-    "update_detected.title" : "새 버전이 감지되었습니다!",
-    "update_detected.content" : "브라우저를 열어 공식 웹사이트에서 최신 버전을 다운로드하시겠습니까?",
-    "update_detected_beta.title" : "베타 업데이트가 감지되었습니다!",
-    "update_detected_beta.content" : "이것은 베타 업데이트입니다. 불안정하거나 알 수 없는 문제가 있을 수 있습니다. 브라우저를 열어 공식 웹사이트에서 다운로드하시겠습니까?",
-    "update_request_failed.title" : "업데이트 확인에 실패했습니다!",
-    "update_request_failed.content" : "네트워크 권한과 인터넷 연결을 확인하세요. 브라우저를 열어 공식 웹사이트를 방문하여 최신 버전을 확인하시겠습니까?",
-    "game_version_different.title" : "버전 불일치!",
-    "game_version_different.content.1" : "현재 게임 \"",
-    "game_version_different.content.2" : "\"의 최적 런처 버전:",
-    "game_version_different.content.3" : ", 현재 버전:",
-    "game_version_different.content.4" : "강제 실행 시 충돌이 발생할 수 있습니다",
-    "game_launcher_version_unknown.title" : "게임 버전 요구 사항을 알 수 없습니다!",
-    "game_launcher_version_unknown.content.1" : "현재 게임 \"",
-    "game_launcher_version_unknown.content.2" : "\"이(가) 인식 가능한 런처 버전 요구 사항을 선언하지 않았습니다. 강제 실행하지 않는 것이 좋습니다."
+  "message_box": {
+    "open_official_website.title": "게임 공식 웹사이트를 여시겠습니까?",
+    "open_official_website.content": "브라우저를 열고 공식 웹사이트로 이동하시겠습니까?",
+    "quit_game.title": "게임 종료",
+    "quit_game.content": "정말 게임을 종료하시겠습니까?",
+    "update_detected.title": "새 버전이 감지되었습니다!",
+    "update_detected.content": "브라우저를 열어 공식 웹사이트에서 최신 버전을 다운로드하시겠습니까?",
+    "update_detected_beta.title": "베타 업데이트가 감지되었습니다!",
+    "update_detected_beta.content": "이것은 베타 업데이트입니다. 불안정하거나 알 수 없는 문제가 있을 수 있습니다. 브라우저를 열어 공식 웹사이트에서 다운로드하시겠습니까?",
+    "update_request_failed.title": "업데이트 확인에 실패했습니다!",
+    "update_request_failed.content": "네트워크 권한과 인터넷 연결을 확인하세요. 브라우저를 열어 공식 웹사이트를 방문하여 최신 버전을 확인하시겠습니까?",
+    "game_version_different.title": "버전 불일치!",
+    "game_version_different.content.1": "현재 게임 \"",
+    "game_version_different.content.2": "\"의 최적 런처 버전:",
+    "game_version_different.content.3": ", 현재 버전:",
+    "game_version_different.content.4": "강제 실행 시 충돌이 발생할 수 있습니다",
+    "game_launcher_version_unknown.title": "게임 버전 요구 사항을 알 수 없습니다!",
+    "game_launcher_version_unknown.content.1": "현재 게임 \"",
+    "game_launcher_version_unknown.content.2": "\"이(가) 인식 가능한 런처 버전 요구 사항을 선언하지 않았습니다. 강제 실행하지 않는 것이 좋습니다."
   },
-  "menu.main" : {
-    "button.start" : "시작",
-    "button.create" : "만들기",
-    "button.config" : "설정",
-    "button.quit" : "종료"
+  "menu.main": {
+    "button.start": "시작",
+    "button.create": "만들기",
+    "button.config": "설정",
+    "button.quit": "종료"
   },
-  "menu.list" : {
-    "button.back" : "뒤로",
-    "button.import" : "가져오기",
-    "button.profile" : "프로필",
-    "button.share" : "공유",
-    "button.delete" : "삭제",
-    "button.last_page" : "이전 페이지",
-    "button.next_page" : "다음 페이지",
-    "label.absolute_path" : "폴더 경로",
-    "label.selected_path" : "선택한 폴더",
-    "label.page" : "/"
+  "menu.list": {
+    "button.back": "뒤로",
+    "button.import": "가져오기",
+    "button.profile": "프로필",
+    "button.share": "공유",
+    "button.delete": "삭제",
+    "button.next_page": "다음",
+    "label.absolute_path": "폴더 경로",
+    "label.selected_path": "선택한 폴더",
+    "label.page": "/",
+    "button.previous_page": "이전"
   },
-  "menu.load" : {
-    "label.loading" : "로딩 중..."
+  "menu.load": {
+    "label.loading": "로딩 중..."
   },
-  "config.basic" : {
-    "back" : "뒤로",
-    "language" : "사용 언어"
+  "config.basic": {
+    "back": "뒤로",
+    "language": "사용 언어"
   }
 }

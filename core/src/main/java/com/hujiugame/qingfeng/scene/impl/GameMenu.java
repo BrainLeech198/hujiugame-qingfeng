@@ -37,7 +37,7 @@ public final class GameMenu extends AbstractGameRender
      * @param gameStateDataContainer 游戏状态数据容器
      */
     @Override
-    protected void onInit (GameStateDataContainer gameStateDataContainer)
+    protected void init (GameStateDataContainer gameStateDataContainer)
     {
 
         gameAudioManager = gameHost.getPlayLocalData().getAudioManager();

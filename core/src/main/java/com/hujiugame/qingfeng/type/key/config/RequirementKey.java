@@ -64,7 +64,7 @@ public final class RequirementKey
             public static final String BUTTON_SHARE = "share";
             public static final String BUTTON_DELETE = "delete";
 
-            public static final String BUTTON_SELECT_LAST_PAGE = "select.last_page";
+            public static final String BUTTON_SELECT_PREVIOUS_PAGE = "select.previous_page";
             public static final String BUTTON_SELECT_NEXT_PAGE = "select.next_page";
         }
 
@@ -223,7 +223,7 @@ public final class RequirementKey
             public static final String BUTTON_PROFILE = "button.profile";
             public static final String BUTTON_SHARE = "button.share";
             public static final String BUTTON_DELETE = "button.delete";
-            public static final String BUTTON_LAST_PAGE = "button.last_page";
+            public static final String BUTTON_PREVIOUS_PAGE = "button.previous_page";
             public static final String BUTTON_NEXT_PAGE = "button.next_page";
             public static final String LABEL_ABSOLUTE_PATH = "label.absolute_path";
             public static final String LABEL_SELECTED_PATH = "label.selected_path";

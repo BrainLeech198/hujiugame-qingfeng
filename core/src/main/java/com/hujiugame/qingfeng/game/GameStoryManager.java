@@ -9,7 +9,7 @@ import com.hujiugame.qingfeng.data.story.Role;
 import com.hujiugame.qingfeng.data.story.tree.*;
 import com.hujiugame.qingfeng.type.file.PathName;
 import com.hujiugame.qingfeng.type.key.story.StoryKey;
-import com.hujiugame.qingfeng.manager.LayoutManager;
+import com.hujiugame.qingfeng.manager.LayoutService;
 import com.hujiugame.qingfeng.manager.ThemeManager;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 import com.hujiugame.qingfeng.util.system.LogUtils;
@@ -17,7 +17,7 @@ import com.hujiugame.qingfeng.util.system.LogUtils;
 public final class GameStoryManager
 {
     private ThemeManager themeManager;
-    private LayoutManager layoutManager;
+    private LayoutService layoutManager;
     private Role role;
     private FileHandle treePathHandle;
     private FileHandle pagePathHandle;
@@ -43,7 +43,7 @@ public final class GameStoryManager
      * @param layoutManager 布局管理器
      * @return 初始化是否成功
      */
-    public boolean init (ThemeManager themeManager, LayoutManager layoutManager)
+    public boolean init (ThemeManager themeManager, LayoutService layoutManager)
     {
         try
         {

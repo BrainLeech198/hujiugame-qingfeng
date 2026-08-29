@@ -598,7 +598,7 @@ public class Main extends ApplicationAdapter
         try
         {
             // 文字解析器
-            if (!JsonTextParser.init(instanceContent.getTextManager()))
+            if (!JsonTextParser.init(instanceContent.getLanguageManager()))
             {
                 LogUtils.error(Main.class, "initParser 文字解析器初始化失败");
                 return false;
