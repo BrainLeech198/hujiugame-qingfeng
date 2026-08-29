@@ -1,20 +1,21 @@
-package com.hujiugame.qingfeng.animation.task.action;
+package com.hujiugame.qingfeng.animation.task.command;
 
 import com.hujiugame.qingfeng.type.key.animation.AnimationKey;
 
 /**
- * 动画动作类型枚举。
+ * 动画指令大类枚举。
  * <p>
- * 对应动画 action 节点中的 {@code type} 字段值。
+ * 对应动画 command 节点中的 {@code type} 字段值，
+ * 对标 Script 的 {@link com.hujiugame.qingfeng.script.data.command.ScriptCommandType}。
  */
-public enum AnimationActionType
+public enum AnimationCommandType
 {
-    NONE(AnimationKey.Task.Action.Type.NONE),
-    SMOOTH_MOVE(AnimationKey.Task.Action.Type.SMOOTH_MOVE);
+    /** 普通动画 */
+    NORMAL(AnimationKey.Task.Command.Type.NORMAL);
 
     private final String displayString;
 
-    AnimationActionType (String displayString)
+    AnimationCommandType (String displayString)
     {
         this.displayString = displayString;
     }
@@ -28,15 +29,15 @@ public enum AnimationActionType
     }
 
     /**
-     * 从 JSON 字符串解析 AnimationActionType
+     * 从 JSON 字符串解析 AnimationCommandType
      *
      * @param jsonValue type 字段值
      * @return 对应的枚举，不匹配时返回 null
      */
-    public static AnimationActionType fromString (String jsonValue)
+    public static AnimationCommandType fromString (String jsonValue)
     {
         if (jsonValue == null) return null;
-        for (AnimationActionType t : values())
+        for (AnimationCommandType t : values())
         {
             if (t.displayString.equals(jsonValue)) return t;
         }

@@ -45,24 +45,34 @@ public final class Animation
     }
 
     /**
-     * 是否存在任一有效组件
+     * 判断组件是否全部有效（无组件时也视为有效）
+     * <p>
+     * valid 条件：1. 不存在组件 或 2. 存在的组件全部 valid
      */
     private boolean hasValidComponent ()
     {
+        if (components == null || components.isEmpty())
+        {
+            LogUtils.debug(Animation.class, "Animation(hasValidComponent) 组件为空，视为有效 (components): " + components);
+            return true;
+        }
         for (AnimationComponent component : components.values())
         {
-            if (component.isValid())
+            if (!component.isValid())
             {
-                return true;
+                LogUtils.debug(Animation.class, "Animation(hasValidComponent) 存在无效组件 (component): " + component);
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     // ===================================================================================================================
 
     /**
-     * 字段构造
+     * 字段构造。
+     * <p>
+     * valid 条件：无组件时 valid；有组件时全部必须 valid。
      *
      * @param components 动画组件映射（类型 → 组件，FadeIn / FadeOut），可空
      */
@@ -71,7 +81,7 @@ public final class Animation
         this.components = components == null ? new LinkedHashMap<>() : new LinkedHashMap<>(components);
         if (!hasValidComponent())
         {
-            LogUtils.error(Animation.class, "构造失败 无有效动画组件 (components): " + components);
+            LogUtils.error(Animation.class, "构造失败 有无效动画组件 (components): " + components);
             valid = false;
             return;
         }

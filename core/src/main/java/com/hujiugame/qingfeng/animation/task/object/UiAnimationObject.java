@@ -75,12 +75,11 @@ public class UiAnimationObject extends AnimationObject
     }
 
     /**
-     * 依据目标生成 object 节点 JSON
+     * 依据目标生成 object 节点 JSON（不含 class，由调用方按数组位置注入）
      */
     private void buildJson ()
     {
         json = new JsonEntity();
-        json.put(AnimationKey.Task.Object.CLASS, AnimationKey.Task.Object.CLASS_UI);
         json.put(UiKey.UiObject.TYPE, target.getUiKind().getDisplayString());
         json.put(UiKey.UiObject.TAG, target.getTag());
     }
