@@ -27,13 +27,13 @@
 
 ### 重构
 
-- **TransitionManager 空壳化** — 移除原有 1195 行动画执行逻辑（initFadeOut/fadingOut/initFadeIn/fadingIn/smooth_move 分发），保留双事件模型骨架（setPendingTask → executePendingTask）；startTransition 立即执行并恢复渲染管线，无动画过渡（commit <hash>）
-- **Action→Command 重命名** — AnimationAction/AnimationActionParser/AnimationActionType/AnimationActionParam 及参数类全部重命名为 AnimationCommand 系列（commit <hash>）
-- **AnimationObjectClass 枚举新增** — 提取动画对象类型枚举，替代原 AnimationAction 内嵌类型判断（commit <hash>）
+- **TransitionManager 空壳化** — 移除原有 1195 行动画执行逻辑（initFadeOut/fadingOut/initFadeIn/fadingIn/smooth_move 分发），保留双事件模型骨架（setPendingTask → executePendingTask）；startTransition 立即执行并恢复渲染管线，无动画过渡（commit 3952fb5）
+- **Action→Command 重命名** — AnimationAction/AnimationActionParser/AnimationActionType/AnimationActionParam 及参数类全部重命名为 AnimationCommand 系列（commit 3952fb5）
+- **AnimationObjectClass 枚举新增** — 提取动画对象类型枚举，替代原 AnimationAction 内嵌类型判断（commit 3952fb5）
 
 ### 移除
 
-- **删除旧动画任务类** — AnimationAction.java、AnimationActionParser.java、AnimationActionType.java、AnimationActionParam.java、NoneAnimationActionParam.java、SmoothMoveAnimationActionParam.java（commit <hash>）
+- **删除旧动画任务类** — AnimationAction.java、AnimationActionParser.java、AnimationActionType.java、AnimationActionParam.java、NoneAnimationActionParam.java、SmoothMoveAnimationActionParam.java（commit 3952fb5）
 
 ---
 
