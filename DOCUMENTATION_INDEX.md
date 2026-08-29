@@ -75,13 +75,11 @@
 | **语言/主题默认配置损坏恢复** | [develop/plans/2026-08-06-language-theme-default-recovery.md](develop/plans/2026-08-06-language-theme-default-recovery.md) | "用户删除默认配置"场景盘点 + 将来实现方向（融合前置/词典校验），Internal 化已消除主路径 |
 | **页面切换 BGM 自动切换** | [develop/plans/2026-08-07-bgm-page-switch.md](develop/plans/2026-08-07-bgm-page-switch.md) | 页面切换旧 BGM 未停导致双播，playLayout 播放记录同步方案 |
 | **页面切换过渡动画** | [develop/plans/2026-08-07-page-transition-animation.md](develop/plans/2026-08-07-page-transition-animation.md) | 切页淡出淡入动画（已实现为双事件模型 + 控件级 smooth_move，含「淡出→淡入卡顿」待解决） |
+| **SceneStack 预加载改造** | [develop/plans/2026-08-23-scene-stack-preload.md](develop/plans/2026-08-23-scene-stack-preload.md) | 拆 updateGameState 为 preload + apply 两步，淡出期间后台线程预加载 JSON，消除切页卡顿 |
 | **JSON 键 snake_case 统一迁移** | [develop/plans/2026-08-08-json-key-snake-case.md](develop/plans/2026-08-08-json-key-snake-case.md) | 程序消费 JSON 键 camelCase→snake_case 全量迁移方案（24 键 + 常量类 + 仓库外数据） |
-| **UiObject 支持 JsonEntity 构造** | [develop/plans/2026-08-09-uiobject-jsonentity-constructor.md](develop/plans/2026-08-09-uiobject-jsonentity-constructor.md) | UiObject 从 JsonEntity 解析 type/tag 构造（键收进 UiKey.UiObject），VirtualInputHandler 复用替换 |
 | **运行时切换主题/语言技术路径** | [develop/plans/2026-08-09-runtime-switch-theme-language.md](develop/plans/2026-08-09-runtime-switch-theme-language.md) | reload 为何无效 + 语言切换只差 blockMap 清空 + 主题切换需重建 UI 层 + 分阶段实现建议 |
 | **日志三维改造 + Script throw 统一** | [develop/plans/2026-08-10-log-3d-refactor.md](develop/plans/2026-08-10-log-3d-refactor.md) | LogUtils 空间/异常/上下文/时间四维改造 + Script 90 处 throw 消息中文化溯源 + GraphicsObject tag 可空优化（已确认，暂未实施） |
-| **Beta 快照细分版本** | [develop/plans/2026-08-13-beta-snapshot-version.md](develop/plans/2026-08-13-beta-snapshot-version.md) | app_version_snapshot 字段（YYwWWa）+ 打包器自动联想 + 产物命名带细分 + 资源同步加快照（已实施） |
-| **mac 交付物改 zip 内嵌安装器** | [develop/plans/2026-08-13-mac-zip-delivery.md](develop/plans/2026-08-13-mac-zip-delivery.md) | mac 交付物改为 zip 内嵌自解压 .command + 中文 symlink，绕过蓝奏云扩展名白名单 |
-| **mac zip 交付实施计划** | [develop/plans/2026-08-13-mac-zip-delivery-plan.md](develop/plans/2026-08-13-mac-zip-delivery-plan.md) | zip 内嵌安装器逐任务实施计划（build_package_mac 改造 + 一次性补救脚本） |
+| **服务器部署计划** | [develop/plans/2026-08-22-server-deployment-plan.md](develop/plans/2026-08-22-server-deployment-plan.md) | 游戏创作社区服务器部署方案（用户系统/房间系统/邮件订阅/自动部署） |
 
 ---
 
