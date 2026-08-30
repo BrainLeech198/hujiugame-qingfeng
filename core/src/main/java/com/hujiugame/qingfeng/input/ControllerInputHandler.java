@@ -7,16 +7,15 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.hujiugame.qingfeng.di.InstanceContent;
 import com.hujiugame.qingfeng.core.GameHost;
-import com.hujiugame.qingfeng.ui.kind.InteractableObject;
+import com.hujiugame.qingfeng.di.InstanceContent;
+import com.hujiugame.qingfeng.graphic.GraphicsManager;
 import com.hujiugame.qingfeng.type.Numeric;
 import com.hujiugame.qingfeng.type.ScreenSize;
 import com.hujiugame.qingfeng.type.VirtualInputType;
 import com.hujiugame.qingfeng.type.file.FileName;
 import com.hujiugame.qingfeng.type.file.PathName;
-import com.hujiugame.qingfeng.graphic.GraphicsManager;
-import com.hujiugame.qingfeng.ui.UiManager;
+import com.hujiugame.qingfeng.ui.kind.InteractableObject;
 import com.hujiugame.qingfeng.util.StringPolisher;
 import com.hujiugame.qingfeng.util.system.FileUtils;
 import com.hujiugame.qingfeng.util.system.LogUtils;
@@ -72,7 +71,7 @@ public class ControllerInputHandler implements ControllerListener
     private static final int CONFIRM_KEY = BUTTON_A;
     private static final int CANCEL_KEY = BUTTON_B;
 
-    private static final int FULLSCREEN_KEY = BUTTON_RB;
+    private static final int FULLSCREEN_KEY = BUTTON_BACK;
 
 
     /**
