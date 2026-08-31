@@ -21,21 +21,21 @@
 > 10. 【必须】CHANGELOG 条目按日期归组：同一天的所有提交主题共同包含在同一个 `## <日期> — <概括标题>` 下，禁止拆成多个 `## ` 日期标题；每个提交块以 `**<主题>**（commit <7位短哈希>）` 标记，块内每条 `- ` 条目行尾标注引入它的提交短哈希 `（commit <7位短哈希>）`。新条目随内容改动提交后，其哈希在下一笔内容改动提交中一并补写（补写仅改 hash，不新增条目）
 > 11. 【必须】写版本发布说明（官网 `docs/data/versions.json` 的 `log`、`develop/PUBLISH.md` 面向玩家摘要）时，按「上一版本发布点 → 本版本发布点」之间的 commit 区间梳理玩家可见改动（修复的 Bug / 新增功能 / 优化），逐一写入，不要遗漏跨版本才生效的修复（打包之后完成的 bug 修复会随下一个版本发出，须算入下一版本的说明）；beta 测试版按此梳理书写即可，release 正式版属重要更新，需正式、系统地书写
 
-## 2026-08-31 — 版本配置清理（删除26w33b/26w34a，26w34b→26w34a）
+## 2026-08-31 — 版本配置清理（删除26w33b/26w34b，26w34b→26w34b）
 
 **构建(版本)：版本配置清理与版本码重排**
 
 ### 构建
 
-- **app_version 重排** — 删除26w33b（版本码2）和原26w34a（版本码3），26w34b改名为26w34a并继承版本码2；版本序列收敛为26w33a(1)→26w34a(2)（commit 625f9d5）
+- **app_version 重排** — 删除26w33b（版本码2）和原26w34b（版本码3），26w34b改名为26w34b并继承版本码2；版本序列收敛为26w33a(1)→26w34b(2)（commit 625f9d5）
 - **android versionCode 同步** — `android/build.gradle` versionCode 4→2，与 app_version.json 对齐（commit 625f9d5）
 
 **文档(版本)：PUBLISH.md 与 versions.json 同步清理**
 
 ### 文档
 
-- **PUBLISH.md 条目合并** — 删除26w33b和原26w34a发布记录，26w34b改为26w34a并合并两版更新摘要（mac卡死修复/版本码判定/安卓BGM双播/动画回退等）（commit 625f9d5）
-- **versions.json 条目合并** — versions key "4"→"2"，newest_version 4→2，删除版本"2"(26w33b)和"3"(原26w34a)，log合并为相对26w33a的完整更新说明（commit 625f9d5）
+- **PUBLISH.md 条目合并** — 删除26w33b和原26w34b发布记录，26w34b改为26w34b并合并两版更新摘要（mac卡死修复/版本码判定/安卓BGM双播/动画回退等）（commit 625f9d5）
+- **versions.json 条目合并** — versions key "4"→"2"，newest_version 4→2，删除版本"2"(26w33b)和"3"(原26w34b)，log合并为相对26w33a的完整更新说明（commit 625f9d5）
 
 ---
 
@@ -141,7 +141,7 @@
 
 ### 构建
 
-- **app_version 升级** — app_version 3→4，snapshot 26w34a→26w34b（commit <hash>）
+- **app_version 升级** — app_version 3→4，snapshot 26w34b→26w34b（commit <hash>）
 - **android versionCode 升级** — versionCode 3→4（commit <hash>）
 - **打包器版本码自动递增** — build_common.py input_version_interactive 版本码不再手动询问，改为 last+1 自动递增（commit <hash>）
 
@@ -260,11 +260,11 @@
 - **版本号显示日志** — doVersionDifferent/checkWebVersion 版本号拼接顺序与 displayVersionString 修正（commit b8cdca9）
 - **type/key import 适配** — ConfigKey/VersionKey import 路径更新（commit b8cdca9）
 
-**构建(版本)：发布 v1.0.0-beta-26w34a**
+**构建(版本)：发布 v1.0.0-beta-26w34b**
 
 ### 构建
 
-- **app_version 升级** — app_version 2→3，snapshot 26w33b→26w34a（commit 5dbedb9）
+- **app_version 升级** — app_version 2→3，snapshot 26w33b→26w34b（commit 5dbedb9）
 - **android versionCode 升级** — versionCode 2→3（commit 5dbedb9）
 
 **新增(文档)：官网版本数据维护规范 DOC_STANDARD + 官网日志修正**
@@ -273,7 +273,7 @@
 
 - **DOC_STANDARD.md 新增** — 官网 versions.json 日期时间格式（yyyy-MM-dd HH:mm）、更新日志只写用户可感知价值、跨版本修复补全原则、与其他文档联动（commit d485a18）
 - **DOCUMENTATION_INDEX 更新** — 新增 DOC_STANDARD 条目（commit d485a18）
-- **官网 v26w34a log 修正** — date 补完整时间，log 移除"控件预偏移"（内部必须非卖点）、补安卓背景音乐双播修复（commit d485a18）
+- **官网 v26w34b log 修正** — date 补完整时间，log 移除"控件预偏移"（内部必须非卖点）、补安卓背景音乐双播修复（commit d485a18）
 - **PUBLISH 同步** — 发布 commit 更新为官网最终提交（commit d485a18）
 
 **修复(网站)：游戏介绍折叠改为按 110px 高度判定**
