@@ -1,12 +1,6 @@
 /* ================================
    社区分享页专属样式
    ================================ */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     background: linear-gradient(160deg, var(--bg-0) 0%, var(--bg-1) 30%, var(--bg-2) 65%, var(--bg-3) 100%);
     min-height: 100vh;
@@ -14,56 +8,24 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 30px 20px;
+    padding: 72px 0 0;
 }
 
 .main-wrapper {
     max-width: 1200px;
     width: 100%;
+    flex: 1;
     background-color: var(--card-bg);
     backdrop-filter: blur(12px);
-    border-radius: 32px;
+    border-radius: var(--radius-card);
     box-shadow: var(--shadow-soft);
-    padding: 40px;
+    padding: 40px 60px;
     border: 1px solid var(--border-glass);
-    transition: box-shadow 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+    border-top: 1px solid var(--border-top-highlight);
+    transition: box-shadow 0.3s var(--ease-out);
 }
 .main-wrapper:hover {
     box-shadow: var(--shadow-hover);
-}
-
-.community-header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 35px;
-    gap: 15px;
-}
-.back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: transparent;
-    padding: 12px 28px;
-    border-radius: 50px;
-    border: 1.5px solid var(--border-glass-strong);
-    color: var(--text-2);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1.2rem;
-    transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out), border-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
-}
-.back-link:hover {
-    background: rgba(79, 195, 216, 0.1);
-    border-color: var(--accent);
-    color: var(--accent-2);
-    transform: translateX(-3px);
-    box-shadow: 0 10px 22px -8px rgba(0, 0, 0, 0.5), 0 0 18px -6px var(--glow);
-}
-.back-link span {
-    font-size: 1.5rem;
-    line-height: 1;
 }
 
 .page-title {
@@ -81,13 +43,13 @@ body {
     left: 0;
     width: 80px;
     height: 4px;
-    background: linear-gradient(90deg, var(--accent), rgba(126, 224, 208, 0.4));
-    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent), rgba(79, 195, 216, 0.3));
+    border-radius: var(--radius-card);
 }
 
 .discussion-card {
     background: var(--card-bg-strong);
-    border-radius: 32px;
+    border-radius: var(--radius-card);
     padding: 32px 36px;
     margin: 20px 0;
     box-shadow: var(--shadow-soft);
@@ -129,93 +91,38 @@ body {
     background: var(--btn-grad);
     color: white;
     padding: 12px 28px;
-    border-radius: 50px;
+    border-radius: var(--radius-card);
     font-size: 1.1rem;
     font-weight: 600;
     text-decoration: none;
-    box-shadow: 0 8px 20px -6px rgba(42, 169, 184, 0.45);
+    box-shadow: 0 8px 20px -6px rgba(79, 195, 216, 0.45);
     transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
-    border: 1px solid rgba(126, 224, 208, 0.35);
+    border: 1px solid rgba(79, 195, 216, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+.discussion-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    animation: shimmer 3s ease-in-out infinite;
 }
 .discussion-button:hover {
-    background: linear-gradient(135deg, #167a9c, #0f4a62);
     transform: translateY(-2px);
-    box-shadow: 0 12px 28px -8px rgba(42, 169, 184, 0.6), 0 0 22px -6px var(--glow);
-}
-
-.loading-skeleton {
-    color: var(--text-3);
-    font-style: italic;
-    animation: pulse 1.5s infinite ease-in-out;
-}
-@keyframes pulse {
-    0% { opacity: 0.6; }
-    50% { opacity: 1; }
-    100% { opacity: 0.6; }
-}
-
-.error-message {
-    text-align: center;
-    padding: 50px 20px;
-    background: var(--card-bg-soft);
-    border-radius: 50px;
-    color: #ff9090;
-    font-size: 1.3rem;
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 144, 144, 0.3);
-}
-
-.footnote {
-    max-width: 1200px;
-    width: 100%;
-    margin-top: 35px;
-    text-align: center;
-    color: var(--text-3);
-    font-size: 1rem;
-    border-top: 1px solid rgba(120, 190, 230, 0.2);
-    padding: 25px 20px 10px;
-    background: var(--card-bg-soft);
-    backdrop-filter: blur(8px);
-    border-radius: 24px;
-    border-top: 1px solid var(--border-glass);
-}
-.footer-inner {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    align-items: start;
-    justify-items: center;
-    max-width: 900px;
-    margin: 0 auto;
-}
-.footer-col { display: flex; flex-direction: column; gap: 6px; }
-.footer-brand { align-items: center; }
-.footer-logo { font-weight: 600; color: var(--text-1); }
-.footer-copy { font-size: 0.9rem; color: var(--text-3); }
-.footnote a {
-    color: var(--text-2);
-    text-decoration: none;
-    font-weight: 500;
-    position: relative;
-    padding-bottom: 2px;
-    background-image: linear-gradient(90deg, var(--accent), var(--accent-2));
-    background-repeat: no-repeat;
-    background-size: 0% 3px;
-    background-position: 0 100%;
-    transition: color 0.25s var(--ease-out), background-size 0.45s var(--ease-out);
-}
-.footnote a:hover {
-    color: var(--accent-2);
-    background-size: 100% 3px;
-    text-shadow: 0 0 14px rgba(79, 195, 216, 0.4);
+    box-shadow: 0 12px 28px -8px rgba(79, 195, 216, 0.6), 0 0 22px -6px var(--glow);
 }
 
 @media (max-width: 700px) {
-    .main-wrapper { padding: 25px 20px; }
-    .page-title { font-size: 2.2rem; }
-    .discussion-card { padding: 24px; }
-    .discussion-title { font-size: 1.7rem; }
-    .discussion-description { font-size: 1rem; }
-    .discussion-button { padding: 10px 20px; font-size: 1rem; }
-    .footnote { margin-top: 30px; }
+    body { padding: 64px 0 0; }
+    .main-wrapper { padding: 20px 16px; backdrop-filter: none; }
+    .page-title { font-size: 2rem; }
+    .discussion-card { padding: 20px; }
+    .discussion-title { font-size: 1.5rem; }
+    .discussion-description { font-size: 0.95rem; }
+    .discussion-buttons { gap: 10px; }
+    .discussion-button { padding: 10px 20px; font-size: 0.95rem; }
 }

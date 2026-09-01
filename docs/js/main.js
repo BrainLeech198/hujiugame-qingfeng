@@ -4,72 +4,85 @@
    ================================ */
 (function () {
 
-    // ==================== 修复步骤面板 ====================
-    function bindRepairButton() {
-        const repairBtn = document.querySelector('#tipCardRepair .tip-btn');
-        const repairSteps = document.getElementById('repairSteps');
-        if (repairBtn && repairSteps) {
-            // 只更新按钮内文案 span，保留 🔧 emoji
-            const updateRepairBtnText = (key) => {
-                const span = repairBtn.querySelector('[data-i18n]');
-                if (span && currentMessages && currentMessages[key]) {
-                    span.textContent = currentMessages[key];
-                }
-            };
-            repairBtn.onclick = () => {
-                const isOpen = repairSteps.classList.toggle('open');
-                updateRepairBtnText(isOpen ? 'tip_repair_button_hide' : 'tip_repair_button');
-            };
-            // 点击面板外部关闭（lightbox 内的点击不触发：图片放大再关闭时不应收起面板）
-            document.addEventListener('click', (e) => {
-                const tipCard = repairBtn.closest('.tip-card');
-                if (repairSteps.classList.contains('open') &&
-                    !repairSteps.contains(e.target) &&
-                    !tipCard.contains(e.target) &&
-                    !e.target.closest('.lightbox')) {
-                    repairSteps.classList.remove('open');
-                    updateRepairBtnText('tip_repair_button');
+    // ==================== Accordion 折叠面板（单开） ====================
+    function initAccordion() {
+        const items = document.querySelectorAll('.accordion-item');
+        items.forEach(item => {
+            const trigger = item.querySelector('.accordion-trigger');
+            const panel = item.querySelector('.accordion-panel');
+            if (!trigger || !panel) return;
+            // 关闭时重置 max-height
+            panel.addEventListener('transitionend', (e) => {
+                if (e.propertyName === 'max-height' && !item.classList.contains('open')) {
+                    panel.style.maxHeight = null;
                 }
             });
-        }
+            // Escape 键关闭面板并焦点回到 trigger
+            panel.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && item.classList.contains('open')) {
+                    item.classList.remove('open');
+                    trigger.setAttribute('aria-expanded', 'false');
+                    panel.style.maxHeight = panel.scrollHeight + 'px';
+                    panel.offsetHeight;
+                    panel.style.maxHeight = null;
+                    trigger.focus();
+                }
+            });
+            trigger.addEventListener('click', () => {
+                const wasOpen = item.classList.contains('open');
+                // 关闭所有（带动画）
+                items.forEach(other => {
+                    if (other === item) return;
+                    if (!other.classList.contains('open')) return;
+                    const t = other.querySelector('.accordion-trigger');
+                    const p = other.querySelector('.accordion-panel');
+                    if (t) t.setAttribute('aria-expanded', 'false');
+                    if (p) {
+                        p.style.maxHeight = p.scrollHeight + 'px';
+                        p.offsetHeight; // force reflow
+                        p.style.maxHeight = null;
+                    }
+                    other.classList.remove('open');
+                });
+                // 切换当前
+                if (wasOpen) {
+                    // 先锁定当前高度，强制 reflow 后归零，确保 transition 生效
+                    panel.style.maxHeight = panel.scrollHeight + 'px';
+                    panel.offsetHeight; // force reflow
+                    item.classList.remove('open');
+                    trigger.setAttribute('aria-expanded', 'false');
+                    panel.style.maxHeight = null;
+                } else {
+                    item.classList.add('open');
+                    trigger.setAttribute('aria-expanded', 'true');
+                    panel.style.maxHeight = panel.scrollHeight + 'px';
+                }
+            });
+        });
     }
 
-    // ==================== 游戏介绍折叠 ====================
+    // ==================== 功能介绍折叠 ====================
     function initIntroFold() {
         const fold = document.getElementById('introFold');
-        if (!fold) return;
         const toggle = document.getElementById('introFoldToggle');
-        const body = fold.querySelector('.intro-body');
-        if (!toggle || !body) return;
-
-        // 折叠阈值：固定 110px 高度（与更新日志折叠一致）
-        const FOLD_HEIGHT = 110;
-
-        // 先移除折叠类、测量完整内容高度，超过阈值才折叠（内容过短不显示按钮）
-        fold.classList.remove('folded');
-        const fullHeight = body.scrollHeight;
-        const overflow = fullHeight > FOLD_HEIGHT;
-        if (!overflow) {
-            // 内容不足 110px，不折叠也不显示按钮
-            toggle.hidden = true;
-            return;
-        }
+        if (!fold || !toggle) return;
 
         const updateText = () => {
             const span = toggle.querySelector('[data-i18n]');
-            if (span && currentMessages) {
-                const key = fold.classList.contains('folded') ? 'expand_all' : 'collapse_all';
-                span.textContent = currentMessages[key] || (fold.classList.contains('folded') ? '展开全部' : '收起全部');
+            if (span && window.currentMessages) {
+                const expanded = !fold.classList.contains('folded');
+                const key = expanded ? 'collapse_all' : 'expand_all';
+                span.textContent = window.currentMessages[key] || (expanded ? '收起' : '了解更多');
             }
         };
         toggle.addEventListener('click', () => {
             fold.classList.toggle('folded');
-            toggle.setAttribute('aria-expanded', String(!fold.classList.contains('folded')));
+            const expanded = !fold.classList.contains('folded');
+            toggle.setAttribute('aria-expanded', String(expanded));
             updateText();
         });
-        // 内容超阈值默认折叠
-        fold.classList.add('folded');
         toggle.hidden = false;
+        updateText();
     }
 
     // ==================== Lightbox 图片放大 ====================
@@ -80,6 +93,25 @@
         const lightboxCaption = document.getElementById('lightboxCaption');
         const closeBtn = document.getElementById('lightboxClose');
 
+        let scale = 1;
+        let panX = 0;
+        let panY = 0;
+        const PAN_STEP = 60;
+        const ZOOM_STEP = 0.15;
+        const MIN_SCALE = 0.5;
+        const MAX_SCALE = 5;
+
+        function applyTransform() {
+            lightboxImg.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+        }
+
+        function resetView() {
+            scale = 1;
+            panX = 0;
+            panY = 0;
+            applyTransform();
+        }
+
         function open(src, alt) {
             lightboxImg.src = src;
             lightboxImg.alt = alt || '';
@@ -87,20 +119,23 @@
             lightbox.classList.add('open');
             lightbox.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
+            resetView();
         }
+
         function close() {
             lightbox.classList.remove('open');
             lightbox.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
             lightboxImg.src = '';
+            resetView();
         }
 
-        // 事件委托：仅放大非交互容器内的图片（排除下载按钮等）
+        // 点击图片打开
         document.addEventListener('click', (e) => {
             const img = e.target.closest('img');
             if (!img) return;
-            if (img.closest('a, button')) return;   // 交互元素内的图片不放大
-            if (!img.offsetParent) return;          // 已隐藏（兜底）的图片不放大
+            if (img.closest('a, button')) return;
+            if (!img.offsetParent) return;
             open(img.currentSrc || img.src, img.alt);
         });
 
@@ -108,8 +143,68 @@
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) close();
         });
+
+        // 滚轮缩放（以鼠标位置为中心）
+        lightbox.addEventListener('wheel', (e) => {
+            if (!lightbox.classList.contains('open')) return;
+            e.preventDefault();
+            const rect = lightboxImg.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left - rect.width / 2;
+            const mouseY = e.clientY - rect.top - rect.height / 2;
+            const oldScale = scale;
+            const delta = e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP;
+            scale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale + delta * scale));
+            const ratio = scale / oldScale;
+            panX = mouseX - ratio * (mouseX - panX);
+            panY = mouseY - ratio * (mouseY - panY);
+            applyTransform();
+        }, { passive: false });
+
+        // 键盘控制
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') close();
+            if (!lightbox.classList.contains('open')) return;
+            switch (e.key) {
+                case 'Escape': close(); break;
+                case 'ArrowLeft':  panX += PAN_STEP; applyTransform(); e.preventDefault(); break;
+                case 'ArrowRight': panX -= PAN_STEP; applyTransform(); e.preventDefault(); break;
+                case 'ArrowUp':    panY += PAN_STEP; applyTransform(); e.preventDefault(); break;
+                case 'ArrowDown':  panY -= PAN_STEP; applyTransform(); e.preventDefault(); break;
+                case '+': case '=':
+                    scale = Math.min(MAX_SCALE, scale + ZOOM_STEP * scale);
+                    applyTransform(); e.preventDefault(); break;
+                case '-': case '_':
+                    scale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale - ZOOM_STEP * scale));
+                    applyTransform(); e.preventDefault(); break;
+                case '0': resetView(); e.preventDefault(); break;
+            }
+        });
+
+        // 拖拽平移（任意缩放级别均可拖动）
+        let dragging = false;
+        let dragStartX, dragStartY;
+        lightboxImg.addEventListener('mousedown', (e) => {
+            dragging = true;
+            dragStartX = e.clientX - panX;
+            dragStartY = e.clientY - panY;
+            lightboxImg.style.cursor = 'grabbing';
+            e.preventDefault();
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (!dragging) return;
+            panX = e.clientX - dragStartX;
+            panY = e.clientY - dragStartY;
+            applyTransform();
+        });
+        document.addEventListener('mouseup', () => {
+            if (!dragging) return;
+            dragging = false;
+            lightboxImg.style.cursor = 'grab';
+        });
+
+        // 双击重置
+        lightboxImg.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            resetView();
         });
     }
 
@@ -136,14 +231,14 @@
     }
 
     function setLoadingState() {
-        if (latestCard && currentMessages) {
-            latestCard.innerHTML = `<div class="loading-skeleton" style="text-align:center; padding:40px;">${currentMessages.loading_version}</div>`;
+        if (latestCard && window.currentMessages) {
+            latestCard.innerHTML = `<div class="loading-skeleton" style="text-align:center; padding:40px;">${window.currentMessages.loading_version}</div>`;
         }
     }
 
     function showError(message) {
         if (latestCard) {
-            latestCard.innerHTML = `<div class="error-message">❌ ${(currentMessages?.error_load_failed || '加载失败：')}${message}</div>`;
+            latestCard.innerHTML = `<div class="error-message">❌ ${(window.currentMessages?.error_load_failed || '加载失败：')}${message}</div>`;
         }
     }
 
@@ -163,16 +258,16 @@
                 <a href="#" class="download-btn" data-platform="${p.key}" data-download='${downloadJson}'>
                     <img src="resource/image/${p.icon}.png" alt="${p.alt}" class="download-icon-small"
                          ${fallbackAttrs(p.label, p.alt)}>
-                    <span>${(currentMessages && currentMessages[p.key + '_button']) || p.label + '版'}</span>
+                    <span>${(window.currentMessages && window.currentMessages[p.key + '_button']) || p.label + '版'}</span>
                 </a>
             </div>`).join('');
     }
 
     function renderLatestVersionCard(versionInfo) {
         if (!latestCard) return;
-        const isLatest = `<span class="latest-tag">${currentMessages?.latest_tag || '最新'}</span>`;
+        const isLatest = `<span class="latest-tag">${window.currentMessages?.latest_tag || '最新'}</span>`;
         const verDate = versionInfo.date
-            ? `<div class="version-date">${(currentMessages?.update_time || '更新时间')}：${versionInfo.date}</div>`
+            ? `<div class="version-date">${(window.currentMessages?.update_time || '更新时间')}：${versionInfo.date}</div>`
             : '';
         const safeLog = (versionInfo.log || '暂无更新日志').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
 
@@ -216,15 +311,25 @@
         if (!log || !toggle) return;
         if (log.scrollHeight <= LOG_FOLD_MAX_HEIGHT) return;
 
-        const updateText = (open) => {
+        const updateText = (folded) => {
             const span = toggle.querySelector('span');
-            const key = open ? 'expand_log' : 'collapse_log';
-            span.textContent = (currentMessages && currentMessages[key]) || (open ? '展开全部' : '收起');
+            const key = folded ? 'expand_log' : 'collapse_log';
+            span.textContent = (window.currentMessages && window.currentMessages[key]) || (folded ? '展开全部' : '收起');
         };
+        // 折叠状态下阻止滚轮滚动，只允许拖动滚动条
+        log.addEventListener('wheel', (e) => {
+            if (!foldEl.classList.contains('folded')) return;
+            if (log.scrollHeight <= log.clientHeight) return;
+            e.preventDefault();
+            log.scrollTop += e.deltaY;
+            if ((e.deltaY < 0 && log.scrollTop <= 0) || (e.deltaY > 0 && log.scrollTop + log.clientHeight >= log.scrollHeight)) {
+                window.scrollBy(0, e.deltaY);
+            }
+        }, { passive: false });
         toggle.addEventListener('click', () => {
-            const open = foldEl.classList.toggle('folded');
-            toggle.setAttribute('aria-expanded', String(open));
-            updateText(open);
+            const folded = foldEl.classList.toggle('folded');
+            toggle.setAttribute('aria-expanded', String(!folded));
+            updateText(folded);
         });
         foldEl.classList.add('folded');
         toggle.setAttribute('aria-expanded', 'false');
@@ -251,34 +356,32 @@
             .catch(error => showError(error.message));
     }
 
-    // ==================== 吸顶导航（滚动毛玻璃 + 汉堡菜单） ====================
-    function initTopNav() {
-        const topNav = document.getElementById('topNav');
-        const navToggle = document.getElementById('navToggle');
-        const navLinks = document.getElementById('navLinks');
-        if (topNav) {
-            window.addEventListener('scroll', () => {
-                topNav.classList.toggle('scrolled', window.scrollY > 10);
-            }, { passive: true });
-        }
-        if (navToggle && navLinks) {
-            navToggle.addEventListener('click', () => {
-                const open = navLinks.classList.toggle('open');
-                navToggle.setAttribute('aria-expanded', String(open));
-            });
-            navLinks.addEventListener('click', (e) => {
-                if (e.target.tagName === 'A') {
-                    navLinks.classList.remove('open');
-                    navToggle.setAttribute('aria-expanded', 'false');
+    // ==================== 数字滚动动画 ====================
+    function initStatsCounter() {
+        const nums = document.querySelectorAll('.stat-number[data-target]');
+        if (nums.length === 0 || !('IntersectionObserver' in window)) return;
+        const io = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                if (!entry.isIntersecting) continue;
+                const el = entry.target;
+                io.unobserve(el);
+                const target = Number(el.dataset.target);
+                const duration = 1200;
+                const start = performance.now();
+                function tick(now) {
+                    const progress = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    el.textContent = Math.round(eased * target);
+                    if (progress < 1) requestAnimationFrame(tick);
                 }
-            });
-        }
+                requestAnimationFrame(tick);
+            }
+        }, { threshold: 0.3 });
+        nums.forEach(el => io.observe(el));
     }
 
-    // ==================== 滚动进入动画 ====================
-    function initScrollReveal() {
-        const els = document.querySelectorAll('.hero-card, .tip-card, .card, .download-item');
-        if (!els.length) return;
+    // ==================== 滚动入场动画 ====================
+    function initRevealAnimations() {
         if (!('IntersectionObserver' in window)) return;
         const io = new IntersectionObserver((entries) => {
             for (const entry of entries) {
@@ -286,33 +389,217 @@
                 const el = entry.target;
                 el.classList.add('in');
                 io.unobserve(el);
-                // 动画结束后摘除 reveal，恢复元素自身的 hover 过渡（避免 delay 影响悬浮）
                 setTimeout(() => {
-                    el.classList.remove('reveal');
-                    el.classList.remove('in');
+                    el.classList.remove('reveal', 'in');
+                    el.classList.add('done');
                     el.style.transitionDelay = '';
-                }, 750);
+                }, 700);
             }
         }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
-        els.forEach((el) => {
-            const parent = el.parentElement;
-            const siblings = parent ? Array.from(parent.children).filter(c => c.matches('.hero-card, .tip-card, .card, .download-item')) : [el];
-            const idx = siblings.indexOf(el);
-            el.style.transitionDelay = `${Math.min(idx * 0.05, 0.2)}s`;
-            el.classList.add('reveal');
+        // feature 卡片交错延迟
+        document.querySelectorAll('.feature-card.reveal').forEach((el, idx) => {
+            el.style.transitionDelay = `${idx * 0.08}s`;
             io.observe(el);
         });
+        // 其他 section 整块入场
+        document.querySelectorAll('.stats-bar.reveal, .download-section.reveal, .help-section.reveal, .community-section.reveal').forEach(el => {
+            io.observe(el);
+        });
+    }
+
+    // ==================== Hero 打字机效果 ====================
+    function initTypewriter() {
+        const el = document.getElementById('typewriterText');
+        const cursor = document.getElementById('typewriterCursor');
+        if (!el || !cursor) {
+            console.warn('[typewriter] 元素未找到');
+            return;
+        }
+
+        const msgs = window.currentMessages || {};
+        const phrases = [
+            msgs.game_intro_desc1_short || '基于 libGDX 的视觉小说引擎与跨平台游戏启动器',
+            msgs.feature_cross_platform_desc || 'Windows / Linux / macOS / Android，桌面与移动端全覆盖',
+            msgs.feature_multilang_desc || '界面原生多语言支持，可切换主题系统',
+            msgs.feature_resource_desc || '语言包 / 主题包一键导入，版本检测与资源修复'
+        ];
+
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reducedMotion) {
+            console.log('[typewriter] prefers-reduced-motion 启用，跳过打字动画');
+            el.textContent = phrases[0];
+            let idx = 0;
+            setInterval(() => {
+                idx = (idx + 1) % phrases.length;
+                el.textContent = phrases[idx];
+            }, 4000);
+            return;
+        }
+
+        let phraseIdx = 0;
+        let charIdx = 0;
+        const TYPE_SPEED = 65;
+        const DELETE_SPEED = 30;
+        const PAUSE_AFTER_TYPE = 2200;
+        const PAUSE_AFTER_DELETE = 400;
+
+        function typeNext() {
+            const current = phrases[phraseIdx];
+            if (charIdx < current.length) {
+                charIdx++;
+                el.textContent = current.substring(0, charIdx);
+                setTimeout(typeNext, TYPE_SPEED);
+            } else {
+                setTimeout(deletePhrase, PAUSE_AFTER_TYPE);
+            }
+        }
+
+        function deletePhrase() {
+            if (charIdx > 0) {
+                charIdx--;
+                el.textContent = phrases[phraseIdx].substring(0, charIdx);
+                setTimeout(deletePhrase, DELETE_SPEED);
+            } else {
+                phraseIdx = (phraseIdx + 1) % phrases.length;
+                setTimeout(typeNext, PAUSE_AFTER_DELETE);
+            }
+        }
+
+        // 先隐藏光标，清空文字
+        el.textContent = '';
+        cursor.style.display = 'inline';
+
+        // 等页面入场淡入结束后再启动打字（opacity transition 0.4s）
+        function startTyping() {
+            setTimeout(typeNext, 300);
+        }
+        if (document.body.classList.contains('loaded')) {
+            startTyping();
+        } else {
+            document.body.addEventListener('transitionend', function onEnd() {
+                document.body.removeEventListener('transitionend', onEnd);
+                startTyping();
+            });
+            // 兜底：如果 transitionend 未触发，1.5s 后启动
+            setTimeout(startTyping, 1500);
+        }
+    }
+
+    // ==================== Hero 光标聚光灯 ====================
+    function initHeroSpotlight() {
+        const hero = document.getElementById('hero');
+        const spot = document.getElementById('heroSpotlight');
+        if (!hero || !spot) return;
+        hero.addEventListener('mousemove', (e) => {
+            const rect = hero.getBoundingClientRect();
+            spot.style.setProperty('--spot-x', (e.clientX - rect.left) + 'px');
+            spot.style.setProperty('--spot-y', (e.clientY - rect.top) + 'px');
+        });
+    }
+
+    // ==================== 按钮涟漪效果 ====================
+    function initRippleButtons() {
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.hero-btn-primary, .accordion-btn:not(.accordion-btn-copy), .community-btn');
+            if (!btn) return;
+            btn.classList.add('ripple-btn');
+            const rect = btn.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height) * 2;
+            const wave = document.createElement('span');
+            wave.className = 'ripple-wave';
+            wave.style.width = wave.style.height = size + 'px';
+            wave.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            wave.style.top = (e.clientY - rect.top - size / 2) + 'px';
+            btn.appendChild(wave);
+            wave.addEventListener('animationend', () => wave.remove());
+        });
+    }
+
+    // ==================== Feature 卡片光晕跟随 ====================
+    function initCardGlow() {
+        const cards = document.querySelectorAll('.feature-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--glow-x', (e.clientX - rect.left) + 'px');
+                card.style.setProperty('--glow-y', (e.clientY - rect.top) + 'px');
+            });
+        });
+    }
+
+    // ==================== 彩蛋：Brand 连击 ====================
+    function initEasterEgg() {
+        const brand = document.querySelector('.nav-brand');
+        if (!brand) return;
+        let clicks = 0;
+        let timer = null;
+        let raining = false;
+        brand.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (raining) return;
+            clicks++;
+            clearTimeout(timer);
+            timer = setTimeout(() => { clicks = 0; }, 2000);
+            if (clicks >= 5) {
+                clicks = 0;
+                raining = true;
+                triggerEmojiRain(() => { raining = false; });
+            }
+        });
+    }
+
+    function triggerEmojiRain(onDone) {
+        const emojis = ['◈', '✦', '⚡', '🌍', '📦', '🎮', '💻', '🎉', '✨', '🚀'];
+        const count = 25;
+        let done = 0;
+        for (let i = 0; i < count; i++) {
+            setTimeout(() => {
+                const el = document.createElement('div');
+                el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                const startX = Math.random() * 100;
+                const drift = (Math.random() - 0.5) * 25;
+                const duration = (2 + Math.random() * 2) * 1000;
+                Object.assign(el.style, {
+                    position: 'fixed',
+                    left: startX + 'vw',
+                    top: '-30px',
+                    fontSize: (1.2 + Math.random() * 1.3) + 'rem',
+                    pointerEvents: 'none',
+                    zIndex: '99999',
+                    opacity: '0.85'
+                });
+                document.body.appendChild(el);
+
+                const anim = el.animate([
+                    { top: '-30px', left: startX + 'vw', opacity: 0.85, transform: 'rotate(0deg)' },
+                    { top: '105vh', left: (startX + drift) + 'vw', opacity: 0, transform: 'rotate(360deg)' }
+                ], { duration: duration, easing: 'ease-in', fill: 'forwards' });
+
+                anim.onfinish = () => {
+                    el.remove();
+                    done++;
+                    if (done >= count && onDone) onDone();
+                };
+            }, i * 100);
+        }
     }
 
     // ==================== 启动流程 ====================
     const userLang = getBrowserLang();
     initLightbox();
     initTopNav();
-    initScrollReveal();
+    initHeroSpotlight();
+    initCardGlow();
+    initRippleButtons();
+    initEasterEgg();
+    initRevealAnimations();
+    initScrollSpy();
     loadMessages(userLang).then(messages => {
         applyI18n(messages);
-        bindRepairButton();
+        initAccordion();
         initIntroFold();
+        initStatsCounter();
+        initTypewriter();
         loadImageConfig();
         fetchVersionAndUpdate();
     }).catch(err => {

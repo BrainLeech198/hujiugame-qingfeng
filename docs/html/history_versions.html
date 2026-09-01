@@ -8,14 +8,21 @@
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/history.css">
 </head>
-<body>
-<div class="main-wrapper">
-    <div class="history-header">
-        <a href="../index.html" class="back-link">
-            <span>←</span> <span data-i18n="back_home">返回首页</span>
-        </a>
-        <div class="page-title"><span class="sec-emoji">📜</span> <span data-i18n="history_title">历史版本</span></div>
+<body id="top">
+
+<a class="skip-link" href="#versionsContainer" data-i18n="skip_to_content">跳到主要内容</a>
+
+<!-- 导航 -->
+<nav class="top-nav" id="topNav" aria-label="主导航" data-i18n-aria="nav_label">
+    <a class="nav-brand" href="#top">◈ <span>氢风</span></a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-label="展开导航菜单">☰</button>
+    <div class="nav-links" id="navLinks">
+        <a href="../index.html">← <span data-i18n="back_home">返回首页</span></a>
     </div>
+</nav>
+
+<div class="main-wrapper">
+    <div class="page-title"><span class="sec-emoji">📜</span> <span data-i18n="history_title">历史版本</span></div>
 
     <div id="versionsContainer" class="versions-container">
         <div class="loading-skeleton" style="text-align:center; padding:40px;" data-i18n="loading_history">加载版本历史中...</div>
@@ -31,24 +38,11 @@
 <footer class="footnote">
     <div class="footer-inner">
         <div class="footer-col footer-brand">
-            <span class="footer-logo">⚡ <span data-i18n="footer_text">氢风 · 官方站</span></span>
+            <span class="footer-logo"><span data-i18n="footer_text">氢风 · 官方站</span></span>
             <span class="footer-copy">&copy; HujiuGame</span>
-            <div class="footer-contact">
-                <a href="mailto:brainleech198@foxmail.com" class="footer-email">📧 brainleech198@foxmail.com</a>
-                <button type="button" class="footer-copy-btn" data-copy="brainleech198@foxmail.com">
-                    <span data-i18n="copy_button">复制</span>
-                </button>
-            </div>
-        </div>
-        <div class="footer-col footer-links">
-            <a data-i18n="back_home" href="../index.html">返回首页</a>
-            <a data-i18n="footer_all_versions" href="history_versions.html">所有版本</a>
-            <a data-i18n="footer_community_resources" href="community_share.html">社区资源</a>
         </div>
         <div class="footer-col footer-legal">
-            <a data-i18n="footer_license" href="../LICENSE.html">项目许可证</a>
-            <a data-i18n="footer_project_thirdparty" href="../PROJECT_THIRDPARTY.html">项目素材第三方版权声明</a>
-            <a data-i18n="footer_website_thirdparty" href="../THIRDPARTY_LICENSES.html">网站素材第三方版权声明</a>
+            <a data-i18n="footer_copyright" href="copyright/index.html">版权相关</a>
         </div>
     </div>
 </footer>

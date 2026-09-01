@@ -48,13 +48,13 @@
     }
 
     function showError(message) {
-        const errorMsg = currentMessages?.error_load_failed || '加载失败：';
+        const errorMsg = window.currentMessages?.error_load_failed || '加载失败：';
         container.innerHTML = `<div class="error-message">❌ ${errorMsg}${message}</div>`;
         paginationDiv.style.display = 'none';
     }
 
     function showEmptyState() {
-        const msg = currentMessages?.no_versions || '暂无版本信息';
+        const msg = window.currentMessages?.no_versions || '暂无版本信息';
         container.innerHTML = `<div class="no-versions">${msg}</div>`;
         paginationDiv.style.display = 'none';
     }
@@ -109,8 +109,8 @@
 
         let htmlStr = '';
         pageData.forEach(ver => {
-            const isLatest = ver.isLatest ? `<span class="latest-tag">${currentMessages?.latest_tag || '最新'}</span>` : '';
-            const verDate = ver.date ? `<div class="version-date">${currentMessages?.update_time || '更新时间'}：${ver.date}</div>` : '';
+            const isLatest = ver.isLatest ? `<span class="latest-tag">${window.currentMessages?.latest_tag || '最新'}</span>` : '';
+            const verDate = ver.date ? `<div class="version-date">${window.currentMessages?.update_time || '更新时间'}：${ver.date}</div>` : '';
             const safeLog = ver.log.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
 
             // 整份下载对象（四平台）存入 data 属性，点击任意平台按钮都先进入平台选择
@@ -126,25 +126,25 @@
                 <a href="#" class="download-btn" data-platform="windows" data-download='${downloadJson}'>
                     <img src="../resource/image/download-windows.png" alt="Windows下载" class="download-icon-small"
                          ${fallbackAttrs('Win', 'Windows下载')}>
-                    <span>${currentMessages?.windows_button || 'Windows版'}</span>
+                    <span>${window.currentMessages?.windows_button || 'Windows版'}</span>
                 </a>`;
             const androidBtnHtml = `
                 <a href="#" class="download-btn" data-platform="android" data-download='${downloadJson}'>
                     <img src="../resource/image/download-android.png" alt="Android下载" class="download-icon-small"
                          ${fallbackAttrs('Android', 'Android下载')}>
-                    <span>${currentMessages?.android_button || 'Android版'}</span>
+                    <span>${window.currentMessages?.android_button || 'Android版'}</span>
                 </a>`;
             const linuxBtnHtml = `
                 <a href="#" class="download-btn" data-platform="linux" data-download='${downloadJson}'>
                     <img src="../resource/image/download-linux.png" alt="Linux下载" class="download-icon-small"
                          ${fallbackAttrs('Linux', 'Linux下载')}>
-                    <span>${currentMessages?.linux_button || 'Linux版'}</span>
+                    <span>${window.currentMessages?.linux_button || 'Linux版'}</span>
                 </a>`;
             const macBtnHtml = `
                 <a href="#" class="download-btn" data-platform="mac" data-download='${downloadJson}'>
                     <img src="../resource/image/download-mac.png" alt="Mac下载" class="download-icon-small"
                          ${fallbackAttrs('Mac', 'Mac下载')}>
-                    <span>${currentMessages?.mac_button || 'Mac版'}</span>
+                    <span>${window.currentMessages?.mac_button || 'Mac版'}</span>
                 </a>`;
 
             htmlStr += `
@@ -196,7 +196,7 @@
             return;
         }
         paginationDiv.style.display = 'flex';
-        const pageInfoText = (currentMessages?.page_info || '第 {current} / {total} 页')
+        const pageInfoText = (window.currentMessages?.page_info || '第 {current} / {total} 页')
             .replace('{current}', currentPage)
             .replace('{total}', totalPages);
         pageInfo.textContent = pageInfoText;
@@ -233,18 +233,27 @@
             const log = foldEl.querySelector('.version-log');
             const toggle = foldEl.querySelector('.log-toggle');
             if (!log || !toggle) return;
-            // 折叠前测量完整内容高度（折叠样式尚未生效时的 scrollHeight），超过阈值才折叠
             if (log.scrollHeight <= LOG_FOLD_MAX_HEIGHT) return;
 
-            const updateText = (open) => {
+            const updateText = (folded) => {
                 const span = toggle.querySelector('span');
-                const key = open ? 'expand_log' : 'collapse_log';
-                span.textContent = (currentMessages && currentMessages[key]) || (open ? '展开全部' : '收起');
+                const key = folded ? 'expand_log' : 'collapse_log';
+                span.textContent = (window.currentMessages && window.currentMessages[key]) || (folded ? '展开全部' : '收起');
             };
+            // 折叠状态下阻止滚轮滚动，只允许拖动滚动条
+            log.addEventListener('wheel', (e) => {
+                if (!foldEl.classList.contains('folded')) return;
+                if (log.scrollHeight <= log.clientHeight) return;
+                e.preventDefault();
+                log.scrollTop += e.deltaY;
+                if ((e.deltaY < 0 && log.scrollTop <= 0) || (e.deltaY > 0 && log.scrollTop + log.clientHeight >= log.scrollHeight)) {
+                    window.scrollBy(0, e.deltaY);
+                }
+            }, { passive: false });
             toggle.addEventListener('click', () => {
-                const open = foldEl.classList.toggle('folded');
-                toggle.setAttribute('aria-expanded', String(open));
-                updateText(open);
+                const folded = foldEl.classList.toggle('folded');
+                toggle.setAttribute('aria-expanded', String(!folded));
+                updateText(folded);
             });
             foldEl.classList.add('folded');
             toggle.setAttribute('aria-expanded', 'false');
@@ -255,6 +264,7 @@
 
     // ==================== 启动流程 ====================
     const userLang = getBrowserLang();
+    initTopNav();
     loadMessages(userLang).then(messages => {
         applyI18n(messages);
         fetchVersions();

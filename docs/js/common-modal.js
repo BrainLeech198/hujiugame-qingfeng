@@ -14,7 +14,7 @@
 
     const PLATFORM_FALLBACK_NAMES = { windows: 'Windows', android: 'Android', linux: 'Linux', mac: 'Mac' };
     function platformName(p) {
-        return currentMessages?.[`${p}_button`] || PLATFORM_FALLBACK_NAMES[p] || p;
+        return window.currentMessages?.[`${p}_button`] || PLATFORM_FALLBACK_NAMES[p] || p;
     }
 
     // 当前正在浏览的系统平台 + 版本下载对象，供「返回」回到来源选择
@@ -32,7 +32,7 @@
     function sourceName(source) {
         const isIntel = source.endsWith('_intel');
         const base = isIntel ? source.slice(0, -'_intel'.length) : source;
-        const baseName = currentMessages?.[`source_${base}`] || base;
+        const baseName = window.currentMessages?.[`source_${base}`] || base;
         return isIntel ? `${baseName}（Intel）` : baseName;
     }
 
@@ -40,19 +40,19 @@
     function showPlatformSelection(platform, download) {
         const options = download ? download[platform] : null;
         if (!options || typeof options !== 'object') {
-            alert(currentMessages?.no_download_options || '该平台暂无可用下载链接，请联系管理员。');
+            alert(window.currentMessages?.no_download_options || '该平台暂无可用下载链接，请联系管理员。');
             return;
         }
         const sources = Object.keys(options).filter(src => hasDownloadOption(options[src]));
         if (sources.length === 0) {
-            alert(currentMessages?.no_download_options || '该平台暂无可用下载链接，请联系管理员。');
+            alert(window.currentMessages?.no_download_options || '该平台暂无可用下载链接，请联系管理员。');
             return;
         }
         currentPlatform = platform;
         currentDownload = download;
         modalContent.classList.remove('modal-content-lg');
         modalBack.classList.remove('show');
-        modalTitle.textContent = `${platformName(platform)} - ${currentMessages?.select_platform || '选择下载平台'}`;
+        modalTitle.textContent = `${platformName(platform)} - ${window.currentMessages?.select_platform || '选择下载平台'}`;
         modalBody.innerHTML = '';
         const grid = document.createElement('div');
         grid.className = 'platform-select-grid';
@@ -71,12 +71,12 @@
     // 阶段二：展示所选下载来源的具体文件（大弹窗 + 返回/关闭）
     function showDownloadOptions(platform, source, options) {
         if (!options || Object.keys(options).length === 0) {
-            alert(currentMessages?.no_download_options || '该来源暂无可用下载链接，请联系管理员。');
+            alert(window.currentMessages?.no_download_options || '该来源暂无可用下载链接，请联系管理员。');
             return;
         }
         modalContent.classList.add('modal-content-lg');
         modalBack.classList.add('show');
-        if (modalBackText) modalBackText.textContent = currentMessages?.back_button || '返回';
+        if (modalBackText) modalBackText.textContent = window.currentMessages?.back_button || '返回';
         modalTitle.textContent = `${sourceName(source)} - ${platformName(platform)}`;
         modalBody.innerHTML = '';
         // 单个下载项或下载项数组统一展开（同一来源可配置多个具体文件）
@@ -97,7 +97,7 @@
             modalBody.appendChild(optionRow);
         }
         if (modalBody.children.length === 0) {
-            modalBody.innerHTML = `<div class="modal-error">${currentMessages?.no_valid_download_source || '没有有效的下载链接'}</div>`;
+            modalBody.innerHTML = `<div class="modal-error">${window.currentMessages?.no_valid_download_source || '没有有效的下载链接'}</div>`;
         }
         modal.classList.add('show');
     }

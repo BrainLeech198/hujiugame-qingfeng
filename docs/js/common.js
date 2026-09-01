@@ -4,8 +4,27 @@
    语言数据路径由 <script data-base="data/"> 传入（html/ 下子页为 ../data/）
    ================================ */
 
-// i18n 核心（顶层声明，跨 script 通过全局词法环境共享）
-let currentMessages = null;
+// ================================
+// Google Fonts 加载（preconnect + link 标签，避免 @import 渲染阻塞）
+// ================================
+(function () {
+    if (document.querySelector('link[href*="fonts.googleapis.com"]')) return;
+    const head = document.head;
+    const preconnect1 = document.createElement('link');
+    preconnect1.rel = 'preconnect';
+    preconnect1.href = 'https://fonts.googleapis.com';
+    const preconnect2 = document.createElement('link');
+    preconnect2.rel = 'preconnect';
+    preconnect2.href = 'https://fonts.gstatic.com';
+    preconnect2.crossOrigin = 'anonymous';
+    const stylesheet = document.createElement('link');
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700&display=swap';
+    head.prepend(preconnect1, preconnect2, stylesheet);
+})();
+
+// i18n 核心（通过 window 全局共享，main.js / common-modal.js 均读取此变量）
+window.currentMessages = null;
 
 // key 统一小写；value 为实际语言文件名（zh-TW 存在独立的繁体语言包）
 const localeMap = {
@@ -49,6 +68,10 @@ function loadMessages(lang) {
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             return res.json();
         })
+        .then(messages => {
+            messages._lang = lang;
+            return messages;
+        })
         .catch(err => {
             console.warn(`加载语言文件 ${lang} 失败，回退到 ${defaultLang}`, err);
             if (lang !== defaultLang) return loadMessages(defaultLang);
@@ -57,29 +80,24 @@ function loadMessages(lang) {
 }
 
 function applyI18n(messages) {
-    currentMessages = messages;
     window.currentMessages = messages;
+    // 更新 <html lang> 以匹配当前语言
+    if (messages._lang) {
+        document.documentElement.lang = messages._lang;
+    }
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (messages[key]) {
             el.textContent = messages[key];
         }
     });
-    // 提示卡片中的混合内容（保留 strong 标签）—— 仅首页有此元素，其他页面自动跳过
-    const tipWattTextSpan = document.querySelector('#tipCardWatt .tip-text span:last-child');
-    if (tipWattTextSpan && messages.tip_watt_text) {
-        const text = messages.tip_watt_text;
-        const strongMatch = /<strong>(.*?)<\/strong>/.exec(text);
-        if (strongMatch) {
-            tipWattTextSpan.innerHTML = text;
-        } else {
-            tipWattTextSpan.textContent = text;
+    // aria-label 国际化：<nav data-i18n-aria="nav_label">
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+        const key = el.getAttribute('data-i18n-aria');
+        if (messages[key]) {
+            el.setAttribute('aria-label', messages[key]);
         }
-    }
-    const tipRepairTextSpan = document.querySelector('#tipCardRepair .tip-text span:last-child');
-    if (tipRepairTextSpan && messages.tip_repair_text) {
-        tipRepairTextSpan.textContent = messages.tip_repair_text;
-    }
+    });
     // 页面标题：key 由 <title data-i18n> 提供（site_title / history_title / community_page_title）
     const titleEl = document.querySelector('title[data-i18n]');
     const titleKey = titleEl && titleEl.getAttribute('data-i18n');
@@ -161,15 +179,83 @@ document.addEventListener('click', (e) => {
     copyToClipboard(btn.dataset.copy).then(() => {
         const label = btn.querySelector('[data-i18n]');
         if (!label) return;
-        const original = (currentMessages && currentMessages.copy_button) || '复制';
-        const copied = (currentMessages && currentMessages.copied_feedback) || '已复制';
+        const original = (window.currentMessages && window.currentMessages.copy_button) || '复制';
+        const copied = (window.currentMessages && window.currentMessages.copied_feedback) || '已复制';
         label.textContent = copied;
         setTimeout(() => { label.textContent = original; }, 2000);
     });
 });
+
+// ==================== 吸顶导航（全站共享） ====================
+function initTopNav() {
+    const topNav = document.getElementById('topNav');
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (topNav) {
+        window.addEventListener('scroll', () => {
+            topNav.classList.toggle('scrolled', window.scrollY > 10);
+        }, { passive: true });
+    }
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => {
+            const open = navLinks.classList.toggle('open');
+            navToggle.setAttribute('aria-expanded', String(open));
+        });
+        // 点击菜单外部关闭
+        document.addEventListener('click', (e) => {
+            if (!navLinks.classList.contains('open')) return;
+            if (e.target.closest('.top-nav')) return;
+            navLinks.classList.remove('open');
+            navToggle.setAttribute('aria-expanded', 'false');
+        });
+        navLinks.addEventListener('click', (e) => {
+            if (e.target.closest('a')) {
+                navLinks.classList.remove('open');
+                navToggle.setAttribute('aria-expanded', 'false');
+                navToggle.focus();
+            }
+        });
+    }
+}
+
+// ==================== 导航滚动高亮（ScrollSpy） ====================
+function initScrollSpy() {
+    if (!('IntersectionObserver' in window)) return;
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+    if (navLinks.length === 0) return;
+    const sections = [];
+    navLinks.forEach(link => {
+        const id = link.getAttribute('href').slice(1);
+        const section = document.getElementById(id);
+        if (section) sections.push({ id, el: section, link });
+    });
+    if (sections.length === 0) return;
+    const io = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+            const item = sections.find(s => s.el === entry.target);
+            if (!item) continue;
+            if (entry.isIntersecting) {
+                sections.forEach(s => s.link.classList.remove('active'));
+                item.link.classList.add('active');
+            }
+        }
+    }, { threshold: 0.2, rootMargin: '-80px 0px -50% 0px' });
+    sections.forEach(s => io.observe(s.el));
+}
+
+// ==================== 页面入场淡入 ====================
+function initPageEntrance() {
+    requestAnimationFrame(() => {
+        document.body.classList.add('loaded');
+    });
+}
+// 自动执行：所有页面加载后立即淡入
+initPageEntrance();
 
 window.getBrowserLang = getBrowserLang;
 window.loadMessages = loadMessages;
 window.applyI18n = applyI18n;
 window.imgErrorSvg = imgErrorSvg;
 window.copyToClipboard = copyToClipboard;
+window.initTopNav = initTopNav;
+window.initScrollSpy = initScrollSpy;

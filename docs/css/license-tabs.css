@@ -1,5 +1,5 @@
 /* ================================
-   LICENSE 许可页：标签切换 + h1 间距微调（其余两页不引用）
+   LICENSE 许可页：标签切换 + h1 间距微调
    ================================ */
 .container h1 { margin-bottom: 12px; }
 .tabs {
@@ -12,7 +12,7 @@
     background: var(--card-bg-soft);
     border: 1px solid var(--border-glass);
     padding: 8px 20px;
-    border-radius: 20px;
+    border-radius: var(--radius-card);
     font-size: 0.95rem;
     color: var(--text-2);
     cursor: pointer;
@@ -25,14 +25,14 @@
 .tab-btn.active {
     background: var(--btn-grad);
     color: #fff;
-    box-shadow: 0 0 0 3px var(--glow), 0 4px 14px -4px rgba(42, 169, 184, 0.6);
+    box-shadow: 0 0 0 3px var(--glow), 0 4px 14px -4px rgba(79, 195, 216, 0.6);
 }
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 .license-text {
     background: var(--card-bg-strong);
     border: 1px solid var(--border-glass);
-    border-radius: 12px;
+    border-radius: var(--radius-card);
     padding: 24px 28px;
     font-family: "Microsoft YaHei", -apple-system, sans-serif;
     font-size: 0.9rem;

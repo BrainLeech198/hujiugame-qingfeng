@@ -8,15 +8,15 @@
     const container = document.getElementById('discussionContainer');
 
     function showError(message) {
-        const errorMsg = currentMessages?.error_load_failed || '加载失败：';
+        const errorMsg = window.currentMessages?.error_load_failed || '加载失败：';
         container.innerHTML = `<div class="error-message">❌ ${errorMsg}${message}</div>`;
     }
 
     function getPlatformDisplayName(platformKey) {
         // 尝试从语言文件中获取平台名称，否则简单处理
         const key = `discussion_platform_${platformKey}`;
-        if (currentMessages && currentMessages[key]) {
-            return currentMessages[key];
+        if (window.currentMessages && window.currentMessages[key]) {
+            return window.currentMessages[key];
         }
         // 默认将首字母大写
         return platformKey.charAt(0).toUpperCase() + platformKey.slice(1);
@@ -26,7 +26,7 @@
         // 兼容旧格式（如果直接是字符串）和新格式（对象）
         let suggestions = data.discussions?.suggestions;
         if (!suggestions) {
-            showError(currentMessages?.no_discussion_link || '未找到讨论区链接');
+            showError(window.currentMessages?.no_discussion_link || '未找到讨论区链接');
             return;
         }
         // 如果 suggestions 是字符串（旧格式），转换为单对象
@@ -35,20 +35,20 @@
         }
         const platforms = Object.entries(suggestions);
         if (platforms.length === 0) {
-            showError(currentMessages?.no_discussion_link || '未找到讨论区链接');
+            showError(window.currentMessages?.no_discussion_link || '未找到讨论区链接');
             return;
         }
 
-        const title = currentMessages?.suggestions_title || "Feature Suggestions & Improvements – Let's Build Together!";
-        const description = currentMessages?.suggestions_description || "我们非常重视每一位用户的反馈。欢迎您在这里提出功能建议、改进意见或分享您的创作。请保持文明、友善的交流。";
+        const title = window.currentMessages?.suggestions_title || "Feature Suggestions & Improvements – Let's Build Together!";
+        const description = window.currentMessages?.suggestions_description || "我们非常重视每一位用户的反馈。欢迎您在这里提出功能建议、改进意见或分享您的创作。请保持文明、友善的交流。";
 
         let buttonsHtml = '';
         for (const [platform, url] of platforms) {
             const platformName = getPlatformDisplayName(platform);
-            const buttonText = currentMessages?.suggestions_button_template
-                ? currentMessages.suggestions_button_template.replace('{platform}', platformName)
-                : `前往 ${platformName} 讨论区 →`;
-            buttonsHtml += `<a href="${url}" class="discussion-button" target="_blank" rel="noopener">${buttonText}</a>`;
+            const buttonText = window.currentMessages?.suggestions_button_template
+                ? window.currentMessages.suggestions_button_template.replace('{platform}', platformName)
+                : `前往 ${platformName} 讨论区`;
+            buttonsHtml += `<a href="${url}" class="discussion-button" target="_blank" rel="noopener">${buttonText} →</a>`;
         }
 
         container.innerHTML = `
@@ -70,6 +70,7 @@
 
     // ==================== 启动流程 ====================
     const userLang = getBrowserLang();
+    initTopNav();
     loadMessages(userLang).then(messages => {
         applyI18n(messages);
         fetchCommunityData();
