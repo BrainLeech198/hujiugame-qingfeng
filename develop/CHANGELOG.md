@@ -21,6 +21,51 @@
 > 10. 【必须】CHANGELOG 条目按日期归组：同一天的所有提交主题共同包含在同一个 `## <日期> — <概括标题>` 下，禁止拆成多个 `## ` 日期标题；每个提交块以 `**<主题>**（commit <7位短哈希>）` 标记，块内每条 `- ` 条目行尾标注引入它的提交短哈希 `（commit <7位短哈希>）`。新条目随内容改动提交后，其哈希在下一笔内容改动提交中一并补写（补写仅改 hash，不新增条目）
 > 11. 【必须】写版本发布说明（官网 `docs/data/versions.json` 的 `log`、`develop/PUBLISH.md` 面向玩家摘要）时，按「上一版本发布点 → 本版本发布点」之间的 commit 区间梳理玩家可见改动（修复的 Bug / 新增功能 / 优化），逐一写入，不要遗漏跨版本才生效的修复（打包之后完成的 bug 修复会随下一个版本发出，须算入下一版本的说明）；beta 测试版按此梳理书写即可，release 正式版属重要更新，需正式、系统地书写
 
+## 2026-09-01 — 官网全面升级（性能/交互/可访问性） + 版权页面重构
+
+**升级(官网)：全面视觉/交互/性能优化（commit 434d4bd）**
+
+### 优化
+
+- **Google Fonts 动态注入** — 改为 JS 插入 `<link>` 标签加载，避免 `@import` 渲染阻塞（commit 434d4bd）
+- **移动端 backdrop-filter 降级** — 导航栏/弹窗在700px以下禁用 `backdrop-filter`，减少合成层开销（commit 434d4bd）
+- **移动端背景光晕降级** — `body::before/after` blur 80px→20px，禁用漂移动画（commit 434d4bd）
+- **will-change 生命周期管理** — 滚动动画元素入场后移除 `will-change`，避免持续 GPU 占用（commit 434d4bd）
+
+### 网站
+
+- **Hero 打字机效果** — 循环逐字输入/删除4句标语，等待页面淡入结束后启动（commit 434d4bd）
+- **Hero 鼠标聚光灯** — `mousemove` 驱动 `radial-gradient` 跟随光标（commit 434d4bd）
+- **Feature 卡片光晕** — CSS `--glow-x/--glow-y` 变量 + `radial-gradient` 跟随鼠标（commit 434d4bd）
+- **Feature 卡片 hover 多层阴影** — 青色外发光 + 抬起效果（commit 434d4bd）
+- **数据亮点条** — 15语言/4平台/5格式三组数字，IntersectionObserver 触发滚动计数动画（commit 434d4bd）
+- **按钮涟漪点击效果** — 点击时在鼠标位置生成白色涟漪波纹（commit 434d4bd）
+- **Brand 彩蛋** — 连击导航品牌名5次触发 Emoji 雨动画（Web Animations API）（commit 434d4bd）
+- **Lightbox 增强** — 支持滚轮缩放（以光标为中心）、拖拽平移、键盘方向键移动、+/- 缩放、0 重置、双击重置（commit 434d4bd）
+- **页面入场淡入** — `body { opacity: 0 }` → `.loaded` 淡入 + 导航栏滑入 + 骨架屏微光（commit 434d4bd）
+- **色板与直角风格** — 色板收窄为深邃蓝调，全站 `--radius-card: 0`（commit 434d4bd）
+- **导航栏毛玻璃** — `backdrop-filter: blur(12px)` + 滚动时背景加深（commit 434d4bd）
+- **社区分享区网格背景** — `background-image` 线性网格装饰（commit 434d4bd）
+
+### 变更
+
+- **跨平台描述统一** — 10 语言 `feature_cross_platform_desc`/`game_intro_desc2`/`game_intro_desc4` 统一为四大平台（Windows/Linux/macOS/Android）（commit 434d4bd）
+- **子页面布局** — history/community/license 页 body padding 移至 `.main-wrapper`，页脚 `align-self: stretch`（commit 434d4bd）
+
+### 资产
+
+- **10 语言文件同步** — 新增 `stat_platforms`、`stat_formats`、`game_intro_desc1_short` 等 i18n key（commit 434d4bd）
+
+---
+
+**重构(官网)：版权页面迁入 html/copyright/ 子目录（commit b5fccc2）**
+
+### 重构
+
+- **版权页面目录化** — LICENSE.html、PROJECT_THIRDPARTY.html、THIRDPARTY_LICENSES.html 从 `docs/` 根目录移至 `docs/html/copyright/`，新增 `index.html` 入口页（commit b5fccc2）
+
+---
+
 ## 2026-08-31 — 版本配置清理（删除26w33b/26w34b，26w34b→26w34b）
 
 **构建(版本)：版本配置清理与版本码重排**
