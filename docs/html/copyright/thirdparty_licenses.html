@@ -3,12 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第三方素材版权声明 — docs（官网素材）</title>
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/license.css">
+    <title data-i18n="thirdparty_licenses_page_title">第三方素材版权声明 — docs（官网素材）</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/license.css">
 </head>
-<body>
-<div class="container">
+<body id="top">
+
+<a class="skip-link" href="#main-content" data-i18n="skip_to_content">跳到主要内容</a>
+
+<!-- 导航 -->
+<nav class="top-nav" id="topNav" aria-label="主导航">
+    <a class="nav-brand" href="#top">◈ <span>氢风</span></a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-label="展开导航菜单">☰</button>
+    <div class="nav-links" id="navLinks">
+        <a href="index.html">← <span>返回版权相关</span></a>
+        <a href="../../index.html">← <span data-i18n="back_home">返回首页</span></a>
+    </div>
+</nav>
+
+<div class="container" id="main-content">
 
 <h1>第三方素材著作权声明 — docs（官网素材）</h1>
 
@@ -173,9 +186,11 @@
 </table>
 
 <div class="footer-note">
-    <a href="index.html">← 返回首页</a>
+    <span>&copy; HujiuGame</span>
 </div>
 
 </div>
+<script src="../../js/common.js" data-base="../../data/"></script>
+<script>initTopNav(); loadMessages(getBrowserLang()).then(applyI18n).catch(() => {});</script>
 </body>
 </html>

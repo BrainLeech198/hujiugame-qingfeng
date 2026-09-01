@@ -3,12 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>项目许可证 — 氢风（qingfeng）</title>
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/license.css">
-    <link rel="stylesheet" href="css/license-tabs.css">
+    <title data-i18n="license_page_title">项目许可证 — 氢风（qingfeng）</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/license.css">
+    <link rel="stylesheet" href="../../css/license-tabs.css">
 </head>
-<body>
+<body id="top">
+
+<a class="skip-link" href="#tab-zh-cn" data-i18n="skip_to_content">跳到主要内容</a>
+
+<!-- 导航 -->
+<nav class="top-nav" id="topNav" aria-label="主导航">
+    <a class="nav-brand" href="#top">◈ <span>氢风</span></a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-label="展开导航菜单">☰</button>
+    <div class="nav-links" id="navLinks">
+        <a href="index.html">← <span>返回版权相关</span></a>
+        <a href="../../index.html">← <span data-i18n="back_home">返回首页</span></a>
+    </div>
+</nav>
+
 <div class="container">
 
 <h1>项目许可证 — 氢风（qingfeng）</h1>
@@ -585,10 +598,12 @@ Creative Commons is not a party to its public licenses. Notwithstanding, Creativ
 Creative Commons may be contacted at <a href="https://creativecommons.org/" target="_blank" rel="noopener noreferrer">creativecommons.org</a>.</div></div>
 
 <div class="footer-note">
-    <a href="index.html">← 返回首页</a>
+    <span>&copy; HujiuGame</span>
 </div>
 
 </div>
-<script src="js/license.js"></script>
+<script src="../../js/common.js" data-base="../../data/"></script>
+<script src="../../js/license.js"></script>
+<script>initTopNav(); loadMessages(getBrowserLang()).then(applyI18n).catch(() => {});</script>
 </body>
 </html>
