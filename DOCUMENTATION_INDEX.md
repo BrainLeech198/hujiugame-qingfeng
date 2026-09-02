@@ -81,6 +81,9 @@
 | **日志三维改造 + Script throw 统一** | [develop/plans/2026-08-10-log-3d-refactor.md](develop/plans/2026-08-10-log-3d-refactor.md) | LogUtils 空间/异常/上下文/时间四维改造 + Script 90 处 throw 消息中文化溯源 + GraphicsObject tag 可空优化（已确认，暂未实施） |
 | **服务器部署计划** | [develop/plans/2026-08-22-server-deployment-plan.md](develop/plans/2026-08-22-server-deployment-plan.md) | 游戏创作社区服务器部署方案（用户系统/房间系统/邮件订阅/自动部署） |
 | **引擎分离架构设计** | [develop/plans/2026-08-29-engine-separation-design.md](develop/plans/2026-08-29-engine-separation-design.md) | 方案 C 务实分层：engine/platform 包拆分 + Application 生命周期 + EventBus 统一 + SceneManager 协调 + 6 阶段迁移 |
+| **引擎分离实施计划** | [develop/plans/2026-09-01-engine-separation-implementation-plan.md](develop/plans/2026-09-01-engine-separation-implementation-plan.md) | 6 阶段实施详述（痛点/改动/收益/风险/文件清单/检查清单），Phase 3a 已按审查决策修正 |
+| **引擎分离审查报告** | [develop/plans/2026-09-01-engine-separation-plan-review.md](develop/plans/2026-09-01-engine-separation-plan-review.md) | 代码级逐帧推演审查：3 P0 + 12 P1/P2 问题清单 + 过时认知修正（TM 已空壳） |
+| **引擎分离方案选项** | [develop/plans/2026-09-01-engine-separation-options.md](develop/plans/2026-09-01-engine-separation-options.md) | 审查 15 个问题的候选方案 + 权衡 + 用户决策记录 |
 
 ---
 

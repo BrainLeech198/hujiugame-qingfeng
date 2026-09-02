@@ -71,11 +71,21 @@
 
 ---
 
-**文档(plans)：引擎分离设计文档二次审查决策回写（commit ）**
+**文档(plans)：引擎分离设计文档二次审查决策回写（commit 6625226）**
 
 ### 文档
 
-- **设计文档二次审查决策回写** — 12 项二次审查决策全部回写：SM 双 API 调用时机（场景仍走 queue，SM 方法仅在帧尾 flush 被调）、场景弹栈重建、executeSceneSwitch 加载链内聚、immediatelyTo 带 action、RESET 清栈回主菜单、QuitGame 去重、闪屏本次做（logo 占位）、ActiveContext 动态取 UiManager、Input 平台实现注入、Init 进 SM 栈、空壳 transitionTo 表述修正、dispose 责任矩阵补全（commit ）
+- **设计文档二次审查决策回写** — 12 项二次审查决策全部回写：SM 双 API 调用时机（场景仍走 queue，SM 方法仅在帧尾 flush 被调）、场景弹栈重建、executeSceneSwitch 加载链内聚、immediatelyTo 带 action、RESET 清栈回主菜单、QuitGame 去重、闪屏本次做（logo 占位）、ActiveContext 动态取 UiManager、Input 平台实现注入、Init 进 SM 栈、空壳 transitionTo 表述修正、dispose 责任矩阵补全（commit 6625226）
+
+---
+
+**文档(plans)：引擎分离实施计划 + 一审审查报告 + 方案选项（commit ）**
+
+### 文档
+
+- **6 阶段实施计划** — 按两轮审查决策修正 Phase 3a（SM 双 API + 帧尾 flush）、3b（Application 主循环 + Init 进栈 + 输入更新）、5（ActiveContext 动态取 AM）；每阶段含痛点/改动/收益/风险表/文件清单/检查清单（commit ）
+- **一审代码级审查报告** — 逐帧推演验证方案假设真实性：3 P0 + 12 P1/P2 问题清单；修正过时认知（TransitionManager 已空壳、场景切换双路径）（commit ）
+- **方案选项与决策记录** — 15 个问题各 2-3 候选方案 + 权衡 + 用户逐项决策记录（commit ）
 
 ## 2026-09-01 — 官网全面升级（性能/交互/可访问性） + 版权页面重构
 
