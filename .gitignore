@@ -153,6 +153,10 @@ www-test/
 nbactions.xml
 nb-configuration.xml
 
+## Node.js / Vite:
+node_modules/
+dist/
+
 ## OS-Specific:
 .DS_Store
 Thumbs.db
