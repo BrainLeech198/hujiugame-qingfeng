@@ -63,11 +63,11 @@
 
 ---
 
-**移除(官网)：删除旧静态站（commit —）**
+**移除(官网)：删除旧静态站（commit 2ddce74）**
 
 ### 移除
 
-- **旧静态资源清理** — 移除 docs/ 下旧 css / js / html 手工页面与 README.md（commit —）
+- **旧静态资源清理** — 移除 docs/ 下旧 css / js / html 手工页面与 README.md（commit 2ddce74）
 
 ## 2026-09-01 — 官网全面升级（性能/交互/可访问性） + 版权页面重构
 
