@@ -116,14 +116,14 @@
 
 ## 2026-08-31 — 版本配置清理（删除26w33b/26w34b，26w34b→26w34b）
 
-**构建(版本)：版本配置清理与版本码重排**
+**构建(版本)：版本配置清理与版本码重排（commit 625f9d5）**
 
 ### 构建
 
 - **app_version 重排** — 删除26w33b（版本码2）和原26w34b（版本码3），26w34b改名为26w34b并继承版本码2；版本序列收敛为26w33a(1)→26w34b(2)（commit 625f9d5）
 - **android versionCode 同步** — `android/build.gradle` versionCode 4→2，与 app_version.json 对齐（commit 625f9d5）
 
-**文档(版本)：PUBLISH.md 与 versions.json 同步清理**
+**文档(版本)：PUBLISH.md 与 versions.json 同步清理（commit 625f9d5）**
 
 ### 文档
 
@@ -134,7 +134,7 @@
 
 ## 2026-08-29 — 清理已实现的设计方案 + 动画空壳化 + Manager 体系收敛
 
-**文档(plans)：引擎分离架构设计方案（方案 C: Pragmatic Layered）**
+**文档(plans)：引擎分离架构设计方案（方案 C: Pragmatic Layered）（commit 9d3a44a）**
 
 ### 文档
 
@@ -142,7 +142,7 @@
 
 ---
 
-**修复(文本)：GameInfoMap 未注入 + 游戏会话 LanguageManager 未切换**
+**修复(文本)：GameInfoMap 未注入 + 游戏会话 LanguageManager 未切换（commit 44f85d0）**
 
 ### 修复
 
@@ -151,7 +151,7 @@
 
 ---
 
-**重构(动画)：TransitionManager 空壳化 + Action→Command 重命名**
+**重构(动画)：TransitionManager 空壳化 + Action→Command 重命名（commit 3952fb5）**
 
 ### 重构
 
@@ -165,7 +165,7 @@
 
 ---
 
-**资产(动画)：动画 JSON 配置格式适配 Action→Command**
+**资产(动画)：动画 JSON 配置格式适配 Action→Command（commit 26146aa）**
 
 ### 资产
 
@@ -174,7 +174,7 @@
 
 ---
 
-**重构(架构)：Manager 体系收敛 — 24 个 Manager/Service 类分层整理**
+**重构(架构)：Manager 体系收敛 — 24 个 Manager/Service 类分层整理（commit c6ab54b）**
 
 ### 重构
 
@@ -199,7 +199,7 @@
 
 ---
 
-**文档(plans)：清理 develop/plans/ 下已实现的 6 篇设计方案文档**
+**文档(plans)：清理 develop/plans/ 下已实现的 6 篇设计方案文档（commit af403ee）**
 
 ### 文档
 
@@ -210,7 +210,7 @@
 
 ## 2026-08-27 — Init 渲染机职责分离
 
-**重构(init)：引入 InitService 提取初始化逻辑，Init 只保留视觉反馈**
+**重构(init)：引入 InitService 提取初始化逻辑，Init 只保留视觉反馈（commit c6ab54b）**
 
 ### 重构
 
@@ -222,7 +222,7 @@
 
 ## 2026-08-19 — 发布 v1.0.0-beta-26w34b + 打包器版本码自动递增 + mac 安装脚本友好提示
 
-**构建(mac)：macOS 安装脚本添加 Gatekeeper 故障处理提示**
+**构建(mac)：macOS 安装脚本添加 Gatekeeper 故障处理提示（commit edffdd3）**
 
 ### 构建
 
@@ -230,31 +230,31 @@
 
 ---
 
-**构建(版本)：发布 v1.0.0-beta-26w34b**
+**构建(版本)：发布 v1.0.0-beta-26w34b（commit 37573a4）**
 
 ### 构建
 
-- **app_version 升级** — app_version 3→4，snapshot 26w34b→26w34b（commit <hash>）
-- **android versionCode 升级** — versionCode 3→4（commit <hash>）
-- **打包器版本码自动递增** — build_common.py input_version_interactive 版本码不再手动询问，改为 last+1 自动递增（commit <hash>）
+- **app_version 升级** — app_version 3→4，snapshot 26w34b→26w34b（commit 37573a4）
+- **android versionCode 升级** — versionCode 3→4（commit 37573a4）
+- **打包器版本码自动递增** — build_common.py input_version_interactive 版本码不再手动询问，改为 last+1 自动递增（commit 37573a4）
 
-**网站(版本)：官网新增 v1.0.0-beta-26w34b 下载入口**
+**网站(版本)：官网新增 v1.0.0-beta-26w34b 下载入口（commit 37573a4）**
 
 ### 网站
 
-- **versions.json 新增 v26w34b 条目** — newest_version 升至 4，Windows/Android/Linux/mac Apple 芯片/mac Intel 五处蓝奏云下载链接更新；更新说明明确回退动画系统范围，保留安卓双播修复（commit <hash>）
+- **versions.json 新增 v26w34b 条目** — newest_version 升至 4，Windows/Android/Linux/mac Apple 芯片/mac Intel 五处蓝奏云下载链接更新；更新说明明确回退动画系统范围，保留安卓双播修复（commit 37573a4）
 
 ---
 
 ## 2026-08-18 — type/key 分类重构 + 事件系统枚举化 + 动画系统实现 + 渲染机过渡接入 + 页面动画配置 + 其他小重构
 
-**重构(keys)：type/key 常量类按领域分类到子包**
+**重构(keys)：type/key 常量类按领域分类到子包（commit a53ed85）**
 
 ### 重构
 
 - **type/key 分类整理** — 16 个 Key 常量类按领域拆到 `config/`（ConfigKey/RequirementKey/ThemeKey/LanguageKey/VersionKey/GameInfoKey）、`layout/`（LayoutKey/GraphicsKey/AudioKey）、`script/`（ScriptKey）、`story/`（StoryKey）、`ui/`（UiKey/UniversalUiKey）、`animation/`（AnimationKey）、`common/`（JsonKey/FileHandleKey/DialogKey），新增 `AudioKey`（audio 节独立），各使用点 import 路径同步更新（commit `a53ed85`）
 
-**重构(事件)：事件系统枚举化 + EXECUTE 执行事件 + 联动转换**
+**重构(事件)：事件系统枚举化 + EXECUTE 执行事件 + 联动转换（commit 3a3259c）**
 
 ### 重构
 
@@ -265,7 +265,7 @@
 - **RecoverNormalRenderPipeLine** — 过渡结束恢复正常渲染事件（commit 3a3259c）
 - **事件类重构** — 各事件类字段命名统一为 eventAction、import 顺序修正（commit 3a3259c）
 
-**新增(动画)：页面切换淡入淡出动画执行引擎 + 控件预偏移**
+**新增(动画)：页面切换淡入淡出动画执行引擎 + 控件预偏移（commit 36b4adc）**
 
 ### 新增
 
@@ -275,7 +275,7 @@
 - **AnimationComponentType 枚举** — 组件自报类型（getType），Animation 组件容器改 Map 存储（commit 36b4adc）
 - **动画数据层完善** — Animation/组件/窗口/任务/动作全链 JsonEntity 构造补 null 防御、无效组件不入 Map、分层调试回溯日志（commit 36b4adc）
 
-**重构(渲染)：渲染机抽象基类 + 页面过渡动画接入 + FADING 渲染管线状态**
+**重构(渲染)：渲染机抽象基类 + 页面过渡动画接入 + FADING 渲染管线状态（commit ce8757a）**
 
 ### 重构
 
@@ -285,7 +285,7 @@
 - **RenderPipeline FADING 状态** — GameRenderPipeLineState 枚举 + RenderPipeline 按状态分流渲染过渡动画（commit ce8757a）
 - **渲染机动画初始化** — Init/MenuMain/MenuList/MenuLoad/ConfigBasic/ConfigDisplay 各页面 setAnimation 接入（commit ce8757a）
 
-**新增(配置): 各页面淡入淡出动画配置**
+**新增(配置): 各页面淡入淡出动画配置（commit 1abebfa）**
 
 ### 新增
 
@@ -294,19 +294,19 @@
 - **menu_load/config_basic/config_display 动画** — 各自控件 smooth_move 切入切出配置（commit 1abebfa）
 - **directory_structure 同步** — 新增页面 config 条目（commit 1abebfa）
 
-**重构(keys)：type/key 分类后全量 import 路径适配**
+**重构(keys)：type/key 分类后全量 import 路径适配（commit 096dc2c）**
 
 ### 重构
 
 - **业务文件 import 同步** — script/data、ui、game、input、manager、util 等 69 个业务类的 type.key.* import 路径更新到子包（commit 096dc2c）
 
-**重构(数据)：JsonEntity 布尔字段命名修正**
+**重构(数据)：JsonEntity 布尔字段命名修正（commit 55eff1f）**
 
 ### 重构
 
 - **isMap 字段去前缀** — JsonEntity 内部 isMap 字段改 map，getter 仍 `isMap()`，构造器赋值与 42 处读点同步（commit 55eff1f）
 
-**重构(类型)：InitState 枚举化 + SceneStack 双 INIT 修复**
+**重构(类型)：InitState 枚举化 + SceneStack 双 INIT 修复（commit fc4b279）**
 
 ### 重构
 
@@ -314,53 +314,53 @@
 - **SceneStack 双 INIT** — 删除构造器栈底哨兵 INIT，保留 GameHost.init 显式 push，状态栈 `[INIT, INIT, MENU_MAIN]` 收敛为 `[INIT, MENU_MAIN]`（commit fc4b279）
 - **GameState 补充** — state 相关补充字段（commit fc4b279）
 
-**编码规范(字段)：布尔字段命名规范化**
+**编码规范(字段)：布尔字段命名规范化（commit 0cd9adc）**
 
 ### 编码规范
 
 - **Main 懒加载字段** — isSlashed/isLazyInitialized 去前缀为 slashed/lazyInitialized，补 is/set 访问（commit 0cd9adc）
 - **TextInputUtils 输入状态** — isInput 字段去前缀为 inputDone，补 setInput（commit 0cd9adc）
 
-**新增(动画)：控件位置接口 + 游戏侧动画管理器注入**
+**新增(动画)：控件位置接口 + 游戏侧动画管理器注入（commit 9510cd5）**
 
 ### 新增
 
 - **InteractableObject 位置接口** — 新增 getX/getY/setPosition，支撑 smooth_move 位移动画（commit 9510cd5）
 - **游戏侧动画管理器** — GameResourceLoader 注入 EventQueue，创建游戏内 AnimationManager（commit 9510cd5）
 
-**重构(事件)：loadGame 空壳压栈事件携带来源状态**
+**重构(事件)：loadGame 空壳压栈事件携带来源状态（commit feb8561）**
 
 ### 重构
 
 - **GameSessionManager.loadGame** — 增加 nowGameState 参数，PushGameState 空壳事件携带 outState 供过渡链识别来源页（commit feb8561）
 
-**重构(keys)：LayoutManager 使用 AudioKey（audio 节独立）**
+**重构(keys)：LayoutManager 使用 AudioKey（audio 节独立）（commit 0996d43）**
 
 ### 重构
 
 - **LayoutManager 关联调整** — backgroundMusic/music 字段改用独立 AudioKey，type/key import 适配（commit 0996d43）
 
-**编码规范(ui)：UiManager 代码整理**
+**编码规范(ui)：UiManager 代码整理（commit 03ba284）**
 
 ### 编码规范
 
 - **CustomFont 类结构与注释整理** — UiManager 内部类与注释格式统一（commit 03ba284）
 
-**修复(版本)：更新检测版本号显示修正**
+**修复(版本)：更新检测版本号显示修正（commit b8cdca9）**
 
 ### 修复
 
 - **版本号显示日志** — doVersionDifferent/checkWebVersion 版本号拼接顺序与 displayVersionString 修正（commit b8cdca9）
 - **type/key import 适配** — ConfigKey/VersionKey import 路径更新（commit b8cdca9）
 
-**构建(版本)：发布 v1.0.0-beta-26w34b**
+**构建(版本)：发布 v1.0.0-beta-26w34b（commit 5dbedb9）**
 
 ### 构建
 
 - **app_version 升级** — app_version 2→3，snapshot 26w33b→26w34b（commit 5dbedb9）
 - **android versionCode 升级** — versionCode 2→3（commit 5dbedb9）
 
-**新增(文档)：官网版本数据维护规范 DOC_STANDARD + 官网日志修正**
+**新增(文档)：官网版本数据维护规范 DOC_STANDARD + 官网日志修正（commit d485a18）**
 
 ### 文档
 
@@ -369,7 +369,7 @@
 - **官网 v26w34b log 修正** — date 补完整时间，log 移除"控件预偏移"（内部必须非卖点）、补安卓背景音乐双播修复（commit d485a18）
 - **PUBLISH 同步** — 发布 commit 更新为官网最终提交（commit d485a18）
 
-**修复(网站)：游戏介绍折叠改为按 110px 高度判定**
+**修复(网站)：游戏介绍折叠改为按 110px 高度判定（commit a6a2313）**
 
 ### 网站
 
@@ -377,7 +377,7 @@
 
 ## 2026-08-16 — 默认语言改英文 + 目录结构补全 + 12 个新语言翻译包 + 首次运行按设备语言改写默认语言 + 设备语言自动检测与 15 语言扩展 + 键前缀/标签前缀常量注释补充动态段占位标注 + AnimationManager 一级服务化 + 显示配置下沉 UserConfigManager + 全屏切换职责迁移 + 崩溃处理职责下沉 CrashUtils + RenderPipeline 方法重命名区分注册与更新 + 全屏切换调用空值防御 + 官网卡片重排与折叠展开 + 官网导航新增遇到问题 + 官网语言扩展与识别修复
 
-**新增(网站)：官网主页卡片重排与长文字折叠展开（游戏介绍 / 更新日志）**
+**新增(网站)：官网主页卡片重排与长文字折叠展开（游戏介绍 / 更新日志）（commit 69ee315）**
 
 ### 网站
 
@@ -388,7 +388,7 @@
 
 ---
 
-**新增(网站)：官网顶部导航新增「遇到问题」入口**
+**新增(网站)：官网顶部导航新增「遇到问题」入口（commit 3abc966）**
 
 ### 网站
 
@@ -397,23 +397,23 @@
 
 ---
 
-**新增(网站)：官网语言扩展与设备语言识别修复**
+**新增(网站)：官网语言扩展与设备语言识别修复（commit 9b18771）**
 
 ### 网站
 
-- **官网新增西班牙语语言包** — 新增 es.json，官网支持语言增至 10 种（commit ）
-- **游戏介绍 15 语言文案** — desc2 改为列明游戏原生支持 15 种界面语言（简体中文/繁體中文/English/Español/Français/Português/Русский/日本語/한국어/Deutsch）（commit ）
-- **设备语言识别修复** — getBrowserLang 由语言主干匹配改为完整 locale 小写优先精确匹配，zh-tw/zh-hk/zh-mo 正确映射繁体 zh-TW，修复繁体用户错显简体（commit ）
+- **官网新增西班牙语语言包** — 新增 es.json，官网支持语言增至 10 种（commit 9b18771）
+- **游戏介绍 15 语言文案** — desc2 改为列明游戏原生支持 15 种界面语言（简体中文/繁體中文/English/Español/Français/Português/Русский/日本語/한국어/Deutsch）（commit 9b18771）
+- **设备语言识别修复** — getBrowserLang 由语言主干匹配改为完整 locale 小写优先精确匹配，zh-tw/zh-hk/zh-mo 正确映射繁体 zh-TW，修复繁体用户错显简体（commit 9b18771）
 
-**变更(配置)：user_config 默认语言由简体中文改为英文**
+**变更(配置)：user_config 默认语言由简体中文改为英文（commit cd21b3c）**
 
 ### 变更
 
-- **user_config.json 默认语言改 en_US** — 内部默认配置 language 字段由 zh_CN 改为 en_US，与设备语言检测默认值一致（commit ）
+- **user_config.json 默认语言改 en_US** — 内部默认配置 language 字段由 zh_CN 改为 en_US，与设备语言检测默认值一致（commit cd21b3c）
 
 ---
 
-**修复(资产)：directory_structure 补全新语言目录与 page 配置条目**
+**修复(资产)：directory_structure 补全新语言目录与 page 配置条目（commit f680356）**
 
 ### 修复
 
@@ -421,7 +421,7 @@
 
 ---
 
-**新增(资产)：language_config 注册 15 语言与 12 个新语言翻译包**
+**新增(资产)：language_config 注册 15 语言与 12 个新语言翻译包（commit 2c07f66）**
 
 ### 资产
 
@@ -430,7 +430,7 @@
 
 ---
 
-**新增(功能)：UserConfigManager 首次运行按设备语言改写默认语言**
+**新增(功能)：UserConfigManager 首次运行按设备语言改写默认语言（commit 2e1c653）**
 
 ### 新增
 
@@ -438,7 +438,7 @@
 
 ---
 
-**新增(类型)：DeviceLanguage 设备语言检测枚举与 15 语言路径/显示名常量**
+**新增(类型)：DeviceLanguage 设备语言检测枚举与 15 语言路径/显示名常量（commit 88c5259）**
 
 ### 类型
 
@@ -448,7 +448,7 @@
 
 ---
 
-**编码规范(注释)：键前缀/标签前缀常量注释补充动态段占位标注**
+**编码规范(注释)：键前缀/标签前缀常量注释补充动态段占位标注（commit 81c2843）**
 
 ### 编码规范
 
@@ -459,7 +459,7 @@
 
 ---
 
-**新增(服务)：AnimationManager 升级为与 Audio/Graphics/Ui 同级的一级服务并接入游戏侧 gameAnimationManager**
+**新增(服务)：AnimationManager 升级为与 Audio/Graphics/Ui 同级的一级服务并接入游戏侧 gameAnimationManager（commit e0a15e5）**
 
 ### 新增
 
@@ -470,7 +470,7 @@
 
 ---
 
-**重构(配置)：initLibGDX 显示配置逻辑下沉为 UserConfigManager 静态特例函数**
+**重构(配置)：initLibGDX 显示配置逻辑下沉为 UserConfigManager 静态特例函数（commit 44e1bb6）**
 
 ### 重构
 
@@ -479,7 +479,7 @@
 
 ---
 
-**重构(配置)：全屏切换职责从 Main 迁移到 UserConfigManager**
+**重构(配置)：全屏切换职责从 Main 迁移到 UserConfigManager（commit 5cc6979）**
 
 ### 重构
 
@@ -489,7 +489,7 @@
 
 ---
 
-**重构(崩溃处理)：safeCrash 安全崩溃兜底从 Main 下沉到 CrashUtils**
+**重构(崩溃处理)：safeCrash 安全崩溃兜底从 Main 下沉到 CrashUtils（commit 2152719）**
 
 ### 重构
 
@@ -498,7 +498,7 @@
 
 ---
 
-**重构(渲染)：RenderPipeline 方法重命名区分注册与每帧更新**
+**重构(渲染)：RenderPipeline 方法重命名区分注册与每帧更新（commit ac5ec56）**
 
 ### 重构
 
@@ -507,7 +507,7 @@
 
 ---
 
-**优化(输入)：全屏切换调用增加 InstanceContent 空值防御**
+**优化(输入)：全屏切换调用增加 InstanceContent 空值防御（commit 53ee6fb）**
 
 ### 优化
 
@@ -515,26 +515,26 @@
 
 ---
 
-**修复(音频)：背景音乐随机切换偶发双播修复**
+**修复(音频)：背景音乐随机切换偶发双播修复（commit f10119e）**
 
 ### 修复
 
-- **loadBackgroundMusic 自然播完回调先 stop 再移除播放记录** — 背景音乐随机切换时偶发双播：曲目自然播完瞬间 isPlaying() 已返回 false 但播放记录尚未移除（libGDX AndroidMusic 将 completion 回调 postRunnable 延迟到下一帧），playLayout 会误将其 resume（Android start() 从头播放），随后记录被移除、下一帧随机新曲导致两曲同播；completion 回调内改为先 m.stop() 兜底再移除记录，保证单曲（commit <hash>）
+- **loadBackgroundMusic 自然播完回调先 stop 再移除播放记录** — 背景音乐随机切换时偶发双播：曲目自然播完瞬间 isPlaying() 已返回 false 但播放记录尚未移除（libGDX AndroidMusic 将 completion 回调 postRunnable 延迟到下一帧），playLayout 会误将其 resume（Android start() 从头播放），随后记录被移除、下一帧随机新曲导致两曲同播；completion 回调内改为先 m.stop() 兜底再移除记录，保证单曲（commit f10119e）
 
 ## 2026-08-15 — 动画数据层落地 + Javadoc 性能标注规范 + 热路径 Javadoc 性能标注 + 官网下载区优化（恢复提取码 / 首页卡片化 / 更新时间）+ 26w33a mac Intel 提取码文案补删 + GameState 扁平化重构 + UiKey 嵌套类化
 
-**优化(Javadoc)：热路径方法补充性能表现与适用场景标注**
+**优化(Javadoc)：热路径方法补充性能表现与适用场景标注（commit 29a6606）**
 
 ### 优化
 
-- **主循环链路性能标注** — `GameHost.run`（每帧热路径入口，帧耗时决定帧率下限）、`RenderPipeline.updateFrame`/`render`（每帧更新/绘制入口）、`InstanceContent.update`（每帧输入聚合点）、`SceneStack.updateGameState`/`loadGameLayout`/`loadGameConfig`（切换时同步 IO + JSON 解析，一次性高开销）、`EventDispatcher.handleEvent`（事件分发 switch + 日志拼接）（commit <hash>）
-- **输入处理性能标注** — `VirtualInputHandler` 的 update/getLists/refreshInteractableObjectMap（每帧，HashSet 相等性判断 + 全量 isShown + stage.hit）、`ControllerInputHandler.update`（每帧摇杆轮询）（commit <hash>）
-- **场景渲染性能标注** — `GamePlay` 的 update/render/localHostUpdate（每帧 + 任务栈 map 查询）、`MenuMain` 的 update/render（每帧 4×isButtonClicked + 4×handleAsk）、`ScriptExecutor.update`（每帧 new ArrayList + shuffle + 指令数上限）（commit <hash>）
-- **资源与 UI 工具性能标注** — `UiManager` 查找类方法（O(1) map 查询，动画应缓存引用）、`GraphicsManager` 纹理与绘制方法（缓存命中 O(1) vs 未命中解码、putGif 每帧帧推进）、`MessageBox.showAsk`/`handleAsk`、`LogUtils` 时间格式化与同步 IO（commit <hash>）
+- **主循环链路性能标注** — `GameHost.run`（每帧热路径入口，帧耗时决定帧率下限）、`RenderPipeline.updateFrame`/`render`（每帧更新/绘制入口）、`InstanceContent.update`（每帧输入聚合点）、`SceneStack.updateGameState`/`loadGameLayout`/`loadGameConfig`（切换时同步 IO + JSON 解析，一次性高开销）、`EventDispatcher.handleEvent`（事件分发 switch + 日志拼接）（commit 29a6606）
+- **输入处理性能标注** — `VirtualInputHandler` 的 update/getLists/refreshInteractableObjectMap（每帧，HashSet 相等性判断 + 全量 isShown + stage.hit）、`ControllerInputHandler.update`（每帧摇杆轮询）（commit 29a6606）
+- **场景渲染性能标注** — `GamePlay` 的 update/render/localHostUpdate（每帧 + 任务栈 map 查询）、`MenuMain` 的 update/render（每帧 4×isButtonClicked + 4×handleAsk）、`ScriptExecutor.update`（每帧 new ArrayList + shuffle + 指令数上限）（commit 29a6606）
+- **资源与 UI 工具性能标注** — `UiManager` 查找类方法（O(1) map 查询，动画应缓存引用）、`GraphicsManager` 纹理与绘制方法（缓存命中 O(1) vs 未命中解码、putGif 每帧帧推进）、`MessageBox.showAsk`/`handleAsk`、`LogUtils` 时间格式化与同步 IO（commit 29a6606）
 
 ---
 
-**编码规范(注释)：耗性能方法 Javadoc 必须标注性能表现与适用场景**
+**编码规范(注释)：耗性能方法 Javadoc 必须标注性能表现与适用场景（commit 8d2f30f）**
 
 ### 编码规范
 
@@ -543,7 +543,7 @@
 
 ---
 
-**动画(数据层)：动画数据模型与配置解析落地**
+**动画(数据层)：动画数据模型与配置解析落地（commit b6864a5）**
 
 ### 新增
 
@@ -561,7 +561,7 @@
 
 ---
 
-**重构(键结构)：RequirementKey.Ui 内部嵌套类化**
+**重构(键结构)：RequirementKey.Ui 内部嵌套类化（commit 432b422）**
 
 ### 重构
 
@@ -570,7 +570,7 @@
 
 ---
 
-**重构(状态系统)：GameState 扁平化，消除主次分层**
+**重构(状态系统)：GameState 扁平化，消除主次分层（commit bbebb21）**
 
 ### 重构
 
@@ -581,7 +581,7 @@
 
 ---
 
-**网站(更新时间)：版本卡显示更新时间（精确到分钟）**（commit e3b7bb3）
+**网站(更新时间)：版本卡显示更新时间（精确到分钟）（commit e3b7bb3）**
 
 ### 网站
 
@@ -590,7 +590,7 @@
 
 ---
 
-**网站(首页)：资源下载区照搬历史版本卡片排版**（commit b526abe）
+**网站(首页)：资源下载区照搬历史版本卡片排版（commit b526abe）**
 
 ### 网站
 
@@ -598,7 +598,7 @@
 
 ---
 
-**网站(下载)：恢复蓝奏云提取码 1698（撤销测试版免密）**（commit f25998f）
+**网站(下载)：恢复蓝奏云提取码 1698（撤销测试版免密）（commit f25998f）**
 
 ### 网站
 
@@ -607,7 +607,7 @@
 
 ---
 
-**重构(网站/version.json)：补删 26w33a mac Intel 遗留提取码文案**
+**重构(网站/version.json)：补删 26w33a mac Intel 遗留提取码文案（commit cafa0c4）**
 
 ### 重构
 
@@ -617,7 +617,7 @@
 
 ## 2026-08-14 — 游戏 launcher_version 强制改为整型版本码 + 发布 v1.0.0-beta-26w33b
 
-**文档(规范)：新增发布说明书写规则**（commit a28ad48）
+**文档(规范)：新增发布说明书写规则（commit a28ad48）**
 
 ### 文档
 
@@ -625,7 +625,7 @@
 
 ---
 
-**文档(发布)：按 commit 区间细化 26w33b 发布说明**（commit 58124e4）
+**文档(发布)：按 commit 区间细化 26w33b 发布说明（commit 58124e4）**
 
 ### 文档
 
@@ -633,7 +633,7 @@
 
 ---
 
-**版本(beta)：26w33b 版本号写入打包文件**（commit f00949c）
+**版本(beta)：26w33b 版本号写入打包文件（commit f00949c）**
 
 ### 变更
 
@@ -642,7 +642,7 @@
 
 ---
 
-**文档(发布)：新增 v1.0.0-beta-26w33b 发布记录**（commit f76adf0）
+**文档(发布)：新增 v1.0.0-beta-26w33b 发布记录（commit f76adf0）**
 
 ### 文档
 
@@ -650,7 +650,7 @@
 
 ---
 
-**网站(beta)：下载区更新为 26w33b 免密链接**（commit 9500e9d）
+**网站(beta)：下载区更新为 26w33b 免密链接（commit 9500e9d）**
 
 ### 网站
 
@@ -660,7 +660,7 @@
 
 ---
 
-**变更(AppVersionTable)：追加版本码 2 → "1.0.0" 映射 + 打包 README 同步**（commit bc61f3a）
+**变更(AppVersionTable)：追加版本码 2 → "1.0.0" 映射 + 打包 README 同步（commit bc61f3a）**
 
 ### 变更
 
@@ -669,7 +669,7 @@
 
 ---
 
-**文档(CLAUDE.md)：新增非项目更新不落盘约定**（commit 405209b）
+**文档(CLAUDE.md)：新增非项目更新不落盘约定（commit 405209b）**
 
 ### 文档
 
@@ -677,7 +677,7 @@
 
 ---
 
-**文档(JSON_STANDARD)：game.json 章节补全实际字段**（commit a66e6d8）
+**文档(JSON_STANDARD)：game.json 章节补全实际字段（commit a66e6d8）**
 
 ### 文档
 
@@ -685,7 +685,7 @@
 
 ---
 
-**变更(launcher_version)：judgeGame minor 判定与未知码弹窗**（commit 78d7f8a）
+**变更(launcher_version)：judgeGame minor 判定与未知码弹窗（commit 78d7f8a）**
 
 ### 变更
 
@@ -694,7 +694,7 @@
 
 ---
 
-**重构(launcher_version)：launcher_version 解析与存储链 int 化**（commit 94c8600）
+**重构(launcher_version)：launcher_version 解析与存储链 int 化（commit 94c8600）**
 
 ### 重构
 
@@ -707,7 +707,7 @@
 
 ## 2026-08-13 — mac 死锁修复 + 官网深色主题美化 + 测试版发布与快照细分 + 打包重构 + 版权素材清理
 
-**文档(发布)：建立版本发布记录体系 + CHANGELOG 条目绑定提交哈希**（commit 10d6d92）
+**文档(发布)：建立版本发布记录体系 + CHANGELOG 条目绑定提交哈希（commit 10d6d92）**
 
 ### 文档
 
@@ -718,7 +718,7 @@
 
 ---
 
-**修复(mac)：原生弹窗改用 osascript 避免 AWT 死锁**（commit c7528e8）
+**修复(mac)：原生弹窗改用 osascript 避免 AWT 死锁（commit c7528e8）**
 
 ### 修复
 
@@ -726,7 +726,7 @@
 
 ---
 
-**修复(mac)：点击路径打开资源管理器死锁**（commit b742781）
+**修复(mac)：点击路径打开资源管理器死锁（commit b742781）**
 
 ### 修复
 
@@ -734,7 +734,7 @@
 
 ---
 
-**官网(新增)：首页反馈卡片与页脚邮件反馈入口**（commit fada51c）
+**官网(新增)：首页反馈卡片与页脚邮件反馈入口（commit fada51c）**
 
 ### 网站
 
@@ -744,7 +744,7 @@
 
 ---
 
-**网站(beta)：下载区五个平台链接换新**（commit adf2635）
+**网站(beta)：下载区五个平台链接换新（commit adf2635）**
 
 ### 网站
 
@@ -752,7 +752,7 @@
 
 ---
 
-**网站(版权)：官网维修步骤示意图换为游戏运行截图**（commit f407091）
+**网站(版权)：官网维修步骤示意图换为游戏运行截图（commit f407091）**
 
 ### 网站
 
@@ -760,7 +760,7 @@
 
 ---
 
-**资产(版权)：主菜单/启动背景图换为自制素材**（commit 62004cb）
+**资产(版权)：主菜单/启动背景图换为自制素材（commit 62004cb）**
 
 ### 资产
 
@@ -768,7 +768,7 @@
 
 ---
 
-**官网(修复)：许可证页 CC 联系链接超链接化**（commit 84371bd）
+**官网(修复)：许可证页 CC 联系链接超链接化（commit 84371bd）**
 
 ### 网站
 
@@ -776,7 +776,7 @@
 
 ---
 
-**文档(清理)：删除已实施完成的官网美化设计文档**（commit a919a88）
+**文档(清理)：删除已实施完成的官网美化设计文档（commit a919a88）**
 
 ### 文档
 
@@ -784,7 +784,7 @@
 
 ---
 
-**文档(计划)：mac zip 交付设计记录与实施计划**（commit d35da2f）
+**文档(计划)：mac zip 交付设计记录与实施计划（commit d35da2f）**
 
 ### 文档
 
@@ -793,7 +793,7 @@
 
 ---
 
-**mac 交付物改 zip 内嵌安装器 + 产物命名更直观**（commit 65433a7）
+**mac 交付物改 zip 内嵌安装器 + 产物命名更直观（commit 65433a7）**
 
 ### 构建
 
@@ -802,7 +802,7 @@
 
 ---
 
-**文档(计划)：beta 快照版本方案更新**（commit b1bde6a）
+**文档(计划)：beta 快照版本方案更新（commit b1bde6a）**
 
 ### 文档
 
@@ -810,7 +810,7 @@
 
 ---
 
-**官网(修复)：历史版本页补 mac 下载按钮**（commit c9fbcff）
+**官网(修复)：历史版本页补 mac 下载按钮（commit c9fbcff）**
 
 ### 网站
 
@@ -818,7 +818,7 @@
 
 ---
 
-**官网(beta)：下载区接入蓝奏云真实链接**（commit c7975e1）
+**官网(beta)：下载区接入蓝奏云真实链接（commit c7975e1）**
 
 ### 网站
 
@@ -826,7 +826,7 @@
 
 ---
 
-**版本(beta)：测试版更新弹窗 + 版本切 beta 快照**（commit e6e5180）
+**版本(beta)：测试版更新弹窗 + 版本切 beta 快照（commit e6e5180）**
 
 ### 功能
 
@@ -835,7 +835,7 @@
 
 ---
 
-**版本(beta)：更新检测整型相同时按快照码细分新旧**（commit a309e32）
+**版本(beta)：更新检测整型相同时按快照码细分新旧（commit a309e32）**
 
 ### 功能
 
@@ -843,7 +843,7 @@
 
 ---
 
-**官网：深色主题配色微调（卡片暖墨分层 + 页脚下划线生长修复）**（commit c551263）
+**官网：深色主题配色微调（卡片暖墨分层 + 页脚下划线生长修复）（commit c551263）**
 
 ### 网站
 
@@ -852,7 +852,7 @@
 
 ---
 
-**官网：许可证页深色化**（commit 0ed4f3f）
+**官网：许可证页深色化（commit 0ed4f3f）**
 
 ### 网站
 
@@ -860,7 +860,7 @@
 
 ---
 
-**官网：社区页深色化**（commit ba548e4）
+**官网：社区页深色化（commit ba548e4）**
 
 ### 网站
 
@@ -868,7 +868,7 @@
 
 ---
 
-**官网：历史页深色化**（commit 75a4515）
+**官网：历史页深色化（commit 75a4515）**
 
 ### 网站
 
@@ -876,7 +876,7 @@
 
 ---
 
-**官网：首页深色化**（commit ad40628）
+**官网：首页深色化（commit ad40628）**
 
 ### 网站
 
@@ -884,7 +884,7 @@
 
 ---
 
-**官网：深色深邃底色板 + 灵动动效系统**（commit b950d22）
+**官网：深色深邃底色板 + 灵动动效系统（commit b950d22）**
 
 ### 网站
 
@@ -896,7 +896,7 @@
 
 ---
 
-**官网：修复卡片 hover 图片模糊**（commit 7258943）
+**官网：修复卡片 hover 图片模糊（commit 7258943）**
 
 ### 网站
 
@@ -904,7 +904,7 @@
 
 ---
 
-**官网：导航社区资源链接 + 版本/社区按钮文案调整**（commit 34b5e36）
+**官网：导航社区资源链接 + 版本/社区按钮文案调整（commit 34b5e36）**
 
 ### 网站
 
@@ -913,7 +913,7 @@
 
 ---
 
-**官网：移除 Hero 标语文案**（commit c5ba684）
+**官网：移除 Hero 标语文案（commit c5ba684）**
 
 ### 网站
 
@@ -921,7 +921,7 @@
 
 ---
 
-**官网美化：附属页轻量换皮**（commit 5b8aedf）
+**官网美化：附属页轻量换皮（commit 5b8aedf）**
 
 ### 网站
 
@@ -930,7 +930,7 @@
 
 ---
 
-**官网美化：页脚三栏毛玻璃 + 全站元信息统一**（commit 3530246）
+**官网美化：页脚三栏毛玻璃 + 全站元信息统一（commit 3530246）**
 
 ### 网站
 
@@ -939,7 +939,7 @@
 
 ---
 
-**官网美化：下载弹窗打磨**（commit 1185144）
+**官网美化：下载弹窗打磨（commit 1185144）**
 
 ### 网站
 
@@ -947,7 +947,7 @@
 
 ---
 
-**官网美化：字体排版增强 + 背景流动渐变**（commit 798ed12）
+**官网美化：字体排版增强 + 背景流动渐变（commit 798ed12）**
 
 ### 网站
 
@@ -956,7 +956,7 @@
 
 ---
 
-**官网美化：卡片与按钮打磨**（commit c904577）
+**官网美化：卡片与按钮打磨（commit c904577）**
 
 ### 网站
 
@@ -965,7 +965,7 @@
 
 ---
 
-**官网美化：吸顶导航 + 锚点 + 汉堡菜单**（commit 5e429a4）
+**官网美化：吸顶导航 + 锚点 + 汉堡菜单（commit 5e429a4）**
 
 ### 网站
 
@@ -975,7 +975,7 @@
 
 ---
 
-**官网美化：Hero 品牌标语**（commit f31e75c）
+**官网美化：Hero 品牌标语（commit f31e75c）**
 
 ### 网站
 
@@ -983,7 +983,7 @@
 
 ---
 
-**官网美化：字体引入 + 设计变量基座**（commit f130021）
+**官网美化：字体引入 + 设计变量基座（commit f130021）**
 
 ### 网站
 
@@ -993,7 +993,7 @@
 
 ---
 
-**官网样式/脚本外置 + 共用 JS + onerror 抽离**（commit 5156482）
+**官网样式/脚本外置 + 共用 JS + onerror 抽离（commit 5156482）**
 
 ### 网站
 
@@ -1004,7 +1004,7 @@
 
 ---
 
-**官网动效优化 + 修复指引面板 Bug**（commit 5156482）
+**官网动效优化 + 修复指引面板 Bug（commit 5156482）**
 
 ### 修复
 
@@ -1020,7 +1020,7 @@
 
 ---
 
-**官网发布 Beta 26w33a（蓝奏云单源）+ UpdateChecker 日期码更新判断**（commit 0bc8850）
+**官网发布 Beta 26w33a（蓝奏云单源）+ UpdateChecker 日期码更新判断（commit 0bc8850）**
 
 ### 新增
 
@@ -1040,7 +1040,7 @@
 
 ---
 
-**Beta 快照细分版本（Minecraft 法则 YYwWWa）**（commit 23863c8）
+**Beta 快照细分版本（Minecraft 法则 YYwWWa）（commit 23863c8）**
 
 ### 新增
 
@@ -1061,7 +1061,7 @@
 
 ---
 
-**官网新增 Mac 下载入口（M1/Intel 链接分组）**（commit 844bfa1）
+**官网新增 Mac 下载入口（M1/Intel 链接分组）（commit 844bfa1）**
 
 ### 网站
 
@@ -1073,7 +1073,7 @@
 
 ---
 
-**.gitignore 打包产物忽略规则收窄为 qingfeng_setup_ 前缀**（commit 920e270）
+**.gitignore 打包产物忽略规则收窄为 qingfeng_setup_ 前缀（commit 920e270）**
 
 ### 构建
 
@@ -1081,7 +1081,7 @@
 
 ---
 
-**mac 安装器文件名前缀统一英文**（commit 6a2ea4b）
+**mac 安装器文件名前缀统一英文（commit 6a2ea4b）**
 
 ### 变更
 
@@ -1089,7 +1089,7 @@
 
 ---
 
-**JDK 版本同步镜像 21.0.11_10 → 21.0.12_8**（commit f226df5）
+**JDK 版本同步镜像 21.0.11_10 → 21.0.12_8（commit f226df5）**
 
 ### 构建
 
@@ -1097,7 +1097,7 @@
 
 ---
 
-**平台脚本失败时退出码非零**（commit 8d02cfa）
+**平台脚本失败时退出码非零（commit 8d02cfa）**
 
 ### 修复
 
@@ -1105,7 +1105,7 @@
 
 ---
 
-**安卓签名密钥安全规范**（commit 00e3b5c）
+**安卓签名密钥安全规范（commit 00e3b5c）**
 
 ### 编码规范
 
@@ -1113,7 +1113,7 @@
 
 ---
 
-**打包交互改为全部平台完成后统一退出**（commit 9f1fe9f）
+**打包交互改为全部平台完成后统一退出（commit 9f1fe9f）**
 
 ### 重构
 
@@ -1125,7 +1125,7 @@
 
 ---
 
-**日志三维改造方案存档**（commit f196250）
+**日志三维改造方案存档（commit f196250）**
 
 ### 文档
 
@@ -1133,7 +1133,7 @@
 
 ---
 
-**menu_main 场景动画配置更新**（commit 55ffee0）
+**menu_main 场景动画配置更新（commit 55ffee0）**
 
 ### 资产
 
@@ -1141,7 +1141,7 @@
 
 ---
 
-**初始化注释补充 + 动画对象判空简化**（commit b5b513a）
+**初始化注释补充 + 动画对象判空简化（commit b5b513a）**
 
 ### 重构
 
@@ -1154,7 +1154,7 @@
 
 ---
 
-**版本检测 URL 常量提取**（commit 65b6836）
+**版本检测 URL 常量提取（commit 65b6836）**
 
 ### 重构
 
@@ -1162,7 +1162,7 @@
 
 ---
 
-**官网文案统一为氢风/QingFeng**（commit a9f60d9）
+**官网文案统一为氢风/QingFeng（commit a9f60d9）**
 
 ### 网站
 
@@ -1170,7 +1170,7 @@
 
 ---
 
-**打包脚本收拢进 scripts 目录 + 主编排器置根**（commit bee5536）
+**打包脚本收拢进 scripts 目录 + 主编排器置根（commit bee5536）**
 
 ### 重构
 
@@ -1182,7 +1182,7 @@
 
 ---
 
-**.gitignore 忽略 mac 打包产物**（commit c167012）
+**.gitignore 忽略 mac 打包产物（commit c167012）**
 
 ### 构建
 
@@ -1190,7 +1190,7 @@
 
 ---
 
-**打包工具按平台拆分 + 主编排器逐平台询问**（commit ca77060）
+**打包工具按平台拆分 + 主编排器逐平台询问（commit ca77060）**
 
 ### 新增
 
@@ -1212,7 +1212,7 @@
 
 ---
 
-**output/README.md 打包工具文档重写**（commit 19890e4）
+**output/README.md 打包工具文档重写（commit 19890e4）**
 
 ### 文档
 
@@ -1222,7 +1222,7 @@
 
 ## 2026-08-10 — 动画目标类 + RequirementKey.Config 收编 + NativeDialog 回调重构
 
-**动画目标类：AnimationObject + Ui/Graphics 子类**（commit 4c6d207）
+**动画目标类：AnimationObject + Ui/Graphics 子类（commit 4c6d207）**
 
 ### 新增
 
@@ -1238,7 +1238,7 @@
 
 ---
 
-**RequirementKey.Config 通用字段收进 Universal 内部类**（commit 275b055）
+**RequirementKey.Config 通用字段收进 Universal 内部类（commit 275b055）**
 
 ### 重构
 
@@ -1246,7 +1246,7 @@
 
 ---
 
-**NativeDialog showConfirm 改用两个 Runnable 回调**（commit 944c23e）
+**NativeDialog showConfirm 改用两个 Runnable 回调（commit 944c23e）**
 
 ### 重构
 
@@ -1256,7 +1256,7 @@
 
 ## 2026-08-09 — Init 防重入 + BGM 静音修复 + 事件类统一 + UiObject JsonEntity 构造
 
-**Init 维修图标防重入**（commit 0ec09f1）
+**Init 维修图标防重入（commit 0ec09f1）**
 
 ### 修复
 
@@ -1264,7 +1264,7 @@
 
 ---
 
-**修复安卓文件选择器往返后 BGM 静音**（commit 77f5065）
+**修复安卓文件选择器往返后 BGM 静音（commit 77f5065）**
 
 ### 修复
 
@@ -1272,7 +1272,7 @@
 
 ---
 
-**官网：修复「查看修复方法」按钮 emoji 消失 + 图片点击放大**（commit bdc9d86）
+**官网：修复「查看修复方法」按钮 emoji 消失 + 图片点击放大（commit bdc9d86）**
 
 ### 修复
 
@@ -1284,7 +1284,7 @@
 
 ---
 
-**事件类统一命名 + 运行时主题/语言切换**（commit 8870857）
+**事件类统一命名 + 运行时主题/语言切换（commit 8870857）**
 
 ### 新增
 
@@ -1308,7 +1308,7 @@
 
 ---
 
-**UiObject 支持 JsonEntity 构造 + 复用点替换**（commit 7677006）
+**UiObject 支持 JsonEntity 构造 + 复用点替换（commit 7677006）**
 
 ### 新增
 
@@ -1323,7 +1323,7 @@
 
 ## 2026-08-08 — JSON 键 snake_case 迁移 + 脚本常量规约 + 虚拟输入优先选中 + 动画配置
 
-**ScriptCommand/ValueCommand type/action 常量按体系拆分**（commit 8efa790）
+**ScriptCommand/ValueCommand type/action 常量按体系拆分（commit 8efa790）**
 
 ### 重构
 
@@ -1332,7 +1332,7 @@
 
 ---
 
-**脚本 Type/Action 字符串常量规约进 ScriptKey**（commit 173342f）
+**脚本 Type/Action 字符串常量规约进 ScriptKey（commit 173342f）**
 
 ### 重构
 
@@ -1341,7 +1341,7 @@
 
 ---
 
-**JSON 键 snake_case 迁移补漏（font_args 子字段 + 脚本/样式键）**（commit 1fbf364）
+**JSON 键 snake_case 迁移补漏（font_args 子字段 + 脚本/样式键）（commit 1fbf364）**
 
 ### 重构
 
@@ -1350,7 +1350,7 @@
 
 ---
 
-**JSON 键统一 snake_case 迁移实施**（commit 9723176）
+**JSON 键统一 snake_case 迁移实施（commit 9723176）**
 
 ### 重构
 
@@ -1359,7 +1359,7 @@
 
 ---
 
-**JSON 键 snake_case 统一迁移方案**（commit 8f0cd26）
+**JSON 键 snake_case 统一迁移方案（commit 8f0cd26）**
 
 ### 文档
 
@@ -1367,7 +1367,7 @@
 
 ---
 
-**EventDispatcher/RenderPipeline/FileSuffix 注释整理**（commit 81a511c）
+**EventDispatcher/RenderPipeline/FileSuffix 注释整理（commit 81a511c）**
 
 ### 编码规范
 
@@ -1376,7 +1376,7 @@
 
 ---
 
-**页面切换过渡动画设计深化**（commit 5970ecf）
+**页面切换过渡动画设计深化（commit 5970ecf）**
 
 ### 文档
 
@@ -1384,7 +1384,7 @@
 
 ---
 
-**menu_main 场景动画配置数据**（commit 161cf40）
+**menu_main 场景动画配置数据（commit 161cf40）**
 
 ### 资产
 
@@ -1392,7 +1392,7 @@
 
 ---
 
-**config_basic 语言信息 label 加宽**（commit e517987）
+**config_basic 语言信息 label 加宽（commit e517987）**
 
 ### 资产
 
@@ -1400,7 +1400,7 @@
 
 ---
 
-**GameStatePageInfo 补全页面配置加载映射**（commit 2f41fa6）
+**GameStatePageInfo 补全页面配置加载映射（commit 2f41fa6）**
 
 ### 修复
 
@@ -1408,7 +1408,7 @@
 
 ---
 
-**数字型常量统一收编**（commit f7623de）
+**数字型常量统一收编（commit f7623de）**
 
 ### 重构
 
@@ -1418,7 +1418,7 @@
 
 ---
 
-**游戏内页面接入虚拟输入优先选中（game_menu/game_role）**（commit fa8278d）
+**游戏内页面接入虚拟输入优先选中（game_menu/game_role）（commit fa8278d）**
 
 ### 功能
 
@@ -1426,7 +1426,7 @@
 
 ---
 
-**启动器页面接入虚拟输入优先选中（menu_list/config_basic/config_display）**（commit 5604a69）
+**启动器页面接入虚拟输入优先选中（menu_list/config_basic/config_display）（commit 5604a69）**
 
 ### 功能
 
@@ -1434,7 +1434,7 @@
 
 ---
 
-**主菜单接入虚拟输入优先选中配置**（commit d9997ce）
+**主菜单接入虚拟输入优先选中配置（commit d9997ce）**
 
 ### 功能
 
@@ -1442,7 +1442,7 @@
 
 ---
 
-**VirtualInputHandler 优先选中按控件类型查找 + 游戏内 UiManager 切换 + 编码规范常量使用规则**（commit c306a46）
+**VirtualInputHandler 优先选中按控件类型查找 + 游戏内 UiManager 切换 + 编码规范常量使用规则（commit c306a46）**
 
 ### 修复
 
@@ -1908,7 +1908,7 @@
 
 ## 2026-07-19 — loadPicture 错误占位 + JSON 标准 + 音效/图片版权清理
 
-**loadPicture 首次加载失败用 errorTexture 占位 + UI 纹理生成工具 + 第三方素材版权清查**（commit 983d0f7）
+**loadPicture 首次加载失败用 errorTexture 占位 + UI 纹理生成工具 + 第三方素材版权清查（commit 983d0f7）**
 
 ### 新增
 
@@ -1931,7 +1931,7 @@
 
 ---
 
-**JSON 配置标准总览 + 文档体系清理 + enterGame 回滚修复**（commit 983d0f7）
+**JSON 配置标准总览 + 文档体系清理 + enterGame 回滚修复（commit 983d0f7）**
 
 ### 新增
 
@@ -1954,7 +1954,7 @@
 
 ---
 
-**默认主题音效替换 + THIRDPARTY_LICENSES 补充 + JSON 标准文档增强**（commit 983d0f7）
+**默认主题音效替换 + THIRDPARTY_LICENSES 补充 + JSON 标准文档增强（commit 983d0f7）**
 
 ### 变更
 
@@ -1967,7 +1967,7 @@
 
 ---
 
-**图片版权全面清查 + error.png 替换 + THIRDPARTY_LICENSES 补全**（commit 983d0f7）
+**图片版权全面清查 + error.png 替换 + THIRDPARTY_LICENSES 补全（commit 983d0f7）**
 
 ### 变更
 
@@ -2175,7 +2175,7 @@
 
 ## 2026-07-13 — 官网 HTML 结构优化 + 更新检测与打包版本管理
 
-**官网 HTML 结构优化：语义化 + 内联样式提取 + 修复步骤面板**（commit 983d0f7）
+**官网 HTML 结构优化：语义化 + 内联样式提取 + 修复步骤面板（commit 983d0f7）**
 
 ### 新增
 
@@ -2201,7 +2201,7 @@
 
 ---
 
-**更新检测三段式判断 + 打包脚本版本管理体系增强**（commit 983d0f7）
+**更新检测三段式判断 + 打包脚本版本管理体系增强（commit 983d0f7）**
 
 ### 新增
 
@@ -2222,7 +2222,7 @@
 
 ## 2026-07-11 — repairGame 保护文件还原 + NinePatch 边框视觉缩放
 
-**repairGame 保护文件还原修复 + init 重入守卫**（commit 983d0f7）
+**repairGame 保护文件还原修复 + init 重入守卫（commit 983d0f7）**
 
 ### 新增
 
@@ -2241,7 +2241,7 @@
 
 ---
 
-**NinePatch 边框视觉缩放：sourceBorder/renderBorder 分离**（commit 983d0f7）
+**NinePatch 边框视觉缩放：sourceBorder/renderBorder 分离（commit 983d0f7）**
 
 ### 重构
 
@@ -2273,7 +2273,7 @@
 
 ## 2026-07-08 — FileHandle 命名规范化 + PathType→FileHandle 全量迁移
 
-**FileHandle 命名规范化 + FileUtils JavaDoc 完善 + .list() 安全替换**（commit 983d0f7）
+**FileHandle 命名规范化 + FileUtils JavaDoc 完善 + .list() 安全替换（commit 983d0f7）**
 
 ### 重构
 
@@ -2309,7 +2309,7 @@
 
 ---
 
-**PathType→FileHandle 全量迁移 + QfFiles 包装 + 路径翻倍调试**（commit 7e791e2）
+**PathType→FileHandle 全量迁移 + QfFiles 包装 + 路径翻倍调试（commit 7e791e2）**
 
 ### 新增
 
@@ -2429,7 +2429,7 @@
 
 ## 2026-06-16 — P0/P1 逻辑漏洞修复 + 脚本引擎包迁移
 
-**P0/P1 逻辑漏洞修复 + 页面进入机制 + 编码规范对齐 + 树结构修复**（commit 983d0f7）
+**P0/P1 逻辑漏洞修复 + 页面进入机制 + 编码规范对齐 + 树结构修复（commit 983d0f7）**
 
 ### 新增
 
@@ -2458,7 +2458,7 @@
 
 ---
 
-**脚本引擎包迁移 + 帧驱动执行器 + 任务系统 + 编码规范修复**（commit 983d0f7）
+**脚本引擎包迁移 + 帧驱动执行器 + 任务系统 + 编码规范修复（commit 983d0f7）**
 
 ### 新增
 
@@ -2512,7 +2512,7 @@
 
 ## 2026-06-10 — 主题字体预缓存 + LogUtils 重构 + 脚本引擎解析器 + 框架重构
 
-**主题字体预缓存 + Page 包迁移 + PageBehavior 骨架**（commit 983d0f7）
+**主题字体预缓存 + Page 包迁移 + PageBehavior 骨架（commit 983d0f7）**
 
 ### 新增
 
@@ -2529,7 +2529,7 @@
 
 ---
 
-**LogUtils 重构：字符串标签改为 Class<?> 传参**（commit 983d0f7）
+**LogUtils 重构：字符串标签改为 Class<?> 传参（commit 983d0f7）**
 
 ### 重构
 
@@ -2543,7 +2543,7 @@
 
 ---
 
-**脚本引擎解析器实现 + 工具包结构重组 + 值对象重构**（commit 983d0f7）
+**脚本引擎解析器实现 + 工具包结构重组 + 值对象重构（commit 983d0f7）**
 
 ### 新增
 
@@ -2568,7 +2568,7 @@
 
 ---
 
-**框架重构：controller→core 类名变更 + 事件系统迁移**（commit 983d0f7）
+**框架重构：controller→core 类名变更 + 事件系统迁移（commit 983d0f7）**
 
 ### 重构
 
@@ -2581,7 +2581,7 @@
 
 ## 2026-06-07 — 脚本引擎基础框架 + 布局字段级融合
 
-**脚本引擎基础框架：Script + ScriptCommand + 解析器**（commit 983d0f7）
+**脚本引擎基础框架：Script + ScriptCommand + 解析器（commit 983d0f7）**
 
 ### 新增
 
@@ -2594,7 +2594,7 @@
 
 ---
 
-**布局字段级融合 + Label 全方向对齐修复**（commit 983d0f7）
+**布局字段级融合 + Label 全方向对齐修复（commit 983d0f7）**
 
 ### 新增
 
@@ -2614,7 +2614,7 @@
 
 ## 2026-06-06 — 代码命名优化 + 命名对齐与主机模式
 
-**代码命名优化 + 启动器控制台修复 + dispose 调试信息补充**（commit 983d0f7）
+**代码命名优化 + 启动器控制台修复 + dispose 调试信息补充（commit 983d0f7）**
 
 ### 命名优化与包结构调整
 
@@ -2645,7 +2645,7 @@
 
 ---
 
-**命名对齐 + GamePlay 主机模式 + 布局安全增强 + 数据结构扩展**（commit 983d0f7）
+**命名对齐 + GamePlay 主机模式 + 布局安全增强 + 数据结构扩展（commit 983d0f7）**
 
 ### 新增
 
@@ -2743,7 +2743,7 @@
 
 ## 2026-06-01 — 官网下载区支持 Linux + Linux 桌面修复
 
-**官网下载区支持 Linux + 打包脚本瘦身优化**（commit 7e791e2）
+**官网下载区支持 Linux + 打包脚本瘦身优化（commit 7e791e2）**
 
 ### 打包优化
 
@@ -2769,7 +2769,7 @@
 
 ---
 
-**Linux 桌面修复：文件选择器改用 zenity、.deb 目录修复**（commit 983d0f7）
+**Linux 桌面修复：文件选择器改用 zenity、.deb 目录修复（commit 983d0f7）**
 
 ### Bug 修复
 
@@ -2791,7 +2791,7 @@
 
 ## 2026-05-31 — 架构审查 + UiManager 拆分 + 委托消除 + 日志 Javadoc 补全 + UpdateController 重构 + UI 样式增强
 
-**架构审查报告：Python→Java 翻新综合评价**（commit 983d0f7）
+**架构审查报告：Python→Java 翻新综合评价（commit 983d0f7）**
 
 ### 新增文档
 
@@ -2802,7 +2802,7 @@
 
 ---
 
-**UiManager 拆分为三子管理器 + 桌面打包脚本便携化**（commit 983d0f7）
+**UiManager 拆分为三子管理器 + 桌面打包脚本便携化（commit 983d0f7）**
 
 ### ⚠️ 新人必看：构建环境配置
 
@@ -2883,7 +2883,7 @@ Python 版已稳定，`.bat` 版因 Windows cmd.exe 在 UTF-8 BOM + 中文环境
 
 ---
 
-**GameController 委托方法消除，直调 GameSessionManager**（commit 983d0f7）
+**GameController 委托方法消除，直调 GameSessionManager（commit 983d0f7）**
 
 - **消除 GameController 的 5 个委托包装方法**：移除 `loadGame`、`enterGame`、`quitGame`、`isInGame`、`playNewStory`，改为直接暴露 `getGameSessionManager()` getter（commit 983d0f7）
 - **全部调用点更新**（8 文件）：`GameRole.java`、`GameMenu.java`、`MenuLoad.java`、`MenuList.java`、`ControllerInputHandler.java`、`UniversalInputHandlerFunction.java`、`VirtualInputHandler.java` 统一改为 `gameController.getGameSessionManager().xxx()` 模式（commit 983d0f7）
@@ -2906,7 +2906,7 @@ Python 版已稳定，`.bat` 版因 Windows cmd.exe 在 UTF-8 BOM + 中文环境
 
 ---
 
-**日志标签统一、全量 Javadoc 与方法注释补全**（commit 983d0f7）
+**日志标签统一、全量 Javadoc 与方法注释补全（commit 983d0f7）**
 
 ### 日志标签统一（25+ 文件）
 
@@ -2933,7 +2933,7 @@ Python 版已稳定，`.bat` 版因 Windows cmd.exe 在 UTF-8 BOM + 中文环境
 
 ---
 
-**UpdateController 重构与 deltaTime 统一**（commit 983d0f7）
+**UpdateController 重构与 deltaTime 统一（commit 983d0f7）**
 
 ### UpdateController 重构
 
@@ -2953,7 +2953,7 @@ Python 版已稳定，`.bat` 版因 Windows cmd.exe 在 UTF-8 BOM + 中文环境
 
 ---
 
-**UI 样式系统增强与多 bug 修复**（commit 983d0f7）
+**UI 样式系统增强与多 bug 修复（commit 983d0f7）**
 
 ### UiManager 样式运行时更新支持
 
