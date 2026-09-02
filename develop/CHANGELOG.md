@@ -51,15 +51,23 @@
 
 ---
 
-**构建(官网)：构建产物输出 docs/（commit —）**
+**构建(官网)：构建产物输出 docs/（commit aff2f03）**
 
 ### 构建
 
-- **SPA 构建产物** — `docs/index.html` 改为加载入口 chunk 的 SPA 壳，`docs/assets/` 输出哈希资源（commit —）
+- **SPA 构建产物** — `docs/index.html` 改为加载入口 chunk 的 SPA 壳，`docs/assets/` 输出哈希资源（commit aff2f03）
 
 ### 网站
 
-- **运行时数据** — 版权 / 第三方许可 HTML 与 10 语言 JSON 由 `public/` 复制至 `docs/data/`，CC 徽章图入 `docs/resource/`（commit —）
+- **运行时数据** — 版权 / 第三方许可 HTML 与 10 语言 JSON 由 `public/` 复制至 `docs/data/`，CC 徽章图入 `docs/resource/`（commit aff2f03）
+
+---
+
+**移除(官网)：删除旧静态站（commit —）**
+
+### 移除
+
+- **旧静态资源清理** — 移除 docs/ 下旧 css / js / html 手工页面与 README.md（commit —）
 
 ## 2026-09-01 — 官网全面升级（性能/交互/可访问性） + 版权页面重构
 
