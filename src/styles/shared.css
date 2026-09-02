@@ -1,0 +1,409 @@
+/* ================================
+   全站共享组件样式
+   由 main.js 全局引入（在 common.css 之后）
+   覆盖：版本卡、下载按钮、错误/空态、手风琴、修复步骤、反馈邮箱、社区区
+   原先散落在 index.css / page.css，因 index.css 只挂在首页导致子页深链样式缺失，
+   故提取为全站共享样式，保证任意页面直接访问时样式完整。
+   ================================ */
+
+/* ================================
+   版本卡片（首页下载区 / 历史页共用）
+   ================================ */
+.version-card {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--card-bg-strong);
+    border-radius: var(--radius-card);
+    padding: 28px 32px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-glass);
+    border-left: 3px solid var(--accent);
+    transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), background-color 0.2s var(--ease-out);
+}
+.version-card:hover {
+    background: rgba(52, 49, 56, 0.9);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-hover), 0 0 0 1px var(--accent), 0 0 36px -12px rgba(79, 195, 216, 0.4);
+    transform: translateY(-4px);
+}
+
+.version-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+.version-name {
+    font-size: 2rem;
+    font-weight: 700;
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.latest-tag {
+    background: linear-gradient(135deg, rgba(79, 195, 216, 0.9), rgba(42, 169, 184, 0.9));
+    color: #0a2028;
+    font-size: 0.9rem;
+    padding: 4px 14px;
+    border-radius: var(--radius-card);
+    font-weight: 600;
+    white-space: nowrap;
+}
+.version-date {
+    margin-top: 4px;
+    font-size: 0.9rem;
+    color: var(--text-3);
+}
+
+.version-log {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-2);
+    background: var(--card-bg-soft);
+    padding: 18px 22px;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--border-glass);
+    margin: 16px 0 20px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.log-fold {
+    position: relative;
+}
+.log-fold .version-log {
+    max-height: none;
+}
+.log-fold.folded .version-log {
+    max-height: 100px;
+    overflow-y: auto;
+}
+.log-toggle {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 4px 0 0;
+    padding: 6px 18px;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--border-glass-strong);
+    background: transparent;
+    color: var(--accent-2);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+}
+.log-toggle:hover {
+    background: rgba(79, 195, 216, 0.08);
+    border-color: var(--accent);
+}
+.fold-arrow {
+    display: inline-block;
+    transition: transform 0.25s var(--ease-out);
+}
+.log-toggle[aria-expanded="true"] .fold-arrow {
+    transform: rotate(180deg);
+}
+
+/* ================================
+   错误 / 空状态
+   ================================ */
+.error-message {
+    text-align: center;
+    padding: 50px 20px;
+    background: var(--card-bg-soft);
+    border-radius: var(--radius-card);
+    color: #ff9090;
+    font-size: 1.3rem;
+    border: 1px solid rgba(255, 144, 144, 0.3);
+}
+.no-versions {
+    text-align: center;
+    padding: 50px 20px;
+    background: var(--card-bg-soft);
+    border-radius: var(--radius-card);
+    color: var(--text-2);
+    font-size: 1.3rem;
+}
+
+/* ================================
+   下载按钮行
+   ================================ */
+.download-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    border-top: 1px solid var(--border-glass);
+    padding-top: 20px;
+    margin-top: 4px;
+}
+.download-item-small {
+    text-align: center;
+    background: var(--card-bg);
+    border-radius: var(--radius-card);
+    padding: 16px 12px;
+    border: 1px solid var(--border-glass);
+    border-top: 1px solid var(--border-top-highlight);
+    transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+}
+.download-item-small:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 0 1px var(--border-glass-strong), 0 10px 24px -8px rgba(0, 0, 0, 0.5);
+    border-color: var(--accent);
+}
+.download-item-small a {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+.download-icon-small {
+    width: 100%;
+    max-width: 100px;
+    height: auto;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--border-glass);
+    background-color: rgba(20, 40, 64, 0.4);
+    min-height: 50px;
+    object-fit: contain;
+}
+.download-icon-small.error {
+    background: var(--card-bg-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-3);
+    font-size: 0.85rem;
+    padding: 10px 0;
+}
+.download-item-small span {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-2);
+}
+
+/* ================================
+   遇到问题 — 手风琴
+   ================================ */
+.help-section {
+    width: 100%;
+    max-width: 1200px;
+    padding: 50px 24px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    border: 1px solid var(--border-glass);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+}
+.help-header h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-1);
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+
+.accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.accordion-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border-glass);
+    border-left: 3px solid transparent;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    transition: border-color 0.3s var(--ease-out), background-color 0.3s var(--ease-out);
+}
+.accordion-item:hover {
+    border-color: var(--border-glass-strong);
+    border-left-color: var(--accent);
+}
+.accordion-item.open {
+    border-left-color: var(--accent);
+    background: rgba(79, 195, 216, 0.03);
+}
+.accordion-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: none;
+    border: none;
+    color: var(--text-1);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.2s var(--ease-out);
+}
+.accordion-trigger:hover {
+    background: rgba(79, 195, 216, 0.04);
+}
+.accordion-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+.accordion-title {
+    flex: 1;
+}
+.accordion-arrow {
+    font-size: 1.1rem;
+    color: var(--text-3);
+    transition: transform 0.25s var(--ease-out);
+    flex-shrink: 0;
+}
+.accordion-item.open .accordion-arrow {
+    transform: rotate(90deg);
+}
+.accordion-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s var(--ease-out);
+}
+/* max-height 由 JS 动态设置 scrollHeight，确保 transition 生效 */
+.accordion-body {
+    padding: 0 20px 20px;
+    font-size: 0.95rem;
+    color: var(--text-2);
+    line-height: 1.6;
+}
+.accordion-body p {
+    margin-bottom: 12px;
+}
+.accordion-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+/* 修复步骤（accordion 内） */
+.repair-steps {
+    margin-top: 16px;
+    border-top: 1px dashed var(--border-glass);
+    padding-top: 16px;
+}
+.repair-step {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--border-glass);
+}
+.repair-step:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.repair-step-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+.repair-step-text {
+    font-size: 0.9rem;
+    color: var(--text-2);
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+.repair-step img {
+    width: 100%;
+    max-width: 600px;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--border-glass);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+}
+.repair-step .img-placeholder {
+    display: none;
+    width: 100%;
+    max-width: 600px;
+    border-radius: var(--radius-card);
+    border: 1px dashed var(--border-glass-strong);
+    background: var(--card-bg-soft);
+    padding: 30px 16px;
+    text-align: center;
+    color: var(--text-3);
+    margin: 0 auto;
+    font-size: 0.9rem;
+}
+
+.feedback-email {
+    color: var(--accent-2);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(79, 195, 216, 0.3);
+    word-break: break-all;
+    transition: color 0.2s var(--ease-out), text-decoration-color 0.2s var(--ease-out);
+}
+.feedback-email:hover {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
+}
+
+/* ================================
+   社区分享区
+   ================================ */
+.community-section {
+    width: 100%;
+    max-width: 1200px;
+    padding: 50px 24px;
+    margin: 0 auto 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-glass);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+}
+.community-inner h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-1);
+    margin-bottom: 12px;
+}
+.community-inner p {
+    font-size: 1rem;
+    color: var(--text-2);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+/* ================================
+   响应式
+   ================================ */
+@media (max-width: 900px) {
+    .download-row { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+    .download-section, .help-section, .community-section { padding: 32px 16px; }
+    .download-header h2, .help-header h2, .community-inner h2 { font-size: 1.5rem; }
+    .version-card { padding: 16px; }
+    .version-name { font-size: 1.5rem; }
+    .version-log { font-size: 0.9rem; padding: 14px 16px; }
+    .accordion-trigger { padding: 14px 16px; font-size: 1rem; }
+    .accordion-body { padding: 0 16px 16px; font-size: 0.9rem; }
+    .repair-step img { max-width: 100%; }
+    .community-inner p { font-size: 0.9rem; }
+}
+@media (max-width: 500px) {
+    .download-row { grid-template-columns: 1fr; }
+    .download-item-small { max-width: 280px; margin: 0 auto; }
+}
+
+/* ================================
+   scroll-margin-top（导航锚点偏移）
+   ================================ */
+#features, #download, #help, #community {
+    scroll-margin-top: 72px;
+}

@@ -1,0 +1,7 @@
+{
+	"logo":"resource/image/logo.png",
+	"download-android":"resource/image/download-android.png",
+	"download-windows":"resource/image/download-windows.png",
+	"download-linux":"resource/image/download-linux.png",
+	"download-mac":"resource/image/download-mac.png"
+}

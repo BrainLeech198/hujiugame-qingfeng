@@ -1,0 +1,100 @@
+{
+  "newest_version" : 2,
+  "newest_version_type" : 0,
+  "newest_version_string" : "1.0.0",
+  "newest_version_snapshot" : "26w34b",
+  "versions" : {
+    "2" : {
+      "name" : "v1.0.0-beta-26w34b",
+      "date" : "2026-08-19 11:35",
+      "type" : 0,
+      "log" : "氢风 v1.0.0-beta-26w34b 公开测试版更新（相对 v1.0.0-beta-26w33a）：\n\n【修复的 Bug】\n1. 修复 mac 版点击游戏内路径标签（打开资源管理器）时游戏卡死的问题\n2. 修复 mac 版出现系统原生弹窗（如崩溃提示）时游戏卡死的问题\n3. 修复误弹「版本不一致」无法进游戏——改用「版本码」判定（主版本相等 + 次版本不低于要求），兼容判断更准确，不再误拦\n4. 修复缺版本要求误判——游戏未声明启动器版本要求时视为「未声明」直接放行\n5. 修复安卓平台背景音乐随机切换偶发双播的问题\n\n【新增功能】\n6. 无法识别版本要求提示——当游戏声明了无法识别的启动器版本码时，弹窗提示并建议不要强制运行\n\n【移除功能】\n7. 移除页面切换过渡动画——该动画存在多处兼容性问题，会导致游戏启动崩溃等严重 Bug，本次回退该动画系统，页面切换恢复为即时切换\n\n【其他优化】\n8. mac 安装包引导改进——压缩包内安装指引更名为「安装氢风请打开Install QingFeng.command」，安装流程更清晰",
+      "download" : {
+        "windows" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · Windows 安装包（.exe）· 提取码 1698 · 双击安装，若弹安全提示点「更多信息 → 仍要运行」",
+              "url" : "https://brainleech198.lanzn.com/iWey943c7d8d"
+            }
+          ]
+        },
+        "android" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · Android 安装包（.apk）· 提取码 1698 · 安装时请允许「未知来源」",
+              "url" : "https://brainleech198.lanzn.com/i7WBR43c7q1e"
+            }
+          ]
+        },
+        "linux" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · Linux 安装包（.deb · Debian/Ubuntu）· 提取码 1698 · 双击安装，或终端执行 sudo dpkg -i",
+              "url" : "https://brainleech198.lanzn.com/iSnqd43c7lbe"
+            }
+          ]
+        },
+        "mac" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · macOS Apple 芯片版（M 芯片，.zip）· 提取码 1698 · 解压后双击「安装氢风」，若提示无法打开请右键 → 打开",
+              "url" : "https://brainleech198.lanzn.com/i137U43c74yf"
+            }
+          ],
+          "lanzouyun_intel" : [
+            {
+              "description" : "蓝奏云 · macOS Intel 版（.zip）· 提取码 1698 · 解压后双击「安装氢风」，若提示无法打开请右键 → 打开",
+              "url" : "https://brainleech198.lanzn.com/iLy9Y43c6syd"
+            }
+          ]
+        }
+      }
+    },
+    "1" : {
+      "name" : "v1.0.0-beta-26w33a",
+      "date" : "2026-08-13 17:56",
+      "type" : 0,
+      "log" : "氢风 1.0.0 首个公开测试版正式上线！这是氢风第一次对外开放体验，诚邀大家下载尝鲜。\n\n测试版可能还存在未知问题，欢迎在体验过程中提出宝贵建议，我们会持续优化打磨。感谢每一位支持氢风的朋友！",
+      "download" : {
+        "windows" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · Windows 安装包（.exe）· 提取码 1698 · 双击安装，若弹安全提示点「更多信息 → 仍要运行」",
+              "url" : "https://brainleech198.lanzn.com/iKQiN425u9ja"
+            }
+          ]
+        },
+        "android" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · Android 安装包（.apk）· 提取码 1698 · 安装时请允许「未知来源」",
+              "url" : "https://brainleech198.lanzn.com/iAteU425ub0d"
+            }
+          ]
+        },
+        "linux" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · Linux 安装包（.deb · Debian/Ubuntu）· 提取码 1698 · 双击安装，或终端执行 sudo dpkg -i",
+              "url" : "https://brainleech198.lanzn.com/iDCq1425tzmd"
+            }
+          ]
+        },
+        "mac" : {
+          "lanzouyun" : [
+            {
+              "description" : "蓝奏云 · macOS Apple 芯片版（M 芯片，.zip）· 提取码 1698 · 解压后双击「安装氢风」，若提示无法打开请右键 → 打开",
+              "url" : "https://brainleech198.lanzn.com/ixJuj425u38d"
+            }
+          ],
+          "lanzouyun_intel" : [
+            {
+              "description" : "蓝奏云 · macOS Intel 版（.zip）· 提取码 1698 · 解压后双击「安装氢风」，若提示无法打开请右键 → 打开",
+              "url" : "https://brainleech198.lanzn.com/iszr0425u79i"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -23,12 +23,31 @@
 
 ## 2026-09-02 — 官网迁移至 Vue 3 + Vite 构建 + 版权许可增强
 
-**构建(官网)：Vite + Vue 3 脚手架搭建（commit —）**
+**构建(官网)：Vite + Vue 3 脚手架搭建（commit 328ce1d）**
 
 ### 构建
 
-- **构建工具链** — 引入 Vite 6 + @vitejs/plugin-vue 5 + Vue 3.5 + vue-router 4.5 + vue-i18n 11，`index.html` 作为 SPA 入口，hash 路由（commit —）
-- **构建配置** — `outDir: 'docs'` 输出构建产物、`base: './'` 适配 GitHub Pages 子路径部署；`.gitignore` 追加 `node_modules/`、`dist/`（commit —）
+- **构建工具链** — 引入 Vite 6 + @vitejs/plugin-vue 5 + Vue 3.5 + vue-router 4.5 + vue-i18n 11，`index.html` 作为 SPA 入口，hash 路由（commit 328ce1d）
+- **构建配置** — `outDir: 'docs'` 输出构建产物、`base: './'` 适配 GitHub Pages 子路径部署；`.gitignore` 追加 `node_modules/`、`dist/`（commit 328ce1d）
+
+---
+
+**重构(官网)：页面组件化 Vue 迁移（commit —）**
+
+### 重构
+
+- **SPA 组件化改造** — 静态多页面重构为 Vue 单页应用：TopNav / SiteFooter / SkipLink / DownloadModal / Lightbox 公共组件 + Home / Help / History / Community / Copyright / License / Thirdparty 七个页面视图（commit —）
+
+### 网站
+
+- **CC BY-NC 4.0 官方链接** — license 页正文补充 Creative Commons 官方许可链接（by-nc/4.0），明确项目授权条款（commit —）
+- **CC 官方徽章按钮** — 版权页标题栏新增 licensebuttons.net 官方 88×31 徽章，悬停增强 + 移动端缩放适配（commit —）
+- **副标题接入 i18n** — 首页打字机文案改用语言文件 key，切换语言自动以新语言重播（commit —）
+- **减动效淡入** — `prefers-reduced-motion: reduce` 下跳过逐字动画、改为整句淡入，避免文字生硬闪现（commit —）
+
+### 资产
+
+- **10 语言文件补充** — locales 新增 `close` key；下载图标 / logo / 修复步骤图迁入 `public/`（commit —）
 
 ## 2026-09-01 — 官网全面升级（性能/交互/可访问性） + 版权页面重构
 
