@@ -84,6 +84,8 @@
 | **引擎分离实施计划** | [develop/plans/2026-09-01-engine-separation-implementation-plan.md](develop/plans/2026-09-01-engine-separation-implementation-plan.md) | 6 阶段实施详述（痛点/改动/收益/风险/文件清单/检查清单），Phase 3a 已按审查决策修正 |
 | **引擎分离审查报告** | [develop/plans/2026-09-01-engine-separation-plan-review.md](develop/plans/2026-09-01-engine-separation-plan-review.md) | 代码级逐帧推演审查：3 P0 + 12 P1/P2 问题清单 + 过时认知修正（TM 已空壳） |
 | **引擎分离方案选项** | [develop/plans/2026-09-01-engine-separation-options.md](develop/plans/2026-09-01-engine-separation-options.md) | 审查 15 个问题的候选方案 + 权衡 + 用户决策记录 |
+| **引擎分离进度快照** | [develop/plans/2026-09-01-engine-separation-progress-snapshot.md](develop/plans/2026-09-01-engine-separation-progress-snapshot.md) | 跨会话接续断点：当前状态 + 15 决策汇总 + 已完成/待办清单 |
+| **引擎分离二次审查报告** | [develop/plans/2026-09-02-engine-separation-review-round2.md](develop/plans/2026-09-02-engine-separation-review-round2.md) | 功能效果与现状一致性二次代码级审查：7 P0 + 5 P1 + 4 P2，11 项决策已确认并回写 |
 
 ---
 
