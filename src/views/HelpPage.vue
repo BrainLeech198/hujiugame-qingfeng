@@ -50,13 +50,13 @@ const accordionItems = computed(() => [
                 <div class="repair-step">
                     <div class="repair-step-title">${t('repair_step1_title')}</div>
                     <div class="repair-step-text">${t('repair_step1_text')}</div>
-                    <img src="/resource/image/repair1.png" alt="修复步骤1" data-fallback-next="1">
+                    <img src="resource/image/repair1.png" alt="修复步骤1" data-fallback-next="1">
                     <div class="img-placeholder">${t('repair_img_placeholder')}</div>
                 </div>
                 <div class="repair-step">
                     <div class="repair-step-title">${t('repair_step2_title')}</div>
                     <div class="repair-step-text">${t('repair_step2_text')}</div>
-                    <img src="/resource/image/repair2.png" alt="修复步骤2" data-fallback-next="1">
+                    <img src="resource/image/repair2.png" alt="修复步骤2" data-fallback-next="1">
                     <div class="img-placeholder">${t('repair_img_placeholder')}</div>
                 </div>
             </div>`

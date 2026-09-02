@@ -35,13 +35,13 @@ const routes = [
         path: '/copyright/thirdparty',
         name: 'thirdparty',
         component: () => import('../views/ThirdpartyPage.vue'),
-        props: { dataUrl: '/data/thirdparty.html', titleKey: 'thirdparty_licenses_page_title' }
+        props: { dataUrl: 'data/thirdparty.html', titleKey: 'thirdparty_licenses_page_title' }
     },
     {
         path: '/copyright/project-thirdparty',
         name: 'project-thirdparty',
         component: () => import('../views/ThirdpartyPage.vue'),
-        props: { dataUrl: '/data/project_thirdparty.html', titleKey: 'project_thirdparty_page_title' }
+        props: { dataUrl: 'data/project_thirdparty.html', titleKey: 'project_thirdparty_page_title' }
     }
 ]
 

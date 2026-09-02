@@ -4,7 +4,7 @@
             <span class="sec-emoji">📜</span>
             <span>{{ $t('license_page_title') }}</span>
             <a class="cc-license-btn" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer" title="CC BY-NC 4.0 官方许可全文（署名—非商业性使用）">
-                <img src="/resource/image/cc-by-nc-4.0.png" alt="CC BY-NC 4.0" width="88" height="31">
+                <img :src="'resource/image/cc-by-nc-4.0.png'" alt="CC BY-NC 4.0" width="88" height="31">
             </a>
         </h1>
         <div class="content-card" ref="contentRef" v-html="contentHtml" @click="onTabClick"></div>
@@ -18,7 +18,7 @@ import { usePageSub } from '../composables/usePageSub.js'
 
 usePageSub()
 
-const { contentHtml } = useHtmlContent('/data/license.html')
+const { contentHtml } = useHtmlContent('data/license.html')
 const contentRef = ref(null)
 
 /** tab 切换：点击 tab-btn 后激活对应面板 */

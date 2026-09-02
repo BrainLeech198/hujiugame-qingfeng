@@ -52,7 +52,7 @@ const i18n = createI18n({
 // 动态加载语言文件
 export async function loadLocaleMessages(lang) {
     try {
-        const res = await fetch(`/data/locales/${lang}.json`)
+        const res = await fetch(`data/locales/${lang}.json`)
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const messages = await res.json()
         i18n.global.setLocaleMessage(lang, messages)
@@ -61,7 +61,7 @@ export async function loadLocaleMessages(lang) {
     } catch (err) {
         console.warn(`加载语言文件 ${lang} 失败`, err)
         if (lang !== 'zh') {
-            const res = await fetch('/data/locales/zh.json')
+            const res = await fetch('data/locales/zh.json')
             const messages = await res.json()
             i18n.global.setLocaleMessage('zh', messages)
             i18n.global.locale.value = 'zh'

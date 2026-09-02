@@ -5,7 +5,7 @@
             <div class="hero-bg"></div>
             <div class="hero-spotlight" ref="spotRef"></div>
             <div class="hero-content">
-                <img alt="氢风 logo" class="hero-logo" src="/resource/image/logo.png">
+                <img alt="氢风 logo" class="hero-logo" :src="'resource/image/logo.png'">
                 <p class="hero-subtitle" :class="{ 'fade-in': reducedMotion }">
                     <span>{{ typewriterText }}</span>
                     <span class="typewriter-cursor">|</span>
@@ -94,7 +94,7 @@
                     <div class="download-row">
                         <div class="download-item-small" v-for="p in platforms" :key="p.key">
                             <a href="#" class="download-btn" @click.prevent="openDownload(p.key)">
-                                <img :src="`/resource/image/${p.icon}.png`" :alt="p.alt" class="download-icon-small">
+                                <img :src="`resource/image/${p.icon}.png`" :alt="p.alt" class="download-icon-small">
                                 <span>{{ $t(p.key + '_button') || p.label + '版' }}</span>
                             </a>
                         </div>
@@ -229,7 +229,7 @@ onUnmounted(() => {
 // 加载版本数据
 async function loadVersion() {
     try {
-        const res = await fetch('/data/versions.json')
+        const res = await fetch('data/versions.json')
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const data = await res.json()
         const newestKey = data.newest_version

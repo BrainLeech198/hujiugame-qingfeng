@@ -25,7 +25,7 @@
                     <div class="download-row">
                         <div class="download-item-small" v-for="p in platforms" :key="p.key">
                             <a href="#" class="download-btn" @click.prevent="openDownload(ver.download, p.key)">
-                                <img :src="`/resource/image/${p.icon}.png`" :alt="p.alt" class="download-icon-small">
+                                <img :src="`resource/image/${p.icon}.png`" :alt="p.alt" class="download-icon-small">
                                 <span>{{ $t(p.key + '_button') || p.label + '版' }}</span>
                             </a>
                         </div>
@@ -102,7 +102,7 @@ onMounted(() => {
 
 async function loadData() {
     try {
-        const res = await fetch('/data/versions.json')
+        const res = await fetch('data/versions.json')
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const data = await res.json()
         if (!data.versions) throw new Error('版本数据格式错误')
